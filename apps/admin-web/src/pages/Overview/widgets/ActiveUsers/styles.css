@@ -1,0 +1,41 @@
+.activeUsers {
+  width: 100%;
+  display: flex;
+  gap: 30px;
+}
+
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.activeUser {
+  width: 100px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  .avatar {
+    margin-bottom: 11px;
+  }
+
+  .timeAgo {
+    font-size: 11px;
+    padding: 4px 5px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-weight: 800;
+    line-height: 1em;
+    border-radius: 3px;
+    background-color: var(--bg-4);
+  }
+
+  .name {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.1em;
+  }
+}
