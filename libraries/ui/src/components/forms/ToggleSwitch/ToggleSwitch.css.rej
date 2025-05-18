@@ -1,0 +1,10 @@
+diff a/libraries/ui/src/components/forms/ToggleSwitch/ToggleSwitch.css b/libraries/ui/src/components/forms/ToggleSwitch/ToggleSwitch.css	(rejected hunks)
+@@ -24,7 +24,7 @@
+     }
+   }
+ 
+-  .title {
++  .toggle-switch-box-title {
+     width: 100%;
+     margin-bottom: 10px;
+     padding-left: 0;

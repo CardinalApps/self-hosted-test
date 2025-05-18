@@ -1,0 +1,10 @@
+diff a/libraries/ui/src/components/forms/ToggleSwitch/ToggleSwitch.tsx b/libraries/ui/src/components/forms/ToggleSwitch/ToggleSwitch.tsx	(rejected hunks)
+@@ -38,7 +38,7 @@ const ToggleSwitch = ({
+ }: PropsWithChildren<ToggleSwitchProps>) => {
+   return (
+     <div className={clsx('toggle-switch-box', layout)}>
+-      {title && <p className="title" dangerouslySetInnerHTML={{ __html: title }} />}
++      {title && <p className="toggle-switch-box-title" dangerouslySetInnerHTML={{ __html: title }} />}
+       {children}
+       {labelAlign === 'left' && label && <div className="toggle-switch-label" dangerouslySetInnerHTML={{ __html: label }} />}
+       <div className={`toggle-switch-box-inner`}>
