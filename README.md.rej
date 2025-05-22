@@ -1,11 +1,32 @@
 diff a/README.md b/README.md	(rejected hunks)
-@@ -1,8 +1,7 @@
- # Source code for self-hosted Cardinal apps
+@@ -11,18 +11,18 @@ This workspace is built with pnpm and Turborepo.
  
- This monorepo contains the source code for all self-hosted [Cardinal
--apps](https://cardinalapps.io). It is updated automatically on every push to
--`main` of a private upstream repository.
-+apps](https://cardinalapps.io). It tracks a private upstream repository.
+ Workspace packages exist in a few top level directories: `/apps`, `/config`, `/libraries`, and `/servers`.
  
- ## Workspace
+-| Directory    | Package        | Dev Port        | Description                                                                          |
+-|--------------|----------------|-----------------|--------------------------------------------------------------------------------------|
+-| `/apps`      | `cinema-web`   | `3096`          | [Cardinal Cinema](https://cardinalapps.io/cardinal-cinema) web app                   |
+-| `/apps`      | `help-web`     | `3074`          | [Cardinal Help app](https://help.cardinalapps.io) web app                            |
+-| `/apps`      | `admin-web`    | `3090`          | [Cardinal Media Server Admin](https://cardinalapps.io/cardinal-media-server) web app |
+-| `/apps`      | `music-web`    | `3094`          | [Cardinal Music](https://cardinalapps.io/cardinal-music) web app                     |
+-| `/apps`      | `photos-web`   | `3092`          | [Cardinal Photos](https://cardinalapps.io/cardinal-photos) web app                   |
+-| `/config`    | `eslint`       | -               | ESLint configurations                                                                |
+-| `/conifg`    | `typescript`   | -               | TypeScript configurations                                                            |
+-| `/libraries` | `app-settings` | -               | App settings and utils                                                               |
+-| `/libraries` | `ui`           | `3099`          | React UI & component library with Storybook                                          |
+-| `/servers`   | `media`        | `3080`, `24800` | Monolithic [Media Server](https://cardinalapps.io/cardinal-media-server)             |
++| Package        | Directory    | Dev Port        | Description                                                                          |
++|----------------|--------------|-----------------|--------------------------------------------------------------------------------------|
++| `cinema-web`   | `/apps`      | `3096`          | [Cardinal Cinema](https://cardinalapps.io/cardinal-cinema) web app                   |
++| `help-web`     | `/apps`      | `3074`          | [Cardinal Help app](https://help.cardinalapps.io) web app                            |
++| `admin-web`    | `/apps`      | `3090`          | [Cardinal Media Server Admin](https://cardinalapps.io/cardinal-media-server) web app |
++| `music-web`    | `/apps`      | `3094`          | [Cardinal Music](https://cardinalapps.io/cardinal-music) web app                     |
++| `photos-web`   | `/apps`      | `3092`          | [Cardinal Photos](https://cardinalapps.io/cardinal-photos) web app                   |
++| `eslint`       | `/config`    | -               | ESLint configurations                                                                |
++| `typescript`   | `/conifg`    | -               | TypeScript configurations                                                            |
++| `app-settings` | `/libraries` | -               | App settings and utils                                                               |
++| `ui`           | `/libraries` | `3099`          | React UI & component library with Storybook                                          |
++| `media`        | `/servers`   | `3080`, `24800` | Monolithic [Media Server](https://cardinalapps.io/cardinal-media-server)             |
+ 
+ These top level directories are not part of the workspace:
  
