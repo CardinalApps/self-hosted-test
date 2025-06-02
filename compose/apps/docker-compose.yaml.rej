@@ -1,19 +1,22 @@
 diff a/compose/apps/docker-compose.yaml b/compose/apps/docker-compose.yaml	(rejected hunks)
-@@ -15,10 +15,10 @@ services:
-   #   restart: always
-   #   network_mode: host
+@@ -7,13 +7,13 @@ services:
+     restart: always
+     network_mode: host
  
--  # cms:
--  #   container_name: cardinal-cms
--  #   image: cardinalapps/cms:latest
--  #   restart: unless-stopped
+-  # status:
+-  #   container_name: cardinal-status
 -  #   env_file:
--  #     - ../../packages/app-web-cms/.env
+-  #     - ../../packages/app-web-status/.env
+-  #   image: cardinalapps/status:latest
+-  #   restart: always
 -  #   network_mode: host
-+  cms:
-+    container_name: cardinal-cms
-+    image: cardinalapps/cms:latest
-+    restart: unless-stopped
++  status:
++    container_name: cardinal-status
 +    env_file:
-+      - ../../servers/cms/.env
++      - ../../apps/status-web/.env
++    image: cardinalapps/status:latest
++    restart: always
 +    network_mode: host
+ 
+   cms:
+     container_name: cardinal-cms
