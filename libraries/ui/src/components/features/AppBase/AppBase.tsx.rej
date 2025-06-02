@@ -1,0 +1,20 @@
+diff a/libraries/ui/src/components/features/AppBase/AppBase.tsx b/libraries/ui/src/components/features/AppBase/AppBase.tsx	(rejected hunks)
+@@ -47,7 +47,7 @@ import useHowler from '../../../hooks/useHowler'
+ import { useAppDispatch } from '../../../hooks/useAppDispatch'
+ 
+ import { getJWT, JWT_TYPE } from '../../../lib/auth/jwt'
+-import { AppBasePaths, CardinalApp } from '../../../lib/env/cardinal'
++import { CardinalApp } from '../../../lib/env/cardinal'
+ 
+ import { routes } from './routes'
+ 
+@@ -96,7 +96,8 @@ function AppBase({
+   kioskMode = false,
+   basePath = '',
+   topLevelContextMenuItems,
+-  onHomeServerRequiresFirstTimeSetup = () => window.location.href = window.location.origin + AppBasePaths[CardinalApp.ADMIN],
++  onHomeServerRequiresFirstTimeSetup = () => console.log('a'),
++  //onHomeServerRequiresFirstTimeSetup = () => window.location.href = window.location.origin + AppBasePaths[CardinalApp.ADMIN],
+   header,
+   sidebarOptions,
+   enableGlobalAudioPlayer,

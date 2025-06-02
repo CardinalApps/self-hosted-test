@@ -1,0 +1,59 @@
+diff a/apps/admin-web/src/components/AppRoot/AppRoot.tsx b/apps/admin-web/src/components/AppRoot/AppRoot.tsx	(rejected hunks)
+@@ -1,4 +1,4 @@
+-import { Route } from 'react-router-dom'
++import { Route, useNavigate } from 'react-router-dom'
+ 
+ import AppBase from '@cardinalapps/ui/src/components/features/AppBase'
+ 
+@@ -9,6 +9,7 @@ import Overview from '../../pages/Overview'
+ import Indexing from '../../pages/Indexing'
+ import Jobs from '../../pages/Jobs'
+ import Libraries from '../../pages/Libraries'
++import FirstTimeSetup from '../../pages/FirstTimeSetup'
+ 
+ import * as routes from '../../routes'
+ 
+@@ -25,6 +26,8 @@ import '../../styles/app.css'
+  * up the AppBase.
+  */
+ function AppRoot() {
++  const navigate = useNavigate()
++
+   return (
+     <AppBase
+       app={CardinalApp.ADMIN}
+@@ -32,6 +35,9 @@ function AppRoot() {
+       basePath="/admin"
+       cardinalAppId={CARDINAL_PUBLIC_APP_ID}
+       cardinalAppPermissions={CARDINAL_PUBLIC_APP_PERMISSIONS}
++      onHomeServerRequiresFirstTimeSetup={() => {
++        navigate(routes.FIRST_TIME_SETUP)
++      }}
+       topLevelContextMenuItems={[
+         {
+           groupName: i18n['app.context-menu-group-name']['en'],
+@@ -49,8 +55,22 @@ function AppRoot() {
+       }}
+       enableGlobalAudioPlayer={true}
+       settingsPanel={<SettingsPanel />}
+-      publicRoutes={<></>}
+-      privateRoutes={<></>}
++      publicRoutes={
++        <>
++          <Route
++            path={routes.FIRST_TIME_SETUP}
++            element={<FirstTimeSetup />}
++          />
++        </>
++      }
++      privateRoutes={
++        <>
++          <Route
++            path={routes.FIRST_TIME_SETUP}
++            element={<FirstTimeSetup />}
++          />
++        </>
++      }
+       privateScaffoldRoutes={
+         <>
+           <Route

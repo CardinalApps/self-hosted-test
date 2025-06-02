@@ -1,0 +1,9 @@
+diff a/apps/music-web/src/components/AppRoot/AppRoot.tsx b/apps/music-web/src/components/AppRoot/AppRoot.tsx	(rejected hunks)
+@@ -34,6 +34,7 @@ function AppRoot() {
+       basePath="/music"
+       cardinalAppId={CARDINAL_PUBLIC_APP_ID}
+       cardinalAppPermissions={CARDINAL_PUBLIC_APP_PERMISSIONS}
++      onHomeServerRequiresFirstTimeSetup={() => window.location.href = window.location.origin + '/admin'}
+       topLevelContextMenuItems={[
+         {
+           groupName: i18n['app.context-menu-group-name']['en'],
