@@ -1,0 +1,43 @@
+diff a/libraries/ui/src/components/features/LoginScreen/LoginScreen.tsx b/libraries/ui/src/components/features/LoginScreen/LoginScreen.tsx	(rejected hunks)
+@@ -19,6 +19,8 @@ import { homeServerUserSelectors } from '../../../store/slices/homeServerUser'
+ import { settingsSelectors } from '../../../store/slices/settings'
+ //import set from '../../../store/slices/settings/thunks/set'
+ 
++import { AppBasePaths } from '../../../lib/env/cardinal'
++
+ import i18n from './i18n'
+ 
+ import './LoginScreen.css'
+@@ -44,6 +46,7 @@ const LoginScreen = ({
+ }: PropsWithChildren<LoginScreenProps>) => {
+   //const dispatch = useDispatch()
+   const app = useSelector(appSelectors.app)
++  const kioskMode = useSelector(appSelectors.kioskMode)
+   //const cloudUserLoggedIn = useSelector(cloudUserSelectors.loggedIn)
+   const homeServerUserLoggedIn = useSelector(homeServerUserSelectors.loggedIn)
+   const currentCloudUser = useSelector(cloudUserSelectors.current)
+@@ -52,16 +55,20 @@ const LoginScreen = ({
+   const [showCurrentUser, setShowCurrentUser] = useState(false)
+ 
+   const getBg = () => {
++    const base = kioskMode
++      ? ''
++      : AppBasePaths[app]
++
+     switch (app) {
+       case 'music':
+-        return `/music/images/turntable.jpg`
++        return `${base}/images/turntable.jpg`
+       case 'photos':
+-        return `/photos/images/lens.jpg`
++        return `${base}/images/lens.jpg`
+       case 'cinema':
+-        return `/cinema/images/popcorn.jpg`
++        return `${base}/images/popcorn.jpg`
+       case 'admin':
+       default:
+-        return `/admin/images/sky.jpg`
++        return `${base}/images/sky.jpg`
+     }
+   }
+ 

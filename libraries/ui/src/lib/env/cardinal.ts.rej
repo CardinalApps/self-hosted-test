@@ -1,0 +1,23 @@
+diff a/libraries/ui/src/lib/env/cardinal.ts b/libraries/ui/src/lib/env/cardinal.ts	(rejected hunks)
+@@ -18,3 +18,21 @@ export enum CardinalEnv {
+   HOME_SERVER = 'home_server', // When self-hosted by the user
+   VANILLA = 'vanilla', // When started by create-react-app
+ }
++
++/**
++ * Gets the app base path from the URL (see AppBasePaths). This can return
++ * undefined in some cases, like the sandbox app in storybook or in kiosk mode.
++ */
++export const getAppBasePathFromUrl = (): string | undefined => {
++  let found = undefined
++
++  if (typeof window !== 'undefined') {
++    for (const [app, basePath] of Object.entries(AppBasePaths)) {
++      if (window.location.pathname.startsWith(basePath)) {
++        found = app
++      }
++    }
++  }
++
++  return found
++}

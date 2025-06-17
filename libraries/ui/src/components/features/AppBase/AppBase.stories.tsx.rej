@@ -1,0 +1,9 @@
+diff a/libraries/ui/src/components/features/AppBase/AppBase.stories.tsx b/libraries/ui/src/components/features/AppBase/AppBase.stories.tsx	(rejected hunks)
+@@ -59,6 +59,7 @@ const DemoApp = () => {
+         id="demo-home-server"
+         name="Sandbox App"
+         version="0.1.2"
++        kioskMode={true}
+         cardinalAppId="59068b7c-2c67-4d98-aef7-44d37914b86f"
+         cardinalAppPermissions="*"
+         enableGlobalAudioPlayer={true}
