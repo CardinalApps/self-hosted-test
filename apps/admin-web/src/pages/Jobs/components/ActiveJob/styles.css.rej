@@ -1,0 +1,20 @@
+diff a/apps/admin-web/src/pages/Jobs/components/ActiveJob/styles.css b/apps/admin-web/src/pages/Jobs/components/ActiveJob/styles.css	(rejected hunks)
+@@ -53,12 +53,18 @@
+   display: flex;
+   justify-content: space-between;
+ 
++  .controls {
++    width: auto;
++    padding-top: 0;
++  }
++
+   @media (max-width: 768px) {
+     flex-direction: column;
+   }
+ }
+ 
+ .progressBar {
++  width: 100%;
+   padding: 15px 60px 0 0;
+   flex-grow: 1;
+ 

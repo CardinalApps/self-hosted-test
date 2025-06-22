@@ -1,0 +1,21 @@
+diff a/apps/admin-web/src/pages/Jobs/styles.css b/apps/admin-web/src/pages/Jobs/styles.css	(rejected hunks)
+@@ -91,6 +91,19 @@
+   }
+ }
+ 
++.jobReport {
++
++  .controls {
++    width: auto;
++    padding-top: 0;
++  }
++
++  .title {
++    margin-bottom: 0;
++    width: auto;
++  }
++}
++
+ .jobReports {
+ 
+   @media (max-width: 768px) {
