@@ -134,6 +134,7 @@
   }
 
   .page-title-bar {
+    height: var(--page-title-bar-height);
     padding-top: 23px;
     padding-left: 20px;
   }

@@ -1,0 +1,7 @@
+diff a/libraries/ui/src/components/interaction/MusicTrack/MusicTrack.css b/libraries/ui/src/components/interaction/MusicTrack/MusicTrack.css	(rejected hunks)
+@@ -1,4 +1,5 @@
+ .music-track {
++  width: 100%;
+   margin-bottom: 6px;
+   padding: 0 10px;
+   display: flex;

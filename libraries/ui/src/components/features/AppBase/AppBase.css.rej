@@ -1,0 +1,30 @@
+diff a/libraries/ui/src/components/features/AppBase/AppBase.css b/libraries/ui/src/components/features/AppBase/AppBase.css	(rejected hunks)
+@@ -75,6 +75,9 @@
+   overflow: hidden;
+   transition: padding 300ms;
+ 
++  --page-toolbar-height: 78px;
++  --page-title-bar-height: 40px;
++
+   .page-toolbar {
+     height: 48px;
+     padding-left: 20px;
+@@ -171,7 +175,18 @@
+     z-index: 5;
+   }
+ 
++  .virtual-layout {
++    --adjust: 20px;
++
++    height: calc(100% - var(--page-toolbar-height) - var(--page-title-bar-height) - var(--adjust));
++    
++    @media (max-width: 768px) {
++      --adjust: 0px;
++    }
++  }
++
+   .virtual-root {
++    height: 100%;
+     padding: 0 20px;
+   }
+ 

@@ -1,0 +1,38 @@
+diff a/libraries/ui/src/components/features/AppBase/layouts/Virtual.tsx b/libraries/ui/src/components/features/AppBase/layouts/Virtual.tsx	(rejected hunks)
+@@ -40,12 +40,13 @@ function Virtual({
+   const boxRef = useRef(null)
+   const parentRef = useRef(null)
+ 
+-  const titleHeight = 60
++  const titleHeight = 40
+   const headerHeight = 73
+   const toolbarHeight = toolbarName
+     ? window.innerWidth < 768 ? 58 : 78
+     : 0
+ 
++  // todo should be 870
+   const calcVirtualHeight = () => (
+     (windowSize.height || window?.innerHeight)
+     - headerHeight
+@@ -65,6 +66,12 @@ function Virtual({
+   }
+   const calcNumRows = () => Math.ceil(items.length / calcItemsPerRow())
+ 
++  console.log('a', (windowSize.height || window?.innerHeight))
++  console.log('headerHeight', headerHeight)
++  console.log('titleHeight', titleHeight)
++  console.log('toolbarHeight', toolbarHeight)
++  console.log('calcVirtualHeight', calcVirtualHeight())
++
+   const [virtualHeight, setVirtualHeight] = useState(calcVirtualHeight())
+   const scrollPoints = useSelector(layoutSelectors.scrollPoints)
+ 
+@@ -146,7 +153,7 @@ function Virtual({
+         ref={parentRef}
+         className={clsx('virtual-root')}
+         style={{
+-          height: virtualHeight,
++          //height: virtualHeight,
+           width: '100%',
+           overflow: 'auto',
+           position: 'relative',
