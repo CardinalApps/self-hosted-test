@@ -1,0 +1,7 @@
+diff a/libraries/app-settings/babel.config.cjs b/libraries/app-settings/babel.config.cjs	(rejected hunks)
+@@ -3,4 +3,4 @@ module.exports = {
+     ['@babel/preset-env', { targets: { node: 'current' } }],
+     '@babel/preset-typescript',
+   ],
+-};
++}
