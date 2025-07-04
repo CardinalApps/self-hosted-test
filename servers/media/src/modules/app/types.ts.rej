@@ -1,0 +1,10 @@
+diff a/servers/media/src/modules/app/types.ts b/servers/media/src/modules/app/types.ts	(rejected hunks)
+@@ -68,7 +68,7 @@ export type Versions = {
+   database?: string,
+   release_channel?: string,
+   cardinal_home_server?: string,
+-  cardinal_home_server_web_app?: string,
++  cardinal_admin_web_app?: string,
+   cardinal_music_web_app?: string,
+   cardinal_photos_web_app?: string,
+   cardinal_cinema_web_app?: string,
