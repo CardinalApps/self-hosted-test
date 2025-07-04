@@ -1,41 +1,9 @@
 diff a/apps/admin-web/src/components/SettingsPanel/styles.css b/apps/admin-web/src/components/SettingsPanel/styles.css	(rejected hunks)
-@@ -27,6 +27,10 @@
-   }
- }
- 
-+.releaseChannel {
-+  margin-bottom: 20px;
-+}
-+
- .icon {
-   display: flex;
- 
-@@ -40,12 +44,14 @@
-   font-size: 17px;
-   font-weight: 800;
-   color: var(--text-color);
-+  line-height: 1em;
- }
- 
- .semver {
-   font-size: 14px;
-   font-weight: 500;
-   color: var(--text-color);
-+  line-height: 1.3em;
- }
- 
- .webLink {
-@@ -80,3 +86,13 @@
-     }
+@@ -96,3 +96,7 @@
+     padding-top: 10px;
    }
  }
 +
-+.manuallyCheckForUpdates {
-+  padding-top: 15px;
-+  display: flex;
-+  gap: 20px;
-+
-+  .results {
-+    padding-top: 10px;
-+  }
++.advancedOption {
++  width: 100%;
 +}

@@ -1,0 +1,9 @@
+diff a/apps/admin-web/src/components/SettingsPanel/custom-pages/Advanced.jsx b/apps/admin-web/src/components/SettingsPanel/custom-pages/Advanced.jsx	(rejected hunks)
+@@ -74,6 +74,7 @@ function Advanced() {
+       className={'advancedCols'}
+       alignItems="flex-start"
+       flexWrap="medium"
++      gap={20}
+     >
+       <Column
+         cols={6}
