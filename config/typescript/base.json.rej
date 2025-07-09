@@ -1,0 +1,9 @@
+diff a/config/typescript/base.json b/config/typescript/base.json	(rejected hunks)
+@@ -11,6 +11,7 @@
+     "skipLibCheck": true,
+     "resolveJsonModule": true,
+     "noFallthroughCasesInSwitch": true,
++    "experimentalDecorators": true,
+   },
+   "exclude": ["node_modules"]
+ }

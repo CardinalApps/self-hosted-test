@@ -1,0 +1,12 @@
+diff a/apps/music-web/tsconfig.json b/apps/music-web/tsconfig.json	(rejected hunks)
+@@ -1,5 +1,7 @@
+ {
+-  "extends": ["../../config/typescript/react-csr"],
+-  "include": ["src"],
+-  "references": [{ "path": "./tsconfig.node.json" }]
++  "files": [],
++  "references": [
++    { "path": "./tsconfig.app.json" },
++    { "path": "./tsconfig.node.json" }
++  ]
+ }
