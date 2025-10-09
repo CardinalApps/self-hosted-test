@@ -1,27 +1,20 @@
 diff a/apps/admin-web/src/components/AppRoot/AppRoot.tsx b/apps/admin-web/src/components/AppRoot/AppRoot.tsx	(rejected hunks)
-@@ -21,8 +21,6 @@ import i18n from './i18n.json'
- import '@cardinalapps/ui/public/styles/global.css'
- import '../../styles/app.css'
- 
--console.log('ooab14')
--
- /**
-  * The app root component is the very top of this Cardinal app. It handles setting
-  * up the AppBase.
-@@ -32,8 +30,6 @@ function AppRoot() {
-   const location = useLocation()
- 
-   return (
--    <>
--    llllllllllllllllllllllasssssssssss
-     <AppBase
+@@ -34,13 +34,17 @@ function AppRoot() {
        app={CardinalApp.ADMIN}
        id="cardinal-admin"
-@@ -105,7 +101,6 @@ function AppRoot() {
-           </>
-         }
-       />
--    </>
-   )
- }
- 
+       basePath="/admin"
++      // @ts-expect-error
+       Router={Router}
++      // @ts-expect-error
+       Routes={Routes}
++      // @ts-expect-error
+       Navigate={Navigate}
++      // @ts-expect-error
+       Route={Route}
++      // @ts-expect-error
+       Link={Link}
+       navigate={navigate}
+-      // @ts-expect-error
+       location={location}
+       cardinalAppId={CARDINAL_PUBLIC_APP_ID}
+       cardinalAppPermissions={CARDINAL_PUBLIC_APP_PERMISSIONS}

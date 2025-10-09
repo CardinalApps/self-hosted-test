@@ -1,0 +1,35 @@
+diff a/libraries/ui/src/context/router.tsx b/libraries/ui/src/context/router.tsx	(rejected hunks)
+@@ -1,18 +1,24 @@
+ import { createContext } from 'react'
++import { type JSX } from 'react/jsx-runtime'
++
++export type RouterContextRouter = JSX.Element
++export type RouterContextRoutes = JSX.Element
++export type RouterContextRoute = JSX.Element
++export type RouterContextNavigate = JSX.Element
++export type RouterContextLink = JSX.Element
++export type RouterContextNavigateFunction = (path: string) => void
++
++// eslint-disable-next-line @typescript-eslint/no-explicit-any
++export type RouterContextLocation = any // react-router-dom actually has this typed as `any`
+ 
+ export type RouterContextType = {
+-  // @ts-expect-error
+   Router: JSX.Element,
+-  // @ts-expect-error
+   Routes: JSX.Element,
+-  // @ts-expect-error
+   Route: JSX.Element,
+-  // @ts-expect-error
+-  Navigate: JSX.Element,
+-  // @ts-expect-error
+-  Link: JSX.Element,
+-  navigate: (path: string) => void,
+-  location: Record<string, string>,
++  Navigate: RouterContextNavigate,
++  Link: RouterContextNavigate,
++  navigate: RouterContextNavigateFunction,
++  location: RouterContextLocation,
+ }
+ 
+ const defaultContext: RouterContextType = {

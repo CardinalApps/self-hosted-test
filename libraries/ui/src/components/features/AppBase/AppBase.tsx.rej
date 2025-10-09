@@ -1,134 +1,40 @@
 diff a/libraries/ui/src/components/features/AppBase/AppBase.tsx b/libraries/ui/src/components/features/AppBase/AppBase.tsx	(rejected hunks)
-@@ -1,7 +1,7 @@
+@@ -1,7 +1,16 @@
  import { useEffect, useRef } from 'react'
  import type { ReactNode } from 'react'
  import { useSelector } from 'react-redux'
--import { useNavigate, useLocation } from 'react-router-dom'
-+import { RouterContext } from '../../../context/router'
+-import { RouterContext } from '../../../context/router'
++import {
++  RouterContext,
++  RouterContextNavigateFunction,
++  RouterContextLocation,
++  RouterContextLink,
++  RouterContextNavigate,
++  RouterContextRoute,
++  RouterContextRoutes,
++  RouterContextRouter,
++} from '../../../context/router'
  import clsx from 'clsx'
  
  import {
-@@ -60,6 +60,13 @@ type AppBaseProps = {
+@@ -60,13 +69,13 @@ type AppBaseProps = {
    id?: string,
    name?: string,
    version?: string,
-+  Router: unknown,
-+  Routes: unknown,
-+  Route: unknown,
-+  Navigate: unknown,
-+  Link: unknown,
-+  navigate: (path: string) => void,
-+  location: Record<string, string>,
+-  Router: unknown,
+-  Routes: unknown,
+-  Route: unknown,
+-  Navigate: unknown,
+-  Link: unknown,
+-  navigate: (path: string) => void,
+-  location: Record<string, string>,
++  Router: RouterContextRouter,
++  Routes: RouterContextRoutes,
++  Route: RouterContextRoute,
++  Navigate: RouterContextNavigate,
++  Link: RouterContextLink,
++  navigate: RouterContextNavigateFunction,
++  location: RouterContextLocation,
    cardinalAppId?: string,
    cardinalAppPermissions?: string,
    authStorage?: 'localStorage' | 'sessionStorage',
-@@ -88,6 +95,13 @@ function AppBase({
-   id,
-   name,
-   version,
-+  Router,
-+  Routes,
-+  Route,
-+  Navigate,
-+  Link,
-+  navigate,
-+  location,
-   cardinalAppId,
-   cardinalAppPermissions,
-   //authStorage = 'localStorage',
-@@ -108,8 +122,6 @@ function AppBase({
- }: AppBaseProps) {
-   useServerSideEvents()
-   useHowler()
--  const navigate = useNavigate()
--  const location = useLocation()
-   const dispatch = useAppDispatch()
-   const appRef = useRef(null)
-   const sidebarMode = useSelector(layoutSelectors.sidebarMode)
-@@ -260,45 +272,47 @@ function AppBase({
-   }, [version])
- 
-   return (
--    <div
--      ref={appRef}
--      id={id}
--      className={clsx('app-base')}
--      data-theme={theme}
--      data-path={location.pathname}
--      data-sidebar-mode={sidebarMode}
--      data-mobile-nav-open={mobileNavIsOpen}
--    >
--      <ContextMenuRightClickSurface disabled={!enable_custom_context_menu}>
--        <ContextMenuDOMLayer className="base-context-menu-layer" items={topLevelContextMenuItems}>
--          <>
--            <Toaster className="toaster" />
--            <ModalLayer />
--            <PhotoViewerLayer />
--            <DrawerLayer />
--            {!!developer_mode && <DevTools />}
--            {health
--              ? homeServerUserLoggedIn
--                ? <AppPrivate
--                    header={header || defaultHeader}
--                    sidebarOptions={sidebarOptions}
--                    settingsPanel={settingsPanel}
--                    privateRoutes={privateRoutes}
--                    publicRoutes={publicRoutes}
--                    privateScaffoldRoutes={privateScaffoldRoutes}
--                    loginWithCardinalButton={ssoButton}
--                    enableGlobalAudioPlayer={enableGlobalAudioPlayer}
--                  />
--                : <AppPublic
--                    publicRoutes={publicRoutes}
--                    loginWithCardinalButton={ssoButton}
--                  />
--              : <AppLoading />
--            }
--          </>
--        </ContextMenuDOMLayer>
--      </ContextMenuRightClickSurface>
--    </div>
-+    <RouterContext.Provider value={{ Router, Routes, Route, Navigate, Link, navigate, location }}>
-+      <div
-+        ref={appRef}
-+        id={id}
-+        className={clsx('app-base')}
-+        data-theme={theme}
-+        data-path={location.pathname}
-+        data-sidebar-mode={sidebarMode}
-+        data-mobile-nav-open={mobileNavIsOpen}
-+      >
-+        <ContextMenuRightClickSurface disabled={!enable_custom_context_menu}>
-+          <ContextMenuDOMLayer className="base-context-menu-layer" items={topLevelContextMenuItems}>
-+            <>
-+              <Toaster className="toaster" />
-+              <ModalLayer />
-+              <PhotoViewerLayer />
-+              <DrawerLayer />
-+              {!!developer_mode && <DevTools />}
-+              {health
-+                ? homeServerUserLoggedIn
-+                  ? <AppPrivate
-+                      header={header || defaultHeader}
-+                      sidebarOptions={sidebarOptions}
-+                      settingsPanel={settingsPanel}
-+                      privateRoutes={privateRoutes}
-+                      publicRoutes={publicRoutes}
-+                      privateScaffoldRoutes={privateScaffoldRoutes}
-+                      loginWithCardinalButton={ssoButton}
-+                      enableGlobalAudioPlayer={enableGlobalAudioPlayer}
-+                    />
-+                  : <AppPublic
-+                      publicRoutes={publicRoutes}
-+                      loginWithCardinalButton={ssoButton}
-+                    />
-+                : <AppLoading />
-+              }
-+            </>
-+          </ContextMenuDOMLayer>
-+        </ContextMenuRightClickSurface>
-+      </div>
-+    </RouterContext.Provider>
-   )
- }
- 
