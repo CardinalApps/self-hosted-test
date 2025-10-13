@@ -1,40 +1,10 @@
 diff a/libraries/ui/src/components/features/AppBase/AppBase.tsx b/libraries/ui/src/components/features/AppBase/AppBase.tsx	(rejected hunks)
-@@ -1,7 +1,16 @@
- import { useEffect, useRef } from 'react'
- import type { ReactNode } from 'react'
- import { useSelector } from 'react-redux'
--import { RouterContext } from '../../../context/router'
-+import {
-+  RouterContext,
-+  RouterContextNavigateFunction,
-+  RouterContextLocation,
-+  RouterContextLink,
-+  RouterContextNavigate,
-+  RouterContextRoute,
-+  RouterContextRoutes,
-+  RouterContextRouter,
-+} from '../../../context/router'
- import clsx from 'clsx'
+@@ -148,6 +148,8 @@ function AppBase({
+     developer_mode = initialDeveloperMode,
+   } = useSelector(settingsSelectors.current)
  
- import {
-@@ -60,13 +69,13 @@ type AppBaseProps = {
-   id?: string,
-   name?: string,
-   version?: string,
--  Router: unknown,
--  Routes: unknown,
--  Route: unknown,
--  Navigate: unknown,
--  Link: unknown,
--  navigate: (path: string) => void,
--  location: Record<string, string>,
-+  Router: RouterContextRouter,
-+  Routes: RouterContextRoutes,
-+  Route: RouterContextRoute,
-+  Navigate: RouterContextNavigate,
-+  Link: RouterContextLink,
-+  navigate: RouterContextNavigateFunction,
-+  location: RouterContextLocation,
-   cardinalAppId?: string,
-   cardinalAppPermissions?: string,
-   authStorage?: 'localStorage' | 'sessionStorage',
++  console.log(location)
++
+   const ssoButton = (
+     <SSOLogin
+       appId={cardinalAppId}

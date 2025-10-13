@@ -1,21 +1,10 @@
 diff a/libraries/ui/src/components/features/AppBase/AppBase.stories.tsx b/libraries/ui/src/components/features/AppBase/AppBase.stories.tsx	(rejected hunks)
-@@ -1,5 +1,5 @@
- import type { Meta } from '@storybook/react'
--import { Route, MemoryRouter, useLocation, Link, useNavigate } from 'react-router-dom'
-+import { Route, Routes, Navigate, Router, MemoryRouter, useLocation, Link, useNavigate } from 'react-router-dom'
- 
- import AppBase from './AppBase'
- import AppPage from './AppPage'
-@@ -57,6 +57,12 @@ const DemoApp = () => {
-         app={CardinalApp.MUSIC}
-         id="demo-home-server"
-         name="Sandbox App"
-+        Router={Router}
-+        Routes={Routes}
-+        Navigate={Navigate}
-+        Route={Route}
-+        // @ts-expect-error
-+        Link={Link}
+@@ -61,6 +61,8 @@ const DemoApp = () => {
+         Routes={Routes}
+         Navigate={Navigate}
+         Route={Route}
++        location={location}
++        navigate={navigate}
+         // @ts-expect-error
+         Link={Link}
          version="0.1.2"
-         kioskMode={true}
-         cardinalAppId="59068b7c-2c67-4d98-aef7-44d37914b86f"
