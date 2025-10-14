@@ -1,10 +1,27 @@
 diff a/servers/media/src/modules/app/app.controller.ts b/servers/media/src/modules/app/app.controller.ts	(rejected hunks)
-@@ -254,7 +254,7 @@ export class AppController {
-       openssl: process.versions.openssl,
-       database: await this.databaseService.getVersion() as string || '0.0.0',
-       cardinal_home_server: this.appService.getHomeServerVersion(),
--      cardinal_home_server_web_app: this.appService.getWebAppVersion(CardinalApp.ADMIN),
-+      cardinal_admin_web_app: this.appService.getWebAppVersion(CardinalApp.ADMIN),
+@@ -226,7 +226,8 @@ export class AppController {
+   }
+ 
+   /**
+-   * Get a list of versions of things in the Media Server.
++   * Get a list of versions of things in the Media Server. In the `build_tag`,
++   * the timestamp is of the build, not the commit.
+    */
+   @Get('/versions')
+   @ApiTags('General')
+@@ -243,6 +244,7 @@ export class AppController {
+         cardinal_music_web_app: '0.0.0',
+         cardinal_photos_web_app: '0.0.0',
+         cardinal_cinema_web_app: '0.0.0',
++        build_tag: '<release_channel>-<commit>-<YYMMDDTHHMMSS>',
+       } as Versions,
+     },
+   })
+@@ -258,6 +260,7 @@ export class AppController {
        cardinal_music_web_app: this.appService.getWebAppVersion(CardinalApp.MUSIC),
        cardinal_photos_web_app: this.appService.getWebAppVersion(CardinalApp.PHOTOS),
        cardinal_cinema_web_app: this.appService.getWebAppVersion(CardinalApp.CINEMA),
++      build_tag: envVar('BUILD_TAG', null) as string,
+     }
+   }
+ 
