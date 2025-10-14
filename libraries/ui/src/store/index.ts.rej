@@ -1,17 +1,25 @@
 diff a/libraries/ui/src/store/index.ts b/libraries/ui/src/store/index.ts	(rejected hunks)
-@@ -52,6 +52,7 @@ import createDefaultStore from './utils/createDefaultStore'
- import deletePendingRTKCache from './utils/deletePendingRTKCache'
- import triggerLifecycle from './utils/triggerLifecycle'
- import { getStorageKey } from './utils/getStorageKey'
-+import deleteInfiniteQueryCache from './utils/deleteInfiniteQueryCache'
+@@ -31,6 +31,7 @@ import { musicTracksApi } from './apis/musicTracks'
+ import { musicReleasesApi } from './apis/musicReleases'
+ import { musicArtistsApi } from './apis/musicArtists'
+ import { runsApi } from './apis/runs'
++import { versionsApi } from './apis/versions'
  
  /**
-  * All apps use a store of this shape.
-@@ -93,6 +94,7 @@ const createStore = () => {
+  * Middleware
+@@ -79,6 +80,7 @@ const slices = {
+   [musicTracksApi.reducerPath]: musicTracksApi,
+   [musicReleasesApi.reducerPath]: musicReleasesApi,
+   [musicArtistsApi.reducerPath]: musicArtistsApi,
++  [versionsApi.reducerPath]: versionsApi,
+ }
  
-   merge(preloadedState, cachedStore)
-   deletePendingRTKCache(preloadedState)
-+  deleteInfiniteQueryCache(preloadedState)
- 
-   // Before store init lifecycle
-   triggerLifecycle(preloadedState, [
+ const rootReducer = combineSlices(...Object.values(slices))
+@@ -114,6 +116,7 @@ const createStore = () => {
+         musicTracksApi.middleware,
+         musicReleasesApi.middleware,
+         musicArtistsApi.middleware,
++        versionsApi.middleware,
+         resetMiddleware.middleware,
+         sseFactoryResetMiddleware.middleware,
+         sseLatestEventMiddleware.middleware,

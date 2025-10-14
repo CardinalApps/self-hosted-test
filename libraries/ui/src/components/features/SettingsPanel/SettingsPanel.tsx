@@ -46,6 +46,7 @@ const SettingsPanel = ({
   const syncError = useSelector(settingsSelectors.syncError)
   const currentUser = useSelector(homeServerUserSelectors.current)
   const modalIsOpen = useSelector(modalSelectors.isOpen)
+  const versionsQuery = useGetVersionsQuery({})
   const [tabs] = useState(getFields(app, settings?.lang))
   const [activeTabIndex, setActiveTabIndex] = useState(0)
 
@@ -121,6 +122,12 @@ const SettingsPanel = ({
               )
             })}
           </SidebarNav>
+          {versionsQuery.isSuccess &&
+            <div className="build-tag">
+              <p><strong>{i18n['settings.build-tag.label']['en']}</strong></p>
+              <p>{versionsQuery.currentData?.build_tag || i18n['settings.build-tag.fallback']['en']}</p>
+            </div>
+          }
         </aside>
         <div className="panel-content">
           <H2 className="panel-title">
