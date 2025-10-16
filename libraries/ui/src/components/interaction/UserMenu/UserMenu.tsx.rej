@@ -1,10 +1,16 @@
 diff a/libraries/ui/src/components/interaction/UserMenu/UserMenu.tsx b/libraries/ui/src/components/interaction/UserMenu/UserMenu.tsx	(rejected hunks)
-@@ -198,7 +198,7 @@ const UserMenu = ({
-                     </nav>
-                   </motion.div>
-                 </>
--              : undefined
-+              : null
-             }
-           </AnimatePresence>
-         </div>
+@@ -166,12 +166,12 @@ const UserMenu = ({
+                               </li>
+                             </ul>
+                             <div className="links">
+-                              <span>
++                              {/* <span>
+                                 <i className="fas fa-comments" />
+                                 <a href="https://forums.cardinalapps.io" target="_blank">
+                                   {i18n['user-menu.forums']['en']}
+                                 </a>
+-                              </span>
++                              </span> */}
+                               <span>
+                                 <a href="https://cardinalapps.io" target="_blank">
+                                   {i18n['user-menu.website']['en']}
