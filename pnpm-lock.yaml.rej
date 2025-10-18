@@ -1,11 +1,21 @@
 diff a/pnpm-lock.yaml b/pnpm-lock.yaml	(rejected hunks)
-@@ -1129,6 +1129,9 @@ importers:
-       '@cardinalapps/app-settings':
-         specifier: workspace:*
-         version: link:../../libraries/app-settings
-+      '@cardinalapps/dtos':
-+        specifier: workspace:*
-+        version: link:../../libraries/dtos
-       '@eslint/js':
-         specifier: ^9.21.0
-         version: 9.27.0
+@@ -13618,6 +13621,10 @@ packages:
+   slate@0.94.1:
+     resolution: {integrity: sha512-GH/yizXr1ceBoZ9P9uebIaHe3dC/g6Plpf9nlUwnvoyf6V1UOYrRwkabtOCd3ZfIGxomY4P7lfgLr7FPH8/BKA==}
+ 
++  slugify@1.6.6:
++    resolution: {integrity: sha512-h+z7HKHYXj6wJU+AnS/+IH8Uh9fdcX1Lrhg1/VMdf9PwoBQXFcXiAdsy2tSK0P6gKwJLXp02r90ahUCqHk9rrw==}
++    engines: {node: '>=8.0.0'}
++
+   smart-buffer@4.2.0:
+     resolution: {integrity: sha512-94hK0Hh8rPqQl2xXc3HsaBoOXKV20MToPkcXvwbISWLEs+64sBq5kFgn2kJDHb1Pry9yrP0dxrCI9RRci7RXKg==}
+     engines: {node: '>= 6.0.0', npm: '>= 3.0.0'}
+@@ -32077,6 +32084,8 @@ snapshots:
+       is-plain-object: 5.0.0
+       tiny-warning: 1.0.3
+ 
++  slugify@1.6.6: {}
++
+   smart-buffer@4.2.0: {}
+ 
+   snake-case@2.1.0:

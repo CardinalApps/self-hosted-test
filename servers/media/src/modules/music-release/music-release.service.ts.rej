@@ -1,9 +1,18 @@
 diff a/servers/media/src/modules/music-release/music-release.service.ts b/servers/media/src/modules/music-release/music-release.service.ts	(rejected hunks)
-@@ -121,6 +121,7 @@ export class MusicReleaseService {
+@@ -116,7 +116,7 @@ export class MusicReleaseService {
+    * Returns all releases according to the query.
+    */
+   async query(getMusicReleasesDto: GetMusicReleasesDto): Promise<[MusicRelease[], number]> {
+-    const { take, skip, order, orderBy, artists, genres, tracks, thumbnails } = getMusicReleasesDto
++    const { take, skip, order, orderBy, artists, genres, tracks, thumbnails, metadata } = getMusicReleasesDto
+     return await this.musicReleaseRepository.findAndCount({
        take,
        skip,
-       relations: {
-+        artist: true,
-         artists: artists,
+@@ -126,6 +126,7 @@ export class MusicReleaseService {
          genres: genres,
          tracks: tracks,
+         thumbnails: thumbnails,
++        metadata: metadata,
+       },
+       order: {
+         [orderBy]: order,

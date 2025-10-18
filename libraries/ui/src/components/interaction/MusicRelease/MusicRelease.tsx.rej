@@ -1,27 +1,22 @@
 diff a/libraries/ui/src/components/interaction/MusicRelease/MusicRelease.tsx b/libraries/ui/src/components/interaction/MusicRelease/MusicRelease.tsx	(rejected hunks)
-@@ -13,7 +13,6 @@ import './MusicRelease.css'
- type MusicReleaseProps = {
-   artwork: string,
-   tracks?: { id: number }[],
--  musicTrackToPlayId?: number,
-   releaseTitle?: string,
-   releaseYear?: string,
-   releaseLink?: string,
-@@ -60,7 +59,7 @@ const MusicRelease = ({
-         <div className="row">
-           {!!releaseTitle && (
-             <p className="release-name">
--              {releaseLink
-+              {releaseLink && releaseTitle && Link
-                 ? <Link to={releaseLink}>{releaseTitle}</Link>
-                 : releaseTitle
-               }
-@@ -70,7 +69,7 @@ const MusicRelease = ({
-         <div className="row">
-           {!!artistName && (
-             <p className="artist-name">
--              {artistLink
-+              {artistLink && artistName && Link
-                 ? <Link to={artistLink}>{artistName}</Link>
-                 : artistName
-               }
+@@ -2,7 +2,7 @@ import { useContext, useState } from 'react'
+ import type { PropsWithChildren } from 'react'
+ import clsx from 'clsx'
+ 
+-import Icon from '../../typography/Icon'
++//import Icon from '../../typography/Icon'
+ import MusicPlaybackButton from '../MusicPlaybackButton'
+ import { RouterContext } from '../../../context/router'
+ 
+@@ -50,9 +50,9 @@ const MusicRelease = ({
+           <div className="col music-track-play-pause">
+             <MusicPlaybackButton musicTrackIds={trackIdsInRelease} musicTrackIdToPlay={trackIdsInRelease?.[0]} />
+           </div>
+-          <div className="col music-track-favorite">
++          {/* <div className="col music-track-favorite">
+             <Icon fa="fas fa-star" hoverType="icon" onClick={() => console.log('fav')} />
+-          </div>
++          </div> */}
+         </div>
+       </div>
+       <div className="meta">

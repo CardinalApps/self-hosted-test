@@ -1,0 +1,10 @@
+diff a/libraries/ui/src/components/interaction/MusicRelease/MusicRelease.css b/libraries/ui/src/components/interaction/MusicRelease/MusicRelease.css	(rejected hunks)
+@@ -38,7 +38,7 @@
+     border-radius: var(--border-radius);
+     box-shadow: var(--box-shadow-1);
+     position: relative;
+-    background-size: contain;
++    background-size: cover;
+     background-position: center center;
+     background-repeat: no-repeat;
+ 

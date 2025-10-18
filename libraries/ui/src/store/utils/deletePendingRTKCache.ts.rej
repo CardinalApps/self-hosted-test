@@ -1,0 +1,10 @@
+diff a/libraries/ui/src/store/utils/deletePendingRTKCache.ts b/libraries/ui/src/store/utils/deletePendingRTKCache.ts	(rejected hunks)
+@@ -25,7 +25,7 @@ export default function deletePendingRTKQueryCache(
+   }
+ 
+   for (const [key] of Object.entries(state)) {
+-    if (key.includes(matcher)) {
++    if (key.includes(matcher) || key === 'api') {
+       const matched = state[key] as StoredApiObject
+       if (Object.keys(matched?.queries).length) {
+         for (const [queryName, queryCache] of Object.entries(matched.queries)) {
