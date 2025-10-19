@@ -3,23 +3,23 @@ diff a/libraries/ui/src/store/index.ts b/libraries/ui/src/store/index.ts	(reject
  import { jobsApi } from './apis/jobs'
  import { jobTasksApi } from './apis/jobTasks'
  import { librariesApi } from './apis/libraries'
--import { musicReleasesApi } from './apis/musicReleases'
- import { musicArtistsApi } from './apis/musicArtists'
+-import { musicArtistsApi } from './apis/musicArtists'
  import { runsApi } from './apis/runs'
  import { versionsApi } from './apis/versions'
-@@ -77,7 +76,6 @@ const slices = {
+ import { baseApi } from './apis/base'
+@@ -76,7 +75,6 @@ const slices = {
    [jobTasksApi.reducerPath]: jobTasksApi,
    [runsApi.reducerPath]: runsApi,
    [librariesApi.reducerPath]: librariesApi,
--  [musicReleasesApi.reducerPath]: musicReleasesApi,
-   [musicArtistsApi.reducerPath]: musicArtistsApi,
+-  [musicArtistsApi.reducerPath]: musicArtistsApi,
    [versionsApi.reducerPath]: versionsApi,
    [baseApi.reducerPath]: baseApi,
-@@ -113,7 +111,6 @@ const createStore = () => {
+ }
+@@ -111,7 +109,6 @@ const createStore = () => {
          jobTasksApi.middleware,
          runsApi.middleware,
          librariesApi.middleware,
--        musicReleasesApi.middleware,
-         musicArtistsApi.middleware,
+-        musicArtistsApi.middleware,
          versionsApi.middleware,
          resetMiddleware.middleware,
+         sseFactoryResetMiddleware.middleware,
