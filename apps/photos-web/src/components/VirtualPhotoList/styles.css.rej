@@ -1,7 +1,19 @@
 diff a/apps/photos-web/src/components/VirtualPhotoList/styles.css b/apps/photos-web/src/components/VirtualPhotoList/styles.css	(rejected hunks)
-@@ -1,4 +1,4 @@
--.list {
-+.virtual-list {
-   margin-left: -10px;
-   padding-left: 30px;
-   position: relative;
+@@ -28,7 +28,7 @@
+ 
+ .rowInner {
+   height: 100%;
+-  padding: 40px 60px 20px 0;
++  padding: 40px 60px 20px 20px;
+   display: flex;
+   gap: 10px;
+ 
+@@ -259,7 +259,7 @@
+   margin-left: 20px;
+   position: absolute;
+   top: 0;
+-  left: 0;
++  left: 20px;
+   right: 0;
+   display: flex;
+   align-items: center;

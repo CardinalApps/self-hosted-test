@@ -3,8 +3,8 @@ diff a/apps/photos-web/src/pages/Archive/Archive.tsx b/apps/photos-web/src/pages
    })
  
    return (
--    <AppPage layout={PAGE_LAYOUT.fixed}>
-+    <AppPage layout={PAGE_LAYOUT.fixed} pageTitle={i18n['title']['en']}>
+-    <AppPage layout={PAGE_LAYOUT.fixed} pageTitle={i18n['title']['en']}>
++    <AppPage className={"photos-archive"} layout={PAGE_LAYOUT.fixed} pageTitle={i18n['title']['en']}>
        <div
          className={clsx(
            'photosArchive',

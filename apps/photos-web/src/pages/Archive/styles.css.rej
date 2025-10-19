@@ -1,0 +1,49 @@
+diff a/apps/photos-web/src/pages/Archive/styles.css b/apps/photos-web/src/pages/Archive/styles.css	(rejected hunks)
+@@ -10,25 +10,29 @@ main {
+ .photosArchive {
+   height: 100%;
+   position: relative;
+-}
+ 
+-.loading {
+-  position: absolute;
+-  top: 50%;
+-  left: 50%;
+-  transform: translate(-50%, -50%);
+-}
++  .page-title-bar {
++    padding-left: 20px;
++  }
+ 
+-.toolbar {
+-  margin-bottom: 40px;
+-  display: flex;
+-  align-items: center;
+-  position: relative;
+-  justify-content: space-between;
+-  z-index: 2;
+-}
++  .loading {
++    position: absolute;
++    top: 50%;
++    left: 50%;
++    transform: translate(-50%, -50%);
++  }
+ 
+-.infinitePhotos {
+-  height: 100%;
+-  position: relative;
++  .toolbar {
++    margin-bottom: 40px;
++    display: flex;
++    align-items: center;
++    position: relative;
++    justify-content: space-between;
++    z-index: 2;
++  }
++
++  .infinitePhotos {
++    height: 100%;
++    position: relative;
++  }
+ }
