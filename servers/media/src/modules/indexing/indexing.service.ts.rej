@@ -1,0 +1,18 @@
+diff a/servers/media/src/modules/indexing/indexing.service.ts b/servers/media/src/modules/indexing/indexing.service.ts	(rejected hunks)
+@@ -743,12 +743,12 @@ export class IndexingService {
+    */
+   async deleteAllIndexedData() {
+     try {
+-      await this.runRepository.delete({})
++      await this.runRepository.clear()
+ 
+       // FIXME not sure why the cascades don't reach these tables
+-      await this.musicArtistRepository.delete({})
+-      await this.musicReleaseRepository.delete({})
+-      await this.musicGenreRepository.delete({})
++      await this.musicArtistRepository.clear()
++      await this.musicReleaseRepository.clear()
++      await this.musicGenreRepository.clear()
+ 
+       Logger.log('Deindexed all files.', 'Indexing')
+       return true
