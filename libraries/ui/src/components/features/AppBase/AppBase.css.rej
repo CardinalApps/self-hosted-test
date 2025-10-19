@@ -1,12 +1,53 @@
 diff a/libraries/ui/src/components/features/AppBase/AppBase.css b/libraries/ui/src/components/features/AppBase/AppBase.css	(rejected hunks)
-@@ -149,6 +149,10 @@
-     height: 100%;
-     padding: 0;
+@@ -207,6 +207,51 @@
+       flex-shrink: 0;
+     }
    }
 +
-+  .sidebar-nav:before {
-+    box-shadow: var(--box-shadow-1);
++  .virtual-loading {
++    position: absolute;
++    top: 50%;
++    left: 50%;
++    transform: translate(-50%, -50%);
++  }
++
++  .virtual-empty {
++    width: 260px;
++    position: absolute;
++    top: 50%;
++    left: 50%;
++    transform: translate(-50%, -50%);
++    z-index: 100;
++
++    i {
++      width: 60px;
++      height: 60px;
++      font-size: 60px;
++      border-radius: 100%;
++      color: var(--accent-color);
++      display: flex;
++      align-items: center;
++      justify-content: center;
++    }
++
++    p {
++      width: 100%;
++      font-size: 15px;
++      font-weight: 500;
++      line-height: 1.4em;
++      color: var(--text-color-2);
++
++      a, a:link, a:visited {
++        color: var(--accent-color);
++      }
++    }
++
++    footer {
++      padding-left: 40px !important;
++      padding-right: 40px !important;
++      justify-content: flex-start !important;
++    }
 +  }
  }
  
- [data-layout="virtual"] {
+ [data-layout="files"] {

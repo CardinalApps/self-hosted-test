@@ -1,150 +1,77 @@
 diff a/libraries/ui/src/components/features/AppBase/layouts/Virtual.tsx b/libraries/ui/src/components/features/AppBase/layouts/Virtual.tsx	(rejected hunks)
-@@ -9,6 +9,7 @@ import {
+@@ -2,15 +2,23 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+ import type { PropsWithChildren, ReactNode } from 'react'
+ import { useVirtualizer } from '@tanstack/react-virtual'
+ import clsx from 'clsx'
++import Loading from '../../../layout/Loading'
+ 
+ import {
+   layoutActions,
+   layoutSelectors,
  } from '../../../../store/slices/layout'
++import { getAppUrl } from '../../../../lib/net/router'
  import { useAppSelector } from '../../../../hooks/useAppSelector'
  import { useAppDispatch } from '../../../../hooks/useAppDispatch'
-+import useElementSize from '../../../../hooks/useElementSize'
+ import useElementSize from '../../../../hooks/useElementSize'
  import { PaginationParams, RTKPage } from '../../../../store/types/api'
++import Card from '../../../layout/Card'
++import Icon from '../../../typography/Icon'
++import Button from '../../../interaction/Button'
++
++import i18n from '../i18n'
++import H5 from '../../../typography/H5'
  
  type VirtualProps = {
-@@ -19,6 +20,7 @@ type VirtualProps = {
-     pages: RTKPage[],
-     pageParams: PaginationParams[],
+   virtualViewName: string,
+@@ -22,6 +30,7 @@ type VirtualProps = {
    },
-+  getItem: (data: Record<string, unknown>) => ReactNode,
+   getItem: (data: Record<string, unknown>) => ReactNode,
    isSuccess: boolean,
++  isLoading: boolean,
    itemHeight: number,
    itemWidth: number | '100%',
-@@ -29,7 +31,18 @@ type VirtualProps = {
-   fetchPreviousPage: () => void,
-   isFetchingNextPage: boolean,
-   isFetchingPreviousPage: boolean,
--  getRowItems?: (rowIndex: number) => ReactNode,
-+}
-+
-+/**
-+ * Determine how many items go in each row for the current screen size.
-+ */
-+const calcItemsPerRow = (boxWidth, itemWidth): number => {
-+  if (itemWidth === '100%') {
-+    return 1
-+  } else {
-+    // Expect a numeric value if not `100%`
-+    return Math.floor(boxWidth / (itemWidth + 20)) || 1
-+  }
- }
- 
- /**
-@@ -40,7 +53,7 @@ function VirtualLayout({
-   virtualViewName,
-   className,
+   scrollRestorationKey?: string,
+@@ -55,6 +64,7 @@ function VirtualLayout({
    data,
--  getRowItems,
-+  getItem,
+   getItem,
    isSuccess,
++  isLoading,
    itemHeight,
    itemWidth,
-@@ -54,30 +67,19 @@ function VirtualLayout({
- }: PropsWithChildren<VirtualProps>) {
-   const dispatch = useAppDispatch()
-   const boxRef = useRef(null)
-+  const { width: boxWidth } = useElementSize(boxRef)
-   const parentRef = useRef<HTMLDivElement>(null)
-   const { [virtualViewName]: virtualView } = useAppSelector(layoutSelectors.virtualViews)
-   const [initialOffset] = useState(virtualView?.offset || 0)
-+  const [itemsPerRow, setItemsPerRow] = useState(calcItemsPerRow(boxWidth, itemWidth))
- 
-   const { pages = [], pageParams = [] } = data || {}
-   const cachedRTKData = pages.flatMap((res) => res[0])
-   const totalItems = pages?.[0]?.[1] || 0
-   const leadingPageParams = pageParams[pageParams.length - 1]
+   hasNextPage,
+@@ -80,7 +90,6 @@ function VirtualLayout({
    const trailingPageParams = pageParams[0]
-+  const numRows = Math.ceil(totalItems / itemsPerRow)
+   const numRows = Math.ceil(totalItems / itemsPerRow)
  
--  /**
--   * Determine how many items go in each row for the current screen size.
--   */
--  const itemsPerRow = (): number => {
--    if (itemWidth === '100%') {
--      return 1
--    } else {
--      // Expect a numeric value if not `100%`
--      return Math.floor((
--        boxRef.current?.getBoundingClientRect()?.width
--        / (itemWidth + 20)
--      )) || 1
--    }
--  }
- 
+-
    /**
     * Cache the virtual position for reinitialization on page reload.
-@@ -85,8 +87,8 @@ function VirtualLayout({
-   const onVirtualChange = (instance) => {
-     const startRow = instance?.range?.startIndex + 1
-     const endRow = instance?.range?.endIndex + 1
--    const start = startRow - 1 <= 0 ? 1 : ((startRow - 1) * itemsPerRow()) + 1
--    const end = Math.min(((endRow) * itemsPerRow()), totalItems)
-+    const start = startRow - 1 <= 0 ? 1 : ((startRow - 1) * itemsPerRow) + 1
-+    const end = Math.min(((endRow) * itemsPerRow), totalItems)
-     dispatch(layoutActions.setVirtualView({
-       name: virtualViewName,
-       value: {
-@@ -98,8 +100,24 @@ function VirtualLayout({
-     }))
-   }
+    */
+@@ -199,6 +208,27 @@ function VirtualLayout({
  
-+  /**
-+   * Gets the items for a single row.
-+   */
-+  const getRowItems = (rowIndex: number) => {
-+    // One item per row
-+    if (itemsPerRow === 1) {
-+      return getItem(cachedRTKData[rowIndex - trailingPageParams.skip])
-+    }
-+
-+    // Multiple items per row
-+    const startIndex = (rowIndex * itemsPerRow) - trailingPageParams.skip
-+    const endIndex = Math.min(startIndex + itemsPerRow, cachedRTKData.length)
-+    const rowItems = cachedRTKData.slice(startIndex, endIndex)
-+    return rowItems.map((data) => getItem(data))
-+  }
-+
-   const rowVirtualizer = useVirtualizer({
--    count: Math.ceil(totalItems / itemsPerRow()),
-+    count: numRows,
-     estimateSize: () => itemHeight,
-     getScrollElement: () => parentRef.current,
-     overscan: 4,
-@@ -165,6 +183,20 @@ function VirtualLayout({
-     }, 20)
-   }, [isSuccess])
- 
-+  /**
-+   * Update the items per row when the width is resized.
-+   */
-+  useEffect(() => {
-+    setItemsPerRow(calcItemsPerRow(boxWidth, itemWidth))
-+  }, [boxWidth])
-+
-+  /**
-+   * Trigger a rerender when the number of items per row changes.
-+   */
-+  useEffect(() => {
-+    rowVirtualizer.measure()
-+  }, [itemsPerRow])
-+
    return (
      <div {...props} className={clsx('virtual-layout', className)}>
++      {isLoading && <div className="virtual-loading"><Loading /></div>}
++      {isSuccess && totalItems === 0 && (
++        <div className="virtual-empty">
++          <Card
++            border={0}
++            shadow={1}
++            bg={1}
++            header={<Icon fa="fas fa-exclamation-circle" />}
++            footer={(
++              <Button href={getAppUrl('admin', 'artists')} solid={true}>
++                {i18n['virtual.empty.button']['en']}
++              </Button>
++            )}
++          >
++            <>
++              <H5>{i18n['virtual.empty.title']['en']}</H5>
++              <p dangerouslySetInnerHTML={{ __html: i18n['virtual.empty.desc']['en'] }} />
++            </>
++          </Card>
++        </div>
++      )}
        <div
-@@ -190,9 +222,11 @@ function VirtualLayout({
-             && rowVirtualizer.getVirtualItems().map((virtualRow) => {
-               return (
-                 <div
-+                  ref={rowVirtualizer.measureElement}
-                   key={virtualRow.index}
-                   className="virtual-row"
-                   data-row-index={virtualRow.index}
-+                  data-index={virtualRow.index}
-                   style={{
-                     height: `${virtualRow.size}px`,
-                     transform: `translateY(${virtualRow.start}px)`,
+         ref={parentRef}
+         className={clsx('virtual-root')}
