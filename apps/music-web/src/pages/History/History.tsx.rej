@@ -3,8 +3,8 @@ diff a/apps/music-web/src/pages/History/History.tsx b/apps/music-web/src/pages/H
  
  function HistoryPage() {
    return (
--    <AppPage layout={PAGE_LAYOUT.fixed} pageTitle={i18n['title']['en']}>
-+    <AppPage layout={PAGE_LAYOUT.standard} pageTitle={i18n['title']['en']}>
+-    <AppPage layout={PAGE_LAYOUT.standard} pageTitle={i18n['title']['en']}>
++    <AppPage layout={PAGE_LAYOUT.fixed} pageTitle={i18n['title']['en']}>
        <div className="history">
          <section>
            <NoContentMessage

@@ -12,7 +12,7 @@ import { HOME_SERVER_HOST } from '../../env'
 
 function PlaylistsPage() {
   return (
-    <AppPage layout={PAGE_LAYOUT.standard} pageTitle={i18n['title']['en']}>
+    <AppPage layout={PAGE_LAYOUT.fixed} pageTitle={i18n['title']['en']}>
       <div className="playlists">
         <section>
           <NoContentMessage
