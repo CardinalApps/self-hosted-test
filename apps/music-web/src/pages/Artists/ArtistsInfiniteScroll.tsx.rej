@@ -1,17 +1,10 @@
 diff a/apps/music-web/src/pages/Artists/ArtistsInfiniteScroll.tsx b/apps/music-web/src/pages/Artists/ArtistsInfiniteScroll.tsx	(rejected hunks)
-@@ -36,6 +36,7 @@ function ReleasesInfiniteScroll({
-   const {
-     data,
-     isSuccess,
-+    isLoading,
-     hasNextPage,
-     hasPreviousPage,
-     fetchNextPage,
-@@ -78,6 +79,7 @@ function ReleasesInfiniteScroll({
-       data={data}
-       getItem={getItem}
-       isSuccess={isSuccess}
-+      isLoading={isLoading}
-       hasNextPage={hasNextPage}
-       hasPreviousPage={hasPreviousPage}
-       fetchNextPage={fetchNextPage}
+@@ -62,7 +62,7 @@ function ReleasesInfiniteScroll({
+         image={'/music/images/placeholder.jpg'}
+         numReleases={musicArtist?.releases?.length || 0}
+         numTracks={musicArtist?.tracks?.length || 0}
+-        link={getAppUrl('music', 'artist', {
++        link={getAppUrl('admin', 'indexing', {
+           params: {
+             ':id': musicArtist?.musicArtistId?.toString() || '',
+           },

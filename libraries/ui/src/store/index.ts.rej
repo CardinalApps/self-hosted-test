@@ -1,25 +1,24 @@
 diff a/libraries/ui/src/store/index.ts b/libraries/ui/src/store/index.ts	(rejected hunks)
-@@ -27,7 +27,6 @@ import { photoAlbumsApi } from './apis/photoAlbums'
- import { jobsApi } from './apis/jobs'
- import { jobTasksApi } from './apis/jobTasks'
- import { librariesApi } from './apis/libraries'
--import { musicArtistsApi } from './apis/musicArtists'
- import { runsApi } from './apis/runs'
- import { versionsApi } from './apis/versions'
- import { baseApi } from './apis/base'
-@@ -76,7 +75,6 @@ const slices = {
-   [jobTasksApi.reducerPath]: jobTasksApi,
-   [runsApi.reducerPath]: runsApi,
-   [librariesApi.reducerPath]: librariesApi,
--  [musicArtistsApi.reducerPath]: musicArtistsApi,
-   [versionsApi.reducerPath]: versionsApi,
-   [baseApi.reducerPath]: baseApi,
- }
-@@ -111,7 +109,6 @@ const createStore = () => {
-         jobTasksApi.middleware,
-         runsApi.middleware,
-         librariesApi.middleware,
--        musicArtistsApi.middleware,
-         versionsApi.middleware,
-         resetMiddleware.middleware,
-         sseFactoryResetMiddleware.middleware,
+@@ -52,6 +52,7 @@ import deletePendingRTKCache from './utils/deletePendingRTKCache'
+ import triggerLifecycle from './utils/triggerLifecycle'
+ import { getStorageKey } from './utils/getStorageKey'
+ import deleteInfiniteQueryCache from './utils/deleteInfiniteQueryCache'
++import deleteApiCache from './utils/deleteApiCache'
+ 
+ /**
+  * All apps use a store of this shape.
+@@ -91,9 +92,14 @@ const createStore = () => {
+   const cachedStore = getCachedStore()
+ 
+   merge(preloadedState, cachedStore)
++
++  // FIXME delete these two once all of the RTK APIs extend the base
+   deletePendingRTKCache(preloadedState)
+   deleteInfiniteQueryCache(preloadedState)
+ 
++  // This replaces the above two
++  deleteApiCache(preloadedState)
++
+   // Before store init lifecycle
+   triggerLifecycle(preloadedState, [
+     musicBeforeStoreInit,

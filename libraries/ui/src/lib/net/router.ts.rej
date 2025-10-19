@@ -1,0 +1,10 @@
+diff a/libraries/ui/src/lib/net/router.ts b/libraries/ui/src/lib/net/router.ts	(rejected hunks)
+@@ -74,7 +74,7 @@ export enum CinemaRoutes {
+  */
+ export const getAppUrl = (
+   app: keyof typeof BasePaths,
+-  route: keyof typeof MusicRoutes,
++  route: keyof typeof AdminRoutes | keyof typeof MusicRoutes | keyof typeof PhotoRoutes | keyof typeof CinemaRoutes,
+   options?: {
+     params?: Record<string, string>,
+   },

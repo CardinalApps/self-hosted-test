@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import clsx from 'clsx'
 import ms from 'ms'
 
 import H5 from '@cardinalapps/ui/src/components/typography/H5'
@@ -146,11 +147,11 @@ function Indexer() {
             <div className={'buttonBox'}>
               <button
                 type="button"
-                className={`
-                  ${'importButton'} 
-                  ${indexingServiceState === 'indexing' ? 'running' : ''}
-                  ${indexingServiceState === 'paused' ? 'paused' : ''}
-                `}
+                className={clsx(
+                  'importButton',
+                  indexingServiceState === 'indexing' ? 'running' : '',
+                  indexingServiceState === 'paused' ? 'paused' : '',
+                )}
                 onClick={handlePowerButtonClick}
               >
                 <i className="fas fa-power-off" />

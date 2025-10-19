@@ -4,6 +4,7 @@ import { prepareRTKQueryHeaders } from "../../lib/homeserver/prepareRTKQueryHead
 
 export const baseApi = createApi({
   reducerPath: 'api',
+  refetchOnMountOrArgChange: true,
   baseQuery: fetchBaseQuery({
     baseUrl: `${HOME_SERVER_HOST}/api/v1`,
     prepareHeaders: prepareRTKQueryHeaders,
