@@ -1,10 +1,10 @@
 diff a/libraries/ui/src/store/apis/musicTracks.ts b/libraries/ui/src/store/apis/musicTracks.ts	(rejected hunks)
-@@ -52,7 +52,7 @@ export const musicTracksApi = baseApi
-           return queryParams('/music/tracks', {
-             ...(typeof skip !== 'undefined' && { skip }),
-             ...(take && { take }),
--            ...(sort && { order }),
-+            ...(sort && { sort }),
-             ...(order && { order }),
-             ...(release && { release }),
-             ...(metadata && { metadata }),
+@@ -11,6 +11,8 @@ export type MusicTrackType = {
+   release: {
+     title: string,
+     thumbnails: Record<string, unknown>[],
++    id: number,
++    releaseId: string,
+   }
+   artists: Array<{
+     name: string,

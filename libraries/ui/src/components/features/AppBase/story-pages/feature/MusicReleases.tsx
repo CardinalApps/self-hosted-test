@@ -7,8 +7,6 @@ import MusicRelease from '../../../../interaction/MusicRelease'
 import { PAGE_LAYOUT } from '../../../../../store/slices/layout'
 import { useGetMusicReleasesQuery } from '../../../../../store/apis/musicReleases'
 
-import { HOME_SERVER_HOST } from '../../../../../../env'
-
 function MusicReleasesPage() {
   const {
     data: musicReleasesResponse,
@@ -33,11 +31,10 @@ function MusicReleasesPage() {
         : <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20 }}>
             {
               musicReleases.map((release, i) => {
-                const thumb = release?.thumbnails?.find?.((t) => t.size === 'small_nocrop')?.relativeSrc
                 return (
                   <MusicRelease
                     key={i}
-                    artwork={thumb ? `${HOME_SERVER_HOST}${thumb}` : undefined}
+                    releaseId={release?.id}
                     tracks={release.tracks}
                     releaseTitle={release.title}
                     artistName={release?.artists?.[0]?.name as string}

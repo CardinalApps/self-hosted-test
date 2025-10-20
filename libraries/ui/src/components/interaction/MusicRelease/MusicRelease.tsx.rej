@@ -1,18 +1,68 @@
 diff a/libraries/ui/src/components/interaction/MusicRelease/MusicRelease.tsx b/libraries/ui/src/components/interaction/MusicRelease/MusicRelease.tsx	(rejected hunks)
-@@ -35,6 +35,7 @@ const MusicRelease = ({
+@@ -5,15 +5,17 @@ import clsx from 'clsx'
+ //import Icon from '../../typography/Icon'
+ import MusicPlaybackButton from '../MusicPlaybackButton'
+ import { RouterContext } from '../../../context/router'
++import { useReleaseCover } from '../../../hooks/useReleaseCover'
+ 
+ //import { settingsSelectors } from '../../../store/slices/settings'
+ 
+ import './MusicRelease.css'
+ 
+ type MusicReleaseProps = {
+-  artwork: string,
++  overrideArtwork?: string,
+   tracks?: { id: number, trackNumber: number }[],
+   releaseTitle?: string,
++  releaseId?: number,
+   releaseYear?: string,
+   releaseLink?: string,
+   artistName?: string,
+@@ -21,9 +23,10 @@ type MusicReleaseProps = {
+ }
+ 
+ const MusicRelease = ({
+-  artwork,
++  overrideArtwork,
+   tracks = [],
+   releaseTitle,
++  releaseId,
+   releaseYear,
+   releaseLink,
+   artistName,
+@@ -34,6 +37,14 @@ const MusicRelease = ({
+   const [showInner, setShowInner] = useState<boolean>()
    const [tracksInOrder, setTracksInOrder] = useState(tracks)
    const trackIdsInRelease = tracksInOrder.map((track) => track.id).filter((track) => !!track)
++  const coverSrc = useReleaseCover(releaseId)
++
++  const getArtwork = () => {
++    if (overrideArtwork) {
++      return overrideArtwork
++    }
++    return coverSrc
++  }
  
-+  // Fixme this doesn't seem to work consistently
+   // Fixme this doesn't seem to work consistently
    useEffect(() => {
-     const ordered = [...tracks]
-     ordered.sort((a, b) => a?.trackNumber > b?.trackNumber ? 1 : -1)
-@@ -51,7 +52,7 @@ const MusicRelease = ({
+@@ -43,17 +54,17 @@ const MusicRelease = ({
+   }, [tracks])
+ 
+   return (
+-    <div className={clsx(`music-release`, !!showInner && 'show', !artwork && 'no-artwork')}>
++    <div className={clsx(`music-release`, !!showInner && 'show', !getArtwork() && 'no-artwork')}>
+       <div
+         className="music-release-art"
+         onFocus={() => setShowInner(true)}
+         onBlur={() => setShowInner(false)}
+         onMouseEnter={() => setShowInner(true)}
          onMouseLeave={() => setShowInner(false)}
-         style={{ ...(artwork && { backgroundImage: `url('${artwork}')` }) }}
+-        style={{ ...(artwork && { backgroundImage: `url('${artwork}')` }) }}
++        style={{ ...(getArtwork() && { backgroundImage: `url('${getArtwork()}')` }) }}
        >
--        {!!releaseLink && <a href={releaseLink} tabIndex={-1} className="cover-link"></a>}
-+        {releaseLink && Link && <Link to={releaseLink} tabIndex={-1} className="cover-link"></Link>}
-         {!artwork && <i className="no-artwork-icon far fa-image" />}
+         {releaseLink && Link && <Link to={releaseLink} tabIndex={-1} className="cover-link"></Link>}
+-        {!artwork && <i className="no-artwork-icon far fa-image" />}
++        {!getArtwork() && <i className="no-artwork-icon far fa-image" />}
          <div className="controls">
            <div className="col music-track-play-pause">
+             <MusicPlaybackButton musicTrackIds={trackIdsInRelease} musicTrackIdToPlay={trackIdsInRelease?.[0]} />

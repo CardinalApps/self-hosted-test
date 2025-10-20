@@ -1,9 +1,23 @@
 diff a/servers/media/src/main.ts b/servers/media/src/main.ts	(rejected hunks)
-@@ -106,6 +106,7 @@ async function startup() {
-       'http://127.0.0.1:3090',      // Media Server web app
-       'http://192.168.2.97:3090',   // Media Server web app
-       'http://localhost:3099',      // Component Library development
-+      'http://localhost:3000',      // Local prod web app tests
-     ],
+@@ -9,7 +9,6 @@ import { NestExpressApplication } from '@nestjs/platform-express'
+ import * as ip from 'ip'
+ 
+ import { AppModule } from './modules/app/app.module'
+-import { OutputCacheDirectories } from './modules/thumbnail/enums'
+ 
+ import {
+   Env,
+@@ -111,13 +110,6 @@ async function startup() {
      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
    })
+ 
+-  /**
+-   * Set static file hosting paths. For SPAs use the app module.
+-   */
+-  app.useStaticAssets(getAppDir(OutputCacheDirectories.PHOTO_THUMBNAILS), {
+-    prefix: '/photo_thumbnails/',
+-  })
+-
+   /**
+    * Prefix all endpoints (except public static dirs) with /api/{version}.
+    */

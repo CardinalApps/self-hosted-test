@@ -1,10 +1,10 @@
 diff a/libraries/ui/src/components/interaction/MusicRelease/MusicRelease.stories.tsx b/libraries/ui/src/components/interaction/MusicRelease/MusicRelease.stories.tsx	(rejected hunks)
-@@ -17,7 +17,7 @@ export const Default = () => {
-   return (
+@@ -18,7 +18,7 @@ export const Default = () => {
      <MemoryRouter>
        <MusicRelease
--        tracks={[{ id: 1 }]}
-+        tracks={[{ id: 1, trackNumber: 1 }]}
-         artwork="/sample/cover.jpg"
+         tracks={[{ id: 1, trackNumber: 1 }]}
+-        artwork="/sample/cover.jpg"
++        overrideArtwork="/sample/cover.jpg"
          releaseTitle="The Perils of Time Travel"
          artistName="Thank You Scientist"
+         releaseYear="2011"
