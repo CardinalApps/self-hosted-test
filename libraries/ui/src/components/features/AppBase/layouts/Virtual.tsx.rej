@@ -1,11 +1,10 @@
 diff a/libraries/ui/src/components/features/AppBase/layouts/Virtual.tsx b/libraries/ui/src/components/features/AppBase/layouts/Virtual.tsx	(rejected hunks)
-@@ -94,6 +94,9 @@ function VirtualLayout({
-    * Cache the virtual position for reinitialization on page reload.
-    */
-   const onVirtualChange = (instance) => {
-+    if (!instance?.range) {
-+      return
-+    }
-     const startRow = instance?.range?.startIndex + 1
-     const endRow = instance?.range?.endIndex + 1
-     const start = startRow - 1 <= 0 ? 1 : ((startRow - 1) * itemsPerRow) + 1
+@@ -220,7 +220,7 @@ function VirtualLayout({
+             bg={1}
+             header={<Icon fa="fas fa-exclamation-circle" />}
+             footer={(
+-              <Button href={getAppUrl('admin', 'artists')} solid={true}>
++              <Button href={getAppUrl('indexing', { app: 'admin' })} solid={true}>
+                 {i18n['virtual.empty.button']['en']}
+               </Button>
+             )}
