@@ -1,0 +1,26 @@
+diff a/apps/music-web/src/pages/Tracks/i18n.json b/apps/music-web/src/pages/Tracks/i18n.json	(rejected hunks)
+@@ -1,14 +1,17 @@
+ {
+-  "title": {
++  "music-tracks.title": {
+     "en": "Music Tracks"
+   },
+-  "no-tracks-card-title": {
+-    "en": "No music"
++  "music-tracks.order-by.title": {
++    "en": "Title"
+   },
+-  "no-tracks-card-message": {
+-    "en": "After importing your music, you'll see all your songs here."
++  "music-tracks.order-by.track-num": {
++    "en": "Track Number"
+   },
+-  "no-tracks-button": {
+-    "en": "Import music"
++  "music-tracks.order-by.duration": {
++    "en": "Duration"
++  },
++  "music-tracks.order-by.bitrate": {
++    "en": "Bitrate"
+   }
+ }

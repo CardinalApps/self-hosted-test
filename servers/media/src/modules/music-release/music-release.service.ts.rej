@@ -3,16 +3,17 @@ diff a/servers/media/src/modules/music-release/music-release.service.ts b/server
     * Returns all releases according to the query.
     */
    async query(getMusicReleasesDto: GetMusicReleasesDto): Promise<[MusicRelease[], number]> {
--    const { take, skip, order, orderBy, artists, genres, tracks, thumbnails } = getMusicReleasesDto
-+    const { take, skip, order, orderBy, artists, genres, tracks, thumbnails, metadata } = getMusicReleasesDto
+-    const { take, skip, order, orderBy, artists, genres, tracks, thumbnails, metadata } = getMusicReleasesDto
++    const { take, skip, order, sort, artists, genres, tracks, thumbnails, metadata } = getMusicReleasesDto
      return await this.musicReleaseRepository.findAndCount({
        take,
        skip,
-@@ -126,6 +126,7 @@ export class MusicReleaseService {
-         genres: genres,
-         tracks: tracks,
-         thumbnails: thumbnails,
-+        metadata: metadata,
+@@ -129,7 +129,7 @@ export class MusicReleaseService {
+         metadata: metadata,
        },
        order: {
-         [orderBy]: order,
+-        [orderBy]: order,
++        [sort]: order,
+       },
+     })
+   }

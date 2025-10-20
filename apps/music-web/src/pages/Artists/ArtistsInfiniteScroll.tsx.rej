@@ -3,8 +3,8 @@ diff a/apps/music-web/src/pages/Artists/ArtistsInfiniteScroll.tsx b/apps/music-w
          image={'/music/images/placeholder.jpg'}
          numReleases={musicArtist?.releases?.length || 0}
          numTracks={musicArtist?.tracks?.length || 0}
--        link={getAppUrl('music', 'artist', {
-+        link={getAppUrl('admin', 'indexing', {
+-        link={getAppUrl('admin', 'indexing', {
++        link={getAppUrl('artist', {
            params: {
              ':id': musicArtist?.musicArtistId?.toString() || '',
            },

@@ -1,11 +1,10 @@
 diff a/servers/media/src/modules/music-release/dtos/GetMusicReleases.dto.ts b/servers/media/src/modules/music-release/dtos/GetMusicReleases.dto.ts	(rejected hunks)
-@@ -37,4 +37,9 @@ export class GetMusicReleasesDto extends MusicReleasesPagination {
+@@ -14,7 +14,7 @@ class MusicReleasesPagination extends Pagination {
    @IsOptional()
-   @IsBoolean()
-   thumbnails?: boolean = false
-+
-+  @Transform(({ value }) => value?.toLowerCase() === 'true')
-+  @IsOptional()
-+  @IsBoolean()
-+  metadata?: boolean = false
+   @IsString()
+   @IsIn(Object.values(AllowedMusicReleasesOrderBy))
+-  orderBy?: AllowedMusicReleasesOrderBy = AllowedMusicReleasesOrderBy.createdAt
++  sort?: AllowedMusicReleasesOrderBy = AllowedMusicReleasesOrderBy.createdAt
  }
+ 
+ export class GetMusicReleasesDto extends MusicReleasesPagination {

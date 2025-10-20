@@ -1,27 +1,25 @@
 diff a/apps/music-web/src/pages/Releases/Releases.tsx b/apps/music-web/src/pages/Releases/Releases.tsx	(rejected hunks)
-@@ -10,8 +10,8 @@ import i18n from './i18n.json'
- 
- import './styles.css'
- 
--const TOOLBAR_NAME = 'tracks-toolbar'
--const VIRTUAL_VIEW_NAME = 'tracks-page'
-+const TOOLBAR_NAME = 'releases-toolbar'
-+const VIRTUAL_VIEW_NAME = 'releases-page'
- 
- function ReleasesPage() {
+@@ -17,7 +17,7 @@ function ReleasesPage() {
    return (
-@@ -37,10 +37,10 @@ function ReleasesPage() {
-                   label: 'Number',
-                   value: 'number',
+     <AppPage
+       layout={PAGE_LAYOUT.virtual}
+-      pageTitle={i18n['title']['en']}
++      pageTitle={i18n['music-releases.title']['en']}
+       restoreScrollPoint={false}
+       toolbar={(
+         <Toolbar
+@@ -31,11 +31,11 @@ function ReleasesPage() {
+             {
+               slug: 'sort',
+               render: ToolbarItem.SORT,
+-              initialValue: 'number',
++              initialValue: 'title',
+               options: [
+                 {
+-                  label: 'Number',
+-                  value: 'number',
++                  label: i18n['music-releases.order-by.title']['en'],
++                  value: 'title',
                  },
--                {
--                  label: 'Random',
--                  value: 'random',
--                },
-+                // {
-+                //   label: 'Random',
-+                //   value: 'random',
-+                // },
-               ],
-             },
-           ]}
+                 // {
+                 //   label: 'Random',

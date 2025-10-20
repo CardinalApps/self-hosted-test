@@ -1,0 +1,19 @@
+diff a/apps/music-web/src/pages/Releases/i18n.json b/apps/music-web/src/pages/Releases/i18n.json	(rejected hunks)
+@@ -1,14 +1,8 @@
+ {
+-  "title": {
++  "music-releases.title": {
+     "en": "Music Releases"
+   },
+-  "no-releases-card-title": {
+-    "en": "No music"
+-  },
+-  "no-releases-card-message": {
+-    "en": "Import your music to see all of your albums, EPs, and singles."
+-  },
+-  "no-releases-button": {
+-    "en": "Import music"
++  "music-releases.order-by.title": {
++    "en": "Title"
+   }
+ }
