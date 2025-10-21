@@ -1,63 +1,19 @@
 diff a/servers/media/src/modules/music-release/music-release.controller.ts b/servers/media/src/modules/music-release/music-release.controller.ts	(rejected hunks)
-@@ -1,3 +1,4 @@
-+import * as fs from 'fs'
- import {
-   Controller,
-   Get,
-@@ -5,6 +6,7 @@ import {
-   UseGuards,
-   NotFoundException,
-   Param,
-+  StreamableFile,
- } from '@nestjs/common'
- import {
-   ApiTags,
-@@ -23,6 +25,8 @@ import { GetMusicArtistDto } from './dtos/GetMusicRelease.dto'
- import { GetMusicReleasesDto } from './dtos/GetMusicReleases.dto'
- 
- import { EventService } from '../event/event.service'
-+import { GetMusicReleaseCover } from './dtos/GetMusicReleaseCover.dto'
-+import { getAppDir } from '../../utils/env'
- 
- @Controller()
- export class MusicReleaseController {
-@@ -76,4 +80,39 @@ export class MusicReleaseController {
-   async getMusicReleases(@Query() query: GetMusicReleasesDto): Promise<[MusicRelease[], number]> {
-     return await this.musicReleaseService.query(query)
+@@ -82,7 +82,7 @@ export class MusicReleaseController {
    }
-+
-+  /**
-+   * Returns the blob data of a release covers.
-+   */
-+  @Get('/music/releases/:id/cover')
-+  @UseGuards(AuthGuard)
-+  @ApiTags('Music')
-+  @ApiOperation({ summary: 'Get the cover image of a release.' })
-+  @ApiOkResponse({
-+    status: 200,
-+  })
-+  @ApiSecurity(ApiSecurityTypes.LOCAL_USER_JWT)
-+  async getReleaseCoverBlob(
-+    @Param('id') id: number,
-+    @Query() query: GetMusicReleaseCover,
-+  ): Promise<StreamableFile> {
-+    const release = await this.musicReleaseService.get(id, {
-+      thumbnails: true,
-+    })
-+
-+    if (!release) {
-+      throw new NotFoundException('Release not found.')
-+    }
-+
-+    const thumbnail = release.thumbnails?.find((thumb) => thumb.size === query.size)
-+
-+    if (!thumbnail) {
-+      throw new NotFoundException('No thumbnail for this release.')
-+    }
-+
-+    const thumbnailFile = getAppDir(thumbnail.relativeSrc)
-+    const file = fs.createReadStream(thumbnailFile)
-+
-+    return new StreamableFile(file)
-+  }
- }
+ 
+   /**
+-   * Returns the blob data of a release covers.
++   * Returns the blob data of a release covers. Supports numeric row ID and musicReleaseId col.
+    */
+   @Get('/music/releases/:id/cover')
+   @UseGuards(AuthGuard)
+@@ -93,7 +93,7 @@ export class MusicReleaseController {
+   })
+   @ApiSecurity(ApiSecurityTypes.LOCAL_USER_JWT)
+   async getReleaseCoverBlob(
+-    @Param('id') id: number,
++    @Param('id') id: string | number,
+     @Query() query: GetMusicReleaseCover,
+   ): Promise<StreamableFile> {
+     const release = await this.musicReleaseService.get(id, {

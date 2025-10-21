@@ -1,0 +1,9 @@
+diff a/servers/media/src/utils/string.ts b/servers/media/src/utils/string.ts	(rejected hunks)
+@@ -102,3 +102,7 @@ export const sortableString = (str) => {
+ 
+   return str
+ }
++
++export const isNumeric = (num: unknown) => {
++  return (typeof(num) === 'number' || typeof(num) === "string" && num.trim() !== '') && !isNaN(num as number)
++}

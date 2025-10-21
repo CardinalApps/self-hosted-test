@@ -1,0 +1,10 @@
+diff a/libraries/ui/src/hooks/useReleaseCover.ts b/libraries/ui/src/hooks/useReleaseCover.ts	(rejected hunks)
+@@ -1,7 +1,7 @@
+ import { useEffect, useState } from 'react'
+ import homeServerAPI from '../lib/homeserver/homeServerAPI'
+ 
+-export function useReleaseCover(releaseId: number) {
++export function useReleaseCover(releaseId: string | number) {
+   const [imageSrc, setImageSrc] = useState<string>()
+ 
+   useEffect(() => {

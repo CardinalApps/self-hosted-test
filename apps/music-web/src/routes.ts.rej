@@ -1,0 +1,9 @@
+diff a/apps/music-web/src/routes.ts b/apps/music-web/src/routes.ts	(rejected hunks)
+@@ -1,3 +1,7 @@
++/**
++ * @deprecated Use MusicRoutes from '@cardinalapps/ui/src/lib/net/router' instead.
++ */
++
+ export const ROOT = '/'
+ 
+ // Outer

@@ -1,35 +1,36 @@
 diff a/libraries/ui/src/context/router.tsx b/libraries/ui/src/context/router.tsx	(rejected hunks)
-@@ -1,14 +1,22 @@
-+/**
-+ * @file All router functionality is provided by each app separately, and then
-+ * shared with the UI layer. This allows for one shared <Router> context in the
-+ * app.
-+ */
-+
+@@ -5,7 +5,7 @@
+  */
+ 
  import { createContext } from 'react'
-+import { LinkProps } from 'react-router-dom'
+-import { LinkProps } from 'react-router-dom'
++import { LinkProps, Params } from 'react-router-dom'
  
  export type RouterContextRouter = (props) => React.ReactElement | null
  export type RouterContextRoutes = (props) => React.ReactElement | null
- export type RouterContextRoute = (props) => React.ReactElement | null
+@@ -13,6 +13,7 @@ export type RouterContextRoute = (props) => React.ReactElement | null
  export type RouterContextNavigate = (props) => React.ReactElement | null
--export type RouterContextLink = (props) => React.ReactElement | null
-+export type RouterContextLink = React.ForwardRefExoticComponent<LinkProps & React.RefAttributes<HTMLAnchorElement>>
+ export type RouterContextLink = React.ForwardRefExoticComponent<LinkProps & React.RefAttributes<HTMLAnchorElement>>
  export type RouterContextNavigateFunction = (path: string) => void
++export type RouterContextParams = Params<string>
  
-+// react-router-dom actually has this typed as `any`
+ // react-router-dom actually has this typed as `any`
  // eslint-disable-next-line @typescript-eslint/no-explicit-any
--export type RouterContextLocation = any // react-router-dom actually has this typed as `any`
-+export type RouterContextLocation = any
- 
- export type RouterContextType = {
-   Router: RouterContextRouter,
-@@ -25,7 +33,7 @@ const defaultContext: RouterContextType = {
-   Routes: () => null,
+@@ -24,6 +25,8 @@ export type RouterContextType = {
+   Route: RouterContextRoute,
+   Navigate: RouterContextNavigate,
+   Link: RouterContextLink,
++  useParams: () => RouterContextParams,
++  useLocation: () => RouterContextLocation,
+   navigate: RouterContextNavigateFunction,
+   location: RouterContextLocation,
+ }
+@@ -34,6 +37,8 @@ const defaultContext: RouterContextType = {
    Route: () => null,
    Navigate: () => null,
--  Link: () => null,
-+  Link: null,
+   Link: null,
++  useParams: () => ({}),
++  useLocation: () => ({}),
    navigate: () => {},
    location: {},
  }

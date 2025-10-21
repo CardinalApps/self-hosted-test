@@ -1,19 +1,27 @@
 diff a/servers/media/src/modules/music-release/music-release.service.ts b/servers/media/src/modules/music-release/music-release.service.ts	(rejected hunks)
-@@ -116,7 +116,7 @@ export class MusicReleaseService {
-    * Returns all releases according to the query.
+@@ -13,7 +13,7 @@ import { EventService } from '../event/event.service'
+ import { GetMusicReleasesDto } from './dtos/GetMusicReleases.dto'
+ import { MusicArtist } from '../music-artist/music-artist.entity'
+ import { MusicGenre } from '../music-genres/music-genre.entity'
+-import { sortableString } from '../../utils/string'
++import { isNumeric, sortableString } from '../../utils/string'
+ 
+ import { ALBUM_ART_FILE_NAME, ALBUM_ART_FILE_EXTENSION } from './types'
+ 
+@@ -48,11 +48,12 @@ export class MusicReleaseService {
+   /**
+    * Gets a single music release.
     */
-   async query(getMusicReleasesDto: GetMusicReleasesDto): Promise<[MusicRelease[], number]> {
--    const { take, skip, order, orderBy, artists, genres, tracks, thumbnails, metadata } = getMusicReleasesDto
-+    const { take, skip, order, sort, artists, genres, tracks, thumbnails, metadata } = getMusicReleasesDto
-     return await this.musicReleaseRepository.findAndCount({
-       take,
-       skip,
-@@ -129,7 +129,7 @@ export class MusicReleaseService {
-         metadata: metadata,
+-  async get(id: number, relations = {}): Promise<MusicRelease | null> {
++  async get(id: number | string, relations = {}): Promise<MusicRelease | null> {
++    const where = isNumeric(id)
++      ? { id: id as number }
++      : { musicReleaseId: id as string }
+     const musicRelease = await this.musicReleaseRepository.find({
+-      where: {
+-        id: id,
+-      },
++      where,
+       relations: {
+         ...relations,
        },
-       order: {
--        [orderBy]: order,
-+        [sort]: order,
-       },
-     })
-   }

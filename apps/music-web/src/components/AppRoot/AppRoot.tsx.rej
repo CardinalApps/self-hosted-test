@@ -1,29 +1,71 @@
 diff a/apps/music-web/src/components/AppRoot/AppRoot.tsx b/apps/music-web/src/components/AppRoot/AppRoot.tsx	(rejected hunks)
-@@ -35,18 +35,15 @@ function AppRoot() {
-       app={CardinalApp.MUSIC}
-       id="cardinal-music"
-       basePath="/music"
--      // @ts-expect-error
--      Router={Router}
--      // @ts-expect-error
--      Routes={Routes}
--      // @ts-expect-error
--      Navigate={Navigate}
--      // @ts-expect-error
--      Route={Route}
--      // @ts-expect-error
--      Link={Link}
--      navigate={navigate}
--      location={location}
-+      router={{
-+        Router,
-+        Routes,
-+        Navigate,
-+        Route,
-+        location,
-+        navigate,
-+        Link,
-+      }}
+@@ -1,19 +1,19 @@
+-import { Router, Route, Routes, Navigate, Link, useNavigate, useLocation } from 'react-router-dom'
++import { Router, Route, Routes, Navigate, Link, useNavigate, useLocation, useParams } from 'react-router-dom'
+ 
+ import AppBase from '@cardinalapps/ui/src/components/features/AppBase'
++import { MusicRoutes } from '@cardinalapps/ui/src/lib/net/router'
+ 
+ import Nav from '../Nav'
+ import SettingsPanel from '../SettingsPanel'
+ 
+ import ListenNow from '../../pages/ListenNow'
+ import ReleasesPage from '../../pages/Releases'
++import ReleasePage from '../../pages/Release'
+ import ArtistsPage from '../../pages/Artists'
+ import TracksPage from '../../pages/Tracks'
+ import HistoryPage from '../../pages/History'
+ import PlaylistsPage from '../../pages/Playlists'
+ 
+-import * as routes from '../../routes'
+-
+ import { CardinalApp } from '@cardinalapps/ui/src/lib/env/cardinal'
+ import { CARDINAL_PUBLIC_APP_ID, CARDINAL_PUBLIC_APP_PERMISSIONS } from '../../env'
+ 
+@@ -43,6 +43,8 @@ function AppRoot() {
+         location,
+         navigate,
+         Link,
++        useLocation,
++        useParams,
+       }}
        cardinalAppId={CARDINAL_PUBLIC_APP_ID}
        cardinalAppPermissions={CARDINAL_PUBLIC_APP_PERMISSIONS}
-       onHomeServerRequiresFirstTimeSetup={() => window.location.href = window.location.origin + '/admin'}
+@@ -69,27 +71,31 @@ function AppRoot() {
+       privateScaffoldRoutes={
+         <>
+           <Route
+-            path={routes.ROOT}
++            path={MusicRoutes.root}
+             element={<ListenNow />}
+           />
+           <Route
+-            path={routes.RELEASES}
++            path={MusicRoutes.releases}
+             element={<ReleasesPage />}
+           />
+           <Route
+-            path={routes.ARTISTS}
++            path={MusicRoutes.release}
++            element={<ReleasePage />}
++          />
++          <Route
++            path={MusicRoutes.artists}
+             element={<ArtistsPage />}
+           />
+           <Route
+-            path={routes.TRACKS}
++            path={MusicRoutes.tracks}
+             element={<TracksPage />}
+           />
+           <Route
+-            path={routes.HISTORY}
++            path={MusicRoutes.history}
+             element={<HistoryPage />}
+           />
+           <Route
+-            path={routes.PLAYLISTS}
++            path={MusicRoutes.playlists}
+             element={<PlaylistsPage />}
+           />
+         </>
