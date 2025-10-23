@@ -1,0 +1,59 @@
+diff a/servers/media/src/modules/indexing/media/indexing.music.service.ts b/servers/media/src/modules/indexing/media/indexing.music.service.ts	(rejected hunks)
+@@ -74,17 +74,16 @@ export class MusicIndexingService {
+       genres,
+       queryRunner,
+     )
++    // if (release.title === 'Six Degrees of Inner Turbulence') {
++    //   console.log('a')
++    // }
++    const trackNumber = this.determineTrackNumber(embeddedMetadata, folderStructureMetadata)
+ 
+     const trackTitle = (
+       embeddedMetadata.find((meta) => meta.metaKey === 'title')?.metaValue
+       || folderStructureMetadata.find((meta) => meta.metaKey === 'trackName')?.metaValue
+       || IndexingFallbacks.UNKNOWN_TRACK
+     )
+-    const trackNumber = (
+-      (embeddedMetadata.find((meta) => meta.metaKey === 'track')?.metaValue as unknown as Record<string, unknown>)?.no
+-      || folderStructureMetadata.find((meta) => meta.metaKey === 'trackNumber')?.metaValue
+-      || 0
+-    )
+     const discNumber = (
+       (embeddedMetadata.find((meta) => meta.metaKey === 'disk')?.metaValue as unknown as Record<string, unknown>)?.no
+       || folderStructureMetadata.find((meta) => meta.metaKey === 'discNumber')?.metaValue
+@@ -98,7 +97,7 @@ export class MusicIndexingService {
+       sortTitle: sortableString(trackTitle),
+       artists: artists,
+       release: release,
+-      trackNumber: Number(trackNumber),
++      trackNumber: trackNumber,
+       discNumber: Number(discNumber),
+       duration: Number(embeddedMetadata.find((meta) => meta.metaKey === 'duration')?.metaValue) || null,
+       bitrate: Number(embeddedMetadata.find((meta) => meta.metaKey === 'bitrate')?.metaValue) || null,
+@@ -546,4 +545,26 @@ export class MusicIndexingService {
+ 
+     return genreEntities
+   }
++
++  /**
++   * Analyzes all given metadata to find the track number.
++   */
++  determineTrackNumber(embeddedMetadata?: MusicTrackMetadata[], fsMetadata?: MusicTrackMetadata[]): number {
++    const fromEmbeddedMetadata = embeddedMetadata.find((metadata) => metadata?.metaKey === 'track')
++
++    if (fromEmbeddedMetadata.metadataType === 'object') {
++      try {
++        const parsed = JSON.parse(fromEmbeddedMetadata.metaValue)
++        if (parsed?.no) {
++          return parsed.no
++        }
++      } catch (error) { /* noop */ }
++    }
++
++    const fromFolderStructure = fsMetadata.find((meta) => meta.metaKey === 'trackNumber')?.metaValue
++
++    if (fromFolderStructure) {
++      return fromFolderStructure as unknown as number
++    }
++  }
+ }

@@ -1,23 +1,10 @@
 diff a/servers/media/src/main.ts b/servers/media/src/main.ts	(rejected hunks)
-@@ -9,7 +9,6 @@ import { NestExpressApplication } from '@nestjs/platform-express'
- import * as ip from 'ip'
- 
- import { AppModule } from './modules/app/app.module'
--import { OutputCacheDirectories } from './modules/thumbnail/enums'
- 
- import {
-   Env,
-@@ -111,13 +110,6 @@ async function startup() {
-     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-   })
- 
--  /**
--   * Set static file hosting paths. For SPAs use the app module.
--   */
--  app.useStaticAssets(getAppDir(OutputCacheDirectories.PHOTO_THUMBNAILS), {
--    prefix: '/photo_thumbnails/',
--  })
--
-   /**
-    * Prefix all endpoints (except public static dirs) with /api/{version}.
+@@ -141,7 +141,7 @@ async function startup() {
     */
+   const printWelcome = (ip) => {
+     Logger.log('╭────────────────────────────────────────────────────────────────╮', 'Welcome')
+-    Logger.log('│ Cardinal Media Server started!                                  │', 'Welcome')
++    Logger.log('│ Cardinal Media Server started!                                 │', 'Welcome')
+     Logger.log('│                                                                │', 'Welcome')
+     Logger.log(`│ Dashboard.......................${(ip+':'+PORT+'/admin').padEnd(31)}│`, 'Welcome')
+     Logger.log(`│ Music app.......................${(ip+':'+PORT+'/music').padEnd(31)}│`, 'Welcome')
