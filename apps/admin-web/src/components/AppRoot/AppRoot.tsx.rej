@@ -1,25 +1,16 @@
 diff a/apps/admin-web/src/components/AppRoot/AppRoot.tsx b/apps/admin-web/src/components/AppRoot/AppRoot.tsx	(rejected hunks)
-@@ -34,14 +34,15 @@ function AppRoot() {
-       app={CardinalApp.ADMIN}
-       id="cardinal-admin"
-       basePath="/admin"
--      Router={Router}
--      Routes={Routes}
--      Navigate={Navigate}
--      Route={Route}
--      // @ts-expect-error
--      Link={Link}
--      navigate={navigate}
--      location={location}
-+      router={{
-+        Router,
-+        Routes,
-+        Navigate,
-+        Route,
-+        location,
-+        navigate,
-+        Link,
-+      }}
+@@ -1,4 +1,4 @@
+-import { Router, Route, Routes, Navigate, Link, useNavigate, useLocation } from 'react-router-dom'
++import { Router, Route, Routes, Navigate, Link, useNavigate, useLocation, useParams } from 'react-router-dom'
+ 
+ import AppBase from '@cardinalapps/ui/src/components/features/AppBase'
+ 
+@@ -42,6 +42,8 @@ function AppRoot() {
+         location,
+         navigate,
+         Link,
++        useParams,
++        useLocation,
+       }}
        cardinalAppId={CARDINAL_PUBLIC_APP_ID}
        cardinalAppPermissions={CARDINAL_PUBLIC_APP_PERMISSIONS}
-       onHomeServerRequiresFirstTimeSetup={() => {

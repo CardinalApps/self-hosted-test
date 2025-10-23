@@ -1,16 +1,36 @@
 diff a/libraries/ui/src/components/interaction/MusicPlaybackButton/MusicPlaybackButton.css b/libraries/ui/src/components/interaction/MusicPlaybackButton/MusicPlaybackButton.css	(rejected hunks)
-@@ -11,6 +11,16 @@
+@@ -7,20 +7,32 @@
+   justify-content: center;
+   border-radius: 100%;
+ 
++  &:hover {
++    background-color: var(--bg-4);
++  }
++
+   &.solid {
      background-color: var(--bg-4);
    }
  
-+  &.size-m {
-+    width: 50px;
-+    height: 50px;
+   &.size-m {
+-    width: 50px;
+-    height: 50px;
++    width: 45px;
++    height: 45px;
+ 
+     button {
+-      width: 50px;
+-      height: 50px;
++      width: 45px;
++      height: 45px;
 +
-+    button {
-+      width: 50px;
-+      height: 50px;
-+    }
++      i {
++        font-size: 18px;
++      }
+     }
+   }
+ 
++  i {
++    font-size: 16px;
 +  }
 +
    .loading-indicator {

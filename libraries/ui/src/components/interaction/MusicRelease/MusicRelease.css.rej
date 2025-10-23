@@ -1,18 +1,18 @@
 diff a/libraries/ui/src/components/interaction/MusicRelease/MusicRelease.css b/libraries/ui/src/components/interaction/MusicRelease/MusicRelease.css	(rejected hunks)
-@@ -77,14 +77,9 @@
-     transition: opacity 100ms;
+@@ -78,8 +78,6 @@
      pointer-events: none;
  
--    .music-playback-button {
--      width: 30px;
--      height: 30px;
--    }
--
      button {
--      width: 30px;
--      height: 30px;
-+      /* width: 35px;
-+      height: 35px; */
+-      /* width: 35px;
+-      height: 35px; */
        pointer-events: all;
        background-color: var(--bg-4);
  
+@@ -88,7 +86,6 @@
+       }
+ 
+       i {
+-        font-size: 14px;
+         color: var(--accent-color);
+       }
+     }
