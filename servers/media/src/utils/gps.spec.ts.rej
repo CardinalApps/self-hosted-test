@@ -1,0 +1,13 @@
+diff a/servers/media/src/utils/gps.spec.ts b/servers/media/src/utils/gps.spec.ts	(rejected hunks)
+@@ -2,8 +2,8 @@ import { getDateFromGPSFormat } from './gps'
+ 
+ describe('Utils: GPS', () => {
+   it(`can convert GPS date strings to a date object`, () => {
+-    expect(getDateFromGPSFormat('2016:10:06', '23:36:58')?.getTime()).toBe(1475811418000)
+-    expect(getDateFromGPSFormat('2016-10-06', '23-36-58')?.getTime()).toBe(1475811418000)
+-    expect(getDateFromGPSFormat('2016/10/06', '23/36/58')?.getTime()).toBe(1475811418000)
++    expect(getDateFromGPSFormat('2016:10:06', '23:36:58')?.toUTCString()).toBe('Fri, 07 Oct 2016 03:36:58 GMT')
++    expect(getDateFromGPSFormat('2016-10-06', '23-36-58')?.toUTCString()).toBe('Fri, 07 Oct 2016 03:36:58 GMT')
++    expect(getDateFromGPSFormat('2016/10/06', '23/36/58')?.toUTCString()).toBe('Fri, 07 Oct 2016 03:36:58 GMT')
+   })
+ })
