@@ -1,7 +1,7 @@
 diff a/servers/media/README.md b/servers/media/README.md	(rejected hunks)
-@@ -6,3 +6,5 @@ Self-hosted monolithic media streaming server.
+@@ -6,5 +6,3 @@ Self-hosted monolithic media streaming server.
  
  Use `pnpm dev:woms` to run the dev env without the Media Server so that it can
  be with VS Code instead.
-+
-+01
+-
+-01

@@ -1,7 +1,7 @@
 diff a/libraries/app-settings/README.md b/libraries/app-settings/README.md	(rejected hunks)
-@@ -3,3 +3,5 @@
+@@ -3,5 +3,3 @@
  App settings are all of the settings that a user can change about any of their apps. Things like the language, theme, and start page.
  
  Most of these settings are exposed through the `<SettingsPanel />` in the React apps.
-+
-+01
+-
+-01
