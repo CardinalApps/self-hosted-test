@@ -1,36 +1,55 @@
 diff a/libraries/ui/src/components/interaction/MusicRelease/MusicRelease.tsx b/libraries/ui/src/components/interaction/MusicRelease/MusicRelease.tsx	(rejected hunks)
-@@ -6,6 +6,7 @@ import clsx from 'clsx'
- import MusicPlaybackButton, { PlayButtonSizeType } from '../MusicPlaybackButton'
- import { RouterContext } from '../../../context/router'
- import { useReleaseCover } from '../../../hooks/useReleaseCover'
-+import { MusicTrackType } from '../../../store/apis/musicTracks'
- 
- //import { settingsSelectors } from '../../../store/slices/settings'
- 
-@@ -13,7 +14,8 @@ import './MusicRelease.css'
- 
- type MusicReleaseProps = {
-   overrideArtwork?: string,
--  tracks?: { id: number, trackNumber: number }[],
-+  hasArtwork?: boolean,
-+  tracks?: MusicTrackType[],
-   releaseTitle?: string,
-   releaseId?: string | number,
-   releaseYear?: string,
-@@ -26,6 +28,7 @@ type MusicReleaseProps = {
- 
- const MusicRelease = ({
-   overrideArtwork,
-+  hasArtwork = true,
-   tracks = [],
-   releaseTitle,
-   releaseId,
-@@ -41,7 +44,7 @@ const MusicRelease = ({
-   const [showInner, setShowInner] = useState<boolean>()
-   const [tracksInOrder, setTracksInOrder] = useState(tracks)
-   const trackIdsInRelease = tracksInOrder.map((track) => track.id).filter((track) => !!track)
--  const coverSrc = useReleaseCover(releaseId)
-+  const coverSrc = useReleaseCover(hasArtwork ? releaseId : null)
- 
-   const getArtwork = () => {
-     if (overrideArtwork) {
+@@ -88,29 +88,31 @@ const MusicRelease = ({
+           </div> */}
+         </div>
+       </div>
+-      <div className="meta">
+-        <div className="row">
+-          {!!releaseTitle && (
+-            <p className="release-name">
+-              {releaseLink && releaseTitle && Link
+-                ? <Link to={releaseLink}>{releaseTitle}</Link>
+-                : releaseTitle
+-              }
+-            </p>
+-          )}
+-        </div>
+-        <div className="row">
+-          {!!artistName && (
+-            <p className="artist-name">
+-              {artistLink && artistName && Link
+-                ? <Link to={artistLink}>{artistName}</Link>
+-                : artistName
+-              }
+-            </p>
+-          )}
+-          {!!releaseYear && <p className="release-year">{releaseYear}</p>}
++      {(releaseTitle || artistName || releaseYear) && (
++        <div className="meta">
++          <div className="row">
++            {!!releaseTitle && (
++              <p className="release-name">
++                {releaseLink && releaseTitle && Link
++                  ? <Link to={releaseLink}>{releaseTitle}</Link>
++                  : releaseTitle
++                }
++              </p>
++            )}
++          </div>
++          <div className="row">
++            {!!artistName && (
++              <p className="artist-name">
++                {artistLink && artistName && Link
++                  ? <Link to={artistLink}>{artistName}</Link>
++                  : artistName
++                }
++              </p>
++            )}
++            {!!releaseYear && <p className="release-year">{releaseYear}</p>}
++          </div>
+         </div>
+-      </div>
++      )}
+     </div>
+   )
+ }

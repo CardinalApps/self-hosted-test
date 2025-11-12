@@ -1,0 +1,110 @@
+diff a/libraries/ui/src/components/interaction/List/List.css b/libraries/ui/src/components/interaction/List/List.css	(rejected hunks)
+@@ -1,11 +1,65 @@
+ .item-list {
+ 
+-  &.outline {
++  &[data-layout="default"] {
+ 
+     ul {
+       padding: 6px 12px;
+       border: 1px solid var(--border-color-1);
+       border-radius: var(--border-radius);
++
++      li {
++        padding: 0 12px;
++        margin: 6px 0;
++        gap: 10px;
++
++        &:before {
++          content: '';
++          width: 100%;
++          height: 100%;
++          position: absolute;
++          top: 0;
++          right: 0;
++          left: 0;
++          bottom: 0;
++          border: 1px solid var(--border-color-3);
++          border-radius: var(--border-radius);
++          background-color: var(--bg-3);
++          z-index: -1;
++        }
++
++        .item-list-item-name {
++          padding: 10px 0;
++          font-size: 14px;
++          font-weight: 500;
++          color: var(--text-color-2);
++        }
++      }
++    }
++  }
++
++  &[data-layout="compact"] {
++
++    ul {
++      padding: 0;
++      border: none;
++
++      li {
++        padding: 3px 0;
++        margin: 0;
++        gap: 10px;
++        border-bottom: 1px solid var(--border-color-3);
++
++        &:last-of-type {
++          border-bottom: none;
++        }
++
++        .item-list-item-name {
++          padding: 5px 0;
++          font-size: 13px;
++          font-weight: 500;
++          color: var(--text-color-2);
++        }
++      }
+     }
+   }
+ 
+@@ -14,29 +68,11 @@
+ 
+     li {
+       width: 100%;
+-      padding: 0 12px;
+-      margin: 6px 0;
+       display: flex;
+-      gap: 10px;
+       position: relative;
+       justify-content: space-between;
+       align-items: center;
+ 
+-      &:before {
+-        content: '';
+-        width: 100%;
+-        height: 100%;
+-        position: absolute;
+-        top: 0;
+-        right: 0;
+-        left: 0;
+-        bottom: 0;
+-        border: 1px solid var(--border-color-3);
+-        border-radius: var(--border-radius);
+-        background-color: var(--bg-3);
+-        z-index: -1;
+-      }
+-
+       &.pending-add {
+         
+         &:before {
+@@ -72,11 +108,7 @@
+       }
+ 
+       .item-list-item-name {
+-        padding: 10px 0;
+-        font-size: 14px;
+-        font-weight: 500;
+         flex-grow: 1;
+-        color: var(--text-color-2);
+         overflow: hidden;
+         text-overflow: ellipsis;
+       }

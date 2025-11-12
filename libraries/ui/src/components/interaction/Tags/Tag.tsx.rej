@@ -1,0 +1,66 @@
+diff a/libraries/ui/src/components/interaction/Tags/Tag.tsx b/libraries/ui/src/components/interaction/Tags/Tag.tsx	(rejected hunks)
+@@ -1,32 +1,48 @@
+-import type { PropsWithChildren } from 'react'
++import { useContext, type PropsWithChildren } from 'react'
++import { RouterContext } from '../../../context/router'
+ 
+ import './Tags.css'
+ 
+-type TagProps = {
+-  tagId: string,
+-  icon: string,
++export type TagProps = {
++  icon?: string,
+   label: string,
+-  onClick: (e, tagId) => void,
++  href?: string,
++  onClick: (e) => void,
+ }
+ 
+ /**
+- * Allows the user to input search queries.
++ * A single tag.
+  */
+ const Tag = ({
+-  tagId,
+   icon,
+   label,
++  href,
+   onClick = () => {},
+ }: PropsWithChildren<TagProps>) => {
+-  return (
+-    <button
+-      className="tag"
+-      type="button"
+-      onClick={(e) => onClick(e, tagId)}
+-    >
+-      {!!icon && <i className={icon} />}{label}
+-    </button>
+-  )
++  const { Link } = useContext(RouterContext)
++  if (href) {
++    return (
++      <Link
++        to={href}
++        className="tag"
++      >
++        {!!icon && <i className={icon} />}{label}
++      </Link>
++    )
++  } else if (onClick) {
++    return (
++      <button
++        key={label}
++        className="tag"
++        type="button"
++        onClick={(e) => onClick(e)}
++      >
++        {!!icon && <i className={icon} />}{label}
++      </button>
++    )
++  } else {
++    return null
++  }
+ }
+ 
+ export default Tag

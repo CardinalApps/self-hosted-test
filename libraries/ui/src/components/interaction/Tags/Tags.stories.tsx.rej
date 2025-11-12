@@ -1,0 +1,18 @@
+diff a/libraries/ui/src/components/interaction/Tags/Tags.stories.tsx b/libraries/ui/src/components/interaction/Tags/Tags.stories.tsx	(rejected hunks)
+@@ -10,14 +10,14 @@ type Story = StoryObj<typeof meta>
+ 
+ export const Default: Story = {
+   args: {
+-    givenTags: ['Tag A', 'Tag B', 'Tag C'],
++    tags: ['Tag A', 'Tag B', 'Tag C'],
+     onClick: (tag) => console.log(tag),
+   },
+ }
+ 
+ export const Icon: Story = {
+   args: {
+-    givenTags: [
++    tags: [
+       {
+         label: 'Frog',
+         icon: 'fas fa-frog',

@@ -119,6 +119,26 @@ export const KeyValue = () => {
   )
 }
 
+export const Compact = () => {
+  return (
+    <List
+      name={'controls-list'}
+      layout={'compact'}
+      items={[
+        { name: 'Item 1' },
+        { name: 'Pending add', value: 'item-2', pendingAdd: true, controls: ['remove'] },
+        { name: 'Pending delete', value: 'item-3', pendingDelete: true, controls: ['delete'] },
+        { name: 'Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4 Item 4', controls: ['add', 'remove', 'delete'] },
+        { name: 'Item 5', value: 'item-5', controls: ['add', 'remove', 'delete'] },
+        { name: 'Item 6', value: 'item-6', controls: ['add', 'remove', 'delete'] },
+      ]}
+      onAdd={(item) => console.log('onAdd', item)}
+      onRemove={(item) => console.log('onRemove', item)}
+      onDelete={(item) => console.log('onDelete', item)}
+    />
+  )
+}
+
 export const Empty = () => {
   return (
     <List

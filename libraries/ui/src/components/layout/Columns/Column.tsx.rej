@@ -1,35 +1,25 @@
 diff a/libraries/ui/src/components/layout/Columns/Column.tsx b/libraries/ui/src/components/layout/Columns/Column.tsx	(rejected hunks)
-@@ -7,8 +7,11 @@ type ColumnProps = {
-   mediumCols?: number,
-   smallCols?: number,
-   minWidth?: number | string,
-+  width?: number | string,
-   justifyContent?: 'space-between' | 'space-around' | 'flex-start' | 'flex-end' | 'center',
+@@ -12,6 +12,7 @@ type ColumnProps = {
    alignItems?: 'space-between' | 'space-around' | 'flex-start' | 'flex-end' | 'center',
-+  grow?: boolean,
-+  shrink?: boolean,
+   grow?: boolean,
+   shrink?: boolean,
++  direction?: 'row' | 'column',
    className?: string,
    style?: CSSProperties,
    children?: ReactNode,
-@@ -19,8 +22,11 @@ const Column = ({
-   mediumCols,
-   smallCols,
-   minWidth,
-+  width,
-   justifyContent = 'center',
+@@ -27,6 +28,7 @@ const Column = ({
    alignItems = 'center',
-+  grow = false,
-+  shrink = true,
+   grow = false,
+   shrink = true,
++  direction = 'row',
    className = '',
    style,
    children,
-@@ -36,6 +42,9 @@ const Column = ({
-         ...(justifyContent && { justifyContent }),
+@@ -43,6 +45,7 @@ const Column = ({
          ...(alignItems && { alignItems }),
          ...(minWidth && { minWidth }),
-+        ...(width && { width }),
-+        flexGrow: grow ? 1 : 0,
-+        flexShrink: shrink ? 1 : 0,
+         ...(width && { width }),
++        ...(direction && { flexDirection: direction }),
+         flexGrow: grow ? 1 : 0,
+         flexShrink: shrink ? 1 : 0,
          ...style,
-       }}
-       {...props}

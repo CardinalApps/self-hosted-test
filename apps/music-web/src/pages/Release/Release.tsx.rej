@@ -1,30 +1,53 @@
 diff a/apps/music-web/src/pages/Release/Release.tsx b/apps/music-web/src/pages/Release/Release.tsx	(rejected hunks)
-@@ -24,8 +24,6 @@ function ReleasePage() {
-     // isSuccess,
-   } = useGetMusicReleaseQuery({ id: releaseId })
+@@ -10,6 +10,8 @@ import { PAGE_LAYOUT } from '@cardinalapps/ui/src/store/slices/layout/constants'
+ import { useGetMusicReleaseQuery } from '@cardinalapps/ui/src/store/apis/musicReleases'
+ import { MusicTrackType } from '@cardinalapps/ui/src/store/apis/musicTracks'
  
--  console.log(data)
--
++import ReleaseMeta from './ReleaseMeta'
++
+ import i18n from './i18n.json'
+ 
+ import './styles.css'
+@@ -27,6 +29,8 @@ function ReleasePage() {
    const artists = data?.artists || []
    //const genres = data?.genres || []
  
-@@ -59,9 +57,9 @@ function ReleasePage() {
-       <Columns grow={true} gap="var(--gutter)" alignItems='flex-start'>
-         <Column minWidth={340}>
++  console.log(data)
++
+   /**
+    * Order tracks by disc then number.
+    */
+@@ -54,8 +58,8 @@ function ReleasePage() {
+       layout={PAGE_LAYOUT.standard}
+       pageTitle={i18n['music-release.title']['en']}
+     >
+-      <Columns grow={true} gap="var(--gutter)" alignItems='flex-start'>
+-        <Column minWidth={340}>
++      <div className="release-page-cols">
++        <div className="artwork-col">
            <MusicRelease
-+            hasArtwork={!!data?.thumbnails?.length}
+             hasArtwork={!!data?.thumbnails?.length}
              releaseId={releaseId}
--            tracks={data?.tracks || []}
--            playButtonSize="m"
-+            tracks={data?.tracks as MusicTrackType[] || []}
-             coverSize={{
-               width: 340,
+@@ -65,8 +69,9 @@ function ReleasePage() {
                height: 340,
-@@ -79,6 +77,7 @@ function ReleasePage() {
-                   releaseId={musicTrack?.release?.id}
-                   trackNumber={musicTrack.trackNumber}
-                   artistName={artists?.[0]?.name as string}
-+                  hasArtwork={!!musicTrack.thumbnails?.length}
-                 />
+             }}
+           />
+-        </Column>
+-        <Column className="music-release-track-list" grow={true}>
++        </div>
++        <div className="data-col">
++          <ReleaseMeta release={data} />
+           {tracksbyDiscInOrder.map((disc) => {
+             return disc.map((musicTrack: MusicTrackType) => {
+               return (
+@@ -82,8 +87,8 @@ function ReleasePage() {
                )
              })
+           })}
+-        </Column>
+-      </Columns>
++        </div>
++      </div>
+     </AppPage>
+   )
+ }

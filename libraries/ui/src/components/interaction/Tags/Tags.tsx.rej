@@ -1,0 +1,51 @@
+diff a/libraries/ui/src/components/interaction/Tags/Tags.tsx b/libraries/ui/src/components/interaction/Tags/Tags.tsx	(rejected hunks)
+@@ -1,25 +1,18 @@
+ import type { PropsWithChildren } from 'react'
+ 
+-import Tag from './Tag'
++import Tag, { TagProps } from './Tag'
+ 
+ import './Tags.css'
+ 
+-export type Tag = string | {
+-  label: string,
+-  icon: string,
+-}
+-
+ type TagsProps = {
+-  givenTags: Tag[],
+-  onClick?: (params) => void,
++  tags: TagProps[],
+ }
+ 
+ /**
+  * Renders tags.
+  */
+ const Tags = ({
+-  givenTags = [],
+-  onClick = () => {},
++  tags: givenTags = [],
+ }: PropsWithChildren<TagsProps>) => {
+   const makeParams = (givenTag) => {
+     if (typeof givenTag === 'string') {
+@@ -35,18 +28,13 @@ const Tags = ({
+     <div className="tags">
+       {givenTags.map((givenTag) => {
+         const params = makeParams(givenTag)
+-        const handleTagClick = () => {
+-          onClick(params)
+-        }
+         return (
+           <Tag
+             key={params.label}
+             label={params.label}
+-            tagId={params?.tagId}
++            href={params.href}
+             icon={params?.icon}
+-            onClick={() => {
+-              handleTagClick()
+-            }}
++            onClick={params?.onClick}
+           />
+         )
+       })}
