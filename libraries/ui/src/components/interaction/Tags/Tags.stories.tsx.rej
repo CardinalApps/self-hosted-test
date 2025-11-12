@@ -1,18 +1,29 @@
 diff a/libraries/ui/src/components/interaction/Tags/Tags.stories.tsx b/libraries/ui/src/components/interaction/Tags/Tags.stories.tsx	(rejected hunks)
-@@ -10,14 +10,14 @@ type Story = StoryObj<typeof meta>
+@@ -1,5 +1,6 @@
+ import type { Meta, StoryObj } from '@storybook/react'
+ import Tags from './Tags'
++import { TagProps } from './Tag'
  
+ const meta = {
+   title: 'Interaction/Tags',
+@@ -11,7 +12,6 @@ type Story = StoryObj<typeof meta>
  export const Default: Story = {
    args: {
--    givenTags: ['Tag A', 'Tag B', 'Tag C'],
-+    tags: ['Tag A', 'Tag B', 'Tag C'],
-     onClick: (tag) => console.log(tag),
+     tags: ['Tag A', 'Tag B', 'Tag C'],
+-    onClick: (tag) => console.log(tag),
    },
  }
  
- export const Icon: Story = {
-   args: {
--    givenTags: [
-+    tags: [
+@@ -21,11 +21,10 @@ export const Icon: Story = {
        {
          label: 'Frog',
          icon: 'fas fa-frog',
+-      },
++      } as TagProps,
+       'Tag B',
+       'Tag C',
+     ],
+-    onClick: (tag) => console.log(tag),
+   },
+ }
+ 

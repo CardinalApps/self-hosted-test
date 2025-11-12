@@ -1,53 +1,9 @@
 diff a/apps/music-web/src/pages/Release/Release.tsx b/apps/music-web/src/pages/Release/Release.tsx	(rejected hunks)
-@@ -10,6 +10,8 @@ import { PAGE_LAYOUT } from '@cardinalapps/ui/src/store/slices/layout/constants'
- import { useGetMusicReleaseQuery } from '@cardinalapps/ui/src/store/apis/musicReleases'
- import { MusicTrackType } from '@cardinalapps/ui/src/store/apis/musicTracks'
+@@ -3,7 +3,6 @@ import { useContext, useMemo } from 'react'
+ import AppPage from '@cardinalapps/ui/src/components/features/AppBase/AppPage'
+ import MusicRelease from '@cardinalapps/ui/src/components/interaction/MusicRelease'
+ import MusicTrack from '@cardinalapps/ui/src/components/interaction/MusicTrack'
+-import { Column, Columns } from '@cardinalapps/ui/src/components/layout/Columns'
  
-+import ReleaseMeta from './ReleaseMeta'
-+
- import i18n from './i18n.json'
- 
- import './styles.css'
-@@ -27,6 +29,8 @@ function ReleasePage() {
-   const artists = data?.artists || []
-   //const genres = data?.genres || []
- 
-+  console.log(data)
-+
-   /**
-    * Order tracks by disc then number.
-    */
-@@ -54,8 +58,8 @@ function ReleasePage() {
-       layout={PAGE_LAYOUT.standard}
-       pageTitle={i18n['music-release.title']['en']}
-     >
--      <Columns grow={true} gap="var(--gutter)" alignItems='flex-start'>
--        <Column minWidth={340}>
-+      <div className="release-page-cols">
-+        <div className="artwork-col">
-           <MusicRelease
-             hasArtwork={!!data?.thumbnails?.length}
-             releaseId={releaseId}
-@@ -65,8 +69,9 @@ function ReleasePage() {
-               height: 340,
-             }}
-           />
--        </Column>
--        <Column className="music-release-track-list" grow={true}>
-+        </div>
-+        <div className="data-col">
-+          <ReleaseMeta release={data} />
-           {tracksbyDiscInOrder.map((disc) => {
-             return disc.map((musicTrack: MusicTrackType) => {
-               return (
-@@ -82,8 +87,8 @@ function ReleasePage() {
-               )
-             })
-           })}
--        </Column>
--      </Columns>
-+        </div>
-+      </div>
-     </AppPage>
-   )
- }
+ import { RouterContext } from '@cardinalapps/ui/src/context/router'
+ import { PAGE_LAYOUT } from '@cardinalapps/ui/src/store/slices/layout/constants'
