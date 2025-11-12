@@ -6,6 +6,7 @@ import MusicRelease from '../../../../interaction/MusicRelease'
 
 import { PAGE_LAYOUT } from '../../../../../store/slices/layout'
 import { useGetMusicReleasesQuery } from '../../../../../store/apis/musicReleases'
+import { MusicTrackType } from '../../../../../store/apis/musicTracks'
 
 function MusicReleasesPage() {
   const {
@@ -35,7 +36,7 @@ function MusicReleasesPage() {
                   <MusicRelease
                     key={i}
                     releaseId={release?.id}
-                    tracks={release.tracks}
+                    tracks={release.tracks as MusicTrackType[]}
                     releaseTitle={release.title}
                     artistName={release?.artists?.[0]?.name as string}
                   />

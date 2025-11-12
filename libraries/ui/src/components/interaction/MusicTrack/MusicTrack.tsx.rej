@@ -1,10 +1,24 @@
 diff a/libraries/ui/src/components/interaction/MusicTrack/MusicTrack.tsx b/libraries/ui/src/components/interaction/MusicTrack/MusicTrack.tsx	(rejected hunks)
-@@ -61,7 +61,7 @@ const MusicTrack = ({
-       </div>
-       {!!trackNumber && <p className="col music-track-number">{trackNumber}.</p>}
-       <div className="col music-track-info">
--        {!!releaseTitle && <p className="music-track-title">{trackTitle}</p>}
-+        {!!trackTitle && <p className="music-track-title">{trackTitle}</p>}
-         {!!(releaseTitle || artistName) &&
-           <div className="music-release">
-             {!!releaseTitle &&
+@@ -22,6 +22,7 @@ type MusicTrackProps = {
+   artistLink?: string,
+   duration?: string,
+   plays?: number,
++  hasArtwork?: boolean,
+ }
+ 
+ const MusicTrack = ({
+@@ -35,12 +36,13 @@ const MusicTrack = ({
+   artistLink,
+   duration,
+   plays,
++  hasArtwork = true,
+ }: PropsWithChildren<MusicTrackProps>) => {
+   const dispatch = useDispatch()
+   const { Link } = useContext(RouterContext)
+   //const { lang } = useSelector(settingsSelectors.current)
+   const playing = useSelector(musicSelectors.playing)
+-  const artwork = useReleaseCover(releaseId)
++  const artwork = useReleaseCover(hasArtwork ? releaseId : null)
+ 
+   const handleDoubleClick = (e) => {
+     if (

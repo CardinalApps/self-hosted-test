@@ -1,66 +1,36 @@
 diff a/libraries/ui/src/components/interaction/MusicRelease/MusicRelease.tsx b/libraries/ui/src/components/interaction/MusicRelease/MusicRelease.tsx	(rejected hunks)
-@@ -3,7 +3,7 @@ import type { PropsWithChildren } from 'react'
- import clsx from 'clsx'
- 
- //import Icon from '../../typography/Icon'
--import MusicPlaybackButton from '../MusicPlaybackButton'
-+import MusicPlaybackButton, { PlayButtonSizeType } from '../MusicPlaybackButton'
+@@ -6,6 +6,7 @@ import clsx from 'clsx'
+ import MusicPlaybackButton, { PlayButtonSizeType } from '../MusicPlaybackButton'
  import { RouterContext } from '../../../context/router'
  import { useReleaseCover } from '../../../hooks/useReleaseCover'
++import { MusicTrackType } from '../../../store/apis/musicTracks'
  
-@@ -15,11 +15,13 @@ type MusicReleaseProps = {
+ //import { settingsSelectors } from '../../../store/slices/settings'
+ 
+@@ -13,7 +14,8 @@ import './MusicRelease.css'
+ 
+ type MusicReleaseProps = {
    overrideArtwork?: string,
-   tracks?: { id: number, trackNumber: number }[],
+-  tracks?: { id: number, trackNumber: number }[],
++  hasArtwork?: boolean,
++  tracks?: MusicTrackType[],
    releaseTitle?: string,
--  releaseId?: number,
-+  releaseId?: string | number,
+   releaseId?: string | number,
    releaseYear?: string,
-   releaseLink?: string,
-   artistName?: string,
-   artistLink?: string,
-+  coverSize?: { width?: number, height?: number },
-+  playButtonSize?: PlayButtonSizeType,
- }
+@@ -26,6 +28,7 @@ type MusicReleaseProps = {
  
  const MusicRelease = ({
-@@ -31,6 +33,8 @@ const MusicRelease = ({
-   releaseLink,
-   artistName,
-   artistLink,
-+  coverSize = {},
-+  playButtonSize,
- }: PropsWithChildren<MusicReleaseProps>) => {
-   const { Link } = useContext(RouterContext)
-   //const { lang } = useSelector(settingsSelectors.current)
-@@ -46,7 +50,6 @@ const MusicRelease = ({
-     return coverSrc
-   }
+   overrideArtwork,
++  hasArtwork = true,
+   tracks = [],
+   releaseTitle,
+   releaseId,
+@@ -41,7 +44,7 @@ const MusicRelease = ({
+   const [showInner, setShowInner] = useState<boolean>()
+   const [tracksInOrder, setTracksInOrder] = useState(tracks)
+   const trackIdsInRelease = tracksInOrder.map((track) => track.id).filter((track) => !!track)
+-  const coverSrc = useReleaseCover(releaseId)
++  const coverSrc = useReleaseCover(hasArtwork ? releaseId : null)
  
--  // Fixme this doesn't seem to work consistently
-   useEffect(() => {
-     const ordered = [...tracks]
-     ordered.sort((a, b) => a?.trackNumber > b?.trackNumber ? 1 : -1)
-@@ -61,13 +64,21 @@ const MusicRelease = ({
-         onBlur={() => setShowInner(false)}
-         onMouseEnter={() => setShowInner(true)}
-         onMouseLeave={() => setShowInner(false)}
--        style={{ ...(getArtwork() && { backgroundImage: `url('${getArtwork()}')` }) }}
-+        style={{ ...(getArtwork() && {
-+          width: coverSize?.width,
-+          height: coverSize?.height,
-+          backgroundImage: `url('${getArtwork()}')` }),
-+        }}
-       >
-         {releaseLink && Link && <Link to={releaseLink} tabIndex={-1} className="cover-link"></Link>}
-         {!getArtwork() && <i className="no-artwork-icon far fa-image" />}
-         <div className="controls">
-           <div className="col music-track-play-pause">
--            <MusicPlaybackButton musicTrackIds={trackIdsInRelease} musicTrackIdToPlay={trackIdsInRelease?.[0]} />
-+            <MusicPlaybackButton
-+              size={playButtonSize}
-+              musicTrackIds={trackIdsInRelease}
-+              musicTrackIdToPlay={trackIdsInRelease?.[0]}
-+            />
-           </div>
-           {/* <div className="col music-track-favorite">
-             <Icon fa="fas fa-star" hoverType="icon" onClick={() => console.log('fav')} />
+   const getArtwork = () => {
+     if (overrideArtwork) {

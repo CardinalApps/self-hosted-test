@@ -1,8 +1,30 @@
 diff a/apps/music-web/src/pages/Release/Release.tsx b/apps/music-web/src/pages/Release/Release.tsx	(rejected hunks)
-@@ -1,6 +1,5 @@
- import { useContext, useMemo } from 'react'
+@@ -24,8 +24,6 @@ function ReleasePage() {
+     // isSuccess,
+   } = useGetMusicReleaseQuery({ id: releaseId })
  
+-  console.log(data)
 -
- import AppPage from '@cardinalapps/ui/src/components/features/AppBase/AppPage'
- import MusicRelease from '@cardinalapps/ui/src/components/interaction/MusicRelease'
- import MusicTrack from '@cardinalapps/ui/src/components/interaction/MusicTrack'
+   const artists = data?.artists || []
+   //const genres = data?.genres || []
+ 
+@@ -59,9 +57,9 @@ function ReleasePage() {
+       <Columns grow={true} gap="var(--gutter)" alignItems='flex-start'>
+         <Column minWidth={340}>
+           <MusicRelease
++            hasArtwork={!!data?.thumbnails?.length}
+             releaseId={releaseId}
+-            tracks={data?.tracks || []}
+-            playButtonSize="m"
++            tracks={data?.tracks as MusicTrackType[] || []}
+             coverSize={{
+               width: 340,
+               height: 340,
+@@ -79,6 +77,7 @@ function ReleasePage() {
+                   releaseId={musicTrack?.release?.id}
+                   trackNumber={musicTrack.trackNumber}
+                   artistName={artists?.[0]?.name as string}
++                  hasArtwork={!!musicTrack.thumbnails?.length}
+                 />
+               )
+             })
