@@ -1,0 +1,11 @@
+diff a/libraries/ui/src/store/slices/toast/index.ts b/libraries/ui/src/store/slices/toast/index.ts	(rejected hunks)
+@@ -30,6 +30,9 @@ const toastSlice = createSlice({
+     removeFromQueue: (state, { payload }: PayloadAction<string>) => {
+       state.queue = state.queue.filter((toast) => toast.toastId !== payload)
+     },
++    flushQueue: (state) => {
++      state.queue = []
++    },
+     shiftQueue: (state) => {
+       const newQueue = [...state.queue]
+       newQueue.shift()
