@@ -1,27 +1,30 @@
 diff a/libraries/ui/src/components/features/AppBase/AppPage.tsx b/libraries/ui/src/components/features/AppBase/AppPage.tsx	(rejected hunks)
-@@ -1,7 +1,6 @@
--import { useEffect } from 'react'
-+import { useContext, useEffect } from 'react'
- import type { CSSProperties, PropsWithChildren, ReactNode } from 'react'
- import { useDispatch, useSelector } from 'react-redux'
--import { useLocation } from 'react-router-dom'
- import clsx from 'clsx'
+@@ -18,6 +18,7 @@ type AppPageProps = {
+   pageTitle?: string,
+   pageDocLink?: string,
+   className?: string | string[],
++  loading?: boolean,
+   restoreScrollPoint?: boolean,
+   toolbar?: ReactNode,
+   virtualLayout?: ReactNode,
+@@ -33,6 +34,7 @@ function AppPage({
+   pageTitle,
+   pageDocLink,
+   className = [],
++  loading = false,
+   children,
+   restoreScrollPoint = true,
+   toolbar,
+@@ -84,7 +86,11 @@ function AppPage({
+   }, [layout, pageTitle, pageDocLink])
  
- import {
-@@ -12,6 +11,7 @@ import {
-   SCROLL_RESTORATION_KEYS,
-   SIDEBAR_MODE,
- } from '../../../store/slices/layout'
-+import { RouterContext } from '../../../context/router'
- 
- type AppPageProps = {
-   layout?: string,
-@@ -40,7 +40,7 @@ function AppPage({
-   ...props
- }: PropsWithChildren<AppPageProps>) {
-   const dispatch = useDispatch()
--  const location = useLocation()
-+  const { location } = useContext(RouterContext)
-   const scrollKey = `${SCROLL_RESTORATION_KEYS.page}:${location.pathname}`
-   const scrollPoints = useSelector(layoutSelectors.scrollPoints)
-   const userSelectedSidebarMode = useSelector(layoutSelectors.userSelectedSidebarMode)
+   return (
+-    <div {...props} style={style} className={clsx('app-page', className, sidebarIsCollapsed && 'sidebar-is-collapsed')}>
++    <div
++      {...props}
++      style={style}
++      className={clsx('app-page', className, sidebarIsCollapsed && 'sidebar-is-collapsed', loading && 'loading')}
++    >
+       {!!toolbar && (
+         <div className="page-toolbar">
+           {toolbar}

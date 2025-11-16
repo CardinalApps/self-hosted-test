@@ -1,27 +1,35 @@
 diff a/servers/media/src/modules/music-release/music-release.service.ts b/servers/media/src/modules/music-release/music-release.service.ts	(rejected hunks)
-@@ -13,7 +13,7 @@ import { EventService } from '../event/event.service'
- import { GetMusicReleasesDto } from './dtos/GetMusicReleases.dto'
- import { MusicArtist } from '../music-artist/music-artist.entity'
- import { MusicGenre } from '../music-genres/music-genre.entity'
--import { sortableString } from '../../utils/string'
-+import { isNumeric, sortableString } from '../../utils/string'
- 
- import { ALBUM_ART_FILE_NAME, ALBUM_ART_FILE_EXTENSION } from './types'
- 
-@@ -48,11 +48,12 @@ export class MusicReleaseService {
-   /**
-    * Gets a single music release.
-    */
--  async get(id: number, relations = {}): Promise<MusicRelease | null> {
-+  async get(id: number | string, relations = {}): Promise<MusicRelease | null> {
-+    const where = isNumeric(id)
-+      ? { id: id as number }
-+      : { musicReleaseId: id as string }
-     const musicRelease = await this.musicReleaseRepository.find({
--      where: {
--        id: id,
+@@ -52,18 +52,24 @@ export class MusicReleaseService {
+     const where = isNumeric(id)
+       ? { id: id as number }
+       : { musicReleaseId: id as string }
+-    const musicRelease = await this.musicReleaseRepository.find({
+-      where,
+-      relations: {
+-        ...relations,
 -      },
-+      where,
-       relations: {
-         ...relations,
-       },
+-    })
+ 
+-    if (!musicRelease.length) {
++    try {
++      const musicRelease = await this.musicReleaseRepository.find({
++        where,
++        relations: {
++          ...relations,
++        },
++      })
++
++      if (!musicRelease.length) {
++        return null
++      }
++
++      return musicRelease[0]
++    } catch (error) {
++      Logger.error(error)
+       return null
+     }
+-
+-    return musicRelease[0]
+   }
+ 
+   /**
