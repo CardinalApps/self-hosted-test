@@ -1,0 +1,19 @@
+diff a/apps/music-web/src/components/Nav/Nav.tsx b/apps/music-web/src/components/Nav/Nav.tsx	(rejected hunks)
+@@ -61,7 +61,7 @@ function Nav({ children }: PropsWithChildren) {
+       </li>
+ 
+       {/* Playlists */}
+-      <li
++      {/* <li
+         className={`${activeItem === routes.PLAYLISTS ? 'active' : ''}`}
+         key="playlists"
+       >
+@@ -69,7 +69,7 @@ function Nav({ children }: PropsWithChildren) {
+           <i className="fas fa-stream" />
+           <span>{i18n['nav.playlists']['en']}</span>
+         </Link>
+-      </li>
++      </li> */}
+ 
+       {/* History */}
+       <li
