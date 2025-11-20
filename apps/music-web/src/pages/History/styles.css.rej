@@ -1,0 +1,24 @@
+diff a/apps/music-web/src/pages/History/styles.css b/apps/music-web/src/pages/History/styles.css	(rejected hunks)
+@@ -1,4 +1,19 @@
+-.history {
+-  height: 100%;
+-  position: relative;
++.history-infinite-scroll {
++
++  .virtual-row {
++
++    &:last-of-type {
++      
++      .music-history-entry {
++        border-bottom: none;
++      }
++    }
++  }
++  
++  .music-history-entry {
++    width: 100%;
++    display: grid;
++    grid-template-columns: 1fr;
++    border-bottom: 1px solid var(--border-color-1);
++  }
+ }

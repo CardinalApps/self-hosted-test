@@ -1,35 +1,48 @@
 diff a/libraries/ui/src/components/interaction/MusicPlaybackButton/MusicPlaybackButton.tsx b/libraries/ui/src/components/interaction/MusicPlaybackButton/MusicPlaybackButton.tsx	(rejected hunks)
-@@ -13,11 +13,14 @@ import i18n from './i18n'
+@@ -1,13 +1,15 @@
+ import type { PropsWithChildren } from 'react'
+-import { useDispatch, useSelector } from 'react-redux'
++import { useSelector } from 'react-redux'
+ import clsx from 'clsx'
  
- import './MusicPlaybackButton.css'
++import { useAppDispatch } from '../../../hooks/useAppDispatch'
+ import Icon from '../../typography/Icon'
+ import MusicAnimation from '../../layout/MusicAnimation'
+ import Loading from '../../layout/Loading'
  
-+export type PlayButtonSizeType = 'm' | 's'
-+
+ import { settingsSelectors } from '../../../store/slices/settings'
+ import { musicSelectors, musicActions, Player } from '../../../store/slices/music'
++import playMusic from '../../../store/slices/music/thunks/play'
+ 
+ import i18n from './i18n'
+ 
+@@ -16,9 +18,9 @@ import './MusicPlaybackButton.css'
+ export type PlayButtonSizeType = 'm' | 's'
+ 
  type MusicPlaybackButtonProps = {
-   musicTrackIds: number[],
+-  musicTrackIds: number[],
++  musicTrackIds: string[],
    musicTrackTitle?: string,
-   musicTrackIdToPlay: number,
+-  musicTrackIdToPlay: number,
++  musicTrackIdToPlay: string,
    solid?: boolean,
-+  size?: PlayButtonSizeType,
+   size?: PlayButtonSizeType,
  }
- 
- /**
-@@ -35,6 +38,7 @@ const MusicPlaybackButton = ({
-   musicTrackIds,
-   musicTrackIdToPlay,
+@@ -40,7 +42,7 @@ const MusicPlaybackButton = ({
    solid,
-+  size = 's',
+   size = 's',
  }: PropsWithChildren<MusicPlaybackButtonProps>) => {
-   const dispatch = useDispatch()
+-  const dispatch = useDispatch()
++  const dispatch = useAppDispatch()
    const { lang } = useSelector(settingsSelectors.current)
-@@ -66,7 +70,9 @@ const MusicPlaybackButton = ({
+   const playing = useSelector(musicSelectors.playing)
+   const loading = useSelector(musicSelectors.loading)
+@@ -50,7 +52,7 @@ const MusicPlaybackButton = ({
+   const isPaused = paused.find((player: Player) => musicTrackIds.includes(player.trackId))
+ 
+   const handlePlayClick = () => {
+-    dispatch(musicActions.play({ trackId: musicTrackIdToPlay }))
++    dispatch(playMusic({ trackId: musicTrackIdToPlay }))
    }
  
-   return (
--    <div className={clsx('music-playback-button', !!solid && 'solid')}>
-+    <div
-+      className={clsx('music-playback-button', !!solid && 'solid', !!size && `size-${size}`)}
-+    >
-       {(isLoading) &&
-         <Loading size="s" />
-       }
+   const handlePauseClick = () => {

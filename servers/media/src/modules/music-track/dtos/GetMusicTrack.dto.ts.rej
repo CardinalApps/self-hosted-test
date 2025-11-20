@@ -1,0 +1,17 @@
+diff a/servers/media/src/modules/music-track/dtos/GetMusicTrack.dto.ts b/servers/media/src/modules/music-track/dtos/GetMusicTrack.dto.ts	(rejected hunks)
+@@ -1,10 +1,10 @@
+ import { Transform } from 'class-transformer'
+-import { IsNumber } from 'class-validator'
++import { IsString } from 'class-validator'
+ 
+-import { toNumber } from '../../../utils/transformers'
++import { toString } from '../../../utils/transformers'
+ 
+ export class GetMusicTrackDto {
+-  @Transform(toNumber)
+-  @IsNumber()
+-  id: number
++  @Transform(toString)
++  @IsString()
++  id: string
+ }

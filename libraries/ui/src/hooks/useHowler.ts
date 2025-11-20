@@ -1,10 +1,12 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Howl } from 'howler'
 
+import { getSetting } from '@cardinalapps/app-settings/src'
 import { musicSelectors, musicActions, Player } from '../store/slices/music'
 import { PLAYBACK_STATE } from '../store/slices/music/constants'
 import { authorizedFetchHeaders, JWT_TYPE } from '../lib/auth/jwt'
+import { settingsSelectors } from '../store/slices/settings'
 
 import { HOME_SERVER_HOST } from '../../env'
 import homeServerAPI from '../lib/homeserver/homeServerAPI'
@@ -14,6 +16,25 @@ const streamUrl = (id) => `${HOME_SERVER_HOST}/api/v1/music/stream/${id}`
 
 export const getHowl = (playerId) => howls?.[playerId]
 export const hasHowl = (playerId) => !!howls?.[playerId]
+
+/**
+ * Send playback history to the home server.
+ */
+const saveMusicHistory = (player, howl, progress?: number) => {
+  if (!progress) {
+    const cachedSeek = sessionStorage.getItem(`audio-player-${player.id}-seek`)
+    if (cachedSeek) {
+      progress = Number(cachedSeek) / (howl.duration())
+    }
+    sessionStorage.removeItem(`audio-player-${player.id}-seek`)
+  }
+  homeServerAPI('/music/history', 'POST', {
+    body: {
+      trackId: player.trackId,
+      progress: progress || 0,
+    },
+  })
+}
 
 /**
  * This custom hook is a connector between Redux, where the current playback
@@ -34,9 +55,9 @@ export default function useHowler() {
   const playingIds = useSelector(musicSelectors.playingIds)
   const paused = useSelector(musicSelectors.paused)
   const pausedIds = useSelector(musicSelectors.pausedIds)
-  //const settings = useSelector(settingsSelectors.current)
-  //const { defaultValue: defaultMaxConcurrentAudioStreams } = useMemo(() => getSetting('max_concurrent_audio_streams')(), [])
-  //const maxConcurrentAudioStreams = Number(settings.max_concurrent_audio_streams || defaultMaxConcurrentAudioStreams)
+  const { lang, max_concurrent_audio_streams } = useSelector(settingsSelectors.current)
+  const { defaultValue: defaultMaxConcurrentAudioStreams } = useMemo(() => getSetting('max_concurrent_audio_streams')('music', lang), [])
+  const maxConcurrentAudioStreams = Number(max_concurrent_audio_streams || defaultMaxConcurrentAudioStreams)
 
   /**
    * Creates a new Howl instance for a player. Includes callbacks for
@@ -57,37 +78,21 @@ export default function useHowler() {
       },
     })
 
-    const saveMusicHistory = (progress?: number) => {
-      if (!progress) {
-        const cachedSeek = sessionStorage.getItem(`audio-player-${playerId}-seek`)
-        if (cachedSeek) {
-          progress = Number(cachedSeek) / (howl.duration())
-        }
-        sessionStorage.removeItem(`audio-player-${playerId}-seek`)
-      }
-      homeServerAPI('/music/history', 'POST', {
-        body: {
-          trackId: player.trackId,
-          progress: progress || 0,
-        },
-      })
-    }
-
     howl.on('load', () => {
       // Howl may be destroyed before load is complete
       if (howl) {
         howl.seek(player.currentSeconds)
-        dispatch(musicActions.loaded({ playerId: player.id }))
+        dispatch(musicActions.loaded({ playerId: player.id, maxConcurrentPlayingPlayers: maxConcurrentAudioStreams }))
       }
     })
 
     howl.on('end', () => {
-      saveMusicHistory(1)
+      saveMusicHistory(player, howl, 1)
       dispatch(musicActions.stop(player.id))
     })
 
     howl.on('stop', () => {
-      saveMusicHistory()
+      saveMusicHistory(player, howl)
     })
 
     return howl
@@ -96,6 +101,26 @@ export default function useHowler() {
   /**
    * Create and destroy Howls when players change. A new player is created when
    * the user starts a new audio stream, and players are destroyed when playback ends.
+   */
+  useEffect(() => {
+    // Look for new players and create Howls we don't have
+    Object.values(players).forEach((player) => {
+      if (!hasHowl(player.id)) {
+        howls[player.id] = createHowl(player.id)
+      }
+    })
+
+    // Look for stale Howl instances and destroy them
+    Object.keys(howls).forEach((howlPlayerId) => {
+      if (!Object.values(players).find((player) => player.id === howlPlayerId)) {
+        howls[howlPlayerId].unload()
+        delete howls[howlPlayerId]
+      }
+    })
+  }, [playerIds])
+
+  /**
+   * Look for stale cached seek in the sessionStorage.
    */
   useEffect(() => {
     // Look for new players and create Howls we don't have
@@ -144,7 +169,7 @@ export default function useHowler() {
    * 
    * TODO
    */
-  // useEffect(() => {
-  //   console.log('max concurrent streams', maxConcurrentAudioStreams)
-  // }, [maxConcurrentAudioStreams])
+  useEffect(() => {
+    console.log('max concurrent streams', maxConcurrentAudioStreams)
+  }, [maxConcurrentAudioStreams])
 }

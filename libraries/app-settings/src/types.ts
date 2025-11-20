@@ -5,7 +5,7 @@ export type SupportedCardinalApp =
   'cinema' |
   'books'
 
-export type SupportedLang = 'en'
+export type SupportedLang = 'en' | string
 
 export type InputType =
   'select' |

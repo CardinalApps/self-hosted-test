@@ -1,0 +1,21 @@
+diff a/apps/music-web/src/pages/History/i18n.json b/apps/music-web/src/pages/History/i18n.json	(rejected hunks)
+@@ -1,14 +1,11 @@
+ {
+-  "title": {
++  "music-history.title": {
+     "en": "Playback History"
+   },
+-  "no-history-card-title": {
+-    "en": "No history"
+-  },
+-  "no-history-card-message": {
+-    "en": "You haven't listened to any music yet."
++  "music-history.empty.title": {
++    "en": "Playback History"
+   },
+-  "no-history-button": {
+-    "en": "Import music"
++  "music-history.empty.message": {
++    "en": "Your server's music playback history will appear here."
+   }
+ }

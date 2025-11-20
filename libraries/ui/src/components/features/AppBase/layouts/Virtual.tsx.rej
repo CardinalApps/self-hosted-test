@@ -1,10 +1,42 @@
 diff a/libraries/ui/src/components/features/AppBase/layouts/Virtual.tsx b/libraries/ui/src/components/features/AppBase/layouts/Virtual.tsx	(rejected hunks)
-@@ -220,7 +220,7 @@ function VirtualLayout({
+@@ -40,6 +40,9 @@ type VirtualProps = {
+   fetchPreviousPage: () => void,
+   isFetchingNextPage: boolean,
+   isFetchingPreviousPage: boolean,
++  emptyTitle?: string,
++  emptyMessage?: string,
++  emptyButton?: boolean | React.ReactNode,
+ }
+ 
+ /**
+@@ -73,6 +76,9 @@ function VirtualLayout({
+   fetchPreviousPage,
+   isFetchingNextPage,
+   isFetchingPreviousPage,
++  emptyTitle,
++  emptyMessage,
++  emptyButton,
+   ...props
+ }: PropsWithChildren<VirtualProps>) {
+   const dispatch = useAppDispatch()
+@@ -218,16 +224,16 @@ function VirtualLayout({
+             border={0}
+             shadow={1}
              bg={1}
-             header={<Icon fa="fas fa-exclamation-circle" />}
-             footer={(
--              <Button href={getAppUrl('admin', 'artists')} solid={true}>
-+              <Button href={getAppUrl('indexing', { app: 'admin' })} solid={true}>
+-            header={<Icon fa="fas fa-exclamation-circle" />}
+-            footer={(
++            header={<Icon fa="fas fa-info-circle" hoverType={null} />}
++            footer={!!emptyButton && (
+               <Button href={getAppUrl('indexing', { app: 'admin' })} solid={true}>
                  {i18n['virtual.empty.button']['en']}
                </Button>
              )}
+           >
+             <>
+-              <H5>{i18n['virtual.empty.title']['en']}</H5>
+-              <p dangerouslySetInnerHTML={{ __html: i18n['virtual.empty.desc']['en'] }} />
++              <H5>{emptyTitle || i18n['virtual.empty.title']['en']}</H5>
++              <p dangerouslySetInnerHTML={{ __html: emptyMessage || i18n['virtual.empty.desc']['en'] }} />
+             </>
+           </Card>
+         </div>
