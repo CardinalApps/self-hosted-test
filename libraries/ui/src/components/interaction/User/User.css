@@ -1,0 +1,10 @@
+.user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .user-name {
+    font-size: 13px;
+    font-weight: 500;
+  }
+}

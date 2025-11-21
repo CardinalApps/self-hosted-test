@@ -1,68 +1,9 @@
 diff a/apps/music-web/src/pages/History/History.tsx b/apps/music-web/src/pages/History/History.tsx	(rejected hunks)
-@@ -1,36 +1,43 @@
- import AppPage from '@cardinalapps/ui/src/components/features/AppBase/AppPage'
--import Button from '@cardinalapps/ui/src/components/interaction/Button'
--
--import NoContentMessage from '../../components/NoContentMessage'
-+import Toolbar from '@cardinalapps/ui/src/components/interaction/Toolbar'
-+import { ToolbarItem } from '@cardinalapps/ui/src/components/interaction/Toolbar/types'
- 
- import { PAGE_LAYOUT } from '@cardinalapps/ui/src/store/slices/layout/constants'
- 
-+import MusicHistoryInfiniteScroll from './HistoryInfiniteScroll'
-+
- import i18n from './i18n.json'
-+
- import './styles.css'
- 
--import { HOME_SERVER_HOST } from '../../env'
-+const TOOLBAR_NAME = 'music-history-toolbar'
-+const VIRTUAL_VIEW_NAME = 'music-history-page'
- 
--function HistoryPage() {
-+function MusicHistoryPage() {
-   return (
--    <AppPage layout={PAGE_LAYOUT.fixed} pageTitle={i18n['title']['en']}>
--      <div className="history">
--        <section>
--          <NoContentMessage
--            showUnavailableMessage={true}
--            icon={<i className="fas fa-upload" />}
--            title={i18n['no-history-card-title']['en']}
--            button={
--              <Button href={`${HOME_SERVER_HOST}/admin/media`} target="_blank" solid={true}>
--                {i18n['no-history-button']['en']}
--              </Button>
--            }
--          >
--            <p>{i18n['no-history-card-message']['en']}</p>
--          </NoContentMessage>
--        </section>
--      </div>
-+    <AppPage
-+      layout={PAGE_LAYOUT.virtual}
-+      pageTitle={i18n['music-history.title']['en']}
-+      restoreScrollPoint={false}
-+      toolbar={(
-+        <Toolbar
-+          name={TOOLBAR_NAME}
-+          virtualViewName={VIRTUAL_VIEW_NAME}
-+          items={[
-+            {
-+              slug: 'order',
-+              render: ToolbarItem.ORDER,
-+            },
-+          ]}
-+        />
-+      )}
-+    >
-+      <MusicHistoryInfiniteScroll
-+        virtualViewName={VIRTUAL_VIEW_NAME}
-+        toolbarName={TOOLBAR_NAME}
-+      />
-     </AppPage>
-   )
- }
- 
--export default HistoryPage
-+export default MusicHistoryPage
+@@ -27,6 +27,7 @@ function MusicHistoryPage() {
+             {
+               slug: 'order',
+               render: ToolbarItem.ORDER,
++              initialValue: 'desc',
+             },
+           ]}
+         />

@@ -1,0 +1,9 @@
+diff a/libraries/ui/src/lib/formatting/time.ts b/libraries/ui/src/lib/formatting/time.ts	(rejected hunks)
+@@ -26,3 +26,7 @@ export const secondsToMMSS = (seconds) => {
+   const s = Math.floor(seconds % 60)
+   return `${h ? h.toString().padStart(2, '0') : ''}${m ? m.toString().padStart(2, '0') : '00'}:${s ? s.toString().padStart(2, '0') : '00'}`
+ }
++
++export const formatDate = (date: string) => {
++  return new Date(date).toLocaleString()
++}

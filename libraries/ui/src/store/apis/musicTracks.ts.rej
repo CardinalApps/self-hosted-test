@@ -1,18 +1,9 @@
 diff a/libraries/ui/src/store/apis/musicTracks.ts b/libraries/ui/src/store/apis/musicTracks.ts	(rejected hunks)
-@@ -6,6 +6,7 @@ import { baseApi } from './base'
- export type TracksSortParams = CommonSortParams | 'sortTitle' | 'trackNumber'
- export type MusicTrackType = {
-   id: number,
-+  musicTrackId: string,
-   title: string,
-   trackNumber: number,
+@@ -12,6 +12,7 @@ export type MusicTrackType = {
    discNumber: number,
-@@ -93,7 +94,7 @@ export const musicTracksApi = baseApi
-        */
-       getMusicTrack: builder.query<
-         MusicTrackType,
--        { id: number }
-+        { id: string }
-       >({
-         query: ({ id }) => {
-           return queryParams(`/music/track/${id}`)
+   release: {
+     title: string,
++    musicReleaseId: string,
+     thumbnails: Record<string, unknown>[],
+     id: number,
+     releaseId: string,

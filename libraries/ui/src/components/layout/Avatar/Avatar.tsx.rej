@@ -1,0 +1,19 @@
+diff a/libraries/ui/src/components/layout/Avatar/Avatar.tsx b/libraries/ui/src/components/layout/Avatar/Avatar.tsx	(rejected hunks)
+@@ -4,14 +4,15 @@ import Icon from '../../typography/Icon'
+ 
+ import './Avatar.css'
+ 
+-type AvatarProps = {
++export type AvatarSize = 'xs' | 's' | 'm' | 'l' | 'xl'
++export type AvatarProps = {
+   type?: 'image' | 'color' | 'guest',
+   image?: string,
+   fa?: string,
+   title?: string,
+   initials?: string,
+   color?: string,
+-  size?: 'xs' | 's' | 'm' | 'l' | 'xl',
++  size?: AvatarSize,
+   className?: string,
+   style?: Record<string, unknown>,
+ }

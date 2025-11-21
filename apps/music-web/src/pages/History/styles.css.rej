@@ -1,24 +1,47 @@
 diff a/apps/music-web/src/pages/History/styles.css b/apps/music-web/src/pages/History/styles.css	(rejected hunks)
-@@ -1,4 +1,19 @@
--.history {
--  height: 100%;
--  position: relative;
-+.history-infinite-scroll {
+@@ -12,8 +12,42 @@
+   
+   .music-history-entry {
+     width: 100%;
+-    display: grid;
+-    grid-template-columns: 1fr;
+-    border-bottom: 1px solid var(--border-color-1);
++    height: 100%;
++    position: relative;
 +
-+  .virtual-row {
++    a {
++      color: var(--text-color-2);
 +
-+    &:last-of-type {
-+      
-+      .music-history-entry {
-+        border-bottom: none;
++      &:hover {
++        color: var(--accent-color);
++        text-decoration: underline;
 +      }
 +    }
-+  }
-+  
-+  .music-history-entry {
-+    width: 100%;
-+    display: grid;
-+    grid-template-columns: 1fr;
-+    border-bottom: 1px solid var(--border-color-1);
-+  }
++
++    .date {
++      text-align: right;
++    }
++
++    .cols {
++      height: 100%;
++      padding: 0 10px;
++      display: grid;
++      grid-template-columns: 50px 50px 1fr 200px;
++      align-items: center;
++      font-size: 14px;
++    }
++
++    .progress-bar {
++      height: 100%;
++      position: absolute;
++      top: 0;
++      left: 0;
++      bottom: 0;
++      border-radius: 4px;
++      background-color: #000;
++      opacity: 0.04;
++      z-index: -1;
++      pointer-events: none;
++    }
+   }
  }

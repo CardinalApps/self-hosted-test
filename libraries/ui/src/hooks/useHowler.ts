@@ -5,7 +5,7 @@ import { Howl } from 'howler'
 import { getSetting } from '@cardinalapps/app-settings/src'
 import { SupportedLang } from '@cardinalapps/app-settings/src/types'
 import { musicSelectors, musicActions, Player } from '../store/slices/music'
-import { PLAYBACK_STATE } from '../store/slices/music/constants'
+import { CACHED_SEEK_SESSION_STORAGE_KEY, PLAYBACK_STATE } from '../store/slices/music/constants'
 import { authorizedFetchHeaders, JWT_TYPE } from '../lib/auth/jwt'
 import { settingsSelectors } from '../store/slices/settings'
 
@@ -21,18 +21,22 @@ export const hasHowl = (playerId) => !!howls?.[playerId]
 /**
  * Send playback history to the home server.
  */
-const saveMusicHistory = (player, howl, progress?: number) => {
-  if (!progress) {
-    const cachedSeek = sessionStorage.getItem(`audio-player-${player.id}-seek`)
-    if (cachedSeek) {
-      progress = Number(cachedSeek) / (howl.duration())
+export const saveMusicHistory = (playerId, trackId) => {
+  let seconds = 0
+  try {
+    const cachedSeek = JSON.parse(sessionStorage.getItem(CACHED_SEEK_SESSION_STORAGE_KEY))
+    if (cachedSeek[playerId]) {
+      seconds = cachedSeek[playerId]
+      delete cachedSeek[playerId]
     }
-    sessionStorage.removeItem(`audio-player-${player.id}-seek`)
+    sessionStorage.setItem(CACHED_SEEK_SESSION_STORAGE_KEY, JSON.stringify(cachedSeek))
+  } catch (error) {
+    console.error(error)
   }
   homeServerAPI('/music/history', 'POST', {
     body: {
-      trackId: player.trackId,
-      progress: progress || 0,
+      trackId,
+      seconds,
     },
   })
 }
@@ -88,12 +92,12 @@ export default function useHowler() {
     })
 
     howl.on('end', () => {
-      saveMusicHistory(player, howl, 1)
+      saveMusicHistory(player.id, player.trackId)
       dispatch(musicActions.stop(player.id))
     })
 
     howl.on('stop', () => {
-      saveMusicHistory(player, howl)
+      saveMusicHistory(player.id, player.trackId)
     })
 
     return howl
@@ -171,6 +175,6 @@ export default function useHowler() {
    * TODO
    */
   useEffect(() => {
-    console.log('max concurrent streams', maxConcurrentAudioStreams)
+    //console.log('max concurrent streams', maxConcurrentAudioStreams)
   }, [maxConcurrentAudioStreams])
 }
