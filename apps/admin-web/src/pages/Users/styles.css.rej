@@ -1,0 +1,65 @@
+diff a/apps/admin-web/src/pages/Users/styles.css b/apps/admin-web/src/pages/Users/styles.css	(rejected hunks)
+@@ -1,33 +1,41 @@
+-.server-user-list {
++.users-page {
+ 
+-  .user-name {
+-    display: flex;
+-    align-items: center;
+-    gap: 10px;
+-  }
+-
+-  .user-role {
+-    text-transform: capitalize;
+-  }
++  .server-user-list {
+ 
+-  .current-user-badge {
+-    
+-    i {
+-      font-size: 16px;
++    .user-name {
++      display: flex;
++      align-items: center;
++      gap: 10px;
+     }
+-  }
+ 
+-  .user-activation-status {
+-    display: flex;
+-    gap: 10px;
+-    align-items: center;
+-
+-    &.activated {
++    .current-user-badge {
+       
+       i {
+-        color: var(--success-bg);
+         font-size: 16px;
+       }
+     }
++
++    .user-activation-status {
++      display: flex;
++      gap: 5px;
++      align-items: center;
++
++      &.activated {
++        
++        i {
++          color: var(--success-bg);
++          font-size: 16px;
++        }
++      }
++    }
++  }
++}
++
++.manage-user-drawer {
++
++  .user-actions {
++    display: grid;
++    grid-template-columns: 50% 50%;
++    gap: 8px;
+   }
+ }

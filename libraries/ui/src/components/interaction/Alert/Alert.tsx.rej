@@ -1,0 +1,40 @@
+diff a/libraries/ui/src/components/interaction/Alert/Alert.tsx b/libraries/ui/src/components/interaction/Alert/Alert.tsx	(rejected hunks)
+@@ -3,8 +3,8 @@ import Button from '../Button'
+ import './Alert.css'
+ 
+ type AlertProps = {
+-  type?: 'success' | 'warning' | 'error',
+-  message: string,
++  type?: 'success' | 'warning' | 'error' | 'info',
++  message: string | React.ReactNode,
+   buttons?: Array<{
+     label: string,
+     onClick: () => void,
+@@ -19,10 +19,25 @@ const Alert = ({
+   message,
+   buttons = [],
+ }: AlertProps) => {
++  const getIcon = () => {
++    switch (type) {
++      case 'info':
++        return <i className="fas fa-info-circle" />
++      case 'success':
++        return <i className="fas fa-check-circle" />
++      case 'warning':
++        return <i className="fas fa-exclamation-triangle" />
++      case 'error':
++        return <i className="fas fa-exclamation-circle" />
++    }
++  }
+   return (
+     <div className={`alert ${type}`}>
+-      <i className="fas fa-exclamation-circle"></i>
+-      <p>{message}</p>
++      {getIcon()}
++      {typeof message === 'string'
++        ? <p>{message}</p>
++        : message
++      }
+       <div className="alert-controls-col">
+         {!!buttons.length && buttons.map((btn) => {
+           return (

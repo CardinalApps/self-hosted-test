@@ -1,0 +1,32 @@
+diff a/libraries/ui/src/components/interaction/UserTag/UserTag.tsx b/libraries/ui/src/components/interaction/UserTag/UserTag.tsx	(rejected hunks)
+@@ -10,7 +10,7 @@ type UserProps = {
+   user?: UserType,
+   showName?: boolean,
+   showAvatar?: boolean,
+-  avatarSize?: AvatarSize,
++  size?: AvatarSize,
+ }
+ 
+ /**
+@@ -20,17 +20,17 @@ const UserTag = ({
+   user,
+   showName = true,
+   showAvatar = true,
+-  avatarSize = 'l',
++  size = 'm',
+ }: UserProps) => {
+   const { lang } = useAppSelector(settingsSelectors.current)
+   return (
+-    <div className="user">
++    <div className={`user size-${size}`}>
+       {showAvatar && user?.designation === 'guest_account' &&
+-        <Avatar size={avatarSize} type="guest" className={'avatar'} />
++        <Avatar size={size} type="guest" className={'avatar'} />
+       }
+       {showAvatar && user?.designation !== 'guest_account' && user?.cachedCloudUser?.avatar &&
+         <Avatar
+-          size={avatarSize}
++          size={size}
+           className={'avatar'}
+           image={user?.cachedCloudUser?.avatar?.image}
+           initials={user?.cachedCloudUser?.avatar?.initials}

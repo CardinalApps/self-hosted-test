@@ -168,4 +168,20 @@ Drawer.Tab = ({ className, index, children }: PropsWithChildren<DrawerTabPropsTy
   )
 }
 
+type DrawerSectionPropsType = {
+  className?: string,
+  title?: string,
+}
+
+Drawer.Section = ({ className, title, children }: PropsWithChildren<DrawerSectionPropsType>) => {
+  return (
+    <section className={clsx('drawer-section')}>
+      {!!title && <p className="drawer-section-title">{title}</p>}
+      <div className={clsx('drawer-section-content', className)}>
+        {children}
+      </div>
+    </section>
+  )
+}
+
 export default Drawer

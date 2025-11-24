@@ -1,0 +1,110 @@
+diff a/apps/admin-web/src/pages/Users/Users.tsx b/apps/admin-web/src/pages/Users/Users.tsx	(rejected hunks)
+@@ -1,3 +1,4 @@
++import { useState } from 'react'
+ import { useSelector } from 'react-redux'
+ 
+ import AppPage from '@cardinalapps/ui/src/components/features/AppBase/AppPage'
+@@ -10,16 +11,19 @@ import { settingsSelectors } from '@cardinalapps/ui/src/store/slices/settings'
+ import { useGetUsersQuery } from '@cardinalapps/ui/src/store/apis/users'
+ import { UserType } from '@cardinalapps/ui/src/types/user'
+ import { formatDate, formatTimeAgo } from '@cardinalapps/ui/src/lib/formatting/time'
++import { homeServerUserSelectors } from '@cardinalapps/ui/src/store/slices/homeServerUser'
+ 
+ import { PAGE_LAYOUT } from '@cardinalapps/ui/src/store/slices/layout/constants'
+ 
++import UserManagementDrawer from './UserManagementDrawer'
++
+ import i18n from './i18n.json'
+ import './styles.css'
+-import { homeServerUserSelectors } from '@cardinalapps/ui/src/store/slices/homeServerUser'
+ 
+ function Users() {
+   const { lang } = useSelector(settingsSelectors.current)
+   const currentUser = useSelector(homeServerUserSelectors.current)
++  const [configuringUser, setConfiguringUser] = useState<UserType>()
+ 
+   const res = useGetUsersQuery({ take: 9999 })
+   const data = res?.data ? res.data?.[0] : []
+@@ -28,9 +32,9 @@ function Users() {
+     return (
+       <Table.Col key="username">
+         <div className="user-name">
+-          <UserTag avatarSize='s' user={user} />
++          <UserTag size='s' user={user} />
+           {user?.userId === currentUser?.userId &&
+-            <Icon fa="far fa-id-badge" className="current-user-badge" title={i18n['users.table.current-user-icon-title'][lang]} />
++            <Icon fa="fas fa-fingerprint" className="current-user-badge" title={i18n['users.table.current-user-icon-title'][lang]} />
+           }
+         </div>
+       </Table.Col>
+@@ -40,7 +44,7 @@ function Users() {
+   const roleCol = (user: UserType) => {
+     return (
+       <Table.Col key="role">
+-        <span className="user-role">{user.role}</span>
++        <span className="capitalize">{user.role}</span>
+       </Table.Col>
+     )
+   }
+@@ -51,7 +55,7 @@ function Users() {
+         <Table.Col key="status">
+           <div className="user-activation-status activated">
+             <Icon fa="far fa-check-circle" />
+-            <span>{i18n['users.guest.actived'][lang]}</span>
++            <span>{i18n['users.guest.enabled'][lang]}</span>
+           </div>
+         </Table.Col>
+       )
+@@ -60,7 +64,7 @@ function Users() {
+         <Table.Col key="status">
+           <div className="user-activation-status deactivated">
+             <Icon fa="fas fa-ban" />
+-            <span>{i18n['users.guest.deactivated'][lang]}</span>
++            <span>{i18n['users.guest.disabled'][lang]}</span>
+           </div>
+         </Table.Col>
+       )
+@@ -80,10 +84,12 @@ function Users() {
+     )
+   }
+ 
+-  const controlsCol = () => {
++  const controlsCol = (user) => {
+     return (
+       <Table.Col key="controls" align='right'>
+-        <Button icon="fas fa-users-cog" onClick={() => console.log('a')}>{i18n['users.controls.settings'][lang]}</Button>
++        <Button icon="fas fa-users-cog" onClick={() => setConfiguringUser(user)}>
++          {i18n['users.table.controls.settings'][lang]}
++        </Button>
+       </Table.Col>
+     )
+   }
+@@ -108,13 +114,13 @@ function Users() {
+           roleCol(user),
+           activationStatusCol(true),
+           lastSeenCol(user?.activityStatusUpdatedAt),
+-          controlsCol(),
++          controlsCol(user),
+         ]
+       })
+   }
+ 
+   return (
+-    <AppPage layout={PAGE_LAYOUT.standard} pageTitle={i18n['users.title'][lang]}>
++    <AppPage className="users-page" layout={PAGE_LAYOUT.standard} pageTitle={i18n['users.title'][lang]}>
+       <Table
+         className="server-user-list"
+         header={[
+@@ -127,6 +133,12 @@ function Users() {
+         body={tableBody()}
+         emptyMessage={i18n['users.table.empty'][lang]}
+       />
++      {!!configuringUser && (
++        <UserManagementDrawer
++          user={configuringUser}
++          onClose={() => setConfiguringUser(null)}
++        />
++      )}
+     </AppPage>
+   )
+ }

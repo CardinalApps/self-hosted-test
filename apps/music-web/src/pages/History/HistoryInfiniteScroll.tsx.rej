@@ -1,19 +1,10 @@
 diff a/apps/music-web/src/pages/History/HistoryInfiniteScroll.tsx b/apps/music-web/src/pages/History/HistoryInfiniteScroll.tsx	(rejected hunks)
-@@ -10,7 +10,7 @@ import { ITEMS_PER_RTK_PAGE } from '@cardinalapps/ui/src/store/utils/infiniteScr
- import { settingsSelectors } from '@cardinalapps/ui/src/store/slices/settings'
- import VirtualLayout from '@cardinalapps/ui/src/components/features/AppBase/layouts/Virtual'
- import { formatDate, formatTimeAgo } from '@cardinalapps/ui/src/lib/formatting/time'
--import User from '@cardinalapps/ui/src/components/interaction/User'
-+import UserTag from '@cardinalapps/ui/src/components/interaction/UserTag'
- import { getAppUrl } from '@cardinalapps/ui/src/lib/net/router'
- import { RouterContext } from '@cardinalapps/ui/src/context/router'
- 
 @@ -63,7 +63,7 @@ function MusicHistoryInfiniteScroll({
          <div className="progress-bar" style={{ width: `${historyEntry.progress * 100}%` }}></div>
          <div className="cols">
            <div>{Math.round(historyEntry?.progress * 100)}%</div>
--          <div>{<User user={historyEntry.user} avatarSize='xs' showName={false} />}</div>
-+          <div>{<UserTag user={historyEntry.user} avatarSize='xs' showName={false} />}</div>
+-          <div>{<UserTag user={historyEntry.user} avatarSize='xs' showName={false} />}</div>
++          <div>{<UserTag user={historyEntry.user} size='xs' showName={false} />}</div>
            <div><Link to={getAppUrl('release', { params: { ':id': historyEntry.track.release?.musicReleaseId } })}>{historyEntry?.track?.title}</Link></div>
            <div className="date">
              <time title={formatDate(historyEntry?.createdAt)}>

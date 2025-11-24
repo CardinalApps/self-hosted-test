@@ -1,0 +1,9 @@
+diff a/libraries/ui/public/styles/global.css b/libraries/ui/public/styles/global.css	(rejected hunks)
+@@ -39,3 +39,7 @@
+     transition: 0s;
+   }
+ }
++
++.capitalize {
++  text-transform: capitalize;
++}

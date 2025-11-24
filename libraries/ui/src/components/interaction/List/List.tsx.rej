@@ -1,27 +1,35 @@
 diff a/libraries/ui/src/components/interaction/List/List.tsx b/libraries/ui/src/components/interaction/List/List.tsx	(rejected hunks)
-@@ -12,7 +12,7 @@ import i18n from './i18n'
+@@ -12,10 +12,11 @@ import i18n from './i18n'
  import './List.css'
  
  export type ListItemControls = 'add' | 'remove' | 'delete'
--export type ListItem = {
-+export type ListItem = PropsWithChildren<{
+-export type ListItem = PropsWithChildren<{
++export type ListItem = {
    name: string | ReactNode,
    title?: string,
    value?: string,
-@@ -26,7 +26,7 @@ export type ListItem = {
++  label?: string | React.ReactNode,
+   avatar?: {
+     type: 'image',
+     image: string,
+@@ -26,7 +27,7 @@ export type ListItem = PropsWithChildren<{
    controls?: ListItemControls[],
    pendingAdd?: boolean,
    pendingDelete?: boolean,
--}
-+}>
+-}>
++}
  
  type ListProps = {
    name?: string,
-@@ -82,6 +82,7 @@ const List = ({
+@@ -82,7 +83,10 @@ const List = ({
                      </span>
                    )}
                    <span className="item-list-item-name" title={item?.title || item?.name.toString()}>{item?.name}</span>
-+                  {item.children}
+-                  {item.children}
++                  {typeof item?.label === 'string'
++                    ? <span className="item-list-item-label" title={item?.label || item?.label.toString()}>{item?.label}</span>
++                    : <span className="item-list-item-label">{item?.label || null}</span>
++                  }
                    {!!controlsToUse?.length && (
                      <span className="item-list-item-controls">
                        {!!controlsToUse.includes('add') && <Icon fa="fas fa-plus" onClick={() => onAdd(item)} />}

@@ -158,6 +158,23 @@ export const Compact = () => {
   )
 }
 
+export const KeyValue = () => {
+  return (
+    <List
+      name={'controls-list'}
+      layout={'compact'}
+      items={[
+        { name: 'The List component can be used to display key-value pairs.', label: "Value 1" },
+        { name: 'Key 2', label: 'Value 2' },
+        { name: 'Key 3', value: 'item-3', label: "Value 3", controls: ['add', 'remove', 'delete'] },
+      ]}
+      onAdd={(item) => console.log('onAdd', item)}
+      onRemove={(item) => console.log('onRemove', item)}
+      onDelete={(item) => console.log('onDelete', item)}
+    />
+  )
+}
+
 export const Empty = () => {
   return (
     <List

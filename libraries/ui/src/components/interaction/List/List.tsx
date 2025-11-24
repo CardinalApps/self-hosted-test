@@ -1,4 +1,4 @@
-import type { PropsWithChildren, ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { useSelector } from 'react-redux'
 import clsx from 'clsx'
 

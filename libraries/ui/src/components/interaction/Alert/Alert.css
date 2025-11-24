@@ -79,6 +79,21 @@
     }
   }
 
+  &.info {
+    color: white;
+    background: var(--info-bg);
+
+    button {
+      color: white;
+      border: 1px solid white;
+
+      &:hover {
+        color: white;
+        background: var(--danger) !important;
+      }
+    }
+  }
+
   i {
     margin-right: 15px;
     font-size: 18px;
