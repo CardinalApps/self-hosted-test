@@ -1,0 +1,29 @@
+diff a/libraries/ui/src/components/layout/Card/Card.tsx b/libraries/ui/src/components/layout/Card/Card.tsx	(rejected hunks)
+@@ -15,6 +15,7 @@ type CardProps = {
+   id?: string,
+   className?: string,
+   style?: object,
++  icon?: React.ReactNode,
+   header?: ReactNode,
+   footer?: ReactNode,
+   children?: ReactNode,
+@@ -29,6 +30,7 @@ const Card = ({
+   id,
+   className = '',
+   style,
++  icon,
+   header,
+   footer,
+   children,
+@@ -49,9 +51,10 @@ const Card = ({
+       )}
+       style={style}
+     >
+-      {!!header &&
++      {(!!header || !!icon) &&
+         <header className="card-header">
+           {header}
++          {icon}
+         </header>
+       }
+       <div className="card-content">

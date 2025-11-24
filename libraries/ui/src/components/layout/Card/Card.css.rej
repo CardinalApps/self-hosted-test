@@ -1,0 +1,17 @@
+diff a/libraries/ui/src/components/layout/Card/Card.css b/libraries/ui/src/components/layout/Card/Card.css	(rejected hunks)
+@@ -42,11 +42,13 @@
+     padding: 30px 40px 30px;
+     display: flex;
+     align-items: center;
++    justify-content: space-between;
+ 
+     i {
+-      margin-right: 15px;
+-      font-size: 32px;
++      margin-right: 10px;
++      font-size: 19px;
+       position: relative;
++      color: var(--text-color-4);
+       top: -1px;
+     }
+   }

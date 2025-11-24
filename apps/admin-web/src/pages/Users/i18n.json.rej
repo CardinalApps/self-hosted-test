@@ -1,75 +1,35 @@
 diff a/apps/admin-web/src/pages/Users/i18n.json b/apps/admin-web/src/pages/Users/i18n.json	(rejected hunks)
-@@ -20,13 +20,67 @@
-   "users.table.header.last-seen": {
-     "en": "Last Seen"
+@@ -2,11 +2,32 @@
+   "users.title": {
+     "en": "Users"
    },
--  "users.guest.actived": {
--    "en": "Activated"
-+  "users.guest.enabled": {
-+    "en": "Enabled"
++  "users.server.title": {
++    "en": "Server"
++  },
++  "users.server.unclaimed-warning": {
++    "en": "Unclaimed Server"
++  },
++  "users.server.unclaimed-warning.desc": {
++    "en": "Log in with a Cardinal account to claim this server."
++  },
++  "users.server.info": {
++    "en": "Get Info"
++  },
++  "users.server.info.desc": {
++    "en": "Get help with Cardinal accounts"
++  },
++  "users.server.capacity": {
++    "en": "Capacity"
++  },
++  "users.table.title": {
++    "en": "All users"
++  },
+   "users.table.empty": {
+     "en": "No users"
    },
--  "users.guest.deactivated": {
--    "en": "Deactivated"
-+  "users.guest.disabled": {
-+    "en": "Disabled"
+   "users.table.current-user-icon-title": {
+-    "en": "This is you."
++    "en": "This is you"
    },
--  "users.controls.settings": {
--    "en": "Configure"
-+  "users.table.controls.settings": {
-+    "en": "Manage"
-+  },
-+  "users.settings.drawer-title": {
-+    "en": "Manage User"
-+  },
-+  "users.settings.info": {
-+    "en": "Info"
-+  },
-+  "users.settings.info.id": {
-+    "en": "ID"
-+  },
-+  "users.settings.info.role": {
-+    "en": "Role"
-+  },
-+  "users.settings.info.enabled": {
-+    "en": "Enabled"
-+  },
-+  "users.settings.info.type": {
-+    "en": "Type"
-+  },
-+  "users.settings.info.type.local": {
-+    "en": "Local Account"
-+  },
-+  "users.settings.info.type.cloud": {
-+    "en": "Cloud Account"
-+  },
-+  "users.settings.info.enabled.yes": {
-+    "en": "Yes"
-+  },
-+  "users.settings.info.enabled.no": {
-+    "en": "No"
-+  },
-+  "users.settings.info.last-seen": {
-+    "en": "Last seen"
-+  },
-+  "users.settings.actions": {
-+    "en": "Actions"
-+  },
-+  "users.settings.actions.disable": {
-+    "en": "Disable this user"
-+  },
-+  "users.settings.actions.cloud-portal-link": {
-+    "en": "Manage your Cardinal cloud account online"
-+  },
-+  "users.settings.actions.remove": {
-+    "en": "Remove this user"
-+  },
-+  "users.settings.alert.guest-account-info": {
-+    "en": "The guest account is a special account that can be shared by everyone anonymously."
-+  },
-+  "users.settings.actions.remove.disabled-for-guest": {
-+    "en": "The Guest Account cannot be removed."
-+  },
-+  "users.settings.actions.remove.disabled-for-owner": {
-+    "en": "The Owner account can only be removed by performing a Factory Reset."
-   }
- }
+   "users.table.header.name": {
+     "en": "Account"
