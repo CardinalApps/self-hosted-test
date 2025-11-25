@@ -1,52 +1,26 @@
 diff a/servers/media/src/modules/user/user.controller.ts b/servers/media/src/modules/user/user.controller.ts	(rejected hunks)
-@@ -8,6 +8,8 @@ import {
-   UseGuards,
-   MethodNotAllowedException,
-   Query,
-+  Patch,
-+  UnauthorizedException,
- } from '@nestjs/common'
- import {
-   ApiTags,
-@@ -23,7 +25,9 @@ import { LocalUserService } from './local-user.service'
- import { CloudUserService } from './cloud-user.service'
- import { User } from './user.entity'
- import { CreateUser } from './dtos/CreateUser.dto'
-+import { UpdateUserDto } from './dtos/UpdateUser.dto'
- import { GetUserResponse } from './dtos/GetUserResponse.dto'
-+import { CurrentUser } from '../../decorators/CurrentUser.decorator'
- 
- import { AuthGuard } from '../../guards/auth.guard'
- import { ApiSecurityTypes } from '../../guards/types'
-@@ -162,4 +166,31 @@ export class UserController {
- 
+@@ -167,6 +167,9 @@ export class UserController {
      return await this.userService.createUser(createUserDto)
    }
-+
-+  @Patch('/user/:id')
-+  @UseGuards(AuthGuard)
-+  @ApiTags('User')
-+  @ApiOperation({ summary: 'Update a user.' })
-+  @ApiSecurity(ApiSecurityTypes.LOCAL_USER_JWT)
-+  async updateUser(
-+    @Param('id') id,
-+    @Body() updateUserDto: UpdateUserDto,
-+    @CurrentUser() currentUser: User,
-+  ): Promise<User> {
-+    // TODO proper rbac
-+    const usersThatCanUseThisEndpoint = []
-+
-+    // Server owner can update anyone
-+    const serverOwner = await this.userService.getServerOwner()
-+    usersThatCanUseThisEndpoint.push(serverOwner.userId)
-+
-+    // Users can update themselves
-+    usersThatCanUseThisEndpoint.push(id)
-+
-+    if (usersThatCanUseThisEndpoint.includes(currentUser.userId)) {
-+      return await this.userService.update(id, updateUserDto)
+ 
++  /**
++   * FIXME this endpoint needs proper RBAC
++   */
+   @Patch('/user/:id')
+   @UseGuards(AuthGuard)
+   @ApiTags('User')
+@@ -177,9 +180,13 @@ export class UserController {
+     @Body() updateUserDto: UpdateUserDto,
+     @CurrentUser() currentUser: User,
+   ): Promise<User> {
+-    // TODO proper rbac
+     const usersThatCanUseThisEndpoint = []
+ 
++    // Special case: prevent disabling your own user
++    if (id === currentUser.userId && updateUserDto.enabled === false) {
++      throw new UnauthorizedException('You cannot disable your current user.')
 +    }
 +
-+    throw new UnauthorizedException()
-+  }
- }
+     // Server owner can update anyone
+     const serverOwner = await this.userService.getServerOwner()
+     usersThatCanUseThisEndpoint.push(serverOwner.userId)
