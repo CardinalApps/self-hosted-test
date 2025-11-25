@@ -1,17 +1,19 @@
 diff a/servers/media/src/modules/app/app.module.ts b/servers/media/src/modules/app/app.module.ts	(rejected hunks)
-@@ -26,6 +26,7 @@ import { ThumbnailModule } from '../thumbnail/thumbnail.module'
- import { JobModule } from '../job/job.module'
- import { RBACModule } from '../rbac/rbac.module'
- import { LibraryModule } from '../library/library.module'
-+import { MusicHistoryModule } from '../music-history/music-history.module'
+@@ -29,7 +29,7 @@ import { LibraryModule } from '../library/library.module'
+ import { MusicHistoryModule } from '../music-history/music-history.module'
  
  import { HTTPLoggerMiddleware } from '../../middleware/HTTPLogger.middleware'
- import { RevokeGuestSession } from '../../middleware/RevokeGuestSession.middleware'
-@@ -116,6 +117,7 @@ const resolvePostgresHost = () => {
-     JobModule,
-     RBACModule,
-     LibraryModule,
-+    MusicHistoryModule,
-     // Serve static SPAs, for static files like images use "useStaticAssets" in main.js
-     ServeStaticModule.forRoot({
-       rootPath: join(__dirname, '..', '..', '..', 'public'),
+-import { RevokeGuestSession } from '../../middleware/RevokeGuestSession.middleware'
++import { RevokeDisabledUserSessions } from '../../middleware/RevokeDisabledUserSessions.middleware'
+ import { AttachLocalUserToRequest } from '../../middleware/AttachLocalUser.middleware'
+ import { AttachCloudUserToRequest } from '../../middleware/AttachCloudUser.middleware'
+ import { UserActivity } from '../../middleware/UserActivity.middleware'
+@@ -156,7 +156,7 @@ export class AppModule implements NestModule {
+     consumer.apply(HTTPLoggerMiddleware).forRoutes('*')
+     consumer.apply(AttachLocalUserToRequest).forRoutes('*')
+     consumer.apply(AttachCloudUserToRequest).forRoutes('*')
+-    consumer.apply(RevokeGuestSession).forRoutes('*')
++    consumer.apply(RevokeDisabledUserSessions).forRoutes('*')
+     consumer.apply(UserActivity).forRoutes('*')
+   }
+ }

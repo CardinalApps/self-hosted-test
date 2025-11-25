@@ -1,16 +1,10 @@
 diff a/apps/admin-web/src/pages/Users/i18n.json b/apps/admin-web/src/pages/Users/i18n.json	(rejected hunks)
-@@ -105,7 +105,13 @@
-     "en": "The Guest Account cannot be removed."
+@@ -93,7 +93,7 @@
+     "en": "Enable this user"
    },
-   "users.settings.actions.remove.disabled-for-owner": {
--    "en": "The Owner account can only be removed by performing a Factory Reset."
-+    "en": "The owner account can only be removed by performing a Factory Reset."
-+  },
-+  "users.settings.actions.disable.disabled-for-server-owner": {
-+    "en": "The owner account cannot be disabled."
-+  },
-+  "users.settings.actions.disable.disabled-for-own-user": {
-+    "en": "You cannot disable your current user."
+   "users.settings.actions.cloud-portal-link": {
+-    "en": "Manage your Cardinal cloud account online"
++    "en": "Manage your Cardinal cloud account"
    },
-   "users.settings.actions.disable.confirm.title": {
-     "en": "Disable User"
+   "users.settings.actions.remove": {
+     "en": "Remove this user"

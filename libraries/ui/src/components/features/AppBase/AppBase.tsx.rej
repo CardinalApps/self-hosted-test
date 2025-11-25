@@ -1,10 +1,23 @@
 diff a/libraries/ui/src/components/features/AppBase/AppBase.tsx b/libraries/ui/src/components/features/AppBase/AppBase.tsx	(rejected hunks)
-@@ -111,7 +111,7 @@ function AppBase({
-   useServerSideEvents()
-   useHowler()
-   const dispatch = useAppDispatch()
--  const { navigate } = router
-+  const { navigate, location } = router
-   const appRef = useRef(null)
-   const sidebarMode = useSelector(layoutSelectors.sidebarMode)
-   const mobileNavIsOpen = useSelector(layoutSelectors.mobileNavIsOpen)
+@@ -19,6 +19,7 @@ import
+   registerHomeServerAPIMiddleware,
+   removeHomeServerAPIMiddleware,
+ } from '../../../lib/homeserver/homeServerAPI'
++import handle401 from './middleware/handle401'
+ import handle410 from './middleware/handle410'
+ 
+ import AppHeader from '../AppHeader'
+@@ -158,8 +159,12 @@ function AppBase({
+    * Register Media Server API middleware with the app.
+    */
+   useEffect(() => {
++    registerHomeServerAPIMiddleware('handle_401', (...args) => handle401(args[0], args[1], args[2], args[3], dispatch, lang))
+     registerHomeServerAPIMiddleware('handle_410', (...args) => handle410(args[0], args[1], args[2], args[3], dispatch, lang))
+-    return () => removeHomeServerAPIMiddleware('handle_410')
++    return () => {
++      removeHomeServerAPIMiddleware('handle_401')
++      removeHomeServerAPIMiddleware('handle_410')
++    }
+   }, [])
+ 
+   /**

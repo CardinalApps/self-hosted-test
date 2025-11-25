@@ -1,10 +1,21 @@
 diff a/libraries/ui/src/components/features/AppBase/i18n.ts b/libraries/ui/src/components/features/AppBase/i18n.ts	(rejected hunks)
-@@ -65,7 +65,7 @@ const i18n: StringList = {
+@@ -55,11 +55,17 @@ const i18n: StringList = {
+   "login.error.guest-user-not-found.body": {
+     "en": "<p><a href='https://help.cardinalapps.io/help-codes/ERR_CHS_0017' target='_blank'>Error code: ERR_CHS_0017</a></p><p>Could not log into the guest account.</p>",
+   },
++  "login.error.401.title": {
++    "en": "401 - Unauthorized",
++  },
++  "login.error.401.body": {
++    "en": "Use not authorized.",
++  },
+   "login.error.410.title": {
+-    "en": "User Gone",
++    "en": "409 - User Gone",
+   },
+   "login.error.410.body": {
+-    "en": "<p>Your Media Server doesn't recognize the account you're logged in with, so you'll need to log back in.</p>",
++    "en": "<p>Your user was no longer recognized, so you'll need to log back in.</p>",
+   },
+   "virtual.empty.title": {
      "en": "No Media",
-   },
-   "virtual.empty.desc": {
--    "en": "<p>Your Media Server does not have necessary media for this page.</p>",
-+    "en": "<p>Add media to this page by indexing your photos, music, and movie & TV files.</p>",
-   },
-   "virtual.empty.button": {
-     "en": "Go to file indexing",

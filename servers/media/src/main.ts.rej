@@ -1,10 +1,11 @@
 diff a/servers/media/src/main.ts b/servers/media/src/main.ts	(rejected hunks)
-@@ -141,7 +141,7 @@ async function startup() {
-    */
-   const printWelcome = (ip) => {
-     Logger.log('╭────────────────────────────────────────────────────────────────╮', 'Welcome')
--    Logger.log('│ Cardinal Media Server started!                                  │', 'Welcome')
-+    Logger.log('│ Cardinal Media Server started!                                 │', 'Welcome')
-     Logger.log('│                                                                │', 'Welcome')
-     Logger.log(`│ Dashboard.......................${(ip+':'+PORT+'/admin').padEnd(31)}│`, 'Welcome')
-     Logger.log(`│ Music app.......................${(ip+':'+PORT+'/music').padEnd(31)}│`, 'Welcome')
+@@ -108,6 +108,9 @@ async function startup() {
+       'http://localhost:3000',      // Local prod web app tests
+     ],
+     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
++    exposedHeaders: [
++      'Cardinal-Extra-Message',
++    ],
+   })
+ 
+   /**
