@@ -1,42 +1,18 @@
 diff a/apps/admin-web/src/pages/Users/Users.tsx b/apps/admin-web/src/pages/Users/Users.tsx	(rejected hunks)
-@@ -29,7 +29,7 @@ function Users() {
+@@ -6,6 +6,7 @@ import Table from '@cardinalapps/ui/src/components/interaction/Table'
+ import Icon from '@cardinalapps/ui/src/components/typography/Icon'
+ import Button from '@cardinalapps/ui/src/components/interaction/Button'
+ import UserTag from '@cardinalapps/ui/src/components/interaction/UserTag'
++import { Subscriptions } from '@cardinalapps/products/src'
  
-   const res = useGetUsersQuery({ take: 9999 })
+ import { settingsSelectors } from '@cardinalapps/ui/src/store/slices/settings'
+ import { useGetUsersQuery } from '@cardinalapps/ui/src/store/apis/homeServerUsers'
+@@ -31,6 +32,8 @@ function Users() {
    const data = res?.data ? res.data?.[0] : []
--  const serverIsClaimed = data?.find((user: UserType) => user?.role === 'owner') || true
-+  const serverIsClaimed = data?.find((user: UserType) => user?.role === 'owner')
+   const serverIsClaimed = data?.find((user: UserType) => user?.role === 'owner')
  
++  console.log(Subscriptions)
++
    const nameCol = (user: UserType) => {
      return (
-@@ -145,6 +145,7 @@ function Users() {
-             icon={<Icon fa="fas fa-exclamation-triangle" />}
-             header={<H5>{i18n['users.server.unclaimed-warning'][lang]}</H5>}
-             padding="thin"
-+            bottomAlignContent={true}
-           >
-             {i18n['users.server.unclaimed-warning.desc'][lang]}
-           </Card>
-@@ -154,18 +155,20 @@ function Users() {
-           icon={<Icon fa="fas fa-users" />}
-           header={<H5>{i18n['users.server.capacity'][lang]}</H5>}
-           padding="thin"
-+          bottomAlignContent={true}
-         >
--          Used 0 of 2 seats
-+          Used 0 of 2 seats.
-         </Card>
--        <Card
-+        {/* <Card
-           icon={<Icon fa="fas fa-info-circle" />}
-           header={<H5>{i18n['users.server.info'][lang]}</H5>}
-           padding="thin"
-+          bottomAlignContent={true}
-         >
-           <Button href="https://help.cardinalapps.io/guides/cardinal-media-server/accounts" target="_blank" arrowText={true}>
-             {i18n['users.server.info.desc'][lang]}
-           </Button>
--        </Card>
-+        </Card> */}
-       </div>
-       <Table
-         className="server-user-list"
+       <Table.Col key="username">
