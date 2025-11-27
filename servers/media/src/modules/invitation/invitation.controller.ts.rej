@@ -1,0 +1,22 @@
+diff a/servers/media/src/modules/invitation/invitation.controller.ts b/servers/media/src/modules/invitation/invitation.controller.ts	(rejected hunks)
+@@ -24,7 +24,7 @@ import { GetInvitationDto } from './dtos/GetInvitation.dto'
+ import { QueryInvitationDto } from './dtos/QueryInvitation.dto'
+ 
+ import { EventService } from '../event/event.service'
+-import { CreateInvitationsDto } from './dtos/CreateInvitation'
++import { CreateInvitationDto } from './dtos/CreateInvitation'
+ 
+ @Controller('/invitations')
+ export class InvitationController {
+@@ -71,8 +71,8 @@ export class InvitationController {
+   @ApiTags('Invitations')
+   @ApiOperation({ summary: 'Create a new invitation.' })
+   @ApiSecurity(ApiSecurityTypes.LOCAL_USER_JWT)
+-  async createInvitation(@Body() createInvitationsDto: CreateInvitationsDto): Promise<Invitation> {
+-    const job = await this.invitationService.create(createInvitationsDto)
+-    return job
++  async createInvitation(@Body() createInvitationsDto: CreateInvitationDto): Promise<Invitation> {
++    const invitation = await this.invitationService.create(createInvitationsDto)
++    return invitation
+   }
+ }

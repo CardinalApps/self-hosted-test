@@ -1,27 +1,22 @@
 diff a/apps/admin-web/src/pages/Users/i18n.json b/apps/admin-web/src/pages/Users/i18n.json	(rejected hunks)
-@@ -44,8 +44,23 @@
-   "users.invite-links.search.notice": {
-     "en": "Only returns users whose search visibility is set to Public."
+@@ -60,7 +60,19 @@
+     "en": "Generate link"
    },
--  "users.invite-links.create.title": {
--    "en": "Invite User"
-+  "users.invite-links.tabs.by-username": {
-+    "en": "Invite by Username"
+   "users.invite.link.create.notice": {
+-    "en": "Create a link that you can send to a friend. Your invitee will need to create a free Cardinal account, then they'll be directed to join your Media Server."
++    "en": "Create a link that your friends can use to join your Media Server. Invitees will need to create a free Cardinal account first."
 +  },
-+  "users.invite-links.tabs.by-link": {
-+    "en": "Create Invitation Link"
++  "users.invite.link.create.expiration": {
++    "en": "Expiration"
 +  },
-+  "users.invite.confirm.title": {
-+    "en": "Invite New user"
++  "users.invite.list.user": {
++    "en": "Invite to {name}"
 +  },
-+  "users.invite.confirm.desc": {
-+    "en": "You are about to invite {name} to your server. Only invite users that you trust."
++  "users.invite.list.link": {
++    "en": "Invite link {link}"
 +  },
-+  "users.invite.link.generate": {
-+    "en": "Generate link"
-+  },
-+  "users.invite.link.create.notice": {
-+    "en": "Create a link that you can send to a friend. Your invitee will need to create a free Cardinal account, then they'll be directed to join your Media Server."
++  "users.invite.list.expiration": {
++    "en": "Expiration"
    },
    "users.invite-links.history.title": {
      "en": "History"

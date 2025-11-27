@@ -1,11 +1,10 @@
 diff a/servers/media/src/main.ts b/servers/media/src/main.ts	(rejected hunks)
-@@ -108,6 +108,9 @@ async function startup() {
-       'http://localhost:3000',      // Local prod web app tests
-     ],
-     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-+    exposedHeaders: [
-+      'Cardinal-Extra-Message',
-+    ],
-   })
+@@ -152,7 +152,7 @@ async function startup() {
+     Logger.log(`│ Cinema app......................${(ip+':'+PORT+'/cinema').padEnd(31)}│`, 'Welcome')
+     Logger.log(`│ API specification...............${(ip+':'+PORT+'/api/docs').padEnd(31)}│`, 'Welcome')
+     Logger.log('│ Manage your Cardinal account....account.cardinalapps.io        │', 'Welcome')
+-    Logger.log('│ Get help using the apps.........help.cardinalapps.io           │', 'Welcome')
++    Logger.log('│ Get help using your apps.........help.cardinalapps.io          │', 'Welcome')
+     Logger.log('╰────────────────────────────────────────────────────────────────╯', 'Welcome')
+   }
  
-   /**

@@ -1,10 +1,15 @@
 diff a/libraries/ui/src/components/forms/FormField/FormField.css b/libraries/ui/src/components/forms/FormField/FormField.css	(rejected hunks)
-@@ -11,7 +11,7 @@
+@@ -7,11 +7,10 @@
+   }
+ 
+   .form-field-label {
+-    font-size: 16px;
++    font-size: 14px;
      margin-bottom: 10px;
-     font-weight: 800;
+-    font-weight: 800;
++    font-weight: 600;
      color: var(--text-color-1);
--    //display: inline-block;
-+    /* display: inline-block; */
+-    /* display: inline-block; */
      user-select: none;
    }
  

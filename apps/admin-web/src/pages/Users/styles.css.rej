@@ -1,22 +1,18 @@
 diff a/apps/admin-web/src/pages/Users/styles.css b/apps/admin-web/src/pages/Users/styles.css	(rejected hunks)
-@@ -61,4 +61,20 @@
-     font-size: 12px;
-     text-align: center;
+@@ -67,6 +67,16 @@
+     p {
+       margin-bottom: 20px;
+     }
++
++    form {
++      display: flex;
++      gap: 10px;
++      align-items: flex-end;
++
++      .form-field {
++        margin-bottom: 0;
++      }
++    }
    }
-+
-+  .create-invitiation-link {
-+
-+    p {
-+      margin-bottom: 20px;
-+    }
-+  }
-+
-+  .generated-invitation-link {
-+    padding-top: 20px;
-+    
-+    textarea {
-+      height: 120px;
-+      resize: none;
-+    }
-+  }
- }
+ 
+   .generated-invitation-link {
