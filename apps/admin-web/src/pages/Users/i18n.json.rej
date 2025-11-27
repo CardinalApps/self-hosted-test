@@ -1,39 +1,29 @@
 diff a/apps/admin-web/src/pages/Users/i18n.json b/apps/admin-web/src/pages/Users/i18n.json	(rejected hunks)
-@@ -11,15 +11,33 @@
-   "users.server.unclaimed-warning.desc": {
-     "en": "Sign in with a Cardinal account to claim this server."
+@@ -29,6 +29,27 @@
+   "users.invite-links.manage-title": {
+     "en": "User Invitations"
    },
--  "users.server.info": {
--    "en": "Get Info"
-+  "users.new-users": {
-+    "en": "New Users"
-   },
--  "users.server.info.desc": {
--    "en": "Get help with Cardinal accounts"
-+  "users.new-users.toggle-allow": {
-+    "en": "Allow new users to sign up"
++  "users.invite-links.active": {
++    "en": "Active until {date}"
 +  },
-+  "users.invite-user": {
-+    "en": "Invite Users"
++  "users.invite-links.expired": {
++    "en": "Expired"
 +  },
-+  "users.new-users.invite-links.create": {
-+    "en": "Create link"
++  "users.invite-links.empty": {
++    "en": "No invitations have been sent."
 +  },
-+  "users.invite-links.manage-button": {
-+    "en": "Manage"
++  "users.invite-links.search.placeholder": {
++    "en": "Search for a Cardinal user"
 +  },
-+  "users.invite-links.manage-title": {
-+    "en": "User Invitations"
++  "users.invite-links.search.notice": {
++    "en": "Only returns users whose search visibility is set to Public."
 +  },
-+  "users.new-users.invite-links.no-active-links": {
-+    "en": "No active invitations."
-   },
-   "users.server.capacity": {
-     "en": "Capacity"
-   },
-+  "users.server.capacity.seats": {
-+    "en": "Used {used} of {total} seats."
++  "users.invite-links.create.title": {
++    "en": "Invite User"
 +  },
-   "users.table.title": {
-     "en": "All users"
++  "users.invite-links.history.title": {
++    "en": "History"
++  },
+   "users.new-users.invite-links.no-active-links": {
+     "en": "No active invitations."
    },

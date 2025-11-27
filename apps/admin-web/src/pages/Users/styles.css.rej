@@ -1,10 +1,14 @@
 diff a/apps/admin-web/src/pages/Users/styles.css b/apps/admin-web/src/pages/Users/styles.css	(rejected hunks)
-@@ -11,7 +11,7 @@
- 
-     .card {
-       min-width: 230px;
--      max-width: 300px;
-+      max-width: 340px;
-     }
+@@ -53,3 +53,12 @@
+     gap: 8px;
    }
- 
+ }
++
++.manage-invitations {
++
++  .invite-user-notice {
++    padding-top: 10px;
++    font-size: 12px;
++    text-align: center;
++  }
++}

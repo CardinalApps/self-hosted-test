@@ -1,0 +1,65 @@
+diff a/apps/admin-web/src/pages/Users/ManageInvitationsDrawer.tsx b/apps/admin-web/src/pages/Users/ManageInvitationsDrawer.tsx	(rejected hunks)
+@@ -3,11 +3,14 @@ import { useSelector } from 'react-redux'
+ //import Button from '@cardinalapps/ui/src/components/interaction/Button'
+ //import UserTag from '@cardinalapps/ui/src/components/interaction/UserTag'
+ import Drawer from '@cardinalapps/ui/src/components/layout/Drawer'
+-//import List from '@cardinalapps/ui/src/components/interaction/List'
++import List from '@cardinalapps/ui/src/components/interaction/List'
++import SearchBar from '@cardinalapps/ui/src/components/interaction/SearchBar'
+ 
+ import { settingsSelectors } from '@cardinalapps/ui/src/store/slices/settings'
+ //import { formatDate, formatTimeAgo } from '@cardinalapps/ui/src/lib/formatting/time'
+ 
++import { useGetInvitationsQuery } from '@cardinalapps/ui/src/store/apis/invitations'
++
+ import i18n from './i18n.json'
+ 
+ import './styles.css'
+@@ -19,14 +22,44 @@ type ManageInvitationsDrawerProps = {
+ function ManageInvitationsDrawer({ onClose }: ManageInvitationsDrawerProps) {
+   const { lang } = useSelector(settingsSelectors.current)
+ 
++  const res = useGetInvitationsQuery({})
++  const data = res?.data?.[0] || []
++
++  const handleSearch = (value) => {
++    console.log(value)
++  }
++
++  console.log(res)
++
+   return (
+     <Drawer
+-      className="manage-invitations-drawer"
++      className="manage-invitations"
+       onClose={onClose}
+       title={i18n['users.invite-links.manage-title'][lang]}
+     >
+-      <Drawer.Section>
+-        In development
++      <Drawer.Section title={i18n['users.invite-links.create.title'][lang]}>
++        <SearchBar
++          placeholder={i18n['users.invite-links.search.placeholder'][lang]}
++          onChange={(value) => handleSearch(value)}
++          onSubmit={(e) => e.preventDefault()}
++        />
++        <p className="invite-user-notice">
++          {i18n['users.invite-links.search.notice'][lang]}
++        </p>
++        {/* <UserTag showAvatar={true} size='l' user={user} /> */}
++      </Drawer.Section>
++      <Drawer.Section title={i18n['users.invite-links.history.title'][lang]}>
++        {!data?.length && <p className="no-invitations">{i18n['users.invite-links.empty'][lang]}</p>}
++        {!!data?.length && (
++          <List
++            items={[
++              {
++                name: 'Username',
++                label: 'asd',
++              },
++            ]}
++          />
++        )}
+         {/* <UserTag showAvatar={true} size='l' user={user} /> */}
+       </Drawer.Section>
+     </Drawer>
