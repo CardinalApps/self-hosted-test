@@ -1,15 +1,13 @@
 diff a/apps/admin-web/src/pages/Users/i18n.json b/apps/admin-web/src/pages/Users/i18n.json	(rejected hunks)
-@@ -83,9 +83,12 @@
-   "users.invite-links.history.title": {
-     "en": "History"
-   },
--  "users.new-users.invite-links.no-active-links": {
-+  "users.invite.no-active-links": {
+@@ -86,7 +86,10 @@
+   "users.invite.no-active-links": {
      "en": "No active invitations."
    },
-+  "users.invite.some-active-links": {
-+    "en": "{num} active invitations."
+-  "users.invite.some-active-links": {
++  "users.invite.some-active-links.singular": {
++    "en": "1 active invitation."
 +  },
-   "users.invite.confirm-delete.title": {
-     "en": "Confirm Delete"
++  "users.invite.some-active-links.plural": {
+     "en": "{num} active invitations."
    },
+   "users.invite.confirm-delete.title": {
