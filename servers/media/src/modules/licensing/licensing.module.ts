@@ -2,6 +2,7 @@ import { forwardRef, Module } from '@nestjs/common'
 
 import { LicensingService } from './licensing.service'
 import { UserModule } from '../user/user.module'
+import { LicensingController } from './licensing.controller'
 
 @Module({
   imports: [
@@ -13,6 +14,6 @@ import { UserModule } from '../user/user.module'
   providers: [
     LicensingService,
   ],
-  controllers: [],
+  controllers: [LicensingController],
 })
 export class LicensingModule {}

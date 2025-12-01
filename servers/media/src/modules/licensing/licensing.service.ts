@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
 
 import {
   SUBSCRIPTIONS,
   SubscriptionTier,
+  getSubscription,
 } from '@cardinalapps/products/dist/cjs/subscriptions'
 
-import { User } from '../user/user.entity'
 import { UserService } from '../user/user.service'
 
 /**
@@ -15,8 +14,7 @@ import { UserService } from '../user/user.service'
 @Injectable()
 export class LicensingService {
   constructor(
-    @InjectRepository(User)
-    private userService: UserService,
+    private readonly userService: UserService,
   ) {}
 
   /**
@@ -30,10 +28,11 @@ export class LicensingService {
       return SUBSCRIPTIONS['free']
     }
 
-    const ownerSubscription = owner?.cachedCloudUser?.subscription
+    const ownerSubscriptionSlug = owner?.cachedCloudUser?.subscription
+    const subscription = getSubscription(ownerSubscriptionSlug)
 
-    if (ownerSubscription) {
-      return ownerSubscription
+    if (subscription) {
+      return subscription
     } else {
       throw new Error('Could not determine license')
     }

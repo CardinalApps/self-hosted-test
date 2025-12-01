@@ -22,6 +22,7 @@ export class CardinalSSOStrategy {
     private readonly seatsService: SeatsService,
     private readonly cloudUserService: CloudUserService,
     private readonly tokenService: TokenService,
+    private readonly licensingService: LicensingService,
   ) {}
 
   /**

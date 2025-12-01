@@ -1,15 +1,16 @@
 diff a/libraries/app-settings/package.json b/libraries/app-settings/package.json	(rejected hunks)
-@@ -7,10 +7,11 @@
+@@ -7,11 +7,11 @@
    "private": true,
    "type": "module",
    "scripts": {
--    "dev": "tsc --watch",
-+    "dev": "pnpm copy-dist-packagejson && tsc --watch",
+-    "dev": "pnpm copy-dist-packagejson && tsc --watch",
++    "dev": "pnpm build && tsc --watch",
      "lint": "eslint src",
      "typecheck": "tsc --noEmit",
--    "build": "tsc && cp package.cjs.json dist/cjs/package.json",
-+    "build": "tsc && copy-dist-packagejson",
-+    "copy-dist-packagejson": "mkdir dist && mkdir dist/cjs && cp package.cjs.json dist/cjs/package.json",
+-    "build": "tsc && copy-dist-packagejson",
+-    "copy-dist-packagejson": "mkdir dist && mkdir dist/cjs && cp package.cjs.json dist/cjs/package.json",
++    "build": "tsc && pnpm copy-dist-packagejson",
++    "copy-dist-packagejson": "cp package.cjs.json dist/cjs/package.json",
      "test": "jest"
    },
    "devDependencies": {
