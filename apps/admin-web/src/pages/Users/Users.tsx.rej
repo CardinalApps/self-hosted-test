@@ -1,17 +1,10 @@
 diff a/apps/admin-web/src/pages/Users/Users.tsx b/apps/admin-web/src/pages/Users/Users.tsx	(rejected hunks)
-@@ -116,10 +116,14 @@ function Users() {
-       return []
-     }
+@@ -65,7 +65,7 @@ function Users() {
+   }
  
--    const allUsersExceptGuest = users.filter((user: UserType) => user.designation !== 'guest_account')
-+    const allUsersExceptGuest = users
-+      .filter((user: UserType) => user.designation !== 'guest_account')
-+      .filter((user: UserType) => user.role !== 'owner')
-     const guestAccount = users.find((user: UserType) => user.designation === 'guest_account')
-+    const ownerAccount = users.find((user: UserType) => user.role === 'owner')
- 
-     const ordered = [
-+      ownerAccount,
-       ...allUsersExceptGuest,
-       guestAccount,
-     ]
+   const enabledStatusCol = (user: UserType) => {
+-    if (user.enabled) {
++    if (user?.enabled) {
+       return (
+         <Table.Col key="status">
+           <div className="user-activation-status activated">

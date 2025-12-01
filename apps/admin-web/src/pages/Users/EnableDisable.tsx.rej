@@ -1,22 +1,12 @@
 diff a/apps/admin-web/src/pages/Users/EnableDisable.tsx b/apps/admin-web/src/pages/Users/EnableDisable.tsx	(rejected hunks)
-@@ -77,12 +77,14 @@ function EnableDisableUser({ user }: EnableDisableUserProps) {
-         </Button>
-       )
-     } else {
--      <Button
--        onClick={onClick}
--        icon={icon}
--      >
--        {label}
--      </Button>
-+      return (
-+        <Button
-+          onClick={onClick}
-+          icon={icon}
-+        >
-+          {label}
-+        </Button>
-+      )
-     }
-   }
+@@ -123,8 +123,8 @@ function EnableDisableUser({ user }: EnableDisableUserProps) {
  
+   return (
+     <>
+-      {!!user.enabled && getDisableButton()}
+-      {!user.enabled && (
++      {!!user?.enabled && getDisableButton()}
++      {!user?.enabled && (
+         <Button onClick={() => setShowConfirmEnableUser(true)} icon="fas fa-door-open">
+           {i18n['users.settings.actions.enable'][lang]}
+         </Button>
