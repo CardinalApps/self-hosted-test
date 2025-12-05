@@ -1,9 +1,9 @@
 diff a/apps/admin-web/src/pages/Users/Users.tsx b/apps/admin-web/src/pages/Users/Users.tsx	(rejected hunks)
-@@ -160,7 +160,6 @@ function Users() {
-           <Card
-             icon={<Icon fa="fas fa-exclamation-triangle" />}
-             header={<H5>{i18n['users.server.unclaimed-warning'][lang]}</H5>}
--            bottomAlignContent={true}
-           >
-             {i18n['users.server.unclaimed-warning.desc'][lang]}
-           </Card>
+@@ -129,6 +129,7 @@ function Users() {
+     ]
+ 
+     return ordered
++      .filter((user) => !!user)
+       .map((user: UserType) => {
+         return [
+           nameCol(user),
