@@ -1,19 +1,70 @@
 diff a/apps/admin-web/src/components/SettingsPanel/custom-pages/Advanced.jsx b/apps/admin-web/src/components/SettingsPanel/custom-pages/Advanced.jsx	(rejected hunks)
-@@ -111,7 +111,7 @@ function Advanced() {
-           }
-         </Card>
-       </Column>
--      <Column
-+      {/* <Column
-         cols={6}
-         mediumCols={12}
-         smallCols={12}
-@@ -145,7 +145,7 @@ function Advanced() {
-             />
-           }
-         </Card>
--      </Column>
-+      </Column> */}
-     </Columns>
-   )
- }
+@@ -3,14 +3,14 @@ import { useSelector, useDispatch } from 'react-redux'
+ 
+ import Button from '@cardinalapps/ui/src/components/interaction/Button'
+ import { settingsSelectors } from '@cardinalapps/ui/src/store/slices/settings'
+-import { homeServerActions } from '@cardinalapps/ui/src/store/slices/homeServer'
++// import { homeServerActions } from '@cardinalapps/ui/src/store/slices/homeServer'
+ import Confirm from '@cardinalapps/ui/src/components/interaction/Confirm'
+ import Card from '@cardinalapps/ui/src/components/layout/Card'
+ import H5 from '@cardinalapps/ui/src/components/typography/H5'
+ import WrittenText from '@cardinalapps/ui/src/components/typography/WrittenText'
+ import { Columns, Column } from '@cardinalapps/ui/src/components/layout/Columns'
+ 
+-import healthCheck from '@cardinalapps/ui/src/store/slices/homeServer/thunks/healthCheck'
++// import healthCheck from '@cardinalapps/ui/src/store/slices/homeServer/thunks/healthCheck'
+ import { toastActions } from '@cardinalapps/ui/src/store/slices/toast'
+ 
+ import homeServerAPI from '@cardinalapps/ui/src/lib/homeserver/homeServerAPI'
+@@ -27,8 +27,8 @@ function Advanced() {
+   const [showDeindexConfirm, setShowDeindexConfirm] = useState(false)
+   const [deindexingIsLoading, setDeindexingIsLoading] = useState(false)
+ 
+-  const [showFactoryResetConfirm, setShowFactoryResetConfirm] = useState(false)
+-  const [factoryResetIsLoading, setFactoryResetIsLoading] = useState(false)
++  // const [showFactoryResetConfirm, setShowFactoryResetConfirm] = useState(false)
++  // const [factoryResetIsLoading, setFactoryResetIsLoading] = useState(false)
+ 
+   const handleResetMediaDataClick = () => {
+     setDeindexingIsLoading(true)
+@@ -51,23 +51,23 @@ function Advanced() {
+       })
+   }
+ 
+-  const handleFactoryResetClick = () => {
+-    setFactoryResetIsLoading(true)
+-    homeServerAPI('/reset', 'POST', {
+-      body: {
+-        type: 'factory',
+-        validationString: 'Factory reset',
+-      },
+-    })
+-      .then(() => {
+-        setFactoryResetIsLoading(false)
+-        dispatch(homeServerActions.setFirstTimeSetupComplete(false))
+-        dispatch(healthCheck())
+-      })
+-      .catch(() => {
+-        setFactoryResetIsLoading(false)
+-      })
+-  }
++  // const handleFactoryResetClick = () => {
++  //   setFactoryResetIsLoading(true)
++  //   homeServerAPI('/reset', 'POST', {
++  //     body: {
++  //       type: 'factory',
++  //       validationString: 'Factory reset',
++  //     },
++  //   })
++  //     .then(() => {
++  //       setFactoryResetIsLoading(false)
++  //       dispatch(homeServerActions.setFirstTimeSetupComplete(false))
++  //       dispatch(healthCheck())
++  //     })
++  //     .catch(() => {
++  //       setFactoryResetIsLoading(false)
++  //     })
++  // }
+ 
+   return (
+     <Columns
