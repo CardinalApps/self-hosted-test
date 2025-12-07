@@ -1,11 +1,40 @@
 diff a/libraries/ui/src/components/layout/Card/Card.tsx b/libraries/ui/src/components/layout/Card/Card.tsx	(rejected hunks)
-@@ -56,8 +56,8 @@ const Card = ({
+@@ -6,7 +6,7 @@ import './Card.css'
+ 
+ export type CardPadding = 'regular' | 'thick' | 'thin' | 'none'
+ 
+-type CardProps = {
++export type CardProps = {
+   padding?: CardPadding,
+   shadow?: 0 | 1 | 2 | 3 | 4,
+   bg?: 0 | 1 | 2 | 3 | 4,
+@@ -18,6 +18,7 @@ type CardProps = {
+   bottomAlignContent?: boolean,
+   icon?: React.ReactNode,
+   header?: ReactNode,
++  headerRight?: ReactNode,
+   footer?: ReactNode,
+   children?: ReactNode,
+ }
+@@ -34,6 +35,7 @@ const Card = ({
+   bottomAlignContent,
+   icon,
+   header,
++  headerRight,
+   footer,
+   children,
+ }: PropsWithChildren<CardProps>) => {
+@@ -56,8 +58,11 @@ const Card = ({
      >
        {(!!header || !!icon) &&
          <header className="card-header">
+-          {icon}
 -          {header}
-           {icon}
-+          {header}
++          <div className="card-title">
++            {icon}
++            {header}
++          </div>
++          <div>{headerRight}</div>
          </header>
        }
        <div className="card-content">

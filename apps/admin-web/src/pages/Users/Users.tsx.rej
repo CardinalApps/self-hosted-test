@@ -1,10 +1,77 @@
 diff a/apps/admin-web/src/pages/Users/Users.tsx b/apps/admin-web/src/pages/Users/Users.tsx	(rejected hunks)
-@@ -166,7 +166,7 @@ function Users() {
+@@ -13,7 +13,6 @@ import { useGetUsersQuery } from '@cardinalapps/ui/src/store/apis/homeServerUser
+ import { UserType } from '@cardinalapps/ui/src/types/user'
+ import { formatDate, formatTimeAgo } from '@cardinalapps/ui/src/lib/formatting/time'
+ import { homeServerUserSelectors } from '@cardinalapps/ui/src/store/slices/homeServerUser'
+-import Card from '@cardinalapps/ui/src/components/layout/Card'
+ import CardGrid from '@cardinalapps/ui/src/components/layout/CardGrid'
+ import H5 from '@cardinalapps/ui/src/components/typography/H5'
+ 
+@@ -154,8 +153,6 @@ function Users() {
+     }
+   }, [users])
+ 
+-  console.log(licensingSeats)
+-
+   return (
+     <AppPage className="users-page" layout={PAGE_LAYOUT.standard} pageTitle={i18n['users.title'][lang]}>
+       <CardGrid layout="flex">
+@@ -165,19 +162,19 @@ function Users() {
+          */
          }
          {usersRes.isSuccess && !serverIsClaimed && (
-           <Card
--            icon={<Icon fa="fas fa-exclamation-triangle" />}
-+            icon={<Icon fa="fas fa-info-circle" />}
+-          <Card
++          <CardGrid.Card
+             icon={<Icon fa="fas fa-info-circle" />}
              header={<H5>{i18n['users.server.unclaimed-warning'][lang]}</H5>}
            >
              {i18n['users.server.unclaimed-warning.desc'][lang]}
+-          </Card>
++          </CardGrid.Card>
+         )}
+         {
+         /*
+          * Number of used seats card. 
+          */
+         }
+-        <Card
++        <CardGrid.Card
+           icon={<Icon fa="fas fa-users" />}
+           header={<H5>{i18n['users.server.capacity'][lang]}</H5>}
+         >
+@@ -186,13 +183,13 @@ function Users() {
+               .replace('{used}', !isNaN(licensingSeats?.used) ? licensingSeats.used : 'Unknown')
+               .replace('{total}', licensingSeats?.total || 'Unknown')
+           }
+-        </Card>
++        </CardGrid.Card>
+         {
+         /*
+          * User invitations card. 
+          */
+         }
+-        <Card
++        <CardGrid.Card
+           icon={<Icon fa="fas fa-envelope" />}
+           header={<H5>{i18n['users.invite-user'][lang]}</H5>}
+           footer={(
+@@ -213,8 +210,8 @@ function Users() {
+               : i18n['users.invite.some-active-links.plural'][lang].replace('{num}', activeIntiations.length)
+             : i18n['users.invite.no-active-links'][lang]
+           }
+-        </Card>
+-        {/* <Card
++        </CardGrid.Card>
++        {/* <CardGrid.Card
+           icon={<Icon fa="fas fa-info-circle" />}
+           header={<H5>{i18n['users.new-users'][lang]}</H5>}
+           bottomAlignContent={true}
+@@ -227,7 +224,7 @@ function Users() {
+           <Button href="https://help.cardinalapps.io/guides/cardinal-media-server/accounts" target="_blank" arrowText={true}>
+             {i18n['users.server.info.desc'][lang]}
+           </Button>
+-        </Card> */}
++        </CardGrid.Card> */}
+       </CardGrid>
+       <Table
+         className="server-user-list"
