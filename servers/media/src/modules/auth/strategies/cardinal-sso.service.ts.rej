@@ -1,9 +1,64 @@
 diff a/servers/media/src/modules/auth/strategies/cardinal-sso.service.ts b/servers/media/src/modules/auth/strategies/cardinal-sso.service.ts	(rejected hunks)
-@@ -3,7 +3,6 @@ import { Injectable, Logger } from '@nestjs/common'
- import { UserService } from '../../user/user.service'
- import { CloudUserService } from '../../user/cloud-user.service'
- import { SeatsService } from '../../user/seats.service'
--import { LicensingService } from '../../licensing/licensing.service'
+@@ -33,7 +33,7 @@ export class CardinalSSOStrategy {
+     }
  
- import { LoginResponse } from '../dtos/LoginResponse.dto'
- import { TokenService } from '../token.service'
+     /**
+-     * Decision 1: Happy path, the SSO JWT matches an existing user. Login is successful.
++     * Check 1: Happy path, the SSO JWT matches an existing user. Login is successful.
+      */
+     const localUser = await this.userService.getUserByCardinalJWT(cardinalSSOToken)
+     if (localUser) {
+@@ -41,7 +41,7 @@ export class CardinalSSOStrategy {
+     }
+ 
+     /**
+-     * Decision 2: 
++     * Check 2: 
+      * 
+      *    - The SSO JWT didn't match a user.
+      * 
+@@ -54,7 +54,7 @@ export class CardinalSSOStrategy {
+     }
+ 
+     /**
+-     * Decision 3:
++     * Check 3:
+      * 
+      *    - The SSO JWT didn't match a user.
+      *    - We have >=1 seated users in the database.
+@@ -66,15 +66,33 @@ export class CardinalSSOStrategy {
+     }
+ 
+     /**
+-     * Decision 4:
++     * Check 4:
+      * 
+      *    - The SSO JWT didn't match a user.
+      *    - We have >=1 seated users in the database.
+      *    - At least 1 seat is available.
+      * 
++     * If this server requires users to be invited to join, validate the invitation.
++     */
++    const requiresInvitation = false
++    let allowToJoin = false
++
++    if (requiresInvitation) {
++      // TODO add cloud invitations
++      allowToJoin = false
++      throw new Error('An invitation is required to join this server.')
++    } else {
++      allowToJoin = true
++    }
++
++    /**
+      * Grant the user a seat by creating a local account for them.
+      */
+-    return await this.handleNewCardinalUser(cardinalSSOToken)
++    if (allowToJoin) {
++      return await this.handleNewCardinalUser(cardinalSSOToken)
++    } else {
++      throw new Error('User login failed.')
++    }
+   }
+ 
+   /**
