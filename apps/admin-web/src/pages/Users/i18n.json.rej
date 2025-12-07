@@ -1,10 +1,10 @@
 diff a/apps/admin-web/src/pages/Users/i18n.json b/apps/admin-web/src/pages/Users/i18n.json	(rejected hunks)
-@@ -207,7 +207,7 @@
-     "en": "Disable User"
+@@ -54,7 +54,7 @@
+     "en": "Invite Using a Link"
    },
-   "users.settings.actions.disable.confirm.desc": {
--    "en": "Disabled users are not allowed to log in, and all active sessions for this user will be terminated immediately."
-+    "en": "Disabled users are not allowed to log in, and all active sessions for this user will be terminated immediately. A seat will also become available."
+   "users.invite.confirm.title": {
+-    "en": "Invite New user"
++    "en": "Invite New User"
    },
-   "users.settings.actions.enable.confirm.title": {
-     "en": "Enable User"
+   "users.invite.confirm.desc": {
+     "en": "You are about to invite {name} to your server. Only invite users that you trust."

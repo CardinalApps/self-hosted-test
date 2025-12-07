@@ -1,19 +1,46 @@
 diff a/libraries/ui/src/components/interaction/SearchBar/SearchBar.tsx b/libraries/ui/src/components/interaction/SearchBar/SearchBar.tsx	(rejected hunks)
-@@ -7,7 +7,7 @@ import './SearchBar.css'
- type SearchBarProps = {
+@@ -8,7 +8,6 @@ type SearchBarProps = {
    size?: 'l' | 'm',
    placeholder?: string,
--  onChange?: (e) => void,
-+  onChange?: (e, value) => void,
-   onSubmit?: (e) => void,
+   onChange?: (e, value) => void,
+-  onSubmit?: (e) => void,
  }
  
-@@ -24,7 +24,7 @@ const SearchBar = ({
+ /**
+@@ -18,7 +17,6 @@ const SearchBar = ({
+   size = "m",
+   placeholder = 'Search',
+   onChange = () => {},
+-  onSubmit,
+ }: PropsWithChildren<SearchBarProps>) => {
+   const [query, setQuery] = useState('')
  
-   const handleChange = (e) => {
-     setQuery(e.target.value)
--    onChange(e)
-+    onChange(e, e.target.value)
-   }
+@@ -29,18 +27,16 @@ const SearchBar = ({
  
    return (
+     <div className={clsx('search-bar', `size-${size}`)}>
+-      <form onSubmit={onSubmit}>
+-        <label>
+-          <i className="fas fa-search"></i>
+-          <input
+-            type="search"
+-            name="query"
+-            value={query}
+-            placeholder={placeholder}
+-            onChange={handleChange}
+-          />
+-        </label>
+-      </form>
++      <label>
++        <i className="fas fa-search"></i>
++        <input
++          type="search"
++          name="query"
++          value={query}
++          placeholder={placeholder}
++          onChange={handleChange}
++        />
++      </label>
+     </div>
+   )
+ }
