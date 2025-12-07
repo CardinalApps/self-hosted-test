@@ -1,10 +1,10 @@
 diff a/apps/admin-web/src/pages/Users/i18n.json b/apps/admin-web/src/pages/Users/i18n.json	(rejected hunks)
-@@ -54,7 +54,7 @@
-     "en": "Invite Using a Link"
+@@ -9,7 +9,7 @@
+     "en": "Unclaimed Server"
    },
-   "users.invite.confirm.title": {
--    "en": "Invite New user"
-+    "en": "Invite New User"
+   "users.server.unclaimed-warning.desc": {
+-    "en": "Sign in with a Cardinal account to claim this server."
++    "en": "Sign in with a Cardinal account to claim this server and access Cardinal's cloud services."
    },
-   "users.invite.confirm.desc": {
-     "en": "You are about to invite {name} to your server. Only invite users that you trust."
+   "users.new-users": {
+     "en": "New Users"
