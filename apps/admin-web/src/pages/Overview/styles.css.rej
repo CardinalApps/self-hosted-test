@@ -1,49 +1,9 @@
 diff a/apps/admin-web/src/pages/Overview/styles.css b/apps/admin-web/src/pages/Overview/styles.css	(rejected hunks)
-@@ -42,20 +42,15 @@
+@@ -37,6 +37,7 @@
+       font-weight: 800;
+       line-height: 1em;
+       border-radius: 3px;
++      white-space: nowrap;
+       background-color: var(--bg-4);
+     }
    }
- }
- 
--
--
--
--
--
- .apps {
-   width: 100%;
-   display: flex;
--  flex-direction: column;
-+  flex-wrap: wrap;
-   gap: 6px;
- }
- 
- .app {
--  width: 100%;
-+  width: calc(50% - 3px);
- 
-   .brandLogo {
-     display: flex;
-@@ -81,8 +76,22 @@
-   }
- 
-   .name {
--    font-size: 15px;
-+    line-height: 1.4em;
-+    font-size: 14px;
-     font-weight: 700;
--    color: var(--text-color-2);
-+    color: var(--text-color-1);
-+  }
-+
-+  .version {
-+    line-height: 1.4em;
-+    font-size: 13px;
-+    color: var(--text-color-3);
-+  }
-+}
-+
-+.server-info {
-+
-+  .server-info-list {
-+    width: 100%;
-   }
- }
