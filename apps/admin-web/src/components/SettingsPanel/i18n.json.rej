@@ -1,14 +1,56 @@
 diff a/apps/admin-web/src/components/SettingsPanel/i18n.json b/apps/admin-web/src/components/SettingsPanel/i18n.json	(rejected hunks)
-@@ -39,10 +39,10 @@
-     "en": "Factory reset"
-   },
-   "data.confirm-media-reset": {
--    "en": "<p>Deindexing your media files will remove your photos, music, movies, and TV from your Media Server. Features that require media, like photo albums and playlists, will be reset.</p><p>Your Media Server will become unresponsive while this process runs (it can take a while). You can safely turn off your Media Server while this is running to cancel it without removing any data.</p>"
-+    "en": "<p>Deindexing your media files will remove your photos, music, movies, and TV from your Media Server. Features that require media, like photo albums and playlists, will be reset.</p><p>Your Media Server will become unresponsive while this process runs (it can take a while).</p>"
-   },
-   "data.confirm-factory-reset": {
--    "en": "<p>For Media Servers installed with Docker Compose, <a href='https://help.cardinalapps.io/guides/cardinal-media-server/uninstall' target='_blank'>reinstalling with Docker Compose</a> is recommended instead of using this built-in utility.</p><p>A factory reset will deindex your media, remove any other data, and return your Media Server to its initial state. Your cloud account will be unlinked from this Media Server.</p><p>Your Media Server will become unresponsive while this process runs (it can take a while). You can safely turn off your Media Server while this is running to cancel it without removing any data.</p>"
-+    "en": "<p>For Media Servers installed with Docker Compose, <a href='https://help.cardinalapps.io/guides/cardinal-media-server/uninstall' target='_blank'>reinstalling with Docker Compose</a> is recommended instead of using this built-in utility.</p><p>A factory reset will deindex your media, remove any other data, and return your Media Server to its initial state. Your cloud account will be unlinked from this Media Server.</p><p>Your Media Server will become unresponsive while this process runs (it can take a while).</p>"
-   },
+@@ -47,54 +47,6 @@
    "data.media-reset.success-toast.title": {
      "en": "Media successfully dexindexed."
+   },
+-  "apps.tab.name": {
+-    "en": "Apps"
+-  },
+-  "apps.self-hosted-apps": {
+-    "en": "Self-hosted apps"
+-  },
+-  "apps.versions.app.admin": {
+-    "en": "Cardinal Media Server"
+-  },
+-  "apps.versions.app.cardinal_music": {
+-    "en": "Cardinal Music"
+-  },
+-  "apps.versions.app.cardinal_photos": {
+-    "en": "Cardinal Photos"
+-  },
+-  "apps.versions.app.cardinal_cinema": {
+-    "en": "Cardinal Cinema"
+-  },
+-  "apps.versions.nodejs": {
+-    "en": "Node.js"
+-  },
+-  "apps.versions.openssl": {
+-    "en": "OpenSSL"
+-  },
+-  "apps.versions.database": {
+-    "en": "Database"
+-  },
+-  "apps.versions.web-app-prefix": {
+-    "en": "v"
+-  },
+-  "apps.versions.home-server-version-prefix": {
+-    "en": "Server v"
+-  },
+-  "apps.versions.home-server-admin-version-prefix": {
+-    "en": "Admin v"
+-  },
+-  "apps.error": {
+-    "en": "Error loading apps"
+-  },
+-  "manually-check-for-updates.title": {
+-    "en": "Updates"
+-  },
+-  "manually-check-for-updates.button": {
+-    "en": "Check for updates now"
+-  },
+-  "manually-check-for-updates.available": {
+-    "en": "Update available: <strong>{version}</strong>"
+-  },
+   "manually-check-for-updates.update.links": {
+     "en": "<a href='https://cardinalapps.io/release-notes/cardinal-media-server/{version}' target='_blank'>Release notes</a> / <a href='https://help.cardinalapps.io/guides/cardinal-media-server/update' target='_blank'>How to update</a>"
+   },

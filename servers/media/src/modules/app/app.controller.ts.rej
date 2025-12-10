@@ -1,27 +1,32 @@
 diff a/servers/media/src/modules/app/app.controller.ts b/servers/media/src/modules/app/app.controller.ts	(rejected hunks)
-@@ -226,7 +226,8 @@ export class AppController {
-   }
+@@ -38,6 +38,8 @@ import { ApiSecurityTypes } from '../../guards/types'
+ 
+ import { CardinalApp } from '../../utils/apps'
+ import { helpCode } from '../../utils/help-codes'
++import { MediaType } from '../../utils/media'
++import { UserService } from '../user/user.service'
+ 
+ import { HealthStates, ResetType, ResetValidationPhrase } from './enums'
+ import {
+@@ -50,11 +52,6 @@ import {
+   Versions,
+ } from './types'
+ import { envVar, getMediaDirs } from '../../utils/env'
+-import { MediaType } from '../../utils/media'
+-
+-
+-
+-import { JobTaskQueueService } from '../job/job-task-queue.service'
+ 
+ @Controller()
+ export class AppController {
+@@ -62,8 +59,8 @@ export class AppController {
+     private readonly appService: AppService,
+     private readonly databaseService: DatabaseService,
+     private readonly settingsService: SettingsService,
++    private readonly userService: UserService,
+     private adapterHost: HttpAdapterHost,
+-    private readonly jobTaskQueueService: JobTaskQueueService,
+   ) {}
  
    /**
--   * Get a list of versions of things in the Media Server.
-+   * Get a list of versions of things in the Media Server. In the `build_tag`,
-+   * the timestamp is of the build, not the commit.
-    */
-   @Get('/versions')
-   @ApiTags('General')
-@@ -243,6 +244,7 @@ export class AppController {
-         cardinal_music_web_app: '0.0.0',
-         cardinal_photos_web_app: '0.0.0',
-         cardinal_cinema_web_app: '0.0.0',
-+        build_tag: '<release_channel>-<commit>-<YYMMDDTHHMMSS>',
-       } as Versions,
-     },
-   })
-@@ -258,6 +260,7 @@ export class AppController {
-       cardinal_music_web_app: this.appService.getWebAppVersion(CardinalApp.MUSIC),
-       cardinal_photos_web_app: this.appService.getWebAppVersion(CardinalApp.PHOTOS),
-       cardinal_cinema_web_app: this.appService.getWebAppVersion(CardinalApp.CINEMA),
-+      build_tag: envVar('BUILD_TAG', null) as string,
-     }
-   }
- 

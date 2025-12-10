@@ -1,12 +1,24 @@
 diff a/libraries/ui/src/components/interaction/Button/Button.css b/libraries/ui/src/components/interaction/Button/Button.css	(rejected hunks)
-@@ -95,6 +95,10 @@
-         margin-right: 8px;
-       }
-     }
-+
-+    .button-text {
-+      white-space: normal;
-+    }
+@@ -45,6 +45,22 @@
+     } */
    }
  
-   &.action {
++  &.plain {
++    width: auto;
++    height: auto;
++    border: none;
++    padding: 0;
++    color: var(--accent-color);
++    font-weight: 400;
++    font-size: 14px;
++    background: none;
++
++    &:hover {
++      text-decoration: underline;
++      background: none;
++    }
++  }
++
+   &.tag {
+     padding: 22px 20px;
+     font-size: 14px;

@@ -1,0 +1,25 @@
+diff a/libraries/ui/src/store/apis/licensing.ts b/libraries/ui/src/store/apis/licensing.ts	(rejected hunks)
+@@ -9,10 +9,16 @@ export type SeatLicensingType = {
+ 
+ export const licensingApi = baseHomeServerApi
+   .enhanceEndpoints({
+-    addTagTypes: ['Licensing.Seats'],
++    addTagTypes: ['Licensing.Seats', 'Licensing.Subscription'],
+   })
+   .injectEndpoints({
+     endpoints: (builder) => ({
++      getLicensingSubscription: builder.query({
++        query: () => {
++          return queryParams('/licensing/subscription')
++        },
++        providesTags: ['Licensing.Subscription'],
++      }),
+       getLicensingSeats: builder.query({
+         query: () => {
+           return queryParams('/licensing/seats')
+@@ -24,4 +30,5 @@ export const licensingApi = baseHomeServerApi
+ 
+ export const {
+   useGetLicensingSeatsQuery,
++  useGetLicensingSubscriptionQuery,
+ } = licensingApi

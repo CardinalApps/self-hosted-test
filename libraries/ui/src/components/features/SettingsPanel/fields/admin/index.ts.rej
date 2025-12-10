@@ -1,0 +1,13 @@
+diff a/libraries/ui/src/components/features/SettingsPanel/fields/admin/index.ts b/libraries/ui/src/components/features/SettingsPanel/fields/admin/index.ts	(rejected hunks)
+@@ -1,11 +1,9 @@
+-import enableGuestAccount from './enableGuestAccount'
+ import autoCheckForUpdates from './autoCheckForUpdates'
+ import serverName from './serverName'
+ import telemetry from './telemetry'
+ import openAppsInNewTab from './openAppsInNewTab'
+ 
+ export default {
+-  enableGuestAccount,
+   autoCheckForUpdates,
+   serverName,
+   telemetry,

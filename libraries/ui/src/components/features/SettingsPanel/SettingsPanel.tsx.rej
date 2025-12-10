@@ -1,9 +1,9 @@
 diff a/libraries/ui/src/components/features/SettingsPanel/SettingsPanel.tsx b/libraries/ui/src/components/features/SettingsPanel/SettingsPanel.tsx	(rejected hunks)
-@@ -16,6 +16,7 @@ import set from '../../../store/slices/settings/thunks/set'
+@@ -16,7 +16,6 @@ import set from '../../../store/slices/settings/thunks/set'
  import sync from '../../../store/slices/settings/thunks/sync'
  
  import { useAppDispatch } from '../../../hooks/useAppDispatch'
-+import { useGetVersionsQuery } from '../../../store/apis/versions'
+-import { useGetVersionsQuery } from '../../../store/apis/versions'
  
  import { getFields } from './fields'
  

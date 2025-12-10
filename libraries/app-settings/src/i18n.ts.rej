@@ -1,0 +1,11 @@
+diff a/libraries/app-settings/src/i18n.ts b/libraries/app-settings/src/i18n.ts	(rejected hunks)
+@@ -149,9 +149,6 @@ export default {
+   "settings.guest-account.enable-label": {
+     "en": "Enable guest account",
+   },
+-  "settings.guest-account.desc": {
+-    "en": "The guest account can only be disabled if you've claimed this server with a Cardinal account.",
+-  },
+   "settings.telemetry.label": {
+     "en": "Enable telemetry",
+   },

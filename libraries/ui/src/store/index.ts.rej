@@ -1,52 +1,17 @@
 diff a/libraries/ui/src/store/index.ts b/libraries/ui/src/store/index.ts	(rejected hunks)
-@@ -22,14 +22,7 @@ import musicSlice from './slices/music'
- /**
-  * APIs
-  */
--import { activeUsersApi } from './apis/activeUsers'
--import { photoAlbumsApi } from './apis/photoAlbums'
--import { jobsApi } from './apis/jobs'
--import { jobTasksApi } from './apis/jobTasks'
--import { librariesApi } from './apis/libraries'
--import { runsApi } from './apis/runs'
--import { versionsApi } from './apis/versions'
--import { baseApi } from './apis/base'
-+import { baseHomeServerApi } from './apis/baseHomeServerApi'
+@@ -30,6 +30,7 @@ import { baseHomeServerApi } from './apis/baseHomeServerApi'
+ import resetMiddleware from './middleware/reset'
+ import sseFactoryResetMiddleware from './middleware/sseFactoryReset'
+ import sseLatestEventMiddleware from './slices/homeServer/middleware/sseLatestEvent'
++import logHTTPError from './middleware/logHTTPError'
  
  /**
-  * Middleware
-@@ -70,14 +63,7 @@ const slices = {
-   [jobsSlice.reducerPath]: jobsSlice,
-   [layoutSlice.reducerPath]: layoutSlice,
-   [musicSlice.reducerPath]: musicSlice,
--  [photoAlbumsApi.reducerPath]: photoAlbumsApi,
--  [activeUsersApi.reducerPath]: activeUsersApi,
--  [jobsApi.reducerPath]: jobsApi,
--  [jobTasksApi.reducerPath]: jobTasksApi,
--  [runsApi.reducerPath]: runsApi,
--  [librariesApi.reducerPath]: librariesApi,
--  [versionsApi.reducerPath]: versionsApi,
--  [baseApi.reducerPath]: baseApi,
-+  [baseHomeServerApi.reducerPath]: baseHomeServerApi,
- }
- 
- const rootReducer = combineSlices(...Object.values(slices))
-@@ -109,17 +95,10 @@ const createStore = () => {
-     reducer: rootReducer,
-     middleware: (getDefaultMiddleware) => {
-       return getDefaultMiddleware().concat(
--        activeUsersApi.middleware,
--        photoAlbumsApi.middleware,
--        jobsApi.middleware,
--        jobTasksApi.middleware,
--        runsApi.middleware,
--        librariesApi.middleware,
--        versionsApi.middleware,
+  * Lifecycle
+@@ -98,6 +99,7 @@ const createStore = () => {
          resetMiddleware.middleware,
          sseFactoryResetMiddleware.middleware,
          sseLatestEventMiddleware.middleware,
--        baseApi.middleware,
-+        baseHomeServerApi.middleware,
++        logHTTPError.middleware,
+         baseHomeServerApi.middleware,
        )
      },
-     preloadedState,

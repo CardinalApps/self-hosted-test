@@ -1,0 +1,10 @@
+diff a/libraries/ui/src/store/slices/homeServer/thunks/healthCheck.ts b/libraries/ui/src/store/slices/homeServer/thunks/healthCheck.ts	(rejected hunks)
+@@ -28,6 +28,8 @@ const healthCheck = createAsyncThunk<
+   }
+ >(`${STORE_KEY}/health`, async (data: void, thunkAPI) => {
+   const res = await homeServerAPI('/health', 'GET', { sendJWT: false }) as HealthCheckResponse
++
++  // TODO decouple this from health checks
+   if (res?.update) {
+     const { lang } = settingsSelectors.current(thunkAPI.getState())
+     thunkAPI.dispatch(toastActions.addToQueue({

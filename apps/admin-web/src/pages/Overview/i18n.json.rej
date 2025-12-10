@@ -1,37 +1,72 @@
 diff a/apps/admin-web/src/pages/Overview/i18n.json b/apps/admin-web/src/pages/Overview/i18n.json	(rejected hunks)
-@@ -10,5 +10,35 @@
+@@ -9,7 +9,10 @@
+     "en": "Active Users"
    },
    "apps.title": {
-     "en": "Media Apps"
+-    "en": "Media Apps"
++    "en": "Apps"
 +  },
-+  "active-users.none": {
-+    "en": "No active users"
++  "server.title": {
++    "en": "Media Server"
+   },
+   "active-users.none": {
+     "en": "No active users"
+@@ -23,6 +26,9 @@
+   "active-users.ago": {
+     "en": "ago"
+   },
++  "app.name.admin": {
++    "en": "Admin"
 +  },
-+  "active-users.guest-account": {
-+    "en": "Guest account"
+   "app.name.music": {
+     "en": "Music"
+   },
+@@ -32,6 +38,9 @@
+   "app.name.cinema": {
+     "en": "Cinema"
+   },
++  "app.title.admin": {
++    "en": "Open the Admin web app"
 +  },
-+  "active-users.less-than-a-minute-ago": {
-+    "en": "Active now"
+   "app.title.music": {
+     "en": "Open the Music web app"
+   },
+@@ -40,5 +49,38 @@
+   },
+   "app.title.cinema": {
+     "en": "Open the Cinema web app"
 +  },
-+  "active-users.ago": {
-+    "en": "ago"
++  "server.check-for-updates": {
++    "en": "Check for updates"
 +  },
-+  "app.name.music": {
-+    "en": "Music"
++  "server.version": {
++    "en": "Version"
 +  },
-+  "app.name.photos": {
-+    "en": "Photos"
++  "server.build": {
++    "en": "Build"
 +  },
-+  "app.name.cinema": {
-+    "en": "Cinema"
++  "server.build.untagged": {
++    "en": "Untagged"
 +  },
-+  "app.title.music": {
-+    "en": "Open the Music web app"
++  "server.subscription": {
++    "en": "Subscription"
 +  },
-+  "app.title.photos": {
-+    "en": "Open the Photos web app"
++  "server.release-channel": {
++    "en": "Release Channel"
 +  },
-+  "app.title.cinema": {
-+    "en": "Open the Cinema web app"
++  "server.update-is-available": {
++    "en": "Update Available"
++  },
++  "server.update-is-available.links": {
++    "en": "<p>Cardinal Media Server v{version} is available.</p><p><a href='https://cardinalapps.io/release-notes/cardinal-media-server/v{version}' target='_blank'>Release notes</a> / <a href='https://help.cardinalapps.io/guides/cardinal-media-server/update' target='_blank'>How to update</a></p>"
++  },
++  "server.no-update-available.title": {
++    "en": "No updates available"
++  },
++  "server.no-update-available.body": {
++    "en": "You are already using the latest version."
++  },
++  "server.no-updates-on-dev": {
++    "en": "Updates are not available on the development release channel."
    }
  }

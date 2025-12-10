@@ -1,64 +1,25 @@
 diff a/libraries/ui/src/components/interaction/Button/Button.tsx b/libraries/ui/src/components/interaction/Button/Button.tsx	(rejected hunks)
-@@ -12,8 +12,10 @@ type ButtonProps = {
-   type?: 'button' | 'submit' | 'reset',
-   href?: string,
-   target?: string,
-+  arrowText?: boolean,
-   solid?: boolean,
+@@ -17,6 +17,7 @@ type ButtonProps = {
    outline?: boolean,
-+  title?: string,
+   title?: string,
    textual?: boolean,
++  plain?: boolean,
    tag?: boolean,
    action?: boolean,
-@@ -33,8 +35,10 @@ const Button = ({
-   type = 'button',
-   href = undefined,
-   target = '_self',
-+  arrowText = false,
-   solid = false,
+   icon?: string,
+@@ -40,6 +41,7 @@ const Button = ({
    outline = false,
-+  title,
+   title,
    textual = false,
++  plain = false,
    tag = false,
    action = false,
-@@ -56,7 +60,10 @@ const Button = ({
+   icon = undefined,
+@@ -58,6 +60,7 @@ const Button = ({
+     !!solid && 'solid',
+     !!outline && 'outline',
      !!textual && 'textual',
++    !!plain && 'plain',
      !!tag && 'tag',
      !!action && 'action',
-+    !!arrowText && 'arrow-text',
-     !!color && color,
-+    !!color && color,
-+    !!disabled && 'disabled',
-     !!animation && `${animation}-animation animation with-icon`,
-     !!mouseUpAnimation && `${mouseUpAnimation}`,
-     className,
-@@ -68,12 +75,13 @@ const Button = ({
-         href={href}
-         target={target}
-         type={type}
-+        title={title}
-         onClick={onClick}
-         className={classNameProp}
-         {...props}
-       >
-         {!!icon && <Icon fa={icon} />}
--        {children}
-+        <span className="button-text">{children}</span>
-       </a>
-     )
-   } else {
-@@ -82,12 +90,13 @@ const Button = ({
-         type={type}
-         className={classNameProp}
-         onClick={onClick}
-+        title={title}
-         disabled={disabled || animation ? true : false}
-         {...props}
-       >
-         {!!icon && <Icon fa={icon} />}
-         {animation && getAnimationSVG(animation, animationColor)}
--        {children}
-+        <span className="button-text">{children}</span>
-       </button>
-     )
-   }
+     !!arrowText && 'arrow-text',

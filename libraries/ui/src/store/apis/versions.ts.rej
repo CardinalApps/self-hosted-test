@@ -1,44 +1,38 @@
 diff a/libraries/ui/src/store/apis/versions.ts b/libraries/ui/src/store/apis/versions.ts	(rejected hunks)
-@@ -1,27 +1,22 @@
--import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
--
- import queryParams from '../../lib/net/queryParams'
--import { prepareRTKQueryHeaders } from '../../lib/homeserver/prepareRTKQueryHeaders'
+@@ -4,7 +4,7 @@ import { baseHomeServerApi } from './baseHomeServerApi'
  
--import { HOME_SERVER_HOST } from '../../../env'
-+import { baseHomeServerApi } from './baseHomeServerApi'
- 
--export const versionsApi = createApi({
--  reducerPath: 'versionsApi',
--  refetchOnMountOrArgChange: true,
--  tagTypes: ['Versions'],
--  baseQuery: fetchBaseQuery({
--    baseUrl: `${HOME_SERVER_HOST}/api/v1`,
--    prepareHeaders: prepareRTKQueryHeaders,
--  }),
--  endpoints: (builder) => ({
--    getVersions: builder.query({
--      query: () => {
--        return queryParams('/versions')
--      },
--      providesTags: ['Versions'],
-+export const versionsApi = baseHomeServerApi
-+  .enhanceEndpoints({
-+    addTagTypes: ['Versions'],
-+  })
-+  .injectEndpoints({
-+    endpoints: (builder) => ({
-+      getVersions: builder.query({
+ export const versionsApi = baseHomeServerApi
+   .enhanceEndpoints({
+-    addTagTypes: ['Versions'],
++    addTagTypes: ['Versions', 'ReleaseChannels', 'Updates'],
+   })
+   .injectEndpoints({
+     endpoints: (builder) => ({
+@@ -14,6 +14,18 @@ export const versionsApi = baseHomeServerApi
+         },
+         providesTags: ['Versions'],
+       }),
++      getReleaseChannel: builder.query({
 +        query: () => {
-+          return queryParams('/versions')
++          return queryParams('/release-channels')
 +        },
-+        providesTags: ['Versions'],
++        providesTags: ['ReleaseChannels'],
++      }),
++      getUpdates: builder.query({
++        query: () => {
++          return queryParams('/updates')
++        },
++        providesTags: ['Updates'],
 +      }),
      }),
--  }),
--})
-+  })
-+
+   })
  
+@@ -21,4 +33,8 @@ export const versionsApi = baseHomeServerApi
  export const {
    useGetVersionsQuery,
+   useLazyGetVersionsQuery,
++  useGetReleaseChannelQuery,
++  useLazyGetReleaseChannelQuery,
++  useGetUpdatesQuery,
++  useLazyGetUpdatesQuery,
+ } = versionsApi

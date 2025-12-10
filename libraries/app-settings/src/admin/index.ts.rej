@@ -1,0 +1,9 @@
+diff a/libraries/app-settings/src/admin/index.ts b/libraries/app-settings/src/admin/index.ts	(rejected hunks)
+@@ -1,7 +1,5 @@
+-import { ENABLE_GUEST_ACCOUNT_SLUG, enableGuestAccountFactory } from './enable_guest_account'
+ import { SERVER_NAME_SLUG, serverNameFactory } from './server_name'
+ 
+ export const adminFields = {
+-  [ENABLE_GUEST_ACCOUNT_SLUG]: enableGuestAccountFactory,
+   [SERVER_NAME_SLUG]: serverNameFactory,
+ }

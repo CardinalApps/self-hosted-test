@@ -1,46 +1,21 @@
 diff a/apps/admin-web/src/components/SettingsPanel/SettingsPanel.tsx b/apps/admin-web/src/components/SettingsPanel/SettingsPanel.tsx	(rejected hunks)
-@@ -1,10 +1,16 @@
- import { useSelector } from 'react-redux'
+@@ -6,7 +6,6 @@ import { settingsSelectors } from '@cardinalapps/ui/src/store/slices/settings'
  
- import SettingsPanel from '@cardinalapps/ui/src/components/features/SettingsPanel'
--import { settingsSelectors } from '@cardinalapps/ui/src/store/slices/settings'
- import { CardinalApp } from '@cardinalapps/ui/src/lib/env/cardinal'
-+import { settingsSelectors } from '@cardinalapps/ui/src/store/slices/settings'
-+
-+import Advanced from './custom-pages/Advanced'
-+import Reporting from './custom-pages/Reporting'
-+import Apps from './custom-pages/Apps'
-+
-+import i18n from './i18n.json'
+ import Advanced from './custom-pages/Advanced'
+ import Reporting from './custom-pages/Reporting'
+-import Apps from './custom-pages/Apps'
  
--//import i18n from './i18n.json'
-+import './styles.css'
+ import i18n from './i18n.json'
  
- /**
-  * Custom settings pages for the Media Server.
-@@ -16,7 +22,24 @@ function HomeServerSettingsPanel() {
-     <SettingsPanel
-       app={CardinalApp.ADMIN}
+@@ -24,11 +23,6 @@ function HomeServerSettingsPanel() {
        onClose={() => window.history.back()}
--      lang={lang}
-+      lang="en"
-+      customTabs={[
-+        {
-+          tabName: i18n['apps.tab.name'][lang],
-+          tabIcon: 'fas fa-th',
-+          tabContent: <Apps />,
-+        },
-+        {
-+          tabName: i18n['reporting.tab.name'][lang],
-+          tabIcon: 'fas fa-bullhorn',
-+          tabContent: <Reporting />,
-+        },
-+        {
-+          tabName: i18n['advanced.tab.name'][lang],
-+          tabIcon: 'fas fa-microscope',
-+          tabContent: <Advanced />,
-+        },
-+      ]}
-     />
-   )
- }
+       lang="en"
+       customTabs={[
+-        {
+-          tabName: i18n['apps.tab.name'][lang],
+-          tabIcon: 'fas fa-th',
+-          tabContent: <Apps />,
+-        },
+         {
+           tabName: i18n['reporting.tab.name'][lang],
+           tabIcon: 'fas fa-bullhorn',
