@@ -3,7 +3,7 @@ diff a/libraries/ui/src/components/layout/CardGrid/CardGrid.css b/libraries/ui/s
        .card {
          min-width: 300px;
          max-width: 450px;
-+        max-height: 360px;
++        min-height: 170px;
+         max-height: 360px;
        }
      }
-   }

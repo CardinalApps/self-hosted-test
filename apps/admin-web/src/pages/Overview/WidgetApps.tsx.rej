@@ -1,0 +1,9 @@
+diff a/apps/admin-web/src/pages/Overview/WidgetApps.tsx b/apps/admin-web/src/pages/Overview/WidgetApps.tsx	(rejected hunks)
+@@ -15,6 +15,7 @@ function WidgetApps() {
+ 
+   return (
+     <CardGrid.Card
++      width={300}
+       icon={<Icon fa="fas fa-window-maximize" />}
+       header={
+         <>

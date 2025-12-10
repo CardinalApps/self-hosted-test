@@ -1,40 +1,49 @@
 diff a/libraries/ui/src/components/layout/Card/Card.tsx b/libraries/ui/src/components/layout/Card/Card.tsx	(rejected hunks)
-@@ -6,7 +6,7 @@ import './Card.css'
- 
+@@ -7,6 +7,8 @@ import './Card.css'
  export type CardPadding = 'regular' | 'thick' | 'thin' | 'none'
  
--type CardProps = {
-+export type CardProps = {
+ export type CardProps = {
++  width?: number | string,
++  height?: number | string,
    padding?: CardPadding,
    shadow?: 0 | 1 | 2 | 3 | 4,
    bg?: 0 | 1 | 2 | 3 | 4,
-@@ -18,6 +18,7 @@ type CardProps = {
-   bottomAlignContent?: boolean,
-   icon?: React.ReactNode,
-   header?: ReactNode,
-+  headerRight?: ReactNode,
-   footer?: ReactNode,
-   children?: ReactNode,
+@@ -24,6 +26,8 @@ export type CardProps = {
  }
-@@ -34,6 +35,7 @@ const Card = ({
-   bottomAlignContent,
-   icon,
-   header,
-+  headerRight,
+ 
+ const Card = ({
++  width,
++  height,
+   padding = 'regular',
+   shadow,
+   bg = 1,
+@@ -39,14 +43,14 @@ const Card = ({
    footer,
    children,
  }: PropsWithChildren<CardProps>) => {
-@@ -56,8 +58,11 @@ const Card = ({
+-  const { width } = useWindowSize()
++  const { width: windowWidth } = useWindowSize()
+   return (
+     <div
+       id={id || undefined}
+       className={clsx(
+         `card`,
+         `padding-${padding}`,
+-        `bg-${(mobileBg && width <= 768) ? mobileBg : bg}`,
++        `bg-${(mobileBg && windowWidth <= 768) ? mobileBg : bg}`,
+         className,
+         shadow ? `shadow-${shadow}` : '',
+         border ? `border-${border}` : '',
+@@ -54,7 +58,11 @@ const Card = ({
+         footer ? `has-footer` : '',
+         bottomAlignContent ? `bottom-align-content` : '',
+       )}
+-      style={style}
++      style={{
++        ...style,
++        width,
++        height,
++      }}
      >
        {(!!header || !!icon) &&
          <header className="card-header">
--          {icon}
--          {header}
-+          <div className="card-title">
-+            {icon}
-+            {header}
-+          </div>
-+          <div>{headerRight}</div>
-         </header>
-       }
-       <div className="card-content">

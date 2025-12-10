@@ -1,51 +1,9 @@
 diff a/libraries/ui/src/components/layout/CardGrid/CardGrid.tsx b/libraries/ui/src/components/layout/CardGrid/CardGrid.tsx	(rejected hunks)
-@@ -1,7 +1,9 @@
-+import react from 'react'
- import type { PropsWithChildren, ReactNode } from 'react'
- import clsx from 'clsx'
- 
- import './CardGrid.css'
-+import Card, { CardProps } from '../Card/Card'
- 
- type CardGridProps = {
-   className?: string,
-@@ -18,15 +20,38 @@ const CardGrid = ({
-   wrap = false,
-   children,
- }: PropsWithChildren<CardGridProps>) => {
-+  const enhancedCards = () => {
-+    const childrenAsArray = Array.isArray(children)
-+      ? children
-+      : [children]
-+    return childrenAsArray
-+      .filter((card) => !!card)
-+      .map((card, i) => react.cloneElement(card, {
-+        key: i,
-+        className: 'aaaa',
-+        padding: 'thin',
-+      }))
-+  }
-   return (
-     <div className={clsx("card-grid", className)} data-layout={layout}>
-       {!!title && <p className="card-grid-title">{title}</p>}
-       <div className={clsx("card-grid-layout", wrap ? 'wrap' : undefined)}>
--        {children}
-+        {enhancedCards()}
-       </div>
-     </div>
-   )
- }
- 
-+CardGrid.Card = (props: CardProps = {}) => {
-+  return (
-+    <Card
-+      padding="thin"
-+      {...props}
-+    >
-+      {props.children}
-+    </Card>
-+  )
-+}
-+
- export default CardGrid
- 
+@@ -28,7 +28,6 @@ const CardGrid = ({
+       .filter((card) => !!card)
+       .map((card, i) => react.cloneElement(card, {
+         key: i,
+-        className: 'aaaa',
+         padding: 'thin',
+       }))
+   }
