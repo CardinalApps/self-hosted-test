@@ -1,0 +1,15 @@
+diff a/libraries/ui/src/components/interaction/Toast/Toast.stories.tsx b/libraries/ui/src/components/interaction/Toast/Toast.stories.tsx	(rejected hunks)
+@@ -58,13 +58,6 @@ export const TTL: Story = {
+   },
+ }
+ 
+-export const CustomColor: Story = {
+-  args: {
+-    title: `I'm blue ba de be ba be di`,
+-    overrideColor: 'lightblue',
+-  },
+-}
+-
+ export const DoAToast = () => {
+   const dispatch = useDispatch()
+ 
