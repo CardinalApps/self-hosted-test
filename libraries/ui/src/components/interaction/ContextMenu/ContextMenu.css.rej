@@ -1,0 +1,46 @@
+diff a/libraries/ui/src/components/interaction/ContextMenu/ContextMenu.css b/libraries/ui/src/components/interaction/ContextMenu/ContextMenu.css	(rejected hunks)
+@@ -6,12 +6,15 @@
+   top: 20px;
+   left: 20px;
+   border-radius: 4px;
+-  box-shadow: var(--box-shadow-1);
+-  background-color: var(--bg-3);
++  border: 1px solid var(--border-color-1);
++  box-shadow: var(--box-shadow-2);
++  background-color: var(--bg-1);
+   z-index: 10000000;
+ 
+   .context-menu-group {
+-    margin-bottom: 20px;
++    margin-bottom: 10px;
++    padding-bottom: 10px;
++    border-bottom: 1px solid var(--border-color-3);
+ 
+     &:first-of-type {
+       
+@@ -22,6 +25,8 @@
+ 
+     &:last-of-type {
+       margin-bottom: 0;
++      padding-bottom: 0;
++      border-bottom: none;
+     }
+   }
+ 
+@@ -43,13 +48,13 @@
+       padding: 8px;
+       border: none;
+       text-align: left;
+-      font: 500 14px var(--font-family);
+-      color: var(--text-color-1);
++      font: 400 13px var(--font-family);
++      color: var(--text-color-2);
+       cursor: pointer;
+       border-radius: 4px;
+       user-select: none;
+       -webkit-appearance: none;
+-      background-color: var(--bg-3);
++      background-color: var(--bg-1);
+       
+       &:hover {
+         background-color: var(--bg-4);
