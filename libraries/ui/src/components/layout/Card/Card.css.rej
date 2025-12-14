@@ -1,55 +1,9 @@
 diff a/libraries/ui/src/components/layout/Card/Card.css b/libraries/ui/src/components/layout/Card/Card.css	(rejected hunks)
-@@ -1,18 +1,20 @@
- .card {
-   display: flex;
-   flex-direction: column;
--  overflow-y: auto;
-+  overflow: hidden;
-   border-radius: 12px;
-   background-size: cover;
- 
-   &.padding-thick { padding: 20px; }
-+  &.padding-thick > .card-header { padding: 30px 40px 30px; }
-   &.padding-thick > .card-content { padding: 30px 40px; }
-   &.padding-thick > .card-footer { padding: 30px 20px 20px; }
- 
-+  &.padding-regular > .card-header { padding: 30px 40px 30px; }
-   &.padding-regular > .card-content { padding: 30px 40px; }
- 
--  &.padding-thin > .card-content { padding: 20px; }
--  &.padding-thin > .card-header { padding: 20px; }
-+  &.padding-thin > .card-header { padding: 24px; }
-+  &.padding-thin > .card-content { padding: 24px; }
- 
-   &.padding-none > .card-content { padding: 0 !important; }
- 
-@@ -50,9 +52,9 @@
-   }
- 
-   > .card-header {
--    padding: 30px 40px 30px;
-     display: flex;
-     align-items: center;
-+    justify-content: space-between;
- 
-     i {
-       margin-right: 10px;
-@@ -61,11 +63,18 @@
-       color: var(--text-color-2);
-       top: -1px;
-     }
-+
-+    > .card-title {
-+      display: flex;
-+      align-items: center;
-+      flex-grow: 1;
-+    }
-   }
- 
-   > .card-content {
+@@ -75,6 +75,7 @@
      width: 100%;
      line-height: 1.5em;
-+    overflow-y: auto;
+     overflow-y: auto;
++    flex-grow: 1;
    }
  
    > .card-footer {

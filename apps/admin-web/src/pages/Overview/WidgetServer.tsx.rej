@@ -1,0 +1,10 @@
+diff a/apps/admin-web/src/pages/Overview/WidgetServer.tsx b/apps/admin-web/src/pages/Overview/WidgetServer.tsx	(rejected hunks)
+@@ -62,7 +62,7 @@ function WidgetServer() {
+ 
+   return (
+     <CardGrid.Card
+-      width={330}
++      size="s"
+       icon={<Icon fa="fas fa-server" />}
+       header={
+         <>

@@ -1,22 +1,10 @@
 diff a/apps/admin-web/src/pages/Overview/Overview.tsx b/apps/admin-web/src/pages/Overview/Overview.tsx	(rejected hunks)
-@@ -7,7 +7,8 @@ import { settingsSelectors } from '@cardinalapps/ui/src/store/slices/settings'
- 
- import { PAGE_LAYOUT } from '@cardinalapps/ui/src/store/slices/layout/constants'
- 
--import ActiveUsersWidget from './WidgetActiveUsers'
-+import WidgetServer from './WidgetServer'
-+import WidgetActiveUsers from './WidgetActiveUsers'
- import WidgetApps from './WidgetApps'
- 
- import i18n from './i18n.json'
-@@ -18,8 +19,9 @@ function Overview() {
+@@ -18,7 +18,7 @@ function Overview() {
+   const { lang } = useSelector(settingsSelectors.current)
    return (
      <AppPage layout={PAGE_LAYOUT.standard} pageTitle={i18n['title'][lang]}>
-       <CardGrid layout="flex" wrap>
--        <ActiveUsersWidget />
-+        <WidgetServer />
+-      <CardGrid layout="flex" wrap>
++      <CardGrid rowHeight='m'>
+         <WidgetServer />
          <WidgetApps />
-+        <WidgetActiveUsers />
-       </CardGrid>
-     </AppPage>
-   )
+         <WidgetActiveUsers />

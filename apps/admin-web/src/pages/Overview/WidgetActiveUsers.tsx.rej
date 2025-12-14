@@ -1,16 +1,10 @@
 diff a/apps/admin-web/src/pages/Overview/WidgetActiveUsers.tsx b/apps/admin-web/src/pages/Overview/WidgetActiveUsers.tsx	(rejected hunks)
-@@ -15,7 +15,7 @@ import ReloadButton from './ReloadButton'
- import i18n from './i18n.json'
- import './styles.css'
+@@ -33,7 +33,7 @@ function WidgetActiveUsers() {
  
--function ActiveUsersWidget() {
-+function WidgetActiveUsers() {
-   const { lang } = useSelector(settingsSelectors.current)
-   const { data, refetch } = useGetActiveUsersQuery({})
-   const activeUsers = data || []
-@@ -60,4 +60,4 @@ function ActiveUsersWidget() {
-   )
- }
- 
--export default ActiveUsersWidget
-+export default WidgetActiveUsers
+   return (
+     <CardGrid.Card
+-      width={340}
++      size="m"
+       className="active-users-widget"
+       icon={<Icon fa="fas fa-users" />}
+       header={
