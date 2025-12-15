@@ -1,0 +1,10 @@
+diff a/apps/admin-web/src/pages/Indexing/sections/MediaProgress.tsx b/apps/admin-web/src/pages/Indexing/sections/MediaProgress.tsx	(rejected hunks)
+@@ -47,7 +47,7 @@ function Indexer() {
+ 
+   return (
+     <CardGrid.Card
+-      size="m"
++      size="l"
+       header={
+         <>
+           <H5>{i18n['status.media-progress.title'][lang]}</H5>

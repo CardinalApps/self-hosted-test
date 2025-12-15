@@ -1,70 +1,88 @@
 diff a/apps/admin-web/src/components/SettingsPanel/custom-pages/Advanced.jsx b/apps/admin-web/src/components/SettingsPanel/custom-pages/Advanced.jsx	(rejected hunks)
-@@ -3,14 +3,14 @@ import { useSelector, useDispatch } from 'react-redux'
+@@ -1,56 +1,22 @@
+-import { useState } from 'react'
+-import { useSelector, useDispatch } from 'react-redux'
++import { useSelector } from 'react-redux'
  
- import Button from '@cardinalapps/ui/src/components/interaction/Button'
+-import Button from '@cardinalapps/ui/src/components/interaction/Button'
  import { settingsSelectors } from '@cardinalapps/ui/src/store/slices/settings'
--import { homeServerActions } from '@cardinalapps/ui/src/store/slices/homeServer'
-+// import { homeServerActions } from '@cardinalapps/ui/src/store/slices/homeServer'
- import Confirm from '@cardinalapps/ui/src/components/interaction/Confirm'
+-// import { homeServerActions } from '@cardinalapps/ui/src/store/slices/homeServer'
+-import Confirm from '@cardinalapps/ui/src/components/interaction/Confirm'
  import Card from '@cardinalapps/ui/src/components/layout/Card'
  import H5 from '@cardinalapps/ui/src/components/typography/H5'
  import WrittenText from '@cardinalapps/ui/src/components/typography/WrittenText'
  import { Columns, Column } from '@cardinalapps/ui/src/components/layout/Columns'
  
--import healthCheck from '@cardinalapps/ui/src/store/slices/homeServer/thunks/healthCheck'
-+// import healthCheck from '@cardinalapps/ui/src/store/slices/homeServer/thunks/healthCheck'
- import { toastActions } from '@cardinalapps/ui/src/store/slices/toast'
+-// import healthCheck from '@cardinalapps/ui/src/store/slices/homeServer/thunks/healthCheck'
+-import { toastActions } from '@cardinalapps/ui/src/store/slices/toast'
+-
+-import homeServerAPI from '@cardinalapps/ui/src/lib/homeserver/homeServerAPI'
+-
+ import i18n from '../i18n.json'
  
- import homeServerAPI from '@cardinalapps/ui/src/lib/homeserver/homeServerAPI'
-@@ -27,8 +27,8 @@ function Advanced() {
-   const [showDeindexConfirm, setShowDeindexConfirm] = useState(false)
-   const [deindexingIsLoading, setDeindexingIsLoading] = useState(false)
+ /**
+  * Custom settings pages for the Media Server.
+  */
+ function Advanced() {
+-  const dispatch = useDispatch()
+   const { lang } = useSelector(settingsSelectors.current)
  
--  const [showFactoryResetConfirm, setShowFactoryResetConfirm] = useState(false)
--  const [factoryResetIsLoading, setFactoryResetIsLoading] = useState(false)
-+  // const [showFactoryResetConfirm, setShowFactoryResetConfirm] = useState(false)
-+  // const [factoryResetIsLoading, setFactoryResetIsLoading] = useState(false)
+-  const [showDeindexConfirm, setShowDeindexConfirm] = useState(false)
+-  const [deindexingIsLoading, setDeindexingIsLoading] = useState(false)
+-
+   // const [showFactoryResetConfirm, setShowFactoryResetConfirm] = useState(false)
+   // const [factoryResetIsLoading, setFactoryResetIsLoading] = useState(false)
  
-   const handleResetMediaDataClick = () => {
-     setDeindexingIsLoading(true)
-@@ -51,23 +51,23 @@ function Advanced() {
-       })
-   }
- 
--  const handleFactoryResetClick = () => {
--    setFactoryResetIsLoading(true)
+-  const handleResetMediaDataClick = () => {
+-    setDeindexingIsLoading(true)
 -    homeServerAPI('/reset', 'POST', {
 -      body: {
--        type: 'factory',
--        validationString: 'Factory reset',
+-        type: 'media',
+-        validationString: 'Deindex media',
 -      },
 -    })
 -      .then(() => {
--        setFactoryResetIsLoading(false)
--        dispatch(homeServerActions.setFirstTimeSetupComplete(false))
--        dispatch(healthCheck())
+-        setShowDeindexConfirm(false)
+-        setDeindexingIsLoading(false)
+-        dispatch(toastActions.addToQueue({
+-          title: i18n['data.media-reset.success-toast.title'][lang],
+-          type: 'success',
+-        }))
 -      })
 -      .catch(() => {
--        setFactoryResetIsLoading(false)
+-        setDeindexingIsLoading(false)
 -      })
 -  }
-+  // const handleFactoryResetClick = () => {
-+  //   setFactoryResetIsLoading(true)
-+  //   homeServerAPI('/reset', 'POST', {
-+  //     body: {
-+  //       type: 'factory',
-+  //       validationString: 'Factory reset',
-+  //     },
-+  //   })
-+  //     .then(() => {
-+  //       setFactoryResetIsLoading(false)
-+  //       dispatch(homeServerActions.setFirstTimeSetupComplete(false))
-+  //       dispatch(healthCheck())
-+  //     })
-+  //     .catch(() => {
-+  //       setFactoryResetIsLoading(false)
-+  //     })
-+  // }
- 
-   return (
-     <Columns
+-
+   // const handleFactoryResetClick = () => {
+   //   setFactoryResetIsLoading(true)
+   //   homeServerAPI('/reset', 'POST', {
+@@ -87,28 +53,11 @@ function Advanced() {
+           shadow="0"
+           border="1"
+           className={'advancedOption'}
+-          footer={<Button textual onClick={() => setShowDeindexConfirm(true)}>{i18n['data.media-reset.button'][lang]}</Button>}
+         >
+           <H5>{i18n['data.media-reset.title'][lang]}</H5>
+           <WrittenText>
+             <p>{i18n['data.media-reset.desc'][lang]}</p>
+           </WrittenText>
+-          {!!showDeindexConfirm &&
+-            <Confirm
+-              title={i18n['data.media-reset.confirm-title'][lang]}
+-              message={i18n['data.confirm-media-reset'][lang]}
+-              mustEnterText={'Deindex media'}
+-              confirmButtonIsDangerous={true}
+-              loading={deindexingIsLoading}
+-              onClose={(confirmed) => {
+-                if (confirmed) {
+-                  handleResetMediaDataClick()
+-                } else {
+-                  setShowDeindexConfirm(false)
+-                }
+-              }}
+-            />
+-          }
+         </Card>
+       </Column>
+       {/* <Column

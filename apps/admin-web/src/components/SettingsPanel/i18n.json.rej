@@ -1,10 +1,28 @@
 diff a/apps/admin-web/src/components/SettingsPanel/i18n.json b/apps/admin-web/src/components/SettingsPanel/i18n.json	(rejected hunks)
-@@ -12,7 +12,7 @@
-     "en": "Updates"
+@@ -23,12 +23,6 @@
+   "telemetry.history.header.date": {
+     "en": "Date."
    },
-   "reporting.tab.name": {
--    "en": "Reporting"
-+    "en": "Telemetry"
+-  "data.media-reset.button": {
+-    "en": "Deindex media"
+-  },
+-  "data.media-reset.confirm-title": {
+-    "en": "Deindex media"
+-  },
+   "data.factory-reset.title": {
+     "en": "Factory reset"
    },
-   "telemetry.history.title": {
-     "en": "History"
+@@ -41,13 +35,7 @@
+   "data.factory-reset.confirm-title": {
+     "en": "Factory reset"
+   },
+-  "data.confirm-media-reset": {
+-    "en": "<p>Deindexing your media files will remove your photos, music, movies, and TV from your Media Server. Features that require media, like photo albums and playlists, will be reset.</p><p>Your Media Server will become unresponsive while this process runs (it can take a while).</p>"
+-  },
+   "data.confirm-factory-reset": {
+     "en": "<p>For Media Servers installed with Docker Compose, <a href='https://help.cardinalapps.io/guides/cardinal-media-server/uninstall' target='_blank'>reinstalling with Docker Compose</a> is recommended instead of using this built-in utility.</p><p>A factory reset will deindex your media, remove any other data, and return your Media Server to its initial state. Your cloud account will be unlinked from this Media Server.</p><p>Your Media Server will become unresponsive while this process runs (it can take a while).</p>"
+-  },
+-  "data.media-reset.success-toast.title": {
+-    "en": "Media successfully dexindexed."
+   }
+ }
