@@ -1,0 +1,33 @@
+diff a/apps/admin-web/src/pages/Indexing/i18n.json b/apps/admin-web/src/pages/Indexing/i18n.json	(rejected hunks)
+@@ -123,28 +123,19 @@
+     "en": "No files found"
+   },
+   "run.history.title": {
+-    "en": "Indexing history"
++    "en": "History"
+   },
+   "run.history.show-empty-runs": {
+     "en": "Include empty runs"
+   },
+-  "run.history.no-entries": {
+-    "en": "After your first run, you'll see a history of everything you've indexed."
+-  },
+   "run.history.load-more": {
+-    "en": "Previous runs"
+-  },
+-  "run.status.date": {
+-    "en": "Run initiated on {date}"
++    "en": "Load More"
+   },
+   "run.file-count.0": {
+     "en": "No change"
+   },
+   "run.file-count.added": {
+-    "en": "+{num} files"
+-  },
+-  "run.file-count.view-list": {
+-    "en": "View all"
++    "en": "+{num}"
+   },
+   "run.status.success": {
+     "en": "Completed"

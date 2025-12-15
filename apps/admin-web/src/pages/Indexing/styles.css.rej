@@ -1,9 +1,200 @@
 diff a/apps/admin-web/src/pages/Indexing/styles.css b/apps/admin-web/src/pages/Indexing/styles.css	(rejected hunks)
-@@ -369,6 +369,7 @@
+@@ -353,33 +353,7 @@
+   }
+ }
  
-     .title {
-       margin-bottom: 0;
-+      width: auto;
+-.runHistory {
+-  padding-bottom: 80px;
+-
+-  .wrapper {
+-    max-width: 600px;
+-    margin: 0 auto;
+-  }
+-
+-  .runsTitleBar {
+-    margin-bottom: 20px;
+-    display: flex;
+-    align-items: center;
+-    justify-content: space-between;
+-
+-    .title {
+-      margin-bottom: 0;
+-      width: auto;
+-    }
+-
+-    @media (max-width: 768px) {
+-      flex-wrap: wrap;
+-
+-      .title {
+-        margin-bottom: 10px;
+-      }
+-    }
+-  }
++.indexing-history {
+   
+   .output {
+     width: 100%;
+@@ -389,133 +363,61 @@
+     background-color: var(--bg-2);
+   }
+ 
+-  .noRunsMessage {
+-    font-size: 15px;
+-    font-weight: 500;
+-
+-    i {
+-      margin-right: 8px;
+-      font-size: 20px;
+-    }
+-  }
+-
+   .loadMore {
+     padding: 30px 0;
+     display: flex;
+     justify-content: center;
+   }
+-}
+ 
+-.runItem {
+-  width: 100%;
+-  margin-bottom: var(--gutter);
+-
+-  @media (max-width: 768px) {
+-    padding: 0;
+-  }
+-
+-  header {
+-    padding-bottom: 10px;
+-    margin-bottom: 15px;
++  .list-name {
+     display: flex;
+-    justify-content: space-between;
+     align-items: center;
+-    align-content: center;
+-    border-bottom: 1px solid var(--border-color-1);
++    gap: 10px;
++  }
+ 
+-    .date {
+-      font-weight: 700;
+-      font-size: 16px;
++  .counts {
++    display: flex;
++    gap: 10px;
++    
++    button {
++      margin: 5px 0;
+     }
++  }
+ 
+-    .status {
+-      font-weight: 600;
+-      font-size: 15px;
+-      position: relative;
+-      top: -3px;
+-      white-space: nowrap;
+-
+-      .good {
+-
+-        i {
+-          color: var(--success);
+-        }
+-      }
+-
+-      .warn {
+-
+-        i {
+-          color: var(--warning);
+-        }
+-      }
+-
+-      .bad {
++  .status {
++    font-weight: 400;
++    font-size: 13px;
++    white-space: nowrap;
+ 
+-        i {
+-          color: var(--danger);
+-        }
+-      }
++    .good {
+ 
+       i {
+-        font-size: 15px;
+-        position: relative;
+-        top: 1px;
+-      }
+-
+-      span {
+-        margin-right: 8px;
++        color: var(--success);
+       }
+     }
+-  }
+-
+-  .indexedFileCounts {
+-    padding: 10px 0 0;
+-    display: flex;
+-    flex-wrap: wrap;
+-    justify-content: center;
+-    gap: 10px;
+ 
+-    button.indexedFileCount {
+-      cursor: pointer;
+-
+-      &:hover {
+-        background-color: var(--bg-4);
+-      }
++    .warn {
+ 
+-      .modalCta {
+-        font-size: 12px;
+-        font-weight: 800;
+-        text-transform: uppercase;
++      i {
++        color: var(--warning);
+       }
      }
  
-     @media (max-width: 768px) {
+-    .indexedFileCount {
+-      width: calc(50% - 5px);
+-      padding: 15px 20px;
+-      display: flex;
+-      align-items: center;
+-      justify-content: space-between;
+-      border-radius: 8px;
+-      border: none;
+-      background-color: var(--bg-3);
+-
+-      @media (max-width: 768px) {
+-        width: 100%;
+-      }
++    .bad {
+ 
+       i {
+-        margin-right: 15px;
+-        width: 20px;
+-        color: var(--accent-color);
+-        font-size: 17px;
++        color: var(--danger);
+       }
++    }
+ 
+-      span {
+-        font-size: 15px;
+-        font-weight: 600;
+-        font-family: var(--font-family);
+-        color: var(--text-color-1);
+-      }
++    i {
++      font-size: 15px;
++      position: relative;
++      top: 1px;
++    }
++
++    span {
++      margin: 8px;
+     }
+   }
+ }

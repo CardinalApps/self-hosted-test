@@ -1,22 +1,13 @@
 diff a/libraries/ui/src/components/interaction/List/List.css b/libraries/ui/src/components/interaction/List/List.css	(rejected hunks)
-@@ -33,6 +33,10 @@
-           font-weight: 500;
-           color: var(--text-color-2);
-         }
-+
-+        .item-list-item-label {
-+          font-size: 14px;
-+        }
-       }
-     }
-   }
-@@ -61,6 +65,10 @@
-         }
-       }
+@@ -69,6 +69,12 @@
+     .item-list-item-label {
+       font-size: 13px;
      }
 +
-+    .item-list-item-label {
-+      font-size: 13px;
++    .item-list-empty {
++      padding-left: 0;
++      padding-right: 0;
++      border: none;
 +    }
    }
  
