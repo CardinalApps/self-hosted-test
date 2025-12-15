@@ -1,0 +1,16 @@
+diff a/libraries/ui/src/components/layout/Loading/Loading.css b/libraries/ui/src/components/layout/Loading/Loading.css	(rejected hunks)
+@@ -4,6 +4,14 @@
+     display: inline-flex;
+   }
+ 
++  &.size-xs {
++
++    svg {
++      width: 16px;
++      height: 16px;
++    }
++  }
++
+   &.size-s {
+ 
+     svg {

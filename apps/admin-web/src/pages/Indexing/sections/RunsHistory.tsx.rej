@@ -1,111 +1,38 @@
 diff a/apps/admin-web/src/pages/Indexing/sections/RunsHistory.tsx b/apps/admin-web/src/pages/Indexing/sections/RunsHistory.tsx	(rejected hunks)
-@@ -1,5 +1,6 @@
- import { useState, useEffect, ReactNode } from 'react'
- import { useSelector } from 'react-redux'
-+import { useAppDispatch } from '@cardinalapps/ui/src/hooks/useAppDispatch'
- 
- import Button from '@cardinalapps/ui/src/components/interaction/Button'
- import ToggleSwitch from '@cardinalapps/ui/src/components/forms/ToggleSwitch'
-@@ -9,6 +10,9 @@ import CardGrid from '@cardinalapps/ui/src/components/layout/CardGrid'
- import H5 from '@cardinalapps/ui/src/components/typography/H5'
- import List from '@cardinalapps/ui/src/components/interaction/List'
- import { ListItem } from '@cardinalapps/ui/src/components/interaction/List/List'
-+import Confirm from '@cardinalapps/ui/src/components/interaction/Confirm'
-+import homeServerAPI from '@cardinalapps/ui/src/lib/homeserver/homeServerAPI'
-+import { toastActions } from '@cardinalapps/ui/src/store/slices/toast'
- 
- import { useGetRunsQuery } from '@cardinalapps/ui/src/store/apis/runs'
- import { indexingSelectors } from '@cardinalapps/ui/src/store/slices/indexing'
-@@ -19,6 +23,7 @@ import i18n from '../i18n.json'
- 
- function RunsHistory() {
-   const itemsPerPage = 10
-+  const dispatch = useAppDispatch()
-   const { lang } = useSelector(settingsSelectors.current)
-   const serverState = useSelector(indexingSelectors.serverState)
-   const initialTake = 5
-@@ -28,6 +33,9 @@ function RunsHistory() {
-   const { data, isLoading, refetch } = useGetRunsQuery({ take, skip: 0, includeEmptyRuns })
-   const [pagedRuns, totalRuns] = data || []
- 
-+  const [showDeindexConfirm, setShowDeindexConfirm] = useState(false)
-+  const [deindexingIsLoading, setDeindexingIsLoading] = useState(false)
-+
-   const indexedCountString = (num) => {
-     if (num === 0 || !num) {
-       return i18n['run.file-count.0'][lang]
-@@ -62,6 +70,27 @@ function RunsHistory() {
-     }
-   }
- 
-+  const handleResetMediaDataClick = () => {
-+    setDeindexingIsLoading(true)
-+    homeServerAPI('/reset', 'POST', {
-+      body: {
-+        type: 'media',
-+        validationString: 'Deindex media',
-+      },
-+    })
-+      .then(() => {
-+        setShowDeindexConfirm(false)
-+        setDeindexingIsLoading(false)
-+        dispatch(toastActions.addToQueue({
-+          title: i18n['data.media-reset.success-toast.title'][lang],
-+          type: 'success',
-+        }))
-+      })
-+      .catch(() => {
-+        setDeindexingIsLoading(false)
-+      })
-+  }
-+
-   useEffect(() => {
-     if (serverState === 'completed') {
-       refetch()
-@@ -120,7 +149,7 @@ function RunsHistory() {
-           <H5>{i18n['run.history.title'][lang]}</H5>
-         </>
-       }
--      footer={
-+      headerRight={
-         <>
-           <ToggleSwitch
-             label={i18n['run.history.show-empty-runs'][lang]}
-@@ -132,6 +161,15 @@ function RunsHistory() {
-           />
-         </>
-       }
-+      footer={
-+        <>
-+          <Button
-+            onClick={() => setShowDeindexConfirm(true)}
-+          >
-+            {i18n['data.media-reset.button'][lang]}
-+          </Button>
-+        </>
-+      }
-     >
-       <List
-         className="server-info-list"
-@@ -155,6 +193,21 @@ function RunsHistory() {
-           </div>
-         : null
-       }
-+      {!!showDeindexConfirm &&
-+        <Confirm
-+          title={i18n['data.media-reset.confirm-title'][lang]}
-+          message={i18n['data.confirm-media-reset'][lang]}
-+          mustEnterText={'Deindex media'}
-+          confirmButtonIsDangerous={true}
-+          loading={deindexingIsLoading}
-+          onClose={(confirmed) => {
-+            if (confirmed) {
-+              handleResetMediaDataClick()
-+            }
-+            setShowDeindexConfirm(false)
-+          }}
-+        />
-+      }
-     </CardGrid.Card>
-   )
- }
+@@ -104,28 +104,14 @@ function RunsHistory() {
+     return pagedRuns.map((run) => {
+       return {
+         title: formatDate(run?.createdAt),
+-        name: (
+-          <div className="list-name">
+-            <div className="status">
+-              {run?.status === 'completed' &&
+-                <div className={'good'}>
+-                  <i className="fas fa-check" title={i18n['run.status.success'][lang]} />
+-                </div>
+-              }
+-              {run?.status === 'stopped_by_user' &&
+-                <div className={'warn'}>
+-                  <i className="fas fa-stop-circle" title={i18n['run.status.stopped-by-user'][lang]} />
+-                </div>
+-              }
+-              {run?.status === 'not_started' &&
+-                <div className={'bad'}>
+-                  <i className="fas fa-times" title={i18n['run.status.not-started'][lang]} />
+-                </div>
+-              }
+-            </div>
+-            {formatTimeAgo(run?.createdAt)}
+-          </div>
+-        ),
++        icon: run?.status === 'completed'
++          ? { fa: 'fas fa-check', className: 'success-color' }
++          : run?.status === 'stopped_by_user'
++            ? { fa: 'fas fa-stop-circle', className: 'warning-color' }
++            : run?.status === 'not_started'
++              ? { fa: 'fas fa-times', className: 'success-color' }
++              : null,
++        name: formatTimeAgo(run?.createdAt),
+         label: (
+           <>
+             <div className="counts">

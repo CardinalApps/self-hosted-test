@@ -1,12 +1,13 @@
 diff a/libraries/ui/src/store/apis/jobs.ts b/libraries/ui/src/store/apis/jobs.ts	(rejected hunks)
-@@ -44,8 +44,8 @@ export const jobsApi = baseHomeServerApi
-       getJobs: builder.query<
-         [Job[], number],
-         PaginationParams & {
--          status: JobStatus[]
--          type?: 'album_art_thumbnails' | 'photo_variations' | 'photo_thumbnails'
-+          status: JobStatus[],
-+          type?: 'album_art_thumbnails' | 'photo_variations' | 'photo_thumbnails',
-           order?: CommonOrderParams,
-           orderBy?: 'name' | 'createdAt',
-         }
+@@ -5,6 +5,11 @@ import { baseHomeServerApi } from './baseHomeServerApi'
+ 
+ export type JobStatus = 'draft' | 'preparing' | 'in_queue' | 'running' | 'paused' | 'canceled' | 'completed' | 'errored'
+ 
++// export type JobReport = {
++//   type: string,
++//   status: JobStatus,
++// }
++
+ export type Job = {
+   id: number,
+   jobId: string,

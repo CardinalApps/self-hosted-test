@@ -1,0 +1,45 @@
+diff a/apps/admin-web/src/pages/Jobs/components/ActiveJob/ActiveJob.tsx b/apps/admin-web/src/pages/Jobs/components/ActiveJob/ActiveJob.tsx	(rejected hunks)
+@@ -2,7 +2,6 @@ import { useEffect } from 'react'
+ import { useSelector, useDispatch } from 'react-redux'
+ import clsx from 'clsx'
+ 
+-import H4 from '@cardinalapps/ui/src/components/typography/H4'
+ import TimeCounter from '@cardinalapps/ui/src/components/typography/TimeCounter'
+ import ProgressBar from '@cardinalapps/ui/src/components/layout/ProgressBar'
+ import Button from '@cardinalapps/ui/src/components/interaction/Button'
+@@ -91,23 +90,20 @@ function ActiveJob({
+ 
+   return (
+     <div className={'activeJob'}>
+-      <header>
++      <div className={'info'}>
++        <p className="active-job-name">{i18n[`job.${job.type}.title`]?.[lang]}</p>
+         <JobStatusComponent status={job.status as JobStatus} />
+-      </header>
+-
+-      <H4>{i18n[`job.${job.type}.title`]?.[lang]}</H4>
++      </div>
+ 
+-      <div className={'info'}>
+-        <div
+-          className={clsx('data', 'date')}
+-          title={createdAt.toISOString()}
+-        >
+-          <TimeCounter
+-            className={'date'}
+-            startedAt={createdAt.getTime()}
+-            phrase={i18n['job.started-at'][lang]}
+-          />
+-        </div>
++      <div
++        className={clsx('date')}
++        title={createdAt.toISOString()}
++      >
++        <TimeCounter
++          className={'date'}
++          startedAt={createdAt.getTime()}
++          phrase={i18n['job.started-at'][lang]}
++        />
+       </div>
+ 
+       <div className={'progress'}>

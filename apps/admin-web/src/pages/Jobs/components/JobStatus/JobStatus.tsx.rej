@@ -1,0 +1,17 @@
+diff a/apps/admin-web/src/pages/Jobs/components/JobStatus/JobStatus.tsx b/apps/admin-web/src/pages/Jobs/components/JobStatus/JobStatus.tsx	(rejected hunks)
+@@ -28,13 +28,13 @@ function JobStatus({
+       }
+       {status === 'preparing' &&
+         <>
+-          <Loading size="s" />
++          <Loading size="xs" />
+           <p className={'label'}>{i18n[`job.status.${status}`]?.[lang]}</p>
+         </>
+       }
+       {status === 'running' &&
+         <>
+-          <Loading size="s" />
++          <Loading size="xs" />
+           <p className={'label'}>{i18n[`job.status.${status}`]?.[lang]}</p>
+         </>
+       }

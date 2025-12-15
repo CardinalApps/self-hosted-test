@@ -1,0 +1,10 @@
+diff a/libraries/ui/src/components/layout/Loading/Loading.tsx b/libraries/ui/src/components/layout/Loading/Loading.tsx	(rejected hunks)
+@@ -5,7 +5,7 @@ import { LoadingIcon } from './icons'
+ import './Loading.css'
+ 
+ type LoadingProps = {
+-  size?: 's' | 'm' | 'l',
++  size?: 'xs' | 's' | 'm' | 'l',
+   speed?: string,
+   color?: string,
+   className?: string,

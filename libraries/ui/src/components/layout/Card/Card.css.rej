@@ -1,9 +1,22 @@
 diff a/libraries/ui/src/components/layout/Card/Card.css b/libraries/ui/src/components/layout/Card/Card.css	(rejected hunks)
-@@ -75,6 +75,7 @@
-     width: 100%;
-     line-height: 1.5em;
-     overflow-y: auto;
-+    flex-grow: 1;
+@@ -87,6 +87,20 @@
+     button {
+       margin: 0 5px;
+     }
++
++    .note {
++      display: flex;
++      align-items: flex-start;
++      font-size: 11px;
++      gap: 10px;
++      justify-content: flex-end;
++
++      i {
++        font-size: 14px;
++        position: relative;
++        top: 2px;
++      }
++    }
    }
  
-   > .card-footer {
+   @media screen and (max-width: 768px) {

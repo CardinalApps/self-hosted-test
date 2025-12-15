@@ -1,132 +1,29 @@
 diff a/apps/admin-web/src/pages/Indexing/styles.css b/apps/admin-web/src/pages/Indexing/styles.css	(rejected hunks)
-@@ -5,12 +5,6 @@
-   }
- }
+@@ -338,27 +324,6 @@
+     font-size: 13px;
+     white-space: nowrap;
  
--.wrapper {
--  max-width: 1100px;
--  width: 100%;
--  margin: 0 auto;
--}
--
- .indexing {
-   display: flex;
-   gap: var(--gutter);
-@@ -46,7 +63,6 @@
-     .importerButton {
-       margin-bottom: 20px;
-       display: flex;
--      flex: 0 0 160px;
-       justify-content: center;
- 
-       .buttonCol {
-@@ -126,10 +142,6 @@
-       }
-     }
- 
--    .progressBar {
--      width: 100%;
--    }
--
-     .info {
-       width: 100%;
-       padding: 10px 14px;
-@@ -168,7 +180,8 @@
-           padding: 4px 0;
-           display: inline-flex;
-           align-items: center;
--          font-weight: 700;
-+          font-weight: 500;
-+          font-size: 14px;
-           flex-grow: 1;
-         }
-       }
-@@ -199,75 +212,11 @@
-       }
-     }
-   }
--
--  .card {
--    flex: 1 0 calc(50% - (var(--gutter) / 2));
--
--    header {
--      padding: 0 25px 20px;
--      display: flex;
--      justify-content: space-between;
--      align-items: center;
--
--      .title {
--        margin-bottom: 0;
--      }
+-    .good {
 -
 -      i {
--        font-size: 18px;
+-        color: var(--success);
 -      }
 -    }
--  }
 -
--  .list {
--
--    li {
--      margin-bottom: 10px;
--      font-size: 15px;
--      padding: 20px 30px;
--      border-radius: 20px;
--      display: flex;
--      justify-content: space-between;
--      align-items: center;
--      background: var(--bg-3);
--
--      @media (max-width: 768px) {
--        padding: 15px 20px;
--      }
--
--      &:last-of-type {
--        margin-bottom: 0;
--      }
+-    .warn {
 -
 -      i {
--        margin-right: 15px;
--        font-size: 19px;
--        opacity: 0.8;
--        position: relative;
--        top: -1px;
--      }
--
--      strong {
--        width: 100px;
--        display: inline-flex;
--        align-items: center;
--        white-space: nowrap;
--      }
--
--      span {
--        width: calc(100% - 100px);
--        text-overflow: ellipsis;
--        white-space: nowrap;
--        overflow: hidden;
--        text-align: right;
+-        color: var(--warning);
 -      }
 -    }
--  }
- }
- 
- .importButton {
--  width: 160px;
--  height: 160px;
-+  width: 120px;
-+  height: 120px;
-   position: relative;
-   border-radius: 100%;
-   overflow: hidden;
-@@ -335,8 +284,8 @@
- }
- 
- .spinny {
--  width: 164px;
--  height: 164px;
-+  width: 124px;
-+  height: 124px;
-   position: absolute;
-   top: -2px;
-   left: -2px;
+-
+-    .bad {
+-
+-      i {
+-        color: var(--danger);
+-      }
+-    }
+-
+     i {
+       font-size: 15px;
+       position: relative;
