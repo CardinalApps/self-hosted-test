@@ -1,17 +1,10 @@
 diff a/libraries/ui/src/components/features/AppBase/AppBase.stories.tsx b/libraries/ui/src/components/features/AppBase/AppBase.stories.tsx	(rejected hunks)
-@@ -1,5 +1,5 @@
- import type { Meta } from '@storybook/react'
--import { Route, Routes, Navigate, Router, MemoryRouter, useLocation, Link, useNavigate } from 'react-router-dom'
-+import { Route, Routes, Navigate, Router, MemoryRouter, useLocation, Link, useNavigate, useParams } from 'react-router-dom'
+@@ -333,7 +333,7 @@ const DemoApp = () => {
+   )
+ }
  
- import AppBase from './AppBase'
- import AppPage from './AppPage'
-@@ -65,6 +65,8 @@ const DemoApp = () => {
-           location,
-           navigate,
-           Link,
-+          useParams,
-+          useLocation,
-         }}
-         version="0.1.2"
-         kioskMode={true}
+-export const VanillaApp = () => {
++export const SandboxApp = () => {
+   return (
+     <MemoryRouter>
+       <DemoApp />
