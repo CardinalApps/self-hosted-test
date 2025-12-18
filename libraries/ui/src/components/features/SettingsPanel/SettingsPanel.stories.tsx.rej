@@ -1,0 +1,34 @@
+diff a/libraries/ui/src/components/features/SettingsPanel/SettingsPanel.stories.tsx b/libraries/ui/src/components/features/SettingsPanel/SettingsPanel.stories.tsx	(rejected hunks)
+@@ -5,6 +5,7 @@ import Field from './Field'
+ 
+ import ToggleSwitch from '../../forms/ToggleSwitch'
+ import { CardinalApp } from '../../../lib/env/cardinal'
++import { SettingsObject } from '@cardinalapps/app-settings/src/types'
+ 
+ const meta = {
+   title: 'Feature/SettingsPanel',
+@@ -52,14 +53,20 @@ export const CustomTabs: Story = {
+         tabContent: (
+           <>
+             <Field
+-              label={'Custom field #1'}
+-              desc={<p>Custom pages can use the CustomField component.</p>}
++              field={{
++                label: 'Custom field 1',
++                description: 'Custom description 1',
++                type: 'toggle',
++              } as SettingsObject}
+             >
+               <ToggleSwitch />
+             </Field>
+             <Field
+-              label={'Custom field #2'}
+-              desc={<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id nulla nunc. Proin sit amet fermentum dolor. Quisque eu volutpat nisl, et posuere ante. Morbi ex erat, venenatis scelerisque auctor et, lacinia a purus. Vivamus vulputate lectus leo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>}
++              field={{
++                label: 'Custom field 2',
++                description: 'Custom description 2',
++                type: 'toggle',
++              } as SettingsObject}
+             >
+               <ToggleSwitch />
+             </Field>

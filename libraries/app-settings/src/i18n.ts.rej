@@ -1,10 +1,10 @@
 diff a/libraries/app-settings/src/i18n.ts b/libraries/app-settings/src/i18n.ts	(rejected hunks)
-@@ -153,7 +153,7 @@ export default {
-     "en": "Enable telemetry",
-   },
-   "settings.telemetry.desc": {
--    "en": "Applies to the Media Server and the Music, Photos, and Cinema apps. <a href='https://help.cardinalapps.io/guides/cardinal-media-server/telemetry' target='_blank'>Read more.</a>",
-+    "en": "This setting applies to all apps. All data is anonymized. <a href='https://help.cardinalapps.io/guides/cardinal-media-server/telemetry' target='_blank'>Read more.</a>",
+@@ -156,7 +156,7 @@ export default {
+     "en": "This setting applies to all apps. All data is anonymized. <a href='https://help.cardinalapps.io/guides/cardinal-media-server/telemetry' target='_blank'>Read more.</a>",
    },
    "settings.open-apps-in-new-tab.label": {
-     "en": "Open apps in a new tab",
+-    "en": "Open apps in a new tab",
++    "en": "Open apps in new tab",
+   },
+   "settings.max-concurrent-audio-streams.label": {
+     "en": "Maximum number of concurrent audio streams",

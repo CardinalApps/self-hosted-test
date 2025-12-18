@@ -1,0 +1,14 @@
+diff a/libraries/ui/src/components/features/SettingsPanel/fields/music/notifications.tsx b/libraries/ui/src/components/features/SettingsPanel/fields/music/notifications.tsx	(rejected hunks)
+@@ -11,10 +11,10 @@ const notifications = (app, lang) => {
+     render: ({ value, onChange }) => {
+       return (
+         <ToggleSwitch
+-          name={fieldObj.slug}
+-          label={fieldObj.label}
+           value={value}
+           onChange={onChange}
++          showActiveLabel={true}
++          labelAlign='left'
+         />
+       )
+     },

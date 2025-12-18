@@ -1,0 +1,14 @@
+diff a/libraries/ui/src/components/features/SettingsPanel/fields/common/developerMode.tsx b/libraries/ui/src/components/features/SettingsPanel/fields/common/developerMode.tsx	(rejected hunks)
+@@ -11,10 +11,10 @@ const developerMode = (app, lang) => {
+     render: ({ value, onChange }) => {
+       return (
+         <ToggleSwitch
+-          name={fieldObj.slug}
+           value={value}
+-          label={fieldObj.label}
+           onChange={onChange}
++          showActiveLabel={true}
++          labelAlign='left'
+         />
+       )
+     },

@@ -1,27 +1,33 @@
 diff a/libraries/ui/src/components/features/SettingsPanel/fields/music/maxConcurrentAudioStreams.tsx b/libraries/ui/src/components/features/SettingsPanel/fields/music/maxConcurrentAudioStreams.tsx	(rejected hunks)
-@@ -1,6 +1,7 @@
+@@ -1,7 +1,6 @@
  import { getSetting } from '@cardinalapps/app-settings/src'
  
  import NumberInput from '../../../../forms/NumberInput'
-+import Field from '../../Field'
+-import Field from '../../Field'
  
  const maxConcurrentAudioStreams = (app, lang) => {
    const fieldFactory = getSetting('max_concurrent_audio_streams')
-@@ -10,7 +11,7 @@ const maxConcurrentAudioStreams = (app, lang) => {
+@@ -11,16 +10,13 @@ const maxConcurrentAudioStreams = (app, lang) => {
      ...fieldObj,
      render: ({ value, onChange }) => {
        return (
--        <>
-+        <Field field={fieldObj}>
-           <p className="field-label">{fieldObj.label}</p>
-           <NumberInput
-             name={fieldObj.slug}
-@@ -19,7 +20,7 @@ const maxConcurrentAudioStreams = (app, lang) => {
-             max={10}
-             onChange={(val) => onChange(val)}
-           />
--        </>
-+        </Field>
+-        <Field field={fieldObj}>
+-          <p className="field-label">{fieldObj.label}</p>
+-          <NumberInput
+-            name={fieldObj.slug}
+-            value={value || fieldObj.defaultValue}
+-            min={1}
+-            max={10}
+-            onChange={(val) => onChange(val)}
+-          />
+-        </Field>
++        <NumberInput
++          name={fieldObj.slug}
++          value={value || fieldObj.defaultValue}
++          min={1}
++          max={10}
++          onChange={(val) => onChange(val)}
++        />
        )
      },
    })
