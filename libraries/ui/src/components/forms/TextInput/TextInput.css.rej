@@ -1,0 +1,31 @@
+diff a/libraries/ui/src/components/forms/TextInput/TextInput.css b/libraries/ui/src/components/forms/TextInput/TextInput.css	(rejected hunks)
+@@ -1,8 +1,21 @@
+ .text-input {
+ 
++  &.size-m {
++    
++    input {
++      padding: 12px 16px;
++    }
++  }
++
++  &.size-l {
++    
++    input {
++      padding: 12px 16px;
++    }
++  }
++
+   input {
+     min-width: 240px;
+-    padding: 12px 16px;
+     color: var(--text-color-1);
+     font-size: 15px;
+     font-weight: 500;
+@@ -15,4 +28,4 @@
+       outline: none;
+     }
+   }
+-}
+\ No newline at end of file
++}

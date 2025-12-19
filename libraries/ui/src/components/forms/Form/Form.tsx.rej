@@ -1,0 +1,10 @@
+diff a/libraries/ui/src/components/forms/Form/Form.tsx b/libraries/ui/src/components/forms/Form/Form.tsx	(rejected hunks)
+@@ -76,7 +76,7 @@ const Form = ({
+       )}
+       {children}
+       {controls && (
+-        <div className="form-controls" style={{ justifyContent: controlsAlign }}>
++        <div className="form-controls" data- style={{ justifyContent: controlsAlign }}>
+           {controls}
+         </div>
+       )}
