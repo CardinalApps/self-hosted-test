@@ -1,18 +1,13 @@
 diff a/libraries/ui/src/components/features/AppBase/AppBase.css b/libraries/ui/src/components/features/AppBase/AppBase.css	(rejected hunks)
-@@ -73,7 +73,7 @@
-   flex-wrap: wrap;
-   justify-content: center;
-   overflow: hidden;
--  transition: padding 300ms;
-+  /* transition: padding 300ms; */
+@@ -405,6 +405,11 @@
+     }
+   }
  
-   --page-toolbar-height: 78px;
-   --page-title-bar-height: 40px;
-@@ -291,7 +291,6 @@
-   height: 100%;
-   padding-top: 3px; /* align the top of the main col with the top of the sidebar nav when in collapses mode */
-   overflow-y: auto;
--  /* transition: width 200ms; */
-   position: relative;
-   z-index: 1000;
- 
++  .audio-player-list {
++    position: relative;
++    min-height: 146px;
++  }
++
+   @media (max-width: 768px) {
+     position: fixed;
+     right: 90px;

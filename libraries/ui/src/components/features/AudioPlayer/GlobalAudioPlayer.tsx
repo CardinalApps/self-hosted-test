@@ -97,7 +97,9 @@ const GlobalAudioPlayer = () => {
             </p>
           </div>
         }
-        {visiblePlayer && players?.[visiblePlayer] && <AudioPlayer key={visiblePlayer} playerId={visiblePlayer} size="mini" />}
+        <div className="audio-player-list">
+          {visiblePlayer && players?.[visiblePlayer] && <AudioPlayer className="top" key={visiblePlayer} playerId={visiblePlayer} size="mini" />}
+        </div>
       </div>
     </div>
   )
