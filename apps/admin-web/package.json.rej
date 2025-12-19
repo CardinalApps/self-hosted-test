@@ -1,9 +1,9 @@
 diff a/apps/admin-web/package.json b/apps/admin-web/package.json	(rejected hunks)
-@@ -17,6 +17,7 @@
+@@ -15,6 +15,7 @@
+     "serve": "serve dist"
+   },
    "dependencies": {
++    "@cardinalapps/access-control": "workspace:*",
      "@cardinalapps/app-settings": "workspace:*",
      "@cardinalapps/dtos": "workspace:*",
-+    "@cardinalapps/products": "workspace:*",
-     "@cardinalapps/ui": "workspace:*",
-     "@reduxjs/toolkit": "2.6.1",
-     "@tanstack/react-virtual": "3.11.3",
+     "@cardinalapps/products": "workspace:*",

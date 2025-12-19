@@ -48,6 +48,17 @@ function Nav({ children }: PropsWithChildren) {
         </Link>
       </li>
 
+      {/* Roles */}
+      <li
+        className={activeItem === AdminRoutes.roles ? 'active' : ''}
+        key="roles"
+      >
+        <Link to={AdminRoutes.roles}>
+          <i className="fas fa-key" />
+          <span>{i18n['nav.roles']['en']}</span>
+        </Link>
+      </li>
+
       {/* Indexing */}
       <li
         className={`${activeItem === AdminRoutes.indexing ? 'active' : ''}`}

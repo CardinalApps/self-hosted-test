@@ -1,40 +1,9 @@
 diff a/libraries/ui/src/lib/net/router.ts b/libraries/ui/src/lib/net/router.ts	(rejected hunks)
-@@ -12,17 +12,18 @@ export enum BasePaths {
- }
- 
- export enum AdminRoutes {
--  root                        = '',
-+  root                        = '/',
-   first_time_setup            = '/setup',
+@@ -17,6 +17,7 @@ export enum AdminRoutes {
    login                       = '/login',
    settings                    = '/settings',
-+  users                       = '/users',
+   users                       = '/users',
++  roles                       = '/roles',
    indexing                    = '/indexing',
    jobs                        = '/jobs',
    libraries                   = '/libraries',
- }
- 
- export enum MusicRoutes {
--  root                        = '',
-+  root                        = '/',
-   login                       = '/login',
-   settings                    = '/settings',
-   artists                     = '/artists',
-@@ -35,7 +36,7 @@ export enum MusicRoutes {
- }
- 
- export enum PhotoRoutes {
--  root                        = '',
-+  root                        = '/',
-   login                       = '/login',
-   settings                    = '/settings',
-   photo                       = '/:id',
-@@ -46,7 +47,7 @@ export enum PhotoRoutes {
- }
- 
- export enum CinemaRoutes {
--  root                        = '',
-+  root                        = '/',
-   login                       = '/login',
-   settings                    = '/settings',
-   movies                      = '/movies',
