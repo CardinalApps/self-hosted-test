@@ -60,6 +60,13 @@ const validateCapabilitySyntax = <TCapabilityContext>(assignment: CapabilityAssi
     return false
   }
 
+  const emptyParts = parts
+    .find((part) => !part.length)
+
+  if (emptyParts !== undefined) {
+    return false
+  }
+
   return true
 }
 
