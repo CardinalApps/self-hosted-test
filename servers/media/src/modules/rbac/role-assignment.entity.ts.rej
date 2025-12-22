@@ -1,0 +1,18 @@
+diff a/servers/media/src/modules/rbac/role-assignment.entity.ts b/servers/media/src/modules/rbac/role-assignment.entity.ts	(rejected hunks)
+@@ -5,7 +5,6 @@ import {
+   JoinColumn,
+   PrimaryGeneratedColumn,
+ } from 'typeorm'
+-import { RoleNames } from '@cardinalapps/access-control/dist/cjs'
+ 
+ import { User } from '../user/user.entity'
+ 
+@@ -18,6 +17,6 @@ export class RoleAssignment {
+   @JoinColumn()
+   user: User
+ 
+-  @Column()
+-  role: RoleNames
++  @Column({ nullable: false })
++  role: string
+ }
