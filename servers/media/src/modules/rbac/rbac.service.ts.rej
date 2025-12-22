@@ -1,0 +1,92 @@
+diff a/servers/media/src/modules/rbac/rbac.service.ts b/servers/media/src/modules/rbac/rbac.service.ts	(rejected hunks)
+@@ -1,32 +1,74 @@
+-import { Injectable } from '@nestjs/common'
++import { Injectable, Logger } from '@nestjs/common'
+ import { InjectDataSource, InjectRepository } from '@nestjs/typeorm'
+ import { DataSource, Repository } from 'typeorm'
+-import { AccessControl } from 'accesscontrol'
++import { RoleNames } from '@cardinalapps/access-control/dist/cjs'
+ 
+-import { Grant } from './grant.entity'
+-
+-import { Roles } from '../user/types'
+-
+-import { RBACResources } from './enums'
++import { RoleAssignment } from './role-assignment.entity'
++import { User } from '../user/user.entity'
+ 
+ @Injectable()
+ export class RBACService {
+   constructor(
+     @InjectDataSource()
+     private dataSource: DataSource,
+-    @InjectRepository(Grant)
+-    private grantRepository: Repository<Grant>,
++    @InjectRepository(RoleAssignment)
++    private roleAssignmentRepository: Repository<RoleAssignment>,
+   ) {}
+ 
+-  #ac: AccessControl | null = null
++  /**
++   * Gets all assignments for a single user.
++   */
++  async getRoleAssignments(user: User): Promise<RoleAssignment[]> {
++    let found = null
++
++    try {
++      found = await this.roleAssignmentRepository.findBy({ user })
++    } catch (error) {
++      Logger.error(error, 'RBAC')
++    }
++
++    if (!found.value) {
++      return []
++    }
++
++    return found.value
++  }
++
++  /**
++   * Checks if a user has been assigned a role.
++   */
++  async hasRole(user: User, role: RoleNames): Promise<RoleAssignment | undefined> {
++    const assignedRoles = await this.getRoleAssignments(user)
++    return assignedRoles.find((assignment) => assignment.role === role)
++  }
+ 
+   /**
+-   * When Nest starts up.
++   * Assigns a role. If the user already has the role, this quietly returns
++   * success.
+    */
+-  async onModuleInit(): Promise<void> {
+-    this.#ac = new AccessControl()
+-    this.#ac
+-      .grant(Roles.OWNER)
+-      .createAny(RBACResources.AUTHENTICATION, ['*'])
++  async assignRoles(user: User, roles: RoleNames[] = []): Promise<RoleAssignment[]> {
++    const assignments = []
++
++    for (const role of roles) {
++      const assignment = await this.hasRole(user, role)
++
++      if (assignment) {
++        assignments.push(assignment)
++        return
++      }
++
++      try {
++        const newAssignment = await this.roleAssignmentRepository.save({
++          user,
++          role: role,
++        })
++        assignments.push(newAssignment)
++      } catch (error) {
++        Logger.error(`Failed to assign role ${role}`)
++        Logger.error(error)
++      }
++    }
++
++    return assignments
+   }
+ }

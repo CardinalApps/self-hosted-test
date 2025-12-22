@@ -1,26 +1,9 @@
 diff a/apps/admin-web/src/pages/Roles/RolesList.tsx b/apps/admin-web/src/pages/Roles/RolesList.tsx	(rejected hunks)
-@@ -1,5 +1,5 @@
- import { useState } from 'react'
--import { ACi18n, AllRoleSlugs, getRole, Role, Roles } from '@cardinalapps/access-control/src'
-+import { ACi18n, RoleNames, getRole, Role, Roles } from '@cardinalapps/access-control/src'
- 
- import { useAppSelector } from '@cardinalapps/ui/src/hooks/useAppSelector'
- 
-@@ -24,7 +24,7 @@ import i18n from './i18n.json'
- 
- function RolesList() {
-   const { lang } = useAppSelector(settingsSelectors.current)
--  const [drawerRoleSlug, setDrawerRoleSlug] = useState<AllRoleSlugs>()
-+  const [drawerRoleSlug, setDrawerRoleSlug] = useState<RoleNames>()
-   const drawerRole: Role = getRole(drawerRoleSlug)
- 
-   const usersRes = useGetUsersQuery({ take: 9999 })
-@@ -54,7 +54,7 @@ function RolesList() {
+@@ -62,7 +62,6 @@ function RolesList() {
      })
    }
  
--  const roleUsersUneditableList = (roleSlug: AllRoleSlugs) => {
-+  const roleUsersUneditableList = (roleSlug: RoleNames) => {
-     return usersWithRole(roleSlug).map((user: UserType) => {
-       return {
-         name: <UserTag user={user} size="s" />,
+-  // TODO this needs to use new role assignment system
+   const handleUpdateRoleAssignments = (e, formData) => {
+     console.log(formData)
+     //const assignments = formData['role-assignments']

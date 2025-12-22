@@ -1,19 +1,20 @@
 diff a/servers/media/src/modules/user/user.entity.ts b/servers/media/src/modules/user/user.entity.ts	(rejected hunks)
-@@ -5,7 +5,7 @@ import {
-   JoinColumn,
- } from 'typeorm'
- 
--import { SubscriptionTier } from '@cardinalapps/products/dist/cjs/subscriptions'
-+import { SubscriptionTierSlug } from '@cardinalapps/products/dist/cjs/subscriptions'
+@@ -8,7 +8,7 @@ import {
+ import { SubscriptionTierSlug } from '@cardinalapps/products/dist/cjs/subscriptions'
  
  import { BaseEntity } from '../../entities/base.entity'
- import { Grant } from '../rbac/grant.entity'
-@@ -36,7 +36,7 @@ export class User extends BaseEntity {
-     },
-   })
-   cachedCloudUser?: {
--    subscription: SubscriptionTier
-+    subscription: SubscriptionTierSlug
-   }
+-import { Grant } from '../rbac/grant.entity'
++import { RoleAssignment } from '../rbac/role-assignment.entity'
  
+ /**
+  * Each user entity represents a single human that can log into the Media Server.
+@@ -60,7 +60,7 @@ export class User extends BaseEntity {
    @Column({ nullable: true })
+   activityStatusUpdatedAt?: Date
+ 
+-  @OneToMany(() => Grant, (grant) => grant.user, { onDelete: 'CASCADE' })
++  @OneToMany(() => RoleAssignment, (grant) => grant.user, { onDelete: 'CASCADE' })
+   @JoinColumn()
+-  grants: Grant[]
++  grants: RoleAssignment[]
+ }
