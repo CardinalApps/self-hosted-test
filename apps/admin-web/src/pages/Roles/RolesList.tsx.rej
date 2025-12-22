@@ -1,69 +1,26 @@
 diff a/apps/admin-web/src/pages/Roles/RolesList.tsx b/apps/admin-web/src/pages/Roles/RolesList.tsx	(rejected hunks)
-@@ -22,17 +22,7 @@ import { UserType } from '@cardinalapps/ui/src/types/user'
+@@ -1,5 +1,5 @@
+ import { useState } from 'react'
+-import { ACi18n, AllRoleSlugs, getRole, Role, Roles } from '@cardinalapps/access-control/src'
++import { ACi18n, RoleNames, getRole, Role, Roles } from '@cardinalapps/access-control/src'
  
- import i18n from './i18n.json'
+ import { useAppSelector } from '@cardinalapps/ui/src/hooks/useAppSelector'
  
--type CapabilitiesListProps = {
--  globallySelectedRole: string,
--  setGloballySelectedRole: (string) => void
--}
--
--function RolesList({
--  // eslint-disable-next-line @typescript-eslint/no-unused-vars
--  globallySelectedRole,
--  // eslint-disable-next-line @typescript-eslint/no-unused-vars
--  setGloballySelectedRole,
--}: CapabilitiesListProps) {
-+function RolesList() {
+@@ -24,7 +24,7 @@ import i18n from './i18n.json'
+ 
+ function RolesList() {
    const { lang } = useAppSelector(settingsSelectors.current)
-   const [drawerRoleSlug, setDrawerRoleSlug] = useState<AllRoleSlugs>()
+-  const [drawerRoleSlug, setDrawerRoleSlug] = useState<AllRoleSlugs>()
++  const [drawerRoleSlug, setDrawerRoleSlug] = useState<RoleNames>()
    const drawerRole: Role = getRole(drawerRoleSlug)
-@@ -67,7 +57,7 @@ function RolesList({
-   const roleUsersUneditableList = (roleSlug: AllRoleSlugs) => {
-     return usersWithRole(roleSlug).map((user: UserType) => {
-       return {
--        name: <UserTag user={user} size="xs" />,
-+        name: <UserTag user={user} size="s" />,
-       } as ListItem
+ 
+   const usersRes = useGetUsersQuery({ take: 9999 })
+@@ -54,7 +54,7 @@ function RolesList() {
      })
    }
-@@ -107,6 +97,31 @@ function RolesList({
-               {ACi18n[`role.${drawerRoleSlug}.description`][lang]}
-             </WrittenText>
-           </Drawer.Section>
-+          <Drawer.Section>
-+            <List
-+              layout='compact'
-+              items={[
-+                {
-+                  name: i18n['roles.drawer.max-assignments'][lang],
-+                  label: Roles[drawerRoleSlug].maxUsers !== null
-+                    ? Roles[drawerRoleSlug].maxUsers
-+                    : i18n['roles.drawer.max-assignments.unlimited'][lang],
-+                },
-+                {
-+                  name: i18n['roles.drawer.can-be-assigned'][lang],
-+                  label: Roles[drawerRoleSlug].assignable
-+                    ? i18n['roles.drawer.can-be-assigned.true'][lang]
-+                    : i18n['roles.drawer.can-be-assigned.false'][lang],
-+                },
-+                {
-+                  name: i18n['roles.drawer.can-be-revoked'][lang],
-+                  label: Roles[drawerRoleSlug].unassignable
-+                    ? i18n['roles.drawer.can-be-assigned.true'][lang]
-+                    : i18n['roles.drawer.can-be-assigned.false'][lang],
-+                },
-+              ]}
-+            />
-+          </Drawer.Section>
-           <Drawer.Section title={i18n['roles.drawer.user-list-title'][lang]}>
-             {drawerRole.assignable && drawerRole.unassignable
-               ? (
-@@ -121,7 +136,6 @@ function RolesList({
-                   <FormField>
-                     <AddRemove
-                       name="role-assignments"
--                      selectedTitle={i18n['roles.drawer.user-list.assigned'][lang]}
-                       availableTitle={i18n['roles.drawer.user-list.available'][lang]}
-                       initialSelectedItems={
-                         usersWithRole(drawerRoleSlug)
+ 
+-  const roleUsersUneditableList = (roleSlug: AllRoleSlugs) => {
++  const roleUsersUneditableList = (roleSlug: RoleNames) => {
+     return usersWithRole(roleSlug).map((user: UserType) => {
+       return {
+         name: <UserTag user={user} size="s" />,

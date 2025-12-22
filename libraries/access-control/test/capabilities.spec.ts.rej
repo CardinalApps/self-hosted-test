@@ -1,21 +1,8 @@
 diff a/libraries/access-control/test/capabilities.spec.ts b/libraries/access-control/test/capabilities.spec.ts	(rejected hunks)
-@@ -50,6 +50,19 @@ describe('hasCapability()', () => {
-     expect(hasCapability('invalid.*', userWithWildcardAssignments)).toEqual(false)
-   })
+@@ -1,4 +1,5 @@
+-// @ts-nocheck File contains intentional type mismatches.
++// @ts-nocheck File contains intentional type mismatches to check against
++// runtime role tampering.
  
-+  test('With double wildcard', () => {
-+    expect(hasCapability('AdminApp.Login', userWithDoubleWildcardAssignment)).toEqual(true)
-+    expect(hasCapability('AdminApp.anything', userWithDoubleWildcardAssignment)).toEqual(true)
-+    expect(hasCapability('anything.Login', userWithDoubleWildcardAssignment)).toEqual(true)
-+    expect(hasCapability('MusicArtists.List', userWithDoubleWildcardAssignment)).toEqual(true)
-+    expect(hasCapability('CinemaApp.Login', userWithDoubleWildcardAssignment)).toEqual(true)
-+    expect(hasCapability('anything.anything', userWithDoubleWildcardAssignment)).toEqual(true)
-+
-+    expect(hasCapability('.anything', userWithDoubleWildcardAssignment)).toEqual(false)
-+    expect(hasCapability('anything.', userWithDoubleWildcardAssignment)).toEqual(false)
-+    expect(hasCapability('.', userWithDoubleWildcardAssignment)).toEqual(false)
-+  })
-+
-   test('Malformatted', () => {
-     expect(hasCapability('UnknownComponent.UnknownAction', userWithValidStaticAssignments)).toEqual(false)
-     expect(hasCapability('UnknownComponent.*', userWithValidStaticAssignments)).toEqual(false)
+ import {
+   test,
