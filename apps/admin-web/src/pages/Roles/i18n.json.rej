@@ -1,49 +1,11 @@
 diff a/apps/admin-web/src/pages/Roles/i18n.json b/apps/admin-web/src/pages/Roles/i18n.json	(rejected hunks)
-@@ -9,13 +9,13 @@
-     "en": "Role"
-   },
-   "roles.num-users.singular": {
--    "en": "{num} Assignment"
-+    "en": "{num} User"
-   },
-   "roles.num-users.plural": {
--    "en": "{num} Assignments"
-+    "en": "{num} Users"
-   },
-   "roles.drawer.max-assignments": {
--    "en": "Maximum Assignments"
-+    "en": "Maximum Users"
-   },
-   "roles.drawer.max-assignments.unlimited": {
-     "en": "Unlimited"
-@@ -33,15 +33,26 @@
-     "en": "No"
-   },
-   "roles.drawer.user-list-title": {
--    "en": "Assignments"
-+    "en": "Users with this role"
-   },
+@@ -38,6 +38,9 @@
    "roles.drawer.user-list.available": {
--    "en": "Available Users"
-+    "en": "Assign Role"
+     "en": "Assign Role"
    },
++  "roles.drawer.user-list.guest": {
++    "en": "Guest Account"
++  },
    "roles.drawer.user-list.save": {
--    "en": "Update Assignments"
-+    "en": "Update Users"
-+  },
-+  "roles.drawer.assign.success.singular": {
-+    "en": "Role has been assigned to {num} user."
-+  },
-+  "roles.drawer.assign.success.plural": {
-+    "en": "Role has been assigned to {num} users."
-+  },
-+  "roles.drawer.revoke.success.singular": {
-+    "en": "Role has been unassigned from {num} user."
-+  },
-+  "roles.drawer.revoke.success.plural": {
-+    "en": "Role has been unassigned from {num} users."
-   },
--
-   "caps-list.title": {
-     "en": "Capabilities"
+     "en": "Update Users"
    },
