@@ -1,11 +1,13 @@
 diff a/apps/admin-web/src/pages/Roles/i18n.json b/apps/admin-web/src/pages/Roles/i18n.json	(rejected hunks)
-@@ -38,6 +38,9 @@
-   "roles.drawer.user-list.available": {
-     "en": "Assign Role"
+@@ -65,7 +65,10 @@
+   "caps.drawer.title": {
+     "en": "Capability"
    },
-+  "roles.drawer.user-list.guest": {
-+    "en": "Guest Account"
++  "caps-list.total": {
++    "en": "{total} total capabilities"
 +  },
-   "roles.drawer.user-list.save": {
-     "en": "Update Users"
-   },
+   "caps-list.filtered-count": {
+-    "en": "Showing {num} of {total}"
++    "en": "{role} has {num} of {total} capabilities"
+   }
+ }

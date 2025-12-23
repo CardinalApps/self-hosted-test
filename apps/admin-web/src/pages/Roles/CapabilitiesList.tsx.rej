@@ -1,17 +1,16 @@
 diff a/apps/admin-web/src/pages/Roles/CapabilitiesList.tsx b/apps/admin-web/src/pages/Roles/CapabilitiesList.tsx	(rejected hunks)
-@@ -1,5 +1,5 @@
- import { useEffect, useState } from 'react'
--import { ACi18n, Capabilities, Roles } from '@cardinalapps/access-control/src'
-+import { ACi18n, Capabilities, Roles, hasCapability } from '@cardinalapps/access-control/src'
- 
- import { useAppSelector } from '@cardinalapps/ui/src/hooks/useAppSelector'
- 
-@@ -34,7 +34,7 @@ function CapabilitiesList({
-     const filtered = Capabilities
-       .filter((cap) => {
-         if (globallySelectedRole) {
--          return Roles?.[globallySelectedRole]?.capabilities.includes(cap)
-+          return hasCapability(cap, Roles?.[globallySelectedRole]?.capabilities)
-         } else {
-           return cap
-         }
+@@ -56,9 +56,13 @@ function CapabilitiesList({
+       className={'capabilities-list'}
+       header={<H5 className={'title'}>{i18n['caps-list.title'][lang]}</H5>}
+       footer={
+-        i18n['caps-list.filtered-count'][lang]
++        globallySelectedRole
++        ? i18n['caps-list.filtered-count'][lang]
++          .replace('{role}', ACi18n[`role.${globallySelectedRole}.name`][lang])
+           .replace('{num}', filteredItems.length)
+           .replace('{total}', Capabilities.length)
++        : i18n['caps-list.total'][lang]
++          .replace('{total}', Capabilities.length)
+       }
+       headerRight={(
+         <Form>
