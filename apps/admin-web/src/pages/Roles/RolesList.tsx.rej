@@ -1,17 +1,44 @@
 diff a/apps/admin-web/src/pages/Roles/RolesList.tsx b/apps/admin-web/src/pages/Roles/RolesList.tsx	(rejected hunks)
-@@ -1,5 +1,5 @@
- import { useEffect, useState } from 'react'
--import { ACi18n, RoleNames, getRole, Role, Roles } from '@cardinalapps/access-control/src'
-+import { ACi18n, RoleNames, getRole, Role, Roles, RoleName } from '@cardinalapps/access-control/src'
+@@ -1,4 +1,4 @@
+-import { useEffect, useState } from 'react'
++import { useEffect, useState, useMemo } from 'react'
+ import { ACi18n, RoleNames, getRole, Role, Roles, RoleName } from '@cardinalapps/access-control/src'
  
  import H5 from '@cardinalapps/ui/src/components/typography/H5'
- import List from '@cardinalapps/ui/src/components/interaction/List'
-@@ -79,7 +79,7 @@ function RolesList() {
-         name: ACi18n[`role.${role}.name`]?.[lang],
-         label: pluralize(numUsersWithRole, i18n['roles.num-users.singular'][lang], i18n['roles.num-users.plural'][lang]).replace('{num}', numUsersWithRole),
-         controls: ['view'],
--        onView: () => setDrawerRoleSlug(role),
-+        onView: () => setDrawerRoleSlug(role as RoleName),
-       } as ListItem
-     })
-   }
+@@ -146,6 +146,18 @@ function RolesList() {
+     }
+   }, [deleteRoleAssignmentsResult])
+ 
++  const memoizedUsersWithRole = useMemo(
++    () => usersWithRole(drawerRoleSlug),
++    [drawerRoleSlug, roleAssignments],
++  )
++
++  const memoizedUsersWithoutRole = useMemo(
++    () => usersWithoutRole(drawerRoleSlug),
++    [drawerRoleSlug, roleAssignments],
++  )
++
++  console.log('memoizedUsersWithoutRole', memoizedUsersWithoutRole)
++
+   return (
+     <CardGrid.Card
+       size="m"
+@@ -209,7 +221,7 @@ function RolesList() {
+                       name="role-assignments"
+                       availableTitle={i18n['roles.drawer.user-list.available'][lang]}
+                       initialSelectedItems={
+-                        usersWithRole(drawerRoleSlug)
++                        memoizedUsersWithRole
+                           .map((user) => ({
+                             name: user?.designation === 'guest_account'
+                               ? i18n['roles.drawer.user-list.guest'][lang]
+@@ -224,7 +236,7 @@ function RolesList() {
+                           }))
+                       }
+                       initialAvailableItems={
+-                        usersWithoutRole(drawerRoleSlug)
++                        memoizedUsersWithoutRole
+                           .map((user) => ({
+                             name: user?.designation === 'guest_account'
+                               ? i18n['roles.drawer.user-list.guest'][lang]
