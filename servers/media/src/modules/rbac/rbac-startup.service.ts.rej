@@ -1,0 +1,34 @@
+diff a/servers/media/src/modules/rbac/rbac-startup.service.ts b/servers/media/src/modules/rbac/rbac-startup.service.ts	(rejected hunks)
+@@ -7,13 +7,12 @@
+ import { Injectable, Logger } from '@nestjs/common'
+ import { InjectDataSource, InjectRepository } from '@nestjs/typeorm'
+ import { DataSource, Repository } from 'typeorm'
+-//import { RoleNames } from '@cardinalapps/access-control/dist/cjs'
+ 
+ import { RoleAssignment } from './role-assignment.entity'
+ import { UserService } from '../user/user.service'
+ import { User } from '../user/user.entity'
+ import { RBACService } from './rbac.service'
+-import { getRole } from '@cardinalapps/access-control/dist/cjs'
++import { RoleName } from '@cardinalapps/access-control/dist/cjs'
+ 
+ @Injectable()
+ export class RBACStartupService {
+@@ -46,7 +45,7 @@ export class RBACStartupService {
+     })
+ 
+     if (legacyOwnerRole) {
+-      const ownerRoleAssignment = await this.rbacService.hasRole(legacyOwnerRole, getRole('owner').name)
++      const ownerRoleAssignment = await this.rbacService.hasRole(legacyOwnerRole, RoleName.OWNER)
+ 
+       // If the legacy owner doesn't have the new owner role, create it and
+       // remove the legacy role
+@@ -97,7 +96,7 @@ export class RBACStartupService {
+ 
+     if (usersWithLegacyUserRole.length) {
+       for (const user of usersWithLegacyUserRole) {
+-        const newcomerRoleAssignment = await this.rbacService.hasRole(user, getRole('newcomer').name)
++        const newcomerRoleAssignment = await this.rbacService.hasRole(user, RoleName.NEWCOMER)
+ 
+         // If the user doesn't have the newcomer role, create it and remove the
+         // legacy role

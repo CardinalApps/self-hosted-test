@@ -1,25 +1,17 @@
 diff a/apps/admin-web/src/pages/Roles/RolesList.tsx b/apps/admin-web/src/pages/Roles/RolesList.tsx	(rejected hunks)
-@@ -211,8 +211,11 @@ function RolesList() {
-                       initialSelectedItems={
-                         usersWithRole(drawerRoleSlug)
-                           .map((user) => ({
--                            name: user?.cachedCloudUser?.publicName || 'Cardinal User',
-+                            name: user?.designation === 'guest_account'
-+                              ? i18n['roles.drawer.user-list.guest'][lang]
-+                              :  user?.cachedCloudUser?.publicName || 'Cardinal User',
-                             value: user.userId,
-+                            canDelete: user?.designation !== 'guest_account',
-                             avatar: user?.designation === 'guest_account'
-                               ? { type: 'guest' }
-                               : user?.cachedCloudUser?.avatar
-@@ -223,7 +226,9 @@ function RolesList() {
-                       initialAvailableItems={
-                         usersWithoutRole(drawerRoleSlug)
-                           .map((user) => ({
--                            name: user?.cachedCloudUser?.publicName || 'Cardinal User',
-+                            name: user?.designation === 'guest_account'
-+                              ? i18n['roles.drawer.user-list.guest'][lang]
-+                              :  user?.cachedCloudUser?.publicName || 'Cardinal User',
-                             value: user.userId,
-                             avatar: user?.designation === 'guest_account'
-                             ? { type: 'guest' }
+@@ -1,5 +1,5 @@
+ import { useEffect, useState } from 'react'
+-import { ACi18n, RoleNames, getRole, Role, Roles } from '@cardinalapps/access-control/src'
++import { ACi18n, RoleNames, getRole, Role, Roles, RoleName } from '@cardinalapps/access-control/src'
+ 
+ import H5 from '@cardinalapps/ui/src/components/typography/H5'
+ import List from '@cardinalapps/ui/src/components/interaction/List'
+@@ -79,7 +79,7 @@ function RolesList() {
+         name: ACi18n[`role.${role}.name`]?.[lang],
+         label: pluralize(numUsersWithRole, i18n['roles.num-users.singular'][lang], i18n['roles.num-users.plural'][lang]).replace('{num}', numUsersWithRole),
+         controls: ['view'],
+-        onView: () => setDrawerRoleSlug(role),
++        onView: () => setDrawerRoleSlug(role as RoleName),
+       } as ListItem
+     })
+   }

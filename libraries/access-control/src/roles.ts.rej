@@ -1,17 +1,50 @@
 diff a/libraries/access-control/src/roles.ts b/libraries/access-control/src/roles.ts	(rejected hunks)
-@@ -25,6 +25,15 @@ export const Roles: Record<string, Role> = {
+@@ -1,5 +1,11 @@
+ import { CapabilityAssignments } from "./capabilities"
+ 
++export enum RoleName {
++  OWNER = 'owner',
++  ADMINISTRATIOR = 'administrator',
++  NEWCOMER = 'newcomer',
++}
++
+ /**
+  * Roles are sets of capabilities. Users can be assigned multiple different
+  * roles to form a superset of capabilities.
+@@ -8,15 +14,15 @@ export type Role = {
+   assignable: boolean,
+   unassignable: boolean,
+   maxUsers: number | null, // Use null for unlimited
+-  name: string,
++  name: `${RoleName}`,
+   capabilities: CapabilityAssignments,
+ }
+ 
+ /**
+  * Master list of all roles and their capabilities.
+  */
+-export const Roles: Record<string, Role> = {
+-  owner: {
++export const Roles: Record<`${RoleName}`, Role> = {
++  [RoleName.OWNER]: {
+     assignable: false,
+     unassignable: false,
+     maxUsers: 1,
+@@ -25,7 +31,7 @@ export const Roles: Record<string, Role> = {
        '*.*',
      ],
    },
-+  administrator: {
-+    assignable: true,
-+    unassignable: true,
-+    maxUsers: null,
-+    name: 'administrator',
-+    capabilities: [
-+      '*.*',
-+    ],
-+  },
-   newcomer: {
+-  administrator: {
++  [RoleName.ADMINISTRATIOR]: {
      assignable: true,
      unassignable: true,
+     maxUsers: null,
+@@ -34,7 +40,7 @@ export const Roles: Record<string, Role> = {
+       '*.*',
+     ],
+   },
+-  newcomer: {
++  [RoleName.NEWCOMER]: {
+     assignable: true,
+     unassignable: true,
+     maxUsers: null,
