@@ -1,19 +1,25 @@
 diff a/libraries/ui/src/store/apis/homeServerUsers.ts b/libraries/ui/src/store/apis/homeServerUsers.ts	(rejected hunks)
-@@ -17,7 +17,7 @@ export type MusicHistoryEntryType = {
- 
- export const usersApi = baseHomeServerApi
-   .enhanceEndpoints({
--    addTagTypes: ['Users.List'],
-+    addTagTypes: ['Users.List', 'Licensing.Seats'],
-   })
-   .injectEndpoints({
-     endpoints: (builder) => ({
-@@ -40,7 +40,7 @@ export const usersApi = baseHomeServerApi
-           method: 'PATCH',
-           body,
-         }),
--        invalidatesTags: ['Users.List'],
-+        invalidatesTags: ['Users.List', 'Licensing.Seats'],
+@@ -31,6 +31,16 @@ export const usersApi = baseHomeServerApi
+         providesTags: ['Users.List'],
        }),
-     }),
-   })
+ 
++      /**
++       * Get server owner.
++       */
++      getServerOwner: builder.query({
++        query: () => {
++          return queryParams('/users/owner')
++        },
++        providesTags: ['Users.List'],
++      }),
++
+       /**
+        * Create a photo album.
+        */
+@@ -47,5 +57,6 @@ export const usersApi = baseHomeServerApi
+ 
+ export const {
+   useGetUsersQuery,
++  useGetServerOwnerQuery,
+   useUpdateUserMutation,
+ } = usersApi

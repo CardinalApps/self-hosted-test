@@ -1,26 +1,23 @@
 diff a/apps/admin-web/src/pages/Users/Users.tsx b/apps/admin-web/src/pages/Users/Users.tsx	(rejected hunks)
-@@ -155,7 +155,7 @@ function Users() {
+@@ -25,6 +25,7 @@ import UserManagementDrawer from './UserManagementDrawer'
  
-   return (
-     <AppPage className="users-page" layout={PAGE_LAYOUT.standard} pageTitle={i18n['users.title'][lang]}>
--      <CardGrid layout="flex">
-+      <CardGrid>
-         {
-         /*
-          * "Server is unclaimed" warning card. 
-@@ -175,6 +175,7 @@ function Users() {
-          */
-         }
-         <CardGrid.Card
-+          size="xs"
-           icon={<Icon fa="fas fa-users" />}
-           header={<H5>{i18n['users.server.capacity'][lang]}</H5>}
-         >
-@@ -190,6 +191,7 @@ function Users() {
-          */
-         }
-         <CardGrid.Card
-+          size="s"
-           icon={<Icon fa="fas fa-envelope" />}
-           header={<H5>{i18n['users.invite-user'][lang]}</H5>}
-           footer={(
+ import i18n from './i18n.json'
+ import './styles.css'
++import { useGetActiveUsersQuery } from '@cardinalapps/ui/src/store/apis/activeUsers'
+ 
+ function Users() {
+   const { lang } = useSelector(settingsSelectors.current)
+@@ -32,9 +33,12 @@ function Users() {
+   const [configuringUser, setConfiguringUser] = useState<UserType>()
+   const [showManageInvitationsDrawer, setShowManageInvitationsDrawer] = useState<boolean>(false)
+ 
++  const serverOwnerRes = useGetActiveUsersQuery({})
++  const serverOwner = serverOwnerRes.data?.[0]
++
+   const usersRes = useGetUsersQuery({ take: 9999 })
+   const users = usersRes?.data ? usersRes.data?.[0] : []
+-  const serverIsClaimed = users?.find((user: UserType) => user?.role === 'owner')
++  const serverIsClaimed = !!serverOwner
+ 
+   const licensingSeatsRes = useGetLicensingSeatsQuery({})
+   const licensingSeats = licensingSeatsRes?.data
