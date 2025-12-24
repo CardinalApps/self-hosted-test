@@ -1,10 +1,17 @@
 diff a/apps/admin-web/src/pages/FirstTimeSetup/FirstTimeSetup.tsx b/apps/admin-web/src/pages/FirstTimeSetup/FirstTimeSetup.tsx	(rejected hunks)
-@@ -122,7 +122,7 @@ function FirstTimeSetup() {
-     <div className={'firstTimeSetup'}>
-       {(step >= 2 || step === null) &&
-         <motion.div
--          className={'topLogo'}
-+          className={'top-logo logo'}
-           initial={{ opacity: 0 }}
-           animate={{ opacity: 1, transition: { delay: 0.6, duration: 0.8, type: 'tween' } }}
-         >
+@@ -79,12 +79,12 @@ function FirstTimeSetup() {
+         ssoToken: ssoJWTOfFutureOwner,
+       },
+     })
+-      .then((res: { localUser: { userId } }) => {
++      .then((res: { accountToLogInto: string }) => {
+         setFinishButtonState('')
+         dispatch(homeServerActions.setFirstTimeSetupComplete(true))
+-        if (res?.localUser) {
++        if (res?.accountToLogInto) {
+           dispatch(homeServerLogin({
+-            userId: res.localUser.userId,
++            userId: res?.accountToLogInto,
+             cardinalSSOToken: ssoJWTOfFutureOwner,
+           }))
+         }

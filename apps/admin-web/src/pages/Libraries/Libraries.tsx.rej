@@ -1,29 +1,9 @@
 diff a/apps/admin-web/src/pages/Libraries/Libraries.tsx b/apps/admin-web/src/pages/Libraries/Libraries.tsx	(rejected hunks)
-@@ -23,8 +23,8 @@ import {
-   useDeleteLibraryMutation,
- } from '@cardinalapps/ui/src/store/apis/libraries'
- import { PAGE_LAYOUT } from '@cardinalapps/ui/src/store/slices/layout/constants'
--import { HomeServerUser } from '@cardinalapps/ui/src/store/slices/homeServerUser'
- import { TreeNode } from '@cardinalapps/ui/src/components/interaction/DirectoryTree/DirectoryTree'
-+import { UserType } from '@cardinalapps/ui/src/types/user'
- 
- import homeServerAPI from '@cardinalapps/ui/src/lib/homeserver/homeServerAPI'
- 
-@@ -36,7 +36,7 @@ function Libraries() {
-   const { lang } = useSelector(settingsSelectors.current)
-   const [createLibrary, createLibraryResult] = useCreateLibraryMutation()
-   const [selectedDirectories, setSelectedDirectories] = useState<TreeNode[]>()
--  const [allUsers, setAllUsers] = useState<HomeServerUser[]>([])
-+  const [allUsers, setAllUsers] = useState<UserType[]>([])
-   const [openLibrary, setOpenLibrary] = useState<Library>()
-   const [showConfirmDelete, setShowConfirmDelete] = useState(false)
-   const [updateLibrary, updateLibraryResult] = useUpdateLibraryMutation()
-@@ -74,7 +74,7 @@ function Libraries() {
-    */
-   useEffect(() => {
-     fetchPublicUsers()
--      .then((users: HomeServerUser[]) => {
-+      .then((users: UserType[]) => {
-         setAllUsers(users)
-       })
-   }, [])
+@@ -86,6 +86,7 @@ function Libraries() {
+     return users
+       .sort((user) => {
+         // server owner first
++        // FIXME
+         if (user.role === 'owner') {
+           return -1
+         }
