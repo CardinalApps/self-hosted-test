@@ -1,26 +1,46 @@
 diff a/apps/admin-web/src/pages/Roles/RolesList.tsx b/apps/admin-web/src/pages/Roles/RolesList.tsx	(rejected hunks)
-@@ -219,13 +219,13 @@ function RolesList() {
-                 },
-                 {
-                   name: i18n['roles.drawer.can-be-assigned'][lang],
--                  label: Roles[drawerRoleSlug].assignable
-+                  label: Roles[drawerRoleSlug].revocable
-                     ? i18n['roles.drawer.can-be-assigned.true'][lang]
-                     : i18n['roles.drawer.can-be-assigned.false'][lang],
-                 },
-                 {
-                   name: i18n['roles.drawer.can-be-revoked'][lang],
--                  label: Roles[drawerRoleSlug].unassignable
-+                  label: Roles[drawerRoleSlug].revocable
-                     ? i18n['roles.drawer.can-be-assigned.true'][lang]
-                     : i18n['roles.drawer.can-be-assigned.false'][lang],
-                 },
-@@ -233,7 +233,7 @@ function RolesList() {
-             />
-           </Drawer.Section>
-           <Drawer.Section title={i18n['roles.drawer.user-list-title'][lang]}>
--            {drawerRole.assignable && drawerRole.unassignable
-+            {drawerRole.assignable && drawerRole.revocable
-               ? (
-                 <Form
-                   onSubmit={handleUpdateRoleAssignments}
+@@ -46,14 +46,14 @@ function RolesList() {
+   /**
+    * Return all users with the given role.
+    */
+-  const usersWithRole = (role) => roleAssignments
++  const usersWithRole = (role: string) => roleAssignments
+     .filter((assignment: RoleAssignmentEntity) => assignment.role === role)
+-    .map((assignment) => users.find((user) => user?.userId === assignment.user?.userId))
++    .map((assignment) => assignment.user)
+ 
+   /**
+    * Return all users that don't have the given role.
+    */
+-  const usersWithoutRole = (role) => users.filter((user: UserType) => {
++  const usersWithoutRole = (role: string) => users.filter((user: UserType) => {
+     const userRoleAssignments = roleAssignments.filter((assignment) => assignment.user?.userId === user?.userId)
+ 
+     // Never show the owner in the available users
+@@ -158,7 +157,7 @@ function RolesList() {
+               name: user?.designation === 'guest_account'
+                 ? i18n['roles.drawer.user-list.guest'][lang]
+                 :  user?.cachedCloudUser?.publicName || 'Cardinal User',
+-              value: user.userId,
++              value: user?.userId,
+               canDelete: user?.designation !== 'guest_account',
+               avatar: user?.designation === 'guest_account'
+                 ? { type: 'guest' }
+@@ -173,7 +172,7 @@ function RolesList() {
+               name: user?.designation === 'guest_account'
+                 ? i18n['roles.drawer.user-list.guest'][lang]
+                 :  user?.cachedCloudUser?.publicName || 'Cardinal User',
+-              value: user.userId,
++              value: user?.userId,
+               avatar: user?.designation === 'guest_account'
+               ? { type: 'guest' }
+               : user?.cachedCloudUser?.avatar
+@@ -183,7 +182,7 @@ function RolesList() {
+         }
+       />
+     )
+-  }, [drawerRoleSlug, roleAssignments.length])
++  }, [drawerRoleSlug, roleAssignments.length, users.length])
+ 
+   return (
+     <CardGrid.Card
