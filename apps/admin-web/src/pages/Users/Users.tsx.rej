@@ -1,23 +1,62 @@
 diff a/apps/admin-web/src/pages/Users/Users.tsx b/apps/admin-web/src/pages/Users/Users.tsx	(rejected hunks)
-@@ -25,6 +25,7 @@ import UserManagementDrawer from './UserManagementDrawer'
+@@ -19,13 +19,13 @@ import H5 from '@cardinalapps/ui/src/components/typography/H5'
+ import { PAGE_LAYOUT } from '@cardinalapps/ui/src/store/slices/layout/constants'
+ import { useGetInvitationsQuery } from '@cardinalapps/ui/src/store/apis/invitations'
+ import { useGetLicensingSeatsQuery } from '@cardinalapps/ui/src/store/apis/licensing'
++import { useGetActiveUsersQuery } from '@cardinalapps/ui/src/store/apis/activeUsers'
+ 
+ import ManageInvitationsDrawer from './ManageInvitationsDrawer'
+ import UserManagementDrawer from './UserManagementDrawer'
  
  import i18n from './i18n.json'
  import './styles.css'
-+import { useGetActiveUsersQuery } from '@cardinalapps/ui/src/store/apis/activeUsers'
+-import { useGetActiveUsersQuery } from '@cardinalapps/ui/src/store/apis/activeUsers'
  
  function Users() {
    const { lang } = useSelector(settingsSelectors.current)
-@@ -32,9 +33,12 @@ function Users() {
-   const [configuringUser, setConfiguringUser] = useState<UserType>()
-   const [showManageInvitationsDrawer, setShowManageInvitationsDrawer] = useState<boolean>(false)
+@@ -36,7 +36,7 @@ function Users() {
+   const serverOwnerRes = useGetActiveUsersQuery({})
+   const serverOwner = serverOwnerRes.data?.[0]
  
-+  const serverOwnerRes = useGetActiveUsersQuery({})
-+  const serverOwner = serverOwnerRes.data?.[0]
-+
-   const usersRes = useGetUsersQuery({ take: 9999 })
+-  const usersRes = useGetUsersQuery({ take: 9999 })
++  const usersRes = useGetUsersQuery({ take: 9999, roles: true })
    const users = usersRes?.data ? usersRes.data?.[0] : []
--  const serverIsClaimed = users?.find((user: UserType) => user?.role === 'owner')
-+  const serverIsClaimed = !!serverOwner
+   const serverIsClaimed = !!serverOwner
  
-   const licensingSeatsRes = useGetLicensingSeatsQuery({})
-   const licensingSeats = licensingSeatsRes?.data
+@@ -61,8 +61,13 @@ function Users() {
+ 
+   const roleCol = (user: UserType) => {
+     return (
+-      <Table.Col key="role">
+-        <span className="capitalize">{user?.role}</span>
++      <Table.Col key="status">
++        <span className="capitalize">
++          {user?.roles.length === 1
++            ? user?.roles?.[0]?.role
++            : i18n['users.roles.count'][lang].replace('{num}', user?.roles.length)
++          }
++        </span>
+       </Table.Col>
+     )
+   }
+@@ -119,15 +124,15 @@ function Users() {
+       return []
+     }
+ 
+-    const allUsersExceptGuest = users
+-      .filter((user: UserType) => user.designation !== 'guest_account')
+-      .filter((user: UserType) => user.role !== 'owner')
+     const guestAccount = users.find((user: UserType) => user.designation === 'guest_account')
+-    const ownerAccount = users.find((user: UserType) => user.role === 'owner')
++    const ownerAccount = users.find((user: UserType) => user.roles.find((roleEntity) => roleEntity.role === 'owner'))
++    const otherUsers = users
++      .filter((user: UserType) => user.userId !== guestAccount.userId)
++      .filter((user: UserType) => user.userId !== ownerAccount.userId)
+ 
+     const ordered = [
+       ownerAccount,
+-      ...allUsersExceptGuest,
++      ...otherUsers,
+       guestAccount,
+     ]
+ 

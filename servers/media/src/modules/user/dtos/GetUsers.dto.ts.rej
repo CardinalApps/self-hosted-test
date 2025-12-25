@@ -1,0 +1,22 @@
+diff a/servers/media/src/modules/user/dtos/GetUsers.dto.ts b/servers/media/src/modules/user/dtos/GetUsers.dto.ts	(rejected hunks)
+@@ -1,7 +1,8 @@
+ import { Transform } from 'class-transformer'
+-import { IsString, IsOptional, IsIn } from 'class-validator'
++import { IsString, IsOptional, IsIn, IsBoolean } from 'class-validator'
+ 
+ import { Pagination } from '../../../dtos/pagination.dto'
++import { toBoolean } from '../../../utils/transformers'
+ 
+ enum AllowedUsersOrderBy {
+   'createdAt' = 'createdAt',
+@@ -15,4 +16,9 @@ class UsersPagination extends Pagination {
+   sort?: AllowedUsersOrderBy = AllowedUsersOrderBy.createdAt
+ }
+ 
+-export class GetUsersDto extends UsersPagination {}
++export class GetUsersDto extends UsersPagination {
++  @Transform(toBoolean)
++  @IsBoolean()
++  @IsOptional()
++  roles?: boolean
++}

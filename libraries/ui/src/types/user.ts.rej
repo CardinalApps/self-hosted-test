@@ -1,12 +1,24 @@
 diff a/libraries/ui/src/types/user.ts b/libraries/ui/src/types/user.ts	(rejected hunks)
-@@ -1,8 +1,8 @@
+@@ -1,4 +1,5 @@
  import { AvatarProps } from "../components/layout/Avatar/Avatar"
++import { RoleAssignmentEntity } from "../store/apis/roleAssignments"
  
  export type UserType = {
--  activityStatus: string,
--  activityStatusUpdatedAt: string,
-+  activityStatus?: string,
-+  activityStatusUpdatedAt?: string,
-   cachedCloudUser?: {
-     userId?: string,
-     avatar?: AvatarProps,
+   activityStatus?: string,
+@@ -18,9 +19,15 @@ export type UserType = {
+   createdAt?: string,
+   deletedAt?: string,
+   designation?: "guest_account",
+-  role?: "user" | "owner",
++
+   enabled?: boolean,
+   ssoToken?: string,
+   updatedAt?: string,
+   userId?: string,
++  roles?: RoleAssignmentEntity[],
++
++  /**
++   * @deprecated use roles instead
++   */
++  role?: "user" | "owner",
+ }

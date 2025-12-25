@@ -1,0 +1,10 @@
+diff a/servers/media/src/middleware/RevokeDisabledUserSessions.middleware.ts b/servers/media/src/middleware/RevokeDisabledUserSessions.middleware.ts	(rejected hunks)
+@@ -10,7 +10,7 @@ export class RevokeDisabledUserSessions implements NestMiddleware {
+ 
+   async use(request, response: Response, next: NextFunction): Promise<void> {
+     if (request.user && request.user?.enabled === false) {
+-      response.header('Cardinal-Extra-Message', 'User account disabled')
++      response.header('Cardinal-Extra-Message', 'Your account has been disabled on this server, contact the server owner for help.')
+       throw new UnauthorizedException()
+     }
+ 

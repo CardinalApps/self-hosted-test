@@ -1,0 +1,19 @@
+diff a/libraries/ui/src/store/apis/roleAssignments.ts b/libraries/ui/src/store/apis/roleAssignments.ts	(rejected hunks)
+@@ -27,14 +27,16 @@ export const roleAssignmentsApi = baseHomeServerApi
+         PaginationParams & {
+           order?: CommonOrderParams,
+           orderBy?: 'name' | 'createdAt',
++          userId?: string,
+         }
+       >({
+-        query: ({ take, skip, order, orderBy }) => {
++        query: ({ take, skip, order, orderBy, userId }) => {
+           return queryParams('/roles/assignments', {
+             ...(take && { take }),
+             ...(skip && { skip }),
+             ...(order && { order }),
+             ...(orderBy && { orderBy }),
++            ...(userId && { userId }),
+           })
+         },
+         providesTags: ['RoleAssignments.List'],

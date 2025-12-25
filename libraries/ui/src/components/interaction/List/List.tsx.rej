@@ -1,13 +1,26 @@
 diff a/libraries/ui/src/components/interaction/List/List.tsx b/libraries/ui/src/components/interaction/List/List.tsx	(rejected hunks)
-@@ -142,9 +142,9 @@ const List = ({
-                       <Icon {...item.icon} />
-                     </span>
-                   )}
--                  <span className="item-list-item-name" title={item?.title || item?.name?.toString()}>{item?.name}</span>
-+                  <span className="item-list-item-name" title={item?.title}>{item?.name}</span>
-                   {typeof item?.label === 'string'
--                    ? <span className="item-list-item-label" title={item?.title || item?.label?.toString()}>{item?.label}</span>
-+                    ? <span className="item-list-item-label" title={item?.title}>{item?.label}</span>
-                     : <span className="item-list-item-label">{item?.label || null}</span>
-                   }
-                   {!!controlsToUse?.length && (
+@@ -43,6 +43,7 @@ type ListProps = {
+   items: ListItem[],
+   controls?: unknown[],
+   layout?: 'default' | 'compact'
++  maxHeight?: number,
+   onView?: (item: ListItem) => void,
+   onAdd?: (item: ListItem) => void,
+   onRemove?: (item: ListItem) => void,
+@@ -58,6 +59,7 @@ const List = ({
+   items = [],
+   controls = [],
+   layout = 'default',
++  maxHeight,
+   onView,
+   onAdd,
+   onRemove,
+@@ -119,7 +121,7 @@ const List = ({
+   return (
+     <div {...props} className={clsx('item-list', className)} data-name={name} data-layout={layout}>
+       {items.length
+-        ? <ul>
++        ? <ul style={{ maxHeight }}>
+             {items.map((item, index) => {
+               const controlsToUse = item?.controls
+                 ? item.controls

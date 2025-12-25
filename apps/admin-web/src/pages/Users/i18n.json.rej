@@ -1,26 +1,38 @@
 diff a/apps/admin-web/src/pages/Users/i18n.json b/apps/admin-web/src/pages/Users/i18n.json	(rejected hunks)
-@@ -41,6 +41,15 @@
-   "users.invite.link.none": {
-     "en": "No invitation links."
+@@ -132,7 +132,7 @@
+     "en": "Account"
    },
-+  "users.invite.link.code": {
-+    "en": "Code"
+   "users.table.header.role": {
+-    "en": "Role"
++    "en": "Roles"
+   },
+   "users.table.header.status": {
+     "en": "Status"
+@@ -182,6 +182,9 @@
+   "users.settings.info.last-seen": {
+     "en": "Last seen"
+   },
++  "users.settings.roles": {
++    "en": "Roles"
 +  },
-+  "users.invite.link.cloud-link": {
-+    "en": "Link"
+   "users.settings.actions": {
+     "en": "Actions"
+   },
+@@ -192,7 +195,7 @@
+     "en": "Enable this user"
+   },
+   "users.settings.actions.cloud-portal-link": {
+-    "en": "Manage your Cardinal cloud account"
++    "en": "Manage your Cardinal cloud account online"
+   },
+   "users.settings.actions.remove": {
+     "en": "Remove this user"
+@@ -232,5 +235,8 @@
+   },
+   "users.updated.disabled.success": {
+     "en": "User has been disabled."
 +  },
-+  "users.invite.link.created-at-by": {
-+    "en": "Created {ago}"
-+  },
-   "users.invite-links.search.placeholder": {
-     "en": "Search for a Cardinal user"
-   },
-@@ -63,7 +72,7 @@
-     "en": "Generate link"
-   },
-   "users.invite.link.create.notice": {
--    "en": "Create a link that your friends can use to join your Media Server. Invitees will need to create a free Cardinal account."
-+    "en": "Create a link that people can use to join your Media Server with their Cardinal Account."
-   },
-   "users.invite.link.create.expiration": {
-     "en": "Expiration"
++  "users.roles.count": {
++    "en": "{num} roles"
+   }
+ }
