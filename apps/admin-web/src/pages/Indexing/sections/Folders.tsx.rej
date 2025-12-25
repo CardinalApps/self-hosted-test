@@ -1,0 +1,23 @@
+diff a/apps/admin-web/src/pages/Indexing/sections/Folders.tsx b/apps/admin-web/src/pages/Indexing/sections/Folders.tsx	(rejected hunks)
+@@ -10,7 +10,6 @@ import { settingsSelectors } from '@cardinalapps/ui/src/store/slices/settings'
+ import homeServerAPI from '@cardinalapps/ui/src/lib/homeserver/homeServerAPI'
+ 
+ import i18n from '../i18n.json'
+-import Icon from '@cardinalapps/ui/src/components/typography/Icon'
+ 
+ type MediaDirs = {
+   music?: string,
+@@ -44,12 +43,7 @@ function MediaFolders() {
+           <H5 className={'title'}>{i18n['dirs.title'][lang]}</H5>
+         </>
+       }
+-      footer={
+-        <div className="note">
+-          <Icon fa="fas fa-info-circle" />
+-          {i18n['dirs.tooltip-docker'][lang]}
+-        </div>
+-      }
++      footer={i18n['dirs.tooltip-docker'][lang]}
+     >
+       <List
+         className="server-info-list"

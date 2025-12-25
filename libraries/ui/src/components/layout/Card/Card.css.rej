@@ -1,26 +1,29 @@
 diff a/libraries/ui/src/components/layout/Card/Card.css b/libraries/ui/src/components/layout/Card/Card.css	(rejected hunks)
-@@ -54,6 +54,7 @@
-   > .card-header {
-     display: flex;
-     align-items: center;
-+    gap: 20px;
-     justify-content: space-between;
+@@ -61,7 +61,6 @@
+       margin-right: 10px;
+       position: relative;
+       color: var(--text-color-2);
+-      top: -1px;
  
-     .card-icon {
-@@ -76,6 +77,16 @@
-       align-items: center;
-       flex-grow: 1;
+       &.size-l {
+         font-size: 26px;
+@@ -106,19 +105,6 @@
+     button {
+       margin: 0 5px;
      }
-+
-+    .right-section {
-+      display: flex;
-+      gap: 10px;
-+
-+      form {
-+        display: flex;
-+        gap: 10px;
-+      }
-+    }
+-
+-    .note {
+-      display: flex;
+-      align-items: flex-start;
+-      gap: 10px;
+-      justify-content: flex-end;
+-
+-      i {
+-        font-size: 14px;
+-        position: relative;
+-        top: 2px;
+-      }
+-    }
    }
  
-   > .card-content {
+   @media screen and (max-width: 768px) {
