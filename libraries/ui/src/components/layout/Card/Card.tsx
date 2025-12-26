@@ -1,6 +1,8 @@
 import type { CSSProperties, PropsWithChildren, ReactNode } from 'react'
 import clsx from 'clsx'
+import { NamedCapability } from '@cardinalapps/access-control/src'
 import useWindowSize from '../../../hooks/useWindowSize'
+import HasCapabilities from '../HasCapabilities'
 
 import './Card.css'
 
@@ -23,6 +25,7 @@ export type CardProps = {
   header?: ReactNode,
   headerRight?: ReactNode,
   footer?: ReactNode,
+  capabilities?: NamedCapability[],
   children?: ReactNode,
 }
 
