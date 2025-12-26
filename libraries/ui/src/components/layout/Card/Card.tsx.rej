@@ -1,11 +1,12 @@
 diff a/libraries/ui/src/components/layout/Card/Card.tsx b/libraries/ui/src/components/layout/Card/Card.tsx	(rejected hunks)
-@@ -68,8 +68,8 @@ const Card = ({
+@@ -62,8 +62,8 @@ const Card = ({
+       )}
+       style={{
+         ...style,
+-        width,
+-        height,
++        ...(width ? { width } : {}),
++        ...(height ? { height } : {}),
+       }}
      >
        {(!!header || !!icon) &&
-         <header className="card-header">
--          {!!icon && <div className={clsx(`card-icon`, `size-${iconSize}`)}>{icon}</div>}
-           <div className="card-title">
-+            {!!icon && <div className={clsx(`card-icon`, `size-${iconSize}`)}>{icon}</div>}
-             {header}
-           </div>
-           {headerRight && <div className="right-section">{headerRight}</div>}
