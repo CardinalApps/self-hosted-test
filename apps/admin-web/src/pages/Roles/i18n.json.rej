@@ -1,10 +1,31 @@
 diff a/apps/admin-web/src/pages/Roles/i18n.json b/apps/admin-web/src/pages/Roles/i18n.json	(rejected hunks)
-@@ -72,7 +72,7 @@
+@@ -59,8 +59,8 @@
+   "caps-list.title": {
+     "en": "Capabilities"
+   },
+-  "caps-list.component-filter": {
+-    "en": "Component"
++  "caps-list.aspect-filter": {
++    "en": "Aspect"
+   },
+   "caps-list.role-filter": {
+     "en": "Role"
+@@ -71,14 +71,14 @@
+   "caps-list.total": {
      "en": "{total} total capabilities"
    },
-   "caps-list.only-component": {
--    "en": "{num} of {total} {capabilities} belong to {component}"
-+    "en": "{num} of {total} capabilities belong to {component}"
+-  "caps-list.only-component": {
+-    "en": "{num} of {total} capabilities belong to {component}"
++  "caps-list.only-aspect": {
++    "en": "{num} of {total} capabilities belong to {aspect}"
    },
    "caps-list.only-role": {
      "en": "{role} has {num} of {total} {capabilities}"
+   },
+-  "caps-list.component-and-role": {
+-    "en": "{role} has {num} {component} {capabilities}"
++  "caps-list.aspect-and-role": {
++    "en": "{role} has {num} {aspect} {capabilities}"
+   },
+   "caps.singular": {
+     "en": "capability"

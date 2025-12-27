@@ -1,107 +1,120 @@
 diff a/apps/admin-web/src/pages/Roles/CapabilitiesList.tsx b/apps/admin-web/src/pages/Roles/CapabilitiesList.tsx	(rejected hunks)
-@@ -16,11 +16,12 @@ import List from '@cardinalapps/ui/src/components/interaction/List'
- import CardGrid from '@cardinalapps/ui/src/components/layout/CardGrid'
- import { ListItem } from '@cardinalapps/ui/src/components/interaction/List/List'
- import Select from '@cardinalapps/ui/src/components/forms/Select'
-+import Form from '@cardinalapps/ui/src/components/forms/Form'
-+import { pluralize } from '@cardinalapps/ui/src/lib/formatting/text'
+@@ -4,8 +4,8 @@ import {
+   Capabilities,
+   Roles,
+   hasCapability,
+-  Components,
+-  ComponentNames,
++  Aspects,
++  AspectNames,
+   RoleNames,
+ } from '@cardinalapps/access-control/src'
  
- import { settingsSelectors } from '@cardinalapps/ui/src/store/slices/settings'
- 
+@@ -24,16 +24,16 @@ import { settingsSelectors } from '@cardinalapps/ui/src/store/slices/settings'
  import i18n from './i18n.json'
--import Form from '@cardinalapps/ui/src/components/forms/Form'
  
  type CapabilitiesListProps = {
-   globallySelectedComponent: ComponentNames,
-@@ -39,6 +40,12 @@ function CapabilitiesList({
-   const [filteredItems, setFilteredItems] = useState([])
+-  globallySelectedComponent: ComponentNames,
++  globallySelectedAspect: AspectNames,
+   globallySelectedRole: RoleNames,
+-  setGloballySelectedComponent: (ComponentNames) => void
++  setGloballySelectedAspect: (AspectNames) => void
+   setGloballySelectedRole: (RoleNames) => void
+ }
  
-   const filteredString = () => {
-+    const pluralizedCapability = pluralize(
-+      filteredItems.length,
-+      i18n['caps.singular'][lang],
-+      i18n['caps.plural'][lang],
-+    )
-+
-     if (!globallySelectedComponent && !globallySelectedRole) {
+ function CapabilitiesList({
+-  globallySelectedComponent,
++  globallySelectedAspect: globallySelectedAspect,
+   globallySelectedRole,
+-  setGloballySelectedComponent,
++  setGloballySelectedAspect,
+   setGloballySelectedRole,
+ }: CapabilitiesListProps) {
+   const { lang } = useAppSelector(settingsSelectors.current)
+@@ -46,12 +46,12 @@ function CapabilitiesList({
+       i18n['caps.plural'][lang],
+     )
+ 
+-    if (!globallySelectedComponent && !globallySelectedRole) {
++    if (!globallySelectedAspect && !globallySelectedRole) {
        return i18n['caps-list.total'][lang]
          .replace('{total}', Capabilities.length)
-@@ -49,6 +56,7 @@ function CapabilitiesList({
+     }
+ 
+-    if (!globallySelectedComponent && globallySelectedRole) {
++    if (!globallySelectedAspect && globallySelectedRole) {
+       return i18n['caps-list.only-role'][lang]
          .replace('{role}', ACi18n[`role.${globallySelectedRole}.name`]?.[lang])
          .replace('{num}', filteredItems.length)
-         .replace('{total}', Capabilities.length)
-+        .replace('{capabilities}', pluralizedCapability)
+@@ -59,18 +59,18 @@ function CapabilitiesList({
+         .replace('{capabilities}', pluralizedCapability)
      }
  
-     if (globallySelectedComponent && !globallySelectedRole) {
-@@ -56,6 +64,7 @@ function CapabilitiesList({
-         .replace('{component}', globallySelectedComponent)
+-    if (globallySelectedComponent && !globallySelectedRole) {
+-      return i18n['caps-list.only-component'][lang]
+-        .replace('{component}', globallySelectedComponent)
++    if (globallySelectedAspect && !globallySelectedRole) {
++      return i18n['caps-list.only-aspect'][lang]
++        .replace('{aspect}', globallySelectedAspect)
          .replace('{num}', filteredItems.length)
          .replace('{total}', Capabilities.length)
-+        .replace('{capabilities}', pluralizedCapability)
+         .replace('{capabilities}', pluralizedCapability)
      }
  
-     if (globallySelectedComponent && globallySelectedRole) {
-@@ -64,6 +73,7 @@ function CapabilitiesList({
-         .replace('{component}', globallySelectedComponent)
+-    if (globallySelectedComponent && globallySelectedRole) {
+-      return i18n['caps-list.component-and-role'][lang]
++    if (globallySelectedAspect && globallySelectedRole) {
++      return i18n['caps-list.aspect-and-role'][lang]
+         .replace('{role}', ACi18n[`role.${globallySelectedRole}.name`]?.[lang])
+-        .replace('{component}', globallySelectedComponent)
++        .replace('{aspect}', globallySelectedAspect)
          .replace('{num}', filteredItems.length)
          .replace('{total}', Capabilities.length)
-+        .replace('{capabilities}', pluralizedCapability)
-     }
-   }
+         .replace('{capabilities}', pluralizedCapability)
+@@ -87,8 +87,8 @@ function CapabilitiesList({
+         }
+       })
+       .filter((cap) => {
+-        if (globallySelectedComponent) {
+-          return !!cap.includes(globallySelectedComponent)
++        if (globallySelectedAspect) {
++          return !!cap.includes(globallySelectedAspect)
+         } else {
+           return true
+         }
+@@ -102,7 +102,7 @@ function CapabilitiesList({
+       })
  
-@@ -96,30 +106,17 @@ function CapabilitiesList({
+     setFilteredItems(filtered)
+-  }, [globallySelectedComponent, globallySelectedRole])
++  }, [globallySelectedAspect, globallySelectedRole])
  
    return (
      <CardGrid.Card
--      size="xl"
-+      size="l"
-       className={'capabilities-list'}
-       header={<H5 className={'title'}>{i18n['caps-list.title'][lang]}</H5>}
-       footer={filteredString()}
-       headerRight={(
-         <Form>
-           <>
--            <Select
+@@ -129,19 +129,19 @@ function CapabilitiesList({
+               onChange={(selected) => setGloballySelectedRole(selected)}
+             />
+             <Select
 -              name="component"
--              size='s'
--              multi={false}
++              name="aspect"
+               size='s'
+               layout="underline"
+               multi={false}
 -              selectPlaceholder={i18n['caps-list.component-filter'][lang]}
 -              value={globallySelectedComponent}
 -              options={Components.map((component) => {
--                return {
++              selectPlaceholder={i18n['caps-list.aspect-filter'][lang]}
++              value={globallySelectedAspect}
++              options={Aspects.map((aspect) => {
+                 return {
 -                  label: component,
 -                  value: component,
--                }
--              })}
--              onChange={(selected) => setGloballySelectedComponent(selected)}
--            />
-             <Select
-               name="role"
-               size='s'
-+              layout="underline"
-               multi={false}
-               selectPlaceholder={i18n['caps-list.role-filter'][lang]}
-               value={globallySelectedRole}
-@@ -131,6 +128,21 @@ function CapabilitiesList({
++                  label: aspect,
++                  value: aspect,
+                 }
                })}
-               onChange={(selected) => setGloballySelectedRole(selected)}
+-              onChange={(selected) => setGloballySelectedComponent(selected)}
++              onChange={(selected) => setGloballySelectedAspect(selected)}
              />
-+            <Select
-+              name="component"
-+              size='s'
-+              layout="underline"
-+              multi={false}
-+              selectPlaceholder={i18n['caps-list.component-filter'][lang]}
-+              value={globallySelectedComponent}
-+              options={Components.map((component) => {
-+                return {
-+                  label: component,
-+                  value: component,
-+                }
-+              })}
-+              onChange={(selected) => setGloballySelectedComponent(selected)}
-+            />
            </>
          </Form>
-       )}
