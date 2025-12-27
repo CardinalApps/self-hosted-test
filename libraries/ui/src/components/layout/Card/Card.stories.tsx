@@ -367,24 +367,4 @@ export const Swatches = () => {
   )
 }
 
-export const AccessDenied = () => {
-  return (
-    <Card
-      style={{
-        width: 400,
-        height: 400,
-      }}
-      footer={
-        <>
-          Some footer stuff
-        </>
-      }
-      capabilities={['AdminApp.Login']}
-    >
-      If you can read this, then you are logged into an account that has the AdminApp.Login capability. Log
-      Log out to see what this card looks like when access is denied.
-    </Card>
-  )
-}
-
 export default meta

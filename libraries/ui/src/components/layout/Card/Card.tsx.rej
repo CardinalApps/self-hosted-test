@@ -1,56 +1,52 @@
 diff a/libraries/ui/src/components/layout/Card/Card.tsx b/libraries/ui/src/components/layout/Card/Card.tsx	(rejected hunks)
-@@ -43,9 +46,11 @@ const Card = ({
+@@ -46,7 +45,6 @@ const Card = ({
    header,
    headerRight,
    footer,
-+  capabilities,
+-  capabilities,
    children,
  }: PropsWithChildren<CardProps>) => {
    const { width: windowWidth } = useWindowSize()
-+
-   return (
-     <div
-       id={id || undefined}
-@@ -66,23 +71,25 @@ const Card = ({
+@@ -71,25 +69,23 @@ const Card = ({
          ...(height ? { height } : {}),
        }}
      >
--      {(!!header || !!icon) &&
--        <header className="card-header">
--          <div className="card-title">
--            {!!icon && <div className={clsx(`card-icon`, `size-${iconSize}`)}>{icon}</div>}
--            {header}
--          </div>
--          {headerRight && <div className="right-section">{headerRight}</div>}
--        </header>
--      }
--      <div className="card-content">
--        {children}
--      </div>
--      {!!footer &&
--        <footer className="card-footer">
--          {footer}
--        </footer>
--      }
-+      <HasCapabilities capabilities={capabilities}>
-+        {(!!header || !!icon) &&
-+          <header className="card-header">
-+            <div className="card-title">
-+              {!!icon && <div className={clsx(`card-icon`, `size-${iconSize}`)}>{icon}</div>}
-+              {header}
-+            </div>
-+            {headerRight && <div className="right-section">{headerRight}</div>}
-+          </header>
-+        }
-+        <div className="card-content">
-+          {children}
-+        </div>
-+        {!!footer &&
-+          <footer className="card-footer">
-+            {footer}
-+          </footer>
-+        }
-+      </HasCapabilities>
+-      <HasCapabilities capabilities={capabilities}>
+-        {(!!header || !!icon) &&
+-          <header className="card-header">
+-            <div className="card-title">
+-              {!!icon && <div className={clsx(`card-icon`, `size-${iconSize}`)}>{icon}</div>}
+-              {header}
+-            </div>
+-            {headerRight && <div className="right-section">{headerRight}</div>}
+-          </header>
+-        }
+-        <div className="card-content">
+-          {children}
+-        </div>
+-        {!!footer &&
+-          <footer className="card-footer">
+-            {footer}
+-          </footer>
+-        }
+-      </HasCapabilities>
++      {(!!header || !!icon) &&
++        <header className="card-header">
++          <div className="card-title">
++            {!!icon && <div className={clsx(`card-icon`, `size-${iconSize}`)}>{icon}</div>}
++            {header}
++          </div>
++          {headerRight && <div className="right-section">{headerRight}</div>}
++        </header>
++      }
++      <div className="card-content">
++        {children}
++      </div>
++      {!!footer &&
++        <footer className="card-footer">
++          {footer}
++        </footer>
++      }
      </div>
    )
  }
