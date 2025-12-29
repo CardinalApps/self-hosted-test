@@ -1,19 +1,103 @@
 diff a/servers/media/src/modules/user/user.controller.ts b/servers/media/src/modules/user/user.controller.ts	(rejected hunks)
-@@ -58,7 +58,7 @@ export class UserController extends SecureController {
-   @Get('/users/current')
-   @StandardEndpoint({
-     summary: 'Get the currently logged in user.',
--    capabilities: ['Users.Read'],
-+    capabilities: ['CurrentUser.Read'],
-     cloudUserHeader: true,
-   })
-   async getCurrentUser(@Headers() headers): Promise<GetUserResponse> {
-@@ -193,7 +193,7 @@ export class UserController extends SecureController {
+@@ -18,7 +18,6 @@ import {
+   ApiMethodNotAllowedResponse,
+   ApiExcludeEndpoint,
+ } from '@nestjs/swagger'
+-import { NamedCapability } from '@cardinalapps/access-control/dist/cjs'
+ 
+ import { UserService } from './user.service'
+ import { LocalUserService } from './local-user.service'
+@@ -35,19 +34,15 @@ import { GetUsersDto } from './dtos/GetUsers.dto'
+ import { SeatsService } from './seats.service'
+ import { Designations } from './types'
+ 
+-class SecureController {
+-  protected capabilities: Record<string, NamedCapability[]>
+-}
+-
+ @Controller()
+ @ApiTags('Users')
+-export class UserController extends SecureController {
++export class UserController {
+   constructor(
+     private readonly userService: UserService,
+     private readonly localUserService: LocalUserService,
+     private readonly cloudUserService: CloudUserService,
+     private readonly seatsService: SeatsService,
+-  ) { super() }
++  ) {}
+ 
    /**
-    * TODO split this into two separate endpoints, one for updating your own
-    * user, and one for updating other users. The endpoint for yourself should
--   * require Users.UpdateSelf and the one for other users should require
-+   * require CurrentUser.Update and the one for other users should require
-    * Users.Update.
+    * Returns information about the currently logged in user. Local online
+@@ -96,51 +91,51 @@ export class UserController extends SecureController {
+   }
+ 
+   /**
+-   * Returns the user for the given local user ID.
++   * Returns the server owner, if there is one.
     */
-   @Patch('/users/:id')
+-  @Get('/users/:id')
++  @Get('/users/owner')
+   @StandardEndpoint({
+-    summary: 'Get a specific user.',
++    summary: 'Returns the server owner, if there is one.',
+     capabilities: ['Users.Read'],
+   })
+-  async getUser(@Param('id') id: string): Promise<User | Record<never, never>> {
+-    return await this.userService.getUserByLocalId(id)
++  async getOwner(): Promise<Partial<User> | null> {
++    return await this.userService.getServerOwner()
+   }
+ 
+   /**
+-   * Returns all users in this server.
++   * Returns all active users for this server.
+    */
+-  @Get('/users')
++  @Get('/users/active')
+   @StandardEndpoint({
+-    summary: 'Get all users in this server.',
++    summary: 'Get active Media Server users.',
+     capabilities: ['Users.Read'],
+   })
+-  async getUsers(@Query() query: GetUsersDto): Promise<[Partial<User>[], number]> {
+-    return await this.userService.query(query)
++  async getActiveUsers(): Promise<User[]> {
++    return await this.userService.getActiveUsers()
+   }
+ 
+   /**
+-   * Returns the server owner, if there is one.
++   * Returns all users in this server.
+    */
+-  @Get('/users/owner')
++  @Get('/users')
+   @StandardEndpoint({
+-    summary: 'Returns the server owner, if there is one.',
++    summary: 'Get all users in this server.',
+     capabilities: ['Users.Read'],
+   })
+-  async getOwner(): Promise<Partial<User> | null> {
+-    return await this.userService.getServerOwner()
++  async getUsers(@Query() query: GetUsersDto): Promise<[Partial<User>[], number]> {
++    return await this.userService.query(query)
+   }
+ 
+   /**
+-   * Returns all active users for this server.
++   * Returns the user for the given local user ID.
+    */
+-  @Get('/users/active')
++  @Get('/users/:id')
+   @StandardEndpoint({
+-    summary: 'Get active Media Server users.',
++    summary: 'Get a specific user.',
+     capabilities: ['Users.Read'],
+   })
+-  async getActiveUsers(): Promise<User[]> {
+-    return await this.userService.getActiveUsers()
++  async getUser(@Param('id') id: string): Promise<User | Record<never, never>> {
++    return await this.userService.getUserByLocalId(id)
+   }
+ 
+   /**

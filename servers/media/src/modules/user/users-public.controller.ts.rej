@@ -1,41 +1,19 @@
 diff a/servers/media/src/modules/user/users-public.controller.ts b/servers/media/src/modules/user/users-public.controller.ts	(rejected hunks)
-@@ -4,16 +4,13 @@ import {
- } from '@nestjs/common'
- import {
-   ApiTags,
--  ApiOperation,
- } from '@nestjs/swagger'
- 
-+import { StandardEndpoint } from '../../decorators/StandardEndpoint.decorator'
-+
- import { UserService } from './user.service'
--import { LocalUserService } from './local-user.service'
--import { CloudUserService } from './cloud-user.service'
- import { User } from './user.entity'
- 
--import { SeatsService } from './seats.service'
--
+@@ -14,7 +14,7 @@ import { User } from './user.entity'
  /**
   * Public endpoints in the User module.
   */
-@@ -22,16 +19,16 @@ import { SeatsService } from './seats.service'
+-@Controller('/users')
++@Controller()
+ @ApiTags('Users (Public)')
  export class PublicUserController {
    constructor(
-     private readonly userService: UserService,
--    private readonly localUserService: LocalUserService,
--    private readonly cloudUserService: CloudUserService,
--    private readonly seatsService: SeatsService,
-   ) {}
- 
+@@ -24,7 +24,7 @@ export class PublicUserController {
    /**
     * Returns a curated list of sanitized user objects meant to be shown on the login screen.
     */
-   @Get('/public')
--  @ApiOperation({ summary: 'Get a list of users for the login screen.' })
-+  @StandardEndpoint({
-+    auth: false,
-+    summary: 'Get a list of users for the login screen.',
-+  })
-   async getPublicUsers(): Promise<Partial<User>[]> {
-     return await this.userService.getUsersForPublic()
-   }
+-  @Get('/public')
++  @Get('/users/public')
+   @StandardEndpoint({
+     auth: false,
+     summary: 'Get a list of users for the login screen.',
