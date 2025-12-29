@@ -1,0 +1,30 @@
+diff a/libraries/ui/src/store/slices/settings/thunks/sync.ts b/libraries/ui/src/store/slices/settings/thunks/sync.ts	(rejected hunks)
+@@ -1,6 +1,6 @@
+ import { createAsyncThunk } from '@reduxjs/toolkit'
+ 
+-import homeServerAPI from '../../../../lib/homeserver/homeServerAPI'
++import homeServerAPI, { CARDINAL_APP_HEADER } from '../../../../lib/homeserver/homeServerAPI'
+ import { toastActions } from '../../toast'
+ 
+ import { CardinalApp } from '../../../../lib/env/cardinal'
+@@ -22,6 +22,7 @@ const sync = createAsyncThunk<
+     state: RootState
+   }
+ >(`${STORE_KEY}/sync`, async (app: CardinalApp, thunkAPI) => {
++  const store = thunkAPI.getState()
+   const onError = () => thunkAPI.dispatch(toastActions.addToQueue({
+     type: 'warning',
+     title: i18n['settings.sync.fetch-error']['en'],
+@@ -32,7 +33,11 @@ const sync = createAsyncThunk<
+   let settings = {}
+ 
+   try {
+-    const res = await homeServerAPI(`/settings/${app}`) as { settings: Record<string, unknown> }
++    const res = await homeServerAPI(`/settings/${app}`, 'GET', {
++      headers: {
++        [CARDINAL_APP_HEADER]: store?.app?.app,
++      },
++    }) as { settings: Record<string, unknown> }
+     settings = res?.settings || {}
+   } catch (error) {
+     onError()

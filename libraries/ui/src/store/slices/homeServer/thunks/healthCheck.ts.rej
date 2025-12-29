@@ -1,10 +1,29 @@
 diff a/libraries/ui/src/store/slices/homeServer/thunks/healthCheck.ts b/libraries/ui/src/store/slices/homeServer/thunks/healthCheck.ts	(rejected hunks)
-@@ -28,6 +28,8 @@ const healthCheck = createAsyncThunk<
+@@ -1,6 +1,6 @@
+ import { createAsyncThunk } from '@reduxjs/toolkit'
+ 
+-import homeServerAPI from '../../../../lib/homeserver/homeServerAPI'
++import homeServerAPI, { CARDINAL_APP_HEADER } from '../../../../lib/homeserver/homeServerAPI'
+ import { settingsSelectors } from '../../settings'
+ import { toastActions } from '../../toast'
+ 
+@@ -27,7 +27,18 @@ const healthCheck = createAsyncThunk<
+     state: RootState
    }
  >(`${STORE_KEY}/health`, async (data: void, thunkAPI) => {
-   const res = await homeServerAPI('/health', 'GET', { sendJWT: false }) as HealthCheckResponse
+-  const res = await homeServerAPI('/health', 'GET', { sendJWT: false }) as HealthCheckResponse
++  const store = thunkAPI.getState()
 +
-+  // TODO decouple this from health checks
++  const res = await homeServerAPI(
++    '/health',
++    'GET',
++    {
++      sendJWT: false,
++      headers: {
++        [CARDINAL_APP_HEADER]: store?.app?.app,
++      },
++    },
++  ) as HealthCheckResponse
+ 
+   // TODO decouple this from health checks
    if (res?.update) {
-     const { lang } = settingsSelectors.current(thunkAPI.getState())
-     thunkAPI.dispatch(toastActions.addToQueue({

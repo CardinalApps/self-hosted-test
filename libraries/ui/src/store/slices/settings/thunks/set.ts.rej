@@ -1,0 +1,27 @@
+diff a/libraries/ui/src/store/slices/settings/thunks/set.ts b/libraries/ui/src/store/slices/settings/thunks/set.ts	(rejected hunks)
+@@ -1,6 +1,6 @@
+ import { createAsyncThunk } from '@reduxjs/toolkit'
+ 
+-import homeServerAPI from '../../../../lib/homeserver/homeServerAPI'
++import homeServerAPI, { CARDINAL_APP_HEADER } from '../../../../lib/homeserver/homeServerAPI'
+ import { toastActions } from '../../toast'
+ 
+ import i18n from '../i18n'
+@@ -25,6 +25,7 @@ const set = createAsyncThunk<
+     { settings, app },
+     thunkAPI,
+   ) => {
++  const store = thunkAPI.getState()
+   const onError = () => thunkAPI.dispatch(toastActions.addToQueue({
+     type: 'danger',
+     title: i18n['settings.remote-save-error.title']['en'],
+@@ -34,6 +35,9 @@ const set = createAsyncThunk<
+ 
+   try {
+     await homeServerAPI(`/settings`, 'PATCH', {
++      headers: {
++        [CARDINAL_APP_HEADER]: store?.app?.app,
++      },
+       body: {
+         settings,
+         app,

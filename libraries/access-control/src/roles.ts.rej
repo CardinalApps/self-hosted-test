@@ -1,37 +1,10 @@
 diff a/libraries/access-control/src/roles.ts b/libraries/access-control/src/roles.ts	(rejected hunks)
-@@ -12,7 +12,7 @@ export enum RoleName {
-  */
- export type Role = {
-   assignable: boolean,
--  unassignable: boolean,
-+  revocable: boolean,
-   maxUsers: number | null, // Use null for unlimited
-   name: `${RoleName}`,
-   capabilities: CapabilityAssignments,
-@@ -24,7 +24,7 @@ export type Role = {
- export const Roles: Record<`${RoleName}`, Role> = {
-   [RoleName.OWNER]: {
-     assignable: false,
--    unassignable: false,
-+    revocable: false,
-     maxUsers: 1,
-     name: 'owner',
-     capabilities: [
-@@ -33,7 +33,7 @@ export const Roles: Record<`${RoleName}`, Role> = {
-   },
-   [RoleName.ADMINISTRATIOR]: {
-     assignable: true,
--    unassignable: true,
-+    revocable: true,
-     maxUsers: null,
-     name: 'administrator',
-     capabilities: [
-@@ -42,7 +42,7 @@ export const Roles: Record<`${RoleName}`, Role> = {
-   },
-   [RoleName.NEWCOMER]: {
-     assignable: true,
--    unassignable: true,
-+    revocable: true,
-     maxUsers: null,
+@@ -47,7 +47,7 @@ export const Roles: Record<`${RoleName}`, Role> = {
      name: 'newcomer',
      capabilities: [
+       'MusicApp.Login',
+-      'PhotosApp.Login',
++      //'PhotosApp.Login',
+       'CinemaApp.Login',
+     ],
+   },

@@ -1,0 +1,10 @@
+diff a/libraries/ui/src/lib/homeserver/homeServerAPI.ts b/libraries/ui/src/lib/homeserver/homeServerAPI.ts	(rejected hunks)
+@@ -7,6 +7,8 @@ export type HomeServerAPIMiddleware = {
+   [name: string]: (res: string, endpoint: string, method: Method, body: Record<string, unknown>) => void,
+ }
+ 
++export const CARDINAL_APP_HEADER = 'cardinal-app'
++
+ /**
+  * Holds all registered middleware functions.
+  */

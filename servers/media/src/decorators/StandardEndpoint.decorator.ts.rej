@@ -1,19 +1,69 @@
 diff a/servers/media/src/decorators/StandardEndpoint.decorator.ts b/servers/media/src/decorators/StandardEndpoint.decorator.ts	(rejected hunks)
-@@ -54,7 +54,7 @@ export function StandardEndpoint(options: StandardEndpointOptionsType) {
+@@ -19,6 +19,7 @@ export type StandardEndpointOptionsType = {
+   summary?: string,
+   description?: string,
+   capabilities?: NamedCapability[],
++  manualCapabilities?: NamedCapability[],
+   cloudUserHeader?: boolean,
+ }
+ 
+@@ -31,8 +32,12 @@ export type StandardEndpointOptionsType = {
+  * endpoint.
+  * 
+  * @param [options.auth] - Enable local auth on this endpoint. Enabled by default.
+- * @param [options.capabilities] - Required capabilities for this endpoint. Not
+- * set by default. These will be documented in the OpenAPI docs.
++ * @param [options.capabilities] - Automatically require capabilities for this
++ * endpoint. Undefined by default. These will be documented in the OpenAPI docs.
++ * @param [options.manualCapabilities] - If this endpoint would prefer to not
++ * use the automatic `@Capabilities()` decorator, and instead handle capability
++ * validation internally, then leave the regular `capabilities` array undefined
++ * and set the capabilities in this one for documentation only.
+  * @param [options.summary] - OpenAPI docs summary text (publicly viewable).
+  * @param [options.description] - OpenAPI docs description text (publicly viewable).
+  * @param [options.cloudUserHeader] - Enables the Cardinal Account JWT header
+@@ -42,20 +47,32 @@ export function StandardEndpoint(options: StandardEndpointOptionsType) {
+   const {
+     auth = true,
+     capabilities,
++    manualCapabilities,
+     summary = '',
+     description = '',
+     cloudUserHeader = false,
+   } = options
+ 
+   const publicSummary = (
+-    (capabilities ? ICON + ' ' : '')
++    (capabilities || manualCapabilities ? ICON + ' ' : '')
+     + summary
+   )
  
    const publicDescription = (
       description
--     + (description && capabilities ? '<br /><hr />' : '')
-+     + (description ? '<br /><hr />' : '')
-      + `<h3>${ICON} Requires Capabilities: ${capabilities ? capabilities.map((cap) => `<code>${cap}</code>`).join(' ') : 'None'}</h3>`
+      + (description ? '<br /><hr />' : '')
+-     + `<h3>${ICON} Requires Capabilities: ${capabilities ? capabilities.map((cap) => `<code>${cap}</code>`).join(' ') : 'None'}</h3>`
++     + `<h3>${ICON} Requires Capabilities: `
++     + (() => {
++          if (!capabilities && !manualCapabilities) {
++            return 'None'
++          }
++          const mergedCaps = Array.from(new Set([].concat(capabilities).concat(manualCapabilities)))
++          return mergedCaps
++            .filter((cap) => !!cap)
++            .map((cap) => `<code>${cap}</code>`)
++            .join(', ')
++       })()
++     + '</h3>'
    )
  
-@@ -72,7 +72,7 @@ export function StandardEndpoint(options: StandardEndpointOptionsType) {
+   return applyDecorators(
+@@ -67,8 +84,8 @@ export function StandardEndpoint(options: StandardEndpointOptionsType) {
+     }),
+ 
+     ...(auth ? [UseGuards(AuthGuard)] : []),
+-    ...(auth ? [ApiUnauthorizedResponse()] : []),
+     ...(auth ? [ApiSecurity(ApiSecurityTypes.LOCAL_USER_JWT)] : []),
++    ...(auth ? [ApiUnauthorizedResponse()] : []),
  
      ...(capabilities ? [UseGuards(CapabilitiesGuard)] : []),
      ...(capabilities ? [Capabilities(capabilities)] : []),
--    ...(capabilities ? [ApiForbiddenResponse()] : []),
-+    ...(capabilities ? [ApiForbiddenResponse({ description: "Returns a 403 if the user does not have sufficient capabilities."  })] : []),
- 
-     ...(cloudUserHeader ? [ApiHeader({ name: 'CardinalTolkien' })] : []),
-   )

@@ -1,0 +1,25 @@
+diff a/libraries/ui/src/store/slices/homeServerUser/thunks/login.ts b/libraries/ui/src/store/slices/homeServerUser/thunks/login.ts	(rejected hunks)
+@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
+ import { setJWT, JWT_TYPE } from '../../../../lib/auth/jwt'
+ import { cloudUserActions } from '../../cloudUser'
+ import { toastActions } from '../../toast'
+-import homeServerAPI from '../../../../lib/homeserver/homeServerAPI'
++import homeServerAPI, { CARDINAL_APP_HEADER } from '../../../../lib/homeserver/homeServerAPI'
+ 
+ import { STORE_KEY } from '../constants'
+ 
+@@ -47,9 +47,13 @@ const homeServerLogin = createAsyncThunk<
+   let homeServerJWT
+   let cloudUser
+   let cloudUserJWT
++  const store = thunkAPI.getState()
+ 
+   try {
+-    const loginResponse = await homeServerAPI('/login', 'POST', {
++    const loginResponse = await homeServerAPI(`/login`, 'POST', {
++      headers: {
++        [CARDINAL_APP_HEADER]: store?.app?.app,
++      },
+       body: {
+         userId,
+         cardinalJWT: cardinalSSOToken,
