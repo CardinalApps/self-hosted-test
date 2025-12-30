@@ -1,44 +1,56 @@
 diff a/servers/media/src/modules/user/licensing.controller.ts b/servers/media/src/modules/user/licensing.controller.ts	(rejected hunks)
-@@ -6,6 +6,7 @@ import {
+@@ -1,22 +1,19 @@
+ import {
+   Controller,
+   Get,
+-  UseGuards,
+ } from '@nestjs/common'
  import {
    ApiTags,
-   ApiSecurity,
-+  ApiOperation,
+-  ApiSecurity,
+-  ApiOperation,
  } from '@nestjs/swagger'
  
  import { UserService } from './user.service'
-@@ -13,6 +14,7 @@ import { SeatsService } from '../user/seats.service'
+ import { SeatsService } from '../user/seats.service'
  
- import { AuthGuard } from '../../guards/auth.guard'
- import { ApiSecurityTypes } from '../../guards/types'
-+import { SubscriptionTier } from '@cardinalapps/products/dist/cjs/subscriptions'
+-import { AuthGuard } from '../../guards/auth.guard'
+-import { ApiSecurityTypes } from '../../guards/types'
+ import { SubscriptionTier } from '@cardinalapps/products/dist/cjs/subscriptions'
++import { StandardEndpoint } from '../../decorators/StandardEndpoint.decorator'
  
  @Controller('/licensing')
++@ApiTags('Licensing')
  export class LicensingController {
-@@ -22,11 +24,25 @@ export class LicensingController {
-   ) {}
- 
-   /**
--   * Returns information about the current number of seats.
-+   * Get the current Cardinal subcription tier for this server.
-+   */
-+  @Get('/subscription')
-+  @UseGuards(AuthGuard)
-+  @ApiTags('Licensing')
-+  @ApiOperation({ summary: 'Get the subscription tier.' })
-+  @ApiSecurity(ApiSecurityTypes.LOCAL_USER_JWT)
-+  async getCurrentSubscription(): Promise<SubscriptionTier> {
-+    return await this.userService.getServerOwnerSubscription()
-+  }
-+
-+  /**
-+   * Returns information about the current number of seats and how many have
-+   * been used.
+   constructor(
+     private readonly userService: UserService,
+@@ -27,10 +24,10 @@ export class LicensingController {
+    * Get the current Cardinal subcription tier for this server.
+    */
+   @Get('/subscription')
+-  @UseGuards(AuthGuard)
+-  @ApiTags('Licensing')
+-  @ApiOperation({ summary: 'Get the subscription tier.' })
+-  @ApiSecurity(ApiSecurityTypes.LOCAL_USER_JWT)
++  @StandardEndpoint({
++    summary: 'Get the subscription tier.',
++    capabilities: ['Users.Read'],
++  })
+   async getCurrentSubscription(): Promise<SubscriptionTier> {
+     return await this.userService.getServerOwnerSubscription()
+   }
+@@ -40,10 +37,10 @@ export class LicensingController {
+    * been used.
     */
    @Get('/seats')
-   @UseGuards(AuthGuard)
-   @ApiTags('Licensing')
-+  @ApiOperation({ summary: 'Get information about seat usage.' })
-   @ApiSecurity(ApiSecurityTypes.LOCAL_USER_JWT)
+-  @UseGuards(AuthGuard)
+-  @ApiTags('Licensing')
+-  @ApiOperation({ summary: 'Get information about seat usage.' })
+-  @ApiSecurity(ApiSecurityTypes.LOCAL_USER_JWT)
++  @StandardEndpoint({
++    summary: 'Get information about seat usage.',
++    capabilities: ['Users.Read'],
++  })
    async getSeats(): Promise<{ used: number, total: number }> {
      const subscription = await this.userService.getServerOwnerSubscription()
+     const usedSeats = await this.seatsService.countSeatedUsers()
