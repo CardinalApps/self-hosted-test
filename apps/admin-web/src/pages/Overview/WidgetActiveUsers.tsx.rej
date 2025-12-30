@@ -1,10 +1,9 @@
 diff a/apps/admin-web/src/pages/Overview/WidgetActiveUsers.tsx b/apps/admin-web/src/pages/Overview/WidgetActiveUsers.tsx	(rejected hunks)
-@@ -33,7 +33,7 @@ function WidgetActiveUsers() {
- 
+@@ -34,6 +34,7 @@ function WidgetActiveUsers() {
    return (
      <CardGrid.Card
--      width={340}
-+      size="m"
+       size="m"
++      capabilities={['Users.Read']}
        className="active-users-widget"
        icon={<Icon fa="fas fa-users" />}
        header={

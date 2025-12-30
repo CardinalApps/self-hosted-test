@@ -1,0 +1,32 @@
+diff a/libraries/ui/src/components/layout/CardWithCapabilities/CardWithCapabilities.tsx b/libraries/ui/src/components/layout/CardWithCapabilities/CardWithCapabilities.tsx	(rejected hunks)
+@@ -1,4 +1,5 @@
+ import { useMemo, type PropsWithChildren } from 'react'
++import clsx from 'clsx'
+ import { getRole, hasCapabilities, NamedCapability } from '@cardinalapps/access-control/src'
+ import AccessError from '../AccessError'
+ 
+@@ -6,6 +7,8 @@ import Card, { CardProps } from '../Card/Card'
+ import { useAppSelector } from '../../../hooks/useAppSelector'
+ import { homeServerUserSelectors } from '../../../store/slices/homeServerUser'
+ 
++import './CardWithCapabilities.css'
++
+ type CardWithCapabilitiesProps = {
+   capabilities: NamedCapability[],
+ } & CardProps
+@@ -27,7 +30,14 @@ const CardWithCapabilities = (props: PropsWithChildren<CardWithCapabilitiesProps
+     ? <Card {...props}>
+         {props.children}
+       </Card>
+-    : <AccessError />
++    : <Card
++        {...props}
++        className={clsx('card-access-error', props?.className)}
++        headerRight={null}
++        footer={null}
++      >
++        <AccessError code={403} capabilities={props?.capabilities} />
++      </Card>
+ }
+ 
+ export default CardWithCapabilities
