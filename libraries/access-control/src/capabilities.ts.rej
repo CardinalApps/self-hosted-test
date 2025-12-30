@@ -1,11 +1,12 @@
 diff a/libraries/access-control/src/capabilities.ts b/libraries/access-control/src/capabilities.ts	(rejected hunks)
-@@ -41,6 +41,10 @@ export const Capabilities = [
-   'Indexing.Operate',
-   'Indexing.Deindex',
+@@ -45,6 +45,11 @@ export const Capabilities = [
+   'Jobs.Read',
+   'Jobs.Operate',
  
-+  'Jobs.Create',
-+  'Jobs.Read',
-+  'Jobs.Operate',
++  'Libraries.Create',
++  'Libraries.Read',
++  'Libraries.Update',
++  'Libraries.Delete',
 +
    'MusicApp.Login',
  

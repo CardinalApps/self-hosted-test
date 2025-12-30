@@ -1,9 +1,77 @@
 diff a/apps/admin-web/src/pages/Libraries/Libraries.tsx b/apps/admin-web/src/pages/Libraries/Libraries.tsx	(rejected hunks)
-@@ -86,6 +86,7 @@ function Libraries() {
-     return users
-       .sort((user) => {
-         // server owner first
-+        // FIXME
-         if (user.role === 'owner') {
-           return -1
-         }
+@@ -31,9 +31,13 @@ import homeServerAPI from '@cardinalapps/ui/src/lib/homeserver/homeServerAPI'
+ import i18n from './i18n.json'
+ 
+ import './styles.css'
++import HasCapabilities from '@cardinalapps/ui/src/components/layout/HasCapabilities'
++import useHasCapability from '@cardinalapps/ui/src/hooks/useHasCapability'
+ 
+ function Libraries() {
+   const { lang } = useSelector(settingsSelectors.current)
++  const userCanUpdateLibrary = useHasCapability('Libraries.Update')
++  const userCanDeleteLibrary = useHasCapability('Libraries.Delete')
+   const [createLibrary, createLibraryResult] = useCreateLibraryMutation()
+   const [selectedDirectories, setSelectedDirectories] = useState<TreeNode[]>()
+   const [allUsers, setAllUsers] = useState<UserType[]>([])
+@@ -195,7 +199,13 @@ function Libraries() {
+   }, [updateLibraryResult])
+ 
+   return (
+-    <AppPage className={'libraries'} layout={PAGE_LAYOUT.files} pageTitle={i18n['title'][lang]} pageDocLink="/guides/cardinal-media-server/libraries">
++    <AppPage
++      className={'libraries'}
++      layout={PAGE_LAYOUT.files}
++      pageTitle={i18n['title'][lang]}
++      pageDocLink="/guides/cardinal-media-server/libraries"
++      capabilities={['Libraries.Read']}
++    >
+       <DirectoryTree
+         title={i18n['libraries.create.dirs.title'][lang]}
+         multi={true}
+@@ -213,10 +223,19 @@ function Libraries() {
+           <Form
+             controls={
+               <>
+-                <Button type="submit" onClick={() => {}}>
++                <Button
++                  type="submit"
++                  onClick={() => {}}
++                  disabled={!userCanUpdateLibrary}
++                >
+                   {i18n['libraries.edit.save'][lang]}
+                 </Button>
+-                <Button animation={deleteLibrartResult.isLoading ? 'success' : ''} color="danger" onClick={() => setShowConfirmDelete(true)}>
++                <Button
++                  animation={deleteLibrartResult.isLoading ? 'success' : ''}
++                  color="danger"
++                  onClick={() => setShowConfirmDelete(true)}
++                  disabled={!userCanDeleteLibrary}
++                >
+                   {i18n['libraries.edit.delete'][lang]}
+                 </Button>
+               </>
+@@ -231,14 +250,16 @@ function Libraries() {
+               />
+             </FormField>
+             <FormField label={i18n['libraries.edit.paths'][lang]}>
+-              <AddRemove
+-                name="paths"
+-                initialSelectedItems={openLibrary?.paths?.map((path) => ({ name: path, value: path } ))}
+-                listOutline={false}
+-                boxOutline={true}
+-                customTitle={i18n['libraries.edit.add-path'][lang]}
+-                allowCustom={true}
+-              />
++              <HasCapabilities capabilities={['Libraries.Create']}>
++                <AddRemove
++                  name="paths"
++                  initialSelectedItems={openLibrary?.paths?.map((path) => ({ name: path, value: path } ))}
++                  listOutline={false}
++                  boxOutline={true}
++                  customTitle={i18n['libraries.edit.add-path'][lang]}
++                  allowCustom={true}
++                />
++              </HasCapabilities>
+             </FormField>
+             <FormField label={i18n['libraries.edit.users'][lang]}>
+               <AddRemove
