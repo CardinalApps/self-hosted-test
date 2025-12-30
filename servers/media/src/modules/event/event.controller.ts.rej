@@ -1,29 +1,58 @@
 diff a/servers/media/src/modules/event/event.controller.ts b/servers/media/src/modules/event/event.controller.ts	(rejected hunks)
-@@ -16,8 +16,8 @@ import { Response } from 'express'
- import { v4 as uuid } from 'uuid'
- 
- import { EventService } from './event.service'
--import { AuthService } from '../auth/auth.service'
- import { UserService } from '../user/user.service'
-+import { TokenService } from '../auth/token.service'
- 
+@@ -9,7 +9,6 @@ import {
+ } from '@nestjs/common'
+ import {
+   ApiTags,
+-  ApiOperation,
+ } from '@nestjs/swagger'
+ import { Subject } from 'rxjs'
+ import { Response } from 'express'
+@@ -22,6 +21,7 @@ import { TokenService } from '../auth/token.service'
  import { SubscribeDto } from './dtos/Subscribe.dto'
  
-@@ -34,7 +34,7 @@ import { log, LogModule, LogLevel } from '../../utils/logging'
+ import { log, LogModule, LogLevel } from '../../utils/logging'
++import { StandardEndpoint } from '../../decorators/StandardEndpoint.decorator'
+ 
+ /**
+  * The EventController implements Server-Sent Events manually in a GET handler
+@@ -31,6 +31,7 @@ import { log, LogModule, LogLevel } from '../../utils/logging'
+  * Based on https://github.com/nestjs/nest/issues/12670
+  */
+ @Controller()
++@ApiTags('Events')
  export class EventController {
    constructor(
      private readonly eventService: EventService,
--    private readonly authService: AuthService,
-+    private readonly tokenService: TokenService,
-     private readonly userService: UserService,
+@@ -39,18 +40,22 @@ export class EventController {
    ) {}
  
-@@ -55,7 +55,7 @@ export class EventController {
+   /**
+-   * Subscribe to events. An `EventSource` can be used to listen to events (the
+-   * Swagger test page won't work).
+-   * 
+-   * Each client connection is unique to that client app, and clients will only
+-   * receive the events that are meant for them.
+-   * 
+-   * The JWT must be sent in the `authorization` query param instead of the
+-   * header.
++   * Subscribe to events.
+    */
+   @Get('/events/subscribe')
+-  @ApiTags('Events')
+-  @ApiOperation({ summary: 'Subscribe to real time events.' })
++  @StandardEndpoint({
++    auth: false,
++    summary: 'Subscribe to real time events.',
++    description:
++    `Subscribe to events. An \`EventSource\` can be used to listen to events (the
++Swagger test page won't work).
++
++Each client connection is unique to that client app, and clients will only
++receive the events that are meant for them.
++
++The JWT must be sent in the \`authorization\` query param instead of the
++header.`,
++  })
+   async sse(
      @Query() query: SubscribeDto,
      @Res() response: Response,
-   ) {
--    const tokenIsValid = this.authService.verifyJWT(query.authorization)
-+    const tokenIsValid = this.tokenService.verifyJWT(query.authorization)
-     if (!tokenIsValid) throw new UnauthorizedException()
- 
-     const user = await this.userService.getUserByLocalJWT(query.authorization)
