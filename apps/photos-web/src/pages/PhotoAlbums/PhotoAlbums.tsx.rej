@@ -1,0 +1,32 @@
+diff a/apps/photos-web/src/pages/PhotoAlbums/PhotoAlbums.tsx b/apps/photos-web/src/pages/PhotoAlbums/PhotoAlbums.tsx	(rejected hunks)
+@@ -23,6 +23,7 @@ import i18n from './i18n.json'
+ import './styles.css'
+ 
+ import { HOME_SERVER_HOST } from '../../env'
++import HasCapabilities from '@cardinalapps/ui/src/components/layout/HasCapabilities'
+ 
+ const defaults = {
+   take: 10000,
+@@ -75,11 +76,17 @@ function PhotoAlbumsPage() {
+   }, [createPhotoAlbumResult])
+ 
+   return (
+-    <AppPage layout={PAGE_LAYOUT.standard} pageTitle={i18n['title']['en']}>
+-      <CreateSomething
+-        fieldLabel={i18n['create-album.name'][lang]}
+-        onSubmit={(name) => handleNewPhotoAlbumSubmit(name)}
+-      />
++    <AppPage
++      layout={PAGE_LAYOUT.standard}
++      pageTitle={i18n['title']['en']}
++      capabilities={['PhotoAlbums.Read', 'Photos.Read']}
++    >
++      <HasCapabilities capabilities={['PhotoAlbums.Create']}>
++        <CreateSomething
++          fieldLabel={i18n['create-album.name'][lang]}
++          onSubmit={(name) => handleNewPhotoAlbumSubmit(name)}
++        />
++      </HasCapabilities>
+       <section>
+         {isLoading || isFetching
+           ? <div className="pageLoading">

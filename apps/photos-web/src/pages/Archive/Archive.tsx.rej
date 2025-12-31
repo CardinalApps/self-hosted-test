@@ -1,10 +1,15 @@
 diff a/apps/photos-web/src/pages/Archive/Archive.tsx b/apps/photos-web/src/pages/Archive/Archive.tsx	(rejected hunks)
-@@ -46,7 +46,7 @@ function ArchivePage() {
+@@ -46,7 +46,12 @@ function ArchivePage() {
    })
  
    return (
--    <AppPage layout={PAGE_LAYOUT.fixed} pageTitle={i18n['title']['en']}>
-+    <AppPage className={"photos-archive"} layout={PAGE_LAYOUT.fixed} pageTitle={i18n['title']['en']}>
+-    <AppPage className={"photos-archive"} layout={PAGE_LAYOUT.fixed} pageTitle={i18n['title']['en']}>
++    <AppPage
++      className={"photos-archive"}
++      layout={PAGE_LAYOUT.fixed}
++      pageTitle={i18n['title']['en']}
++      capabilities={['Photos.Read']}
++    >
        <div
          className={clsx(
            'photosArchive',

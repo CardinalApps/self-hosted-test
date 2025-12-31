@@ -1,0 +1,157 @@
+diff a/servers/media/src/modules/photo-album/photo-album.controller.ts b/servers/media/src/modules/photo-album/photo-album.controller.ts	(rejected hunks)
+@@ -6,21 +6,14 @@ import {
+   Delete,
+   Patch,
+   Query,
+-  UseGuards,
+   NotFoundException,
+   Param,
+   InternalServerErrorException,
+ } from '@nestjs/common'
+ import {
+   ApiTags,
+-  ApiSecurity,
+-  ApiOperation,
+-  ApiOkResponse,
+ } from '@nestjs/swagger'
+ 
+-import { AuthGuard } from '../../guards/auth.guard'
+-import { ApiSecurityTypes } from '../../guards/types'
+-
+ import { PhotoAlbum, PhotoAlbumComputed } from './photo-album.entity'
+ import { PhotoAlbumEntry } from './photo-album-entry.entity'
+ import { PhotoAlbumService } from './photo-album.service'
+@@ -35,8 +28,10 @@ import { UpdatePhotoAlbumParamsDto, UpdatePhotoAlbumBodyDto } from './dtos/Updat
+ 
+ import { EventService } from '../event/event.service'
+ import { PhotoAlbumEvents } from './events'
++import { StandardEndpoint } from '../../decorators/StandardEndpoint.decorator'
+ 
+ @Controller()
++@ApiTags('Photo Albums')
+ export class PhotoAlbumController {
+   constructor(
+     private readonly photoAlbumService: PhotoAlbumService,
+@@ -48,11 +43,10 @@ export class PhotoAlbumController {
+    * Get a photo album.
+    */
+   @Get('/photo-album/:id')
+-  @ApiTags('Photo Albums')
+-  @ApiOperation({ summary: 'Get a single photo album.' })
+-  @ApiOkResponse({ status: 200 })
+-  @UseGuards(AuthGuard)
+-  @ApiSecurity(ApiSecurityTypes.LOCAL_USER_JWT)
++  @StandardEndpoint({
++    summary: 'Get a single photo album.',
++    capabilities: ['PhotoAlbums.Read'],
++  })
+   async getPhotoAlbum(@Param() { id }: GetPhotoAlbumDto): Promise<PhotoAlbum> {
+     const photoAlbum = await this.photoAlbumService.getPhotoAlbum(id, false)
+ 
+@@ -67,14 +61,10 @@ export class PhotoAlbumController {
+    * Get photo albums.
+    */
+   @Get('/photo-albums')
+-  @ApiTags('Photo Albums')
+-  @ApiOperation({ summary: 'Get your photo albums.' })
+-  @ApiOkResponse({
+-    status: 200,
+-    description: 'Returns an array where the first item is an array of query results, and the second item is the total number of photo albums.',
++  @StandardEndpoint({
++    summary: 'Get your photo albums.',
++    capabilities: ['PhotoAlbums.Read'],
+   })
+-  @UseGuards(AuthGuard)
+-  @ApiSecurity(ApiSecurityTypes.LOCAL_USER_JWT)
+   async getPhotoAlbums(@Query() query: GetPhotoAlbumsDto): Promise<[PhotoAlbumComputed[], number]> {
+     const data = await this.photoAlbumService.getPhotoAlbums(query)
+ 
+@@ -90,17 +80,10 @@ export class PhotoAlbumController {
+    * Endpoint optimized just for counting photo albums.
+    */
+   @Get('/photo-albums/count')
+-  @ApiTags('Photo Albums')
+-  @ApiOperation({ summary: 'Count your photo albums.' })
+-  @ApiOkResponse({
+-    status: 200,
+-    description: 'Returns the total number of photo albums currently indexed in your database.',
+-    schema: {
+-      example: 24,
+-    },
++  @StandardEndpoint({
++    summary: 'Count your photo albums.',
++    capabilities: ['PhotoAlbums.Read'],
+   })
+-  @UseGuards(AuthGuard)
+-  @ApiSecurity(ApiSecurityTypes.LOCAL_USER_JWT)
+   async countPhotoAlbums(): Promise<number> {
+     return await this.photoAlbumService.countPhotoAlbums()
+   }
+@@ -109,10 +92,10 @@ export class PhotoAlbumController {
+    * Creates a new photo album.
+    */
+   @Post('/photo-album')
+-  @ApiTags('Photo Albums')
+-  @ApiOperation({ summary: 'Create a new photo album.' })
+-  @UseGuards(AuthGuard)
+-  @ApiSecurity(ApiSecurityTypes.LOCAL_USER_JWT)
++  @StandardEndpoint({
++    summary: 'Create a new photo album.',
++    capabilities: ['PhotoAlbums.Create'],
++  })
+   async createPhotoAlbum(@Body() { name }: CreatePhotoAlbumDto): Promise<PhotoAlbum> {
+     const created = await this.photoAlbumService.createPhotoAlbum(name)
+     this.eventService.emitPublic(PhotoAlbumEvents.PHOTO_ALBUM_CREATED, created as unknown as Record<string, unknown>)
+@@ -123,10 +106,10 @@ export class PhotoAlbumController {
+    * Updates a photo album.
+    */
+   @Patch('/photo-album/:id')
+-  @ApiTags('Photo Albums')
+-  @ApiOperation({ summary: 'Update a photo album.' })
+-  @UseGuards(AuthGuard)
+-  @ApiSecurity(ApiSecurityTypes.LOCAL_USER_JWT)
++  @StandardEndpoint({
++    summary: 'Update a photo album.',
++    capabilities: ['PhotoAlbums.Update'],
++  })
+   async updatePhotoAlbum(
+     @Param() { id }: UpdatePhotoAlbumParamsDto,
+     @Body() body: UpdatePhotoAlbumBodyDto,
+@@ -143,15 +126,10 @@ export class PhotoAlbumController {
+    * Deletes a photo album and the entry entities. Does not delete the original photos.
+    */
+   @Delete('/photo-album/:id')
+-  @ApiTags('Photo Albums')
+-  @ApiOperation({ summary: 'Delete a photo album.' })
+-  @ApiOkResponse({
+-    status: 200,
+-    description: 'Returns HTTP 200 if the deletion was successful.',
+-    schema: {},
++  @StandardEndpoint({
++    summary: 'Delete a photo album.',
++    capabilities: ['PhotoAlbums.Delete'],
+   })
+-  @UseGuards(AuthGuard)
+-  @ApiSecurity(ApiSecurityTypes.LOCAL_USER_JWT)
+   async deletePhotoAlbum(@Param() { id }: DeletePhotoAlbumsDto): Promise<void> {
+     if (!await this.photoAlbumService.getPhotoAlbum(id)) throw new NotFoundException()
+ 
+@@ -165,15 +143,10 @@ export class PhotoAlbumController {
+    * Get entries from a photo album.
+    */
+   @Get('/photo-album/:id/entries')
+-  @ApiTags('Photo Albums')
+-  @ApiOperation({ summary: 'Get photo album entries.' })
+-  @ApiOkResponse({
+-    status: 200,
+-    description: 'Returns an array of photo album entries.',
+-    schema: {},
++  @StandardEndpoint({
++    summary: 'Get photo album entries.',
++    capabilities: ['PhotoAlbums.Read'],
+   })
+-  @UseGuards(AuthGuard)
+-  @ApiSecurity(ApiSecurityTypes.LOCAL_USER_JWT)
+   async getPhotoAlbumEntries(
+     @Param() { id }: GetPhotoAlbumEntriesParamsDto,
+     @Query() query: GetPhotoAlbumEntriesDto,

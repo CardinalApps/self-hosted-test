@@ -1,33 +1,33 @@
 diff a/libraries/access-control/src/capabilities.ts b/libraries/access-control/src/capabilities.ts	(rejected hunks)
-@@ -13,9 +13,9 @@ export const Aspects = [
-   'Jobs',
-   'Libraries',
-   'MusicApp',
--  // 'MusicTracks',
--  // 'MusicReleases',
--  // 'MusicArtists',
-+  'MusicArtists',
-+  'MusicReleases',
-+  'MusicTracks',
+@@ -5,6 +5,7 @@
+  * access restricted.
+  */
+ export const Aspects = [
++  'CurrentUser',
+   'Users',
+   'AdminApp',
+   'Invitations',
+@@ -17,6 +18,8 @@ export const Aspects = [
+   'MusicReleases',
+   'MusicTracks',
    'PhotosApp',
++  'Photos',
++  'PhotoAlbums',
    'CinemaApp',
  ] as const
-@@ -66,6 +66,18 @@ export const Capabilities = [
  
-   'MusicApp.Login',
+@@ -80,6 +83,14 @@ export const Capabilities = [
  
-+  'MusicArtists.Read',
-+
-+  'MusicReleases.Read',
-+
-+  'MusicGenres.Read',
-+
-+  'MusicTracks.Read',
-+  'MusicTracks.Play',
-+
-+  'MusicHistory.Create',
-+  'MusicHistory.Read',
-+
    'PhotosApp.Login',
  
++  'Photos.Read',
++  'Photos.Update',
++
++  'PhotoAlbums.Create',
++  'PhotoAlbums.Read',
++  'PhotoAlbums.Update',
++  'PhotoAlbums.Delete',
++
    'CinemaApp.Login',
+ ] as const
+ 

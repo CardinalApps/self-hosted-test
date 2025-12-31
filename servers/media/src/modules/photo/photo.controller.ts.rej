@@ -1,53 +1,134 @@
 diff a/servers/media/src/modules/photo/photo.controller.ts b/servers/media/src/modules/photo/photo.controller.ts	(rejected hunks)
-@@ -32,9 +32,11 @@ import { GetPhotosDto } from './dtos/GetPhotos.dto'
- import { GetPhotoDto } from './dtos/GetPhoto.dto'
- import { GetPhotoBlobDto } from './dtos/GetPhotoBlob.dto'
- import { UpdatePhotoParamsDto, UpdatePhotoBodyDto } from './dtos/UpdatePhoto.dto'
-+import { getPhotoThumbnailDto } from './dtos/GetPhotoThumbnail.dto'
+@@ -6,7 +6,6 @@ import {
+   Patch,
+   Query,
+   Logger,
+-  UseGuards,
+   NotFoundException,
+   Response,
+   Param,
+@@ -17,11 +16,9 @@ import {
+ import {
+   ApiTags,
+   ApiSecurity,
+-  ApiOperation,
+   ApiOkResponse,
+ } from '@nestjs/swagger'
  
- import { PhotoEvents } from './events'
+-import { AuthGuard } from '../../guards/auth.guard'
+ import { ApiSecurityTypes } from '../../guards/types'
  
-+import { getAppDir } from '../../utils/env'
+ import { Photo } from './photo.entity'
+@@ -39,8 +36,10 @@ import { PhotoEvents } from './events'
+ import { getAppDir } from '../../utils/env'
  import { SupportedPhotoFileExtensions, canonicalExtension } from '../../utils/media'
  import { PhotoTransformationHeaders } from '../../utils/headers'
++import { StandardEndpoint } from '../../decorators/StandardEndpoint.decorator'
  
-@@ -206,4 +208,39 @@ export class PhotoController {
- 
-     return await this.photoService.getPhoto(id)
-   }
-+
-+  /**
-+   * Returns the blob data of a photo thumbnail. Supports numeric row ID and photoId.
-+   */
-+  @Get('/photo/:id/thumbnail')
-+  @UseGuards(AuthGuard)
-+  @ApiTags('Photos')
-+  @ApiOperation({ summary: 'Get a photo thumbnail.' })
-+  @ApiOkResponse({
-+    status: 200,
+ @Controller()
++@ApiTags('Photos')
+ export class PhotoController {
+   constructor(
+     private readonly photoService: PhotoService,
+@@ -51,9 +50,10 @@ export class PhotoController {
+    * Get the users photos.
+    */
+   @Get('/photos')
+-  @UseGuards(AuthGuard)
+-  @ApiTags('Photos')
+-  @ApiOperation({ summary: 'Get your photos.' })
++  @StandardEndpoint({
++    summary: 'Get your photos.',
++    capabilities: ['Photos.Read'],
 +  })
-+  @ApiSecurity(ApiSecurityTypes.LOCAL_USER_JWT)
-+  async getReleaseCoverBlob(
-+    @Param('id') id: string,
-+    @Query() query: getPhotoThumbnailDto,
-+  ): Promise<StreamableFile> {
-+    const photo = await this.photoService.getPhoto(id, {
-+      thumbnail: true,
-+    })
-+
-+    if (!photo) {
-+      throw new NotFoundException('Photo not found.')
-+    }
-+
-+    const thumbnail = photo.thumbnail?.find((thumb) => thumb.size === query.size)
-+
-+    if (!thumbnail) {
-+      throw new NotFoundException('No thumbnail of this size found for this photo.')
-+    }
-+
-+    const thumbnailFile = getAppDir(thumbnail.relativeSrc)
-+    const file = fs.createReadStream(thumbnailFile)
-+
-+    return new StreamableFile(file)
-+  }
- }
+   @ApiOkResponse({
+     status: 200,
+     description: 'Returns an array where the first item is an array of query results, and the second item is the total number of photos.',
+@@ -79,31 +79,22 @@ export class PhotoController {
+    * files on the disk).
+    */
+   @Get('/photos/count')
+-  @UseGuards(AuthGuard)
+-  @ApiTags('Photos')
+-  @ApiOperation({ summary: 'Count your photo entities.' })
+-  @ApiOkResponse({
+-    status: 200,
+-    schema: {
+-      example: 24,
+-    },
++  @StandardEndpoint({
++    summary: 'Count your photos.',
++    capabilities: ['Photos.Read'],
+   })
+-  @ApiSecurity(ApiSecurityTypes.LOCAL_USER_JWT)
+   async countPhotos(): Promise<number> {
+     return await this.photoService.countPhotos()
+   }
+ 
+   /**
+-   * Get the users photos.
++   * Get data about a photo.
+    */
+   @Get('/photo/:id')
+-  @UseGuards(AuthGuard)
+-  @ApiTags('Photos')
+-  @ApiOperation({ summary: 'Get data about a photo.' })
+-  @ApiOkResponse({
+-    status: 200,
++  @StandardEndpoint({
++    summary: 'Get data about a photo.',
++    capabilities: ['Photos.Read'],
+   })
+-  @ApiSecurity(ApiSecurityTypes.LOCAL_USER_JWT)
+   async getPhoto(@Param('id') id: number, @Query() query: GetPhotoDto): Promise<Photo> {
+     const found = await this.photoService.getPhoto(id, {
+       file: query.file,
+@@ -123,13 +114,10 @@ export class PhotoController {
+    * Returns the blob data of one of the photos in the photo library.
+    */
+   @Get('/photo/:id/blob')
+-  @UseGuards(AuthGuard)
+-  @ApiTags('Photos')
+-  @ApiOperation({ summary: 'Get a photo.' })
+-  @ApiOkResponse({
+-    status: 200,
++  @StandardEndpoint({
++    summary: 'Get a photo blob.',
++    capabilities: ['Photos.Read'],
+   })
+-  @ApiSecurity(ApiSecurityTypes.LOCAL_USER_JWT)
+   async getPhotoBlob(
+     @Param('id') id: number,
+     @Query() query: GetPhotoBlobDto,
+@@ -181,10 +169,10 @@ export class PhotoController {
+    * Updates a photo.
+    */
+   @Patch('/photo/:id')
+-  @ApiTags('Photos')
+-  @ApiOperation({ summary: 'Update a photo.' })
+-  @UseGuards(AuthGuard)
+-  @ApiSecurity(ApiSecurityTypes.LOCAL_USER_JWT)
++  @StandardEndpoint({
++    summary:  'Update a photo.',
++    capabilities: ['Photos.Update'],
++  })
+   async updatePhoto(
+     @Param() { id }: UpdatePhotoParamsDto,
+     @Body() body: UpdatePhotoBodyDto,
+@@ -213,13 +201,10 @@ export class PhotoController {
+    * Returns the blob data of a photo thumbnail. Supports numeric row ID and photoId.
+    */
+   @Get('/photo/:id/thumbnail')
+-  @UseGuards(AuthGuard)
+-  @ApiTags('Photos')
+-  @ApiOperation({ summary: 'Get a photo thumbnail.' })
+-  @ApiOkResponse({
+-    status: 200,
++  @StandardEndpoint({
++    summary:  'Get a photo thumbnail.',
++    capabilities: ['Photos.Read'],
+   })
+-  @ApiSecurity(ApiSecurityTypes.LOCAL_USER_JWT)
+   async getReleaseCoverBlob(
+     @Param('id') id: string,
+     @Query() query: getPhotoThumbnailDto,

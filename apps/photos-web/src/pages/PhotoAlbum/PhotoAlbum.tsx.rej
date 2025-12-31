@@ -1,0 +1,13 @@
+diff a/apps/photos-web/src/pages/PhotoAlbum/PhotoAlbum.tsx b/apps/photos-web/src/pages/PhotoAlbum/PhotoAlbum.tsx	(rejected hunks)
+@@ -33,7 +33,10 @@ function PhotoAlbumPage() {
+   const photos = photoAlbumEntries.map((entry) => entry.photo)
+ 
+   return (
+-    <AppPage restoreScrollPoint={false}>
++    <AppPage
++      restoreScrollPoint={false}
++      capabilities={['Photos.Read']}
++    >
+       <div className="album">
+         <header className="header">
+           <div className="photoAlbum">
