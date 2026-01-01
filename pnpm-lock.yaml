@@ -30365,6 +30365,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  mquery@5.0.0:
+    dependencies:
+      debug: 4.4.3
+    transitivePeerDependencies:
+      - supports-color
+
   mri@1.2.0: {}
 
   mrmime@2.0.1: {}
