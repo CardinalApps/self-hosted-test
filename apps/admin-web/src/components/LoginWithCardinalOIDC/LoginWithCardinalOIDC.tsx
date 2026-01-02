@@ -3,12 +3,12 @@ import { useState } from 'react'
 import SSOLogin from '@cardinalapps/ui/src/components/interaction/SSOLogin'
 import Loading from '@cardinalapps/ui/src/components/layout/Loading'
 
+import { useAppDispatch } from '@cardinalapps/ui/src/hooks/useAppDispatch'
 import homeServerLogin from '@cardinalapps/ui/src/store/slices/homeServerUser/thunks/login'
 
 import * as routes from '../../routes'
 
 import { CARDINAL_PUBLIC_APP_ID, CARDINAL_PUBLIC_APP_PERMISSIONS } from '../../env'
-import { useAppDispatch } from '@cardinalapps/ui/src/hooks/useAppDispatch'
 
 type LoginWithCardinalProps = {
   automaticallyLogin?: boolean,
@@ -48,7 +48,9 @@ export default function LoginWithCardinalOIDC({
           permissions={CARDINAL_PUBLIC_APP_PERMISSIONS}
           saveJWTInLocalStorage={saveJWTInLocalStorage}
           onSSOSuccess={onSSOSuccess ? onSSOSuccess : handleSSOSuccess}
-          isOIDC={true}
+          oidc={{
+            client_id: '26abb7d9-ae14-4339-8419-927dd85ddb52',
+          }}
         />
       }
       {loading &&
