@@ -1,77 +1,28 @@
 diff a/libraries/ui/src/components/interaction/SSOLogin/SSOLogin.tsx b/libraries/ui/src/components/interaction/SSOLogin/SSOLogin.tsx	(rejected hunks)
-@@ -4,6 +4,7 @@ import type { CSSProperties, PropsWithChildren } from 'react'
+@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react'
+ import type { CSSProperties, PropsWithChildren } from 'react'
+ 
  import BrandLogo from '../../layout/BrandLogo'
++import { useAppSelector } from '../../../hooks/useAppSelector'
++import { settingsSelectors } from '../../../store/slices/settings'
  
  import { setJwt, JWT_TYPE } from '../../../lib/auth/jwt'
-+import { CLOUD_AUTH_HOST, ACCOUNT_APP_HOST } from '../../../../env'
- 
- import './SSOLogin.css'
- 
-@@ -21,13 +22,16 @@ type SSOLoginProps = {
-   ssoUrl?: string,
-   debug?: boolean,
-   style?: CSSProperties,
--
--  // Temporary flag for OIDC login
--  isOIDC?: boolean,
-+  oidc?: {
-+    client_id: string,
-+  },
- }
- 
- /**
-- * Allows the user to input search queries.
-+ * Allows the user to input search queries. OIDC values must match what is in
-+ * the app registry.
-+ * 
-+ * TODO: Remove legacy SSO.
-  */
- const SSOLogin = ({
-   appId,
-@@ -40,7 +44,7 @@ const SSOLogin = ({
-   ssoUrl,
-   debug = false,
-   style,
--  isOIDC = false,
-+  oidc,
- }: PropsWithChildren<SSOLoginProps>) => {
-   const popupWindow = useRef(null)
+ import { CLOUD_AUTH_HOST, ACCOUNT_APP_HOST } from '../../../../env'
+@@ -50,6 +52,8 @@ const SSOLogin = ({
    const popupWindowClosedInterval = useRef(null)
-@@ -113,11 +117,21 @@ const SSOLogin = ({
+   const [popupWindowIsOpen, setPopupWindowIsOpen] = useState(false)
+ 
++  const { enable_oidc_beta } = useAppSelector(settingsSelectors.current)
++
+   if (!ssoUrl) {
+     ssoUrl = window.location.href.includes('//localhost:') || window.location.href.includes('//127.0.0.1:')
+       ? SSO_URL_DEV
+@@ -120,7 +124,7 @@ const SSOLogin = ({
+ 
+   const getPopupUrl = () => {
+     // Legacy URL
+-    if (!oidc) {
++    if (!enable_oidc_beta) {
+       return `${ssoUrl}/login?sso`
      }
-   }, [popupWindowIsOpen])
  
--  const oidcUrl = new URL('http://localhost:4013/oidc/auth')
--  oidcUrl.searchParams.append('client_id', 'cardinal-admin')
--  oidcUrl.searchParams.append('response_type', 'code')
--  oidcUrl.searchParams.append('scope', 'openid')
--  oidcUrl.searchParams.append('redirect_uri', 'http://localhost:3077')
-+
-+  const getPopupUrl = () => {
-+    // Legacy URL
-+    if (!oidc) {
-+      return `${ssoUrl}/login?sso`
-+    }
-+
-+    const oidcUrl = new URL(`${CLOUD_AUTH_HOST}/oidc/auth`)
-+    oidcUrl.searchParams.append('response_type', 'code')
-+    oidcUrl.searchParams.append('scope', 'openid')
-+    oidcUrl.searchParams.append('redirect_uri', ACCOUNT_APP_HOST)
-+    oidcUrl.searchParams.append('client_id', oidc.client_id)
-+
-+    return oidcUrl.href
-+  }
- 
-   return (
-     <>
-@@ -134,9 +148,7 @@ const SSOLogin = ({
-             const popupHeight = 670
-             const popupLeft = (window.outerWidth / 2) - (popupWidth / 2)
-             const popupright = (window.outerHeight / 2) - (popupHeight / 2)
--            const popup = isOIDC
--              ? window.open(oidcUrl.href, '_blank', `popup=true, width=${popupWidth}, height=${popupHeight}, left=${popupLeft}, top=${popupright}`)
--              : window.open(`${ssoUrl}/login?sso`, '_blank', `popup=true, width=${popupWidth}, height=${popupHeight}, left=${popupLeft}, top=${popupright}`)
-+            const popup = window.open(getPopupUrl(), '_blank', `popup=true, width=${popupWidth}, height=${popupHeight}, left=${popupLeft}, top=${popupright}`)
-             popupWindow.current = popup
-             setPopupWindowIsOpen(true)
-           }
