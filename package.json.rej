@@ -1,9 +1,10 @@
 diff a/package.json b/package.json	(rejected hunks)
-@@ -8,6 +8,7 @@
-   "scripts": {
-     "dev": "turbo run dev --ui=tui --concurrency=25",
-     "dev:woms": "turbo run dev --ui=tui --concurrency=25 --filter=!@cardinalapps/media-server",
-+    "dev:woas": "turbo run dev --ui=tui --concurrency=25 --filter=!@cardinalapps/auth-server",
-     "lint": "turbo run lint --continue -- --max-warnings 0",
-     "typecheck": "turbo run typecheck --continue",
-     "build": "turbo run build",
+@@ -23,7 +23,7 @@
+   },
+   "devDependencies": {
+     "turbo": "^2.4.2",
+-    "typescript": "5.7.3"
++    "typescript": "5.9.3"
+   },
+   "packageManager": "pnpm@10.0.0",
+   "engines": {
