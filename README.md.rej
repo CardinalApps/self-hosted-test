@@ -1,46 +1,9 @@
 diff a/README.md b/README.md	(rejected hunks)
-@@ -3,9 +3,9 @@
- This monorepo contains the source code for all self-hosted [Cardinal
- apps](https://cardinalapps.io). It tracks a private upstream repository.
+@@ -24,7 +24,4 @@ This workspace is built with pnpm and Turborepo. Use the [Quick Start](/docs/qui
  
--## Workspace
-+## Quick start
- 
--This workspace is built with pnpm and Turborepo.
-+This workspace is built with pnpm and Turborepo. Use the [Quick Start](/docs/quick-start.md) docs to run it locally.
- 
- ### Packages
- 
-@@ -22,32 +22,6 @@ This workspace is built with pnpm and Turborepo.
- | `ui`           | `/libraries` | `3099`          | React UI & component library with Storybook                                          |
- | `media`        | `/servers`   | `3080`, `24800` | Monolithic [Media Server](https://cardinalapps.io/cardinal-media-server)             |
- 
--## Development
--
--### 1. Environment
--
--Your machine will need:
--
--1. Node.js >=18.17.0
--2. Docker
--
--### 2. Run all dev apps
--
--  ```bash
--  # Install pnpm on your machine
--  $ npm i -g pnpm
--
--  # Install all dependencies
--  $ pnpm i
--
--  # Start the development databases
--  $ cd /compose/databases
--  $ docker compose up -d
--
--  # From the monorepo root, start the apps
--  $ pnpm dev
--  ```
--
  ## License
  
- This software is licensed under CC BY-NC-NC 4.0. [[HTML](https://creativecommons.org/licenses/by-nc-nd/4.0/)]
+-This software is licensed under CC BY-NC-NC 4.0. [[HTML](https://creativecommons.org/licenses/by-nc-nd/4.0/)]
+-[[Plain Text](/LICENSE)]
+-
+ Copyright Cardinal Apps Inc. 2021 - 2025, all rights reserved.
