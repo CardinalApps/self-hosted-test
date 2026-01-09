@@ -1,13 +1,19 @@
 diff a/.vscode/launch.json b/.vscode/launch.json	(rejected hunks)
-@@ -25,5 +25,11 @@
-       "request": "launch",
+@@ -32,10 +32,16 @@
        "type": "node-terminal"
      },
+     {
+-      "name": "Test",
++      "name": "Test File",
+       "command": "cd ./libraries/access-control && pnpm test --runInBand",
+       "request": "launch",
+       "type": "node-terminal",
+     },
 +    {
-+      "name": "Test",
-+      "command": "cd ./libraries/access-control && pnpm test --runInBand",
++      "name": "Test Auth Server",
++      "command": "cd ./servers/auth && pnpm test",
 +      "request": "launch",
 +      "type": "node-terminal",
-+    },
++    }
    ]
  }
