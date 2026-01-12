@@ -1,47 +1,49 @@
 import { Role } from "../roles"
 
 /**
- * Master list of all Authentication aspects.
+ * Master list of all Cloud aspects.
  */
-export const Aspects = [
+export const CloudAspects = [
   'CurrentUser',
+  'AAAACloudAspect',
 ] as const
 
-export type AuthenticationAspect = typeof Aspects[number]
+export type CloudAspect = typeof CloudAspects[number]
 
 /**
- * Master list of all Authentication capabilities.
+ * Master list of all Cloud capabilities.
  */
-export const AuthCapabilities = [
+export const CloudCapabilities = [
   'CurrentUser.Read',
   'CurrentUser.Update',
+  'AAAACloudAspect.Update',
 ] as const
 
-export type AuthCapability = typeof AuthCapabilities[number]
+export type CloudCapability = typeof CloudCapabilities[number]
 
 /**
  * Master list of all roles and their capabilities.
  */
-export enum RoleName {
+export enum CloudRoleName {
   ADMINISTRATIOR = 'admin', // For legacy reasons, this does not match the media-server "administrator" slug
   USER = 'user',
 }
 
-export const AuthRoles: Record<`${RoleName}`, Role> = {
-  [RoleName.ADMINISTRATIOR]: {
+export const CloudRoles: Record<`${CloudRoleName}`, Role> = {
+  [CloudRoleName.ADMINISTRATIOR]: {
     assignable: true,
     revocable: true,
     maxUsers: null,
-    name: RoleName.ADMINISTRATIOR,
+    name: CloudRoleName.ADMINISTRATIOR,
     capabilities: [
       '*.*',
     ],
   },
-  [RoleName.USER]: {
+  [CloudRoleName.USER]: {
     assignable: true,
     revocable: true,
     maxUsers: null,
-    name: RoleName.ADMINISTRATIOR,
+    name: CloudRoleName.ADMINISTRATIOR,
     capabilities: [
       'CurrentUser.Read',
     ],
@@ -51,4 +53,4 @@ export const AuthRoles: Record<`${RoleName}`, Role> = {
 /**
  * A type with all role slugs.
  */
-export type RoleNames = keyof typeof AuthRoles
+export type CloudRoleNames = keyof typeof CloudRoles

@@ -1,33 +1,21 @@
 diff a/libraries/access-control/test/capabilities.spec.ts b/libraries/access-control/test/capabilities.spec.ts	(rejected hunks)
-@@ -7,7 +7,7 @@ import {
+@@ -7,16 +7,16 @@ import {
    describe,
  } from '@jest/globals'
  
--import { CapabilityAssignments, hasCapability } from '../src'
-+import { CapabilityAssignments, hasCapability, hasCapabilities } from '../src'
+-import { CapabilityAssignments, hasCapability, hasCapabilities } from '../src'
++import { MediaServerCapabilityAssignments, hasCapability, hasCapabilities } from '../src'
  
  describe('hasCapability()', () => {
-   const userWithValidStaticAssignments: CapabilityAssignments = [
-@@ -87,3 +87,22 @@ describe('hasCapability()', () => {
-     expect(hasCapability('.', [])).toEqual(false)
-   })
- })
-+
-+describe('hasAllCapabilities()', () => {
-+  const userWithWildcardAssignments: CapabilityAssignments = [
-+    'AdminApp.*',
-+    'AdminApp.Login',
-+    '*.Login',
-+    'MusicReleases.List',
-+    'MusicArtists.Read',
-+    'MusicArtists.List',
-+  ]
-+
-+  test('Multi', () => {
-+    expect(hasCapabilities(['MusicArtists.Read', 'AdminApp.Login'], userWithWildcardAssignments)).toEqual(true)
-+    expect(hasCapabilities(['AdminApp.Login', 'MusicArtists.List'], userWithWildcardAssignments)).toEqual(true)
-+
-+    expect(hasCapabilities(['AdminApp.Login', 'MusicArtists.List', 'MusicReleases.invalid'], userWithWildcardAssignments)).toEqual(false)
-+    expect(hasCapabilities(['CinemaApp.List'], userWithWildcardAssignments)).toEqual(false)
-+  })
-+})
+-  const userWithValidStaticAssignments: CapabilityAssignments = [
++  const userWithValidStaticAssignments: MediaServerCapabilityAssignments = [
+     'AdminApp.Login',
+     'MusicReleases.List',
+     'MusicArtists.Read',
+     'MusicArtists.List',
+   ]
+-  const userWithWildcardAssignments: CapabilityAssignments = [
++  const userWithWildcardAssignments: MediaServerCapabilityAssignments = [
+     'AdminApp.*',
+     'AdminApp.Login',
+     '*.Login',
