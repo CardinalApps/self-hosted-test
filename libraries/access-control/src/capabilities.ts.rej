@@ -1,59 +1,162 @@
 diff a/libraries/access-control/src/capabilities.ts b/libraries/access-control/src/capabilities.ts	(rejected hunks)
-@@ -6,8 +6,8 @@
-  */
- export const Aspects = [
-   'CurrentUser',
+@@ -1,42 +1,6 @@
+-/**
+- * Master list of all aspects.
+- * 
+- * In the context of Access Control, an aspect is anything that can have its
+- * access restricted.
+- */
+-export const Aspects = [
+-  'CurrentUser',
+-  'AdminApp',
 -  'Users',
-   'AdminApp',
-+  'Users',
-   'Invitations',
-   'RoleAssignments',
-   'Indexing',
-@@ -16,11 +16,20 @@ export const Aspects = [
-   'MusicApp',
-   'MusicArtists',
-   'MusicReleases',
-+  'MusicGenres',
-   'MusicTracks',
-+  'MusicHistory',
-   'PhotosApp',
-   'Photos',
-+  'PhotoFaces',
-   'PhotoAlbums',
-   'CinemaApp',
-+  'TVChannels',
-+  'CinemaHistory',
-+  'CinemaCollections',
-+  'CinemaPlaylists',
-+  'Movies',
-+  'TVEpisodes',
- ] as const
- 
- export type AspectNames = typeof Aspects[number]
-@@ -86,12 +95,26 @@ export const Capabilities = [
-   'Photos.Read',
-   'Photos.Update',
- 
-+  'PhotoFaces.Read',
-+
-   'PhotoAlbums.Create',
-   'PhotoAlbums.Read',
-   'PhotoAlbums.Update',
-   'PhotoAlbums.Delete',
- 
-   'CinemaApp.Login',
-+
-+  'TVChannels.Read',
-+
-+  'CinemaHistory.Read',
-+
-+  'CinemaCollections.Read',
-+
-+  'CinemaPlaylists.Read',
-+
-+  'Movies.Read',
-+
-+  'TVEpisodes.Read',
- ] as const
+-  'Invitations',
+-  'RoleAssignments',
+-  'Indexing',
+-  'Jobs',
+-  'Libraries',
+-  'MusicApp',
+-  'MusicArtists',
+-  'MusicReleases',
+-  'MusicGenres',
+-  'MusicTracks',
+-  'MusicHistory',
+-  'PhotosApp',
+-  'Photos',
+-  'PhotoFaces',
+-  'PhotoAlbums',
+-  'CinemaApp',
+-  'TVChannels',
+-  'CinemaHistory',
+-  'CinemaCollections',
+-  'CinemaPlaylists',
+-  'Movies',
+-  'TVEpisodes',
+-] as const
+-
+-export type AspectNames = typeof Aspects[number]
++import { MediaServerAspect, MediaServerCapability } from "./contexts/media-server"
  
  /**
+- * Master list of all capabilities.
+- * 
+  * A capability is a single string that combines an aspect and an action,
+  * separating them with a dot.
+  * 
+@@ -44,85 +8,7 @@ export type AspectNames = typeof Aspects[number]
+  * 
+  * The aspect must be defined in the Aspects array, and the action can be any
+  * arbitrary string except an asterisk (*).
+- */
+-export const Capabilities = [
+-  'CurrentUser.Read',
+-
+-  'AdminApp.Login',
+-
+-  'Users.Create',
+-  'Users.Read',
+-  'Users.Update',
+-
+-  'Invitations.Create',
+-  'Invitations.Read',
+-  'Invitations.Update',
+-  'Invitations.Delete',
+-
+-  'RoleAssignments.Create',
+-  'RoleAssignments.Read',
+-  'RoleAssignments.Delete',
+-
+-  'Indexing.Read',
+-  'Indexing.Operate',
+-  'Indexing.Deindex',
+-
+-  'Jobs.Create',
+-  'Jobs.Read',
+-  'Jobs.Operate',
+-
+-  'Libraries.Create',
+-  'Libraries.Read',
+-  'Libraries.Update',
+-  'Libraries.Delete',
+-
+-  'MusicApp.Login',
+-
+-  'MusicArtists.Read',
+-
+-  'MusicReleases.Read',
+-
+-  'MusicGenres.Read',
+-
+-  'MusicTracks.Read',
+-  'MusicTracks.Play',
+-
+-  'MusicHistory.Create',
+-  'MusicHistory.Read',
+-
+-  'PhotosApp.Login',
+-
+-  'Photos.Read',
+-  'Photos.Update',
+-
+-  'PhotoFaces.Read',
+-
+-  'PhotoAlbums.Create',
+-  'PhotoAlbums.Read',
+-  'PhotoAlbums.Update',
+-  'PhotoAlbums.Delete',
+-
+-  'CinemaApp.Login',
+-
+-  'TVChannels.Read',
+-
+-  'CinemaHistory.Read',
+-
+-  'CinemaCollections.Read',
+-
+-  'CinemaPlaylists.Read',
+-
+-  'Movies.Read',
+-
+-  'TVEpisodes.Read',
+-] as const
+-
+-/**
+- * A type that includes all capabilities.
+- */
+-export type NamedCapability = typeof Capabilities[number]
+-
+-/**
++ * 
+  * Capability Assignments are stored as an array of capability strings. The
+  * strings can be exact matching capabilities, or can use of a wildcard for
+  * selecting broader ranges of capabilities.
+@@ -140,9 +26,9 @@ export type NamedCapability = typeof Capabilities[number]
+  *    aspect.
+  */
+ export type CapabilityAssignment =
+-  NamedCapability
++  MediaServerCapability
+   | '*.*'
+-  | `${AspectNames}.*`
++  | `${MediaServerAspect}.*`
+   | `*.${string}`
+ 
+ export type CapabilityAssignments = CapabilityAssignment[]
+@@ -195,7 +81,7 @@ const validateCapabilitiesSyntax = (capabilityList: CapabilityAssignments = []):
+  * capability assignments.
+  */
+ export function hasCapability(
+-  requiredCapability: NamedCapability,
++  requiredCapability: MediaServerCapability,
+   assignments: CapabilityAssignments = [],
+ ) {
+   if (!validateCapabilitySyntax(requiredCapability)) {
+@@ -244,7 +130,7 @@ export function hasCapability(
+  * capabilities are satisfied.
+  */
+ export function hasCapabilities(
+-  requiredCapabilities: NamedCapability[],
++  requiredCapabilities: MediaServerCapability[],
+   assignments: CapabilityAssignments = [],
+ ) {
+   if (!requiredCapabilities) {

@@ -1,49 +1,17 @@
 diff a/servers/media/src/modules/auth/strategies/local.service.ts b/servers/media/src/modules/auth/strategies/local.service.ts	(rejected hunks)
-@@ -1,10 +1,15 @@
+@@ -1,5 +1,5 @@
  import { Injectable, Logger } from '@nestjs/common'
-+import { getRole, hasCapability, RoleName } from '@cardinalapps/access-control/dist/cjs'
+-import { getRole, hasCapability, RoleName } from '@cardinalapps/access-control/dist/cjs'
++import { getMediaServerRole, hasCapability, MediaServerRoleName } from '@cardinalapps/access-control/dist/cjs'
  
  import { UserService } from '../../user/user.service'
  import { Designations } from '../../user/types'
-+import { CardinalApp } from '../../../utils/apps'
- 
- import { LoginResponse } from '../dtos/LoginResponse.dto'
- import { TokenService } from '../token.service'
-+import { User } from '../../user/user.entity'
-+
-+import { APP_LOGIN_CAPABILITY } from '../types'
- 
- /**
-  * Log into a local account. A local acocunt is one whose identity provider is
-@@ -21,9 +26,11 @@ export class LocalAuthStrategy {
-     private readonly tokenService: TokenService,
-   ) {}
- 
--  async login(localUserId: string): Promise<LoginResponse> {
-+  async login(localUserId: string, app: CardinalApp): Promise<LoginResponse> {
-     const user = await this.userService.getUserByLocalId(localUserId)
- 
-+    this.throwIfFailedLoginRBAC(user, app)
-+
-     if (user.cardinalId) {
-       throw new Error('Cannot log into a cloud account without a SSO JWT')
+@@ -60,7 +60,7 @@ export class LocalAuthStrategy {
+     if (!user || !app) {
+       throw new Error(`Login failed, could not determine which app the user is trying to log into, got: ${app}`)
      }
-@@ -45,4 +52,18 @@ export class LocalAuthStrategy {
-       user: this.userService.cleanseUserObject(user),
-     }
-   }
-+
-+  /**
-+   * Throws an error if the user does not have the login capability for the app.
-+   */
-+  private throwIfFailedLoginRBAC(user: User, app: CardinalApp): boolean {
-+    if (!user || !app) {
-+      throw new Error(`Login failed, could not determine which app the user is trying to log into, got: ${app}`)
-+    }
-+    if (hasCapability(APP_LOGIN_CAPABILITY?.[app], user.roles?.flatMap((role) => getRole(role.role as RoleName).capabilities))) {
-+      return true
-+    } else {
-+      throw new Error(`Login failed, user does not have the ${APP_LOGIN_CAPABILITY?.[app]} capability`)
-+    }
-+  }
- }
+-    if (hasCapability(APP_LOGIN_CAPABILITY?.[app], user.roles?.flatMap((role) => getRole(role.role as RoleName).capabilities))) {
++    if (hasCapability(APP_LOGIN_CAPABILITY?.[app], user.roles?.flatMap((role) => getMediaServerRole(role.role as MediaServerRoleName).capabilities))) {
+       return true
+     } else {
+       throw new Error(`Login failed, user does not have the ${APP_LOGIN_CAPABILITY?.[app]} capability`)

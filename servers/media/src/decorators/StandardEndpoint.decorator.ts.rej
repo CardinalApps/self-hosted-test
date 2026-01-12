@@ -1,99 +1,21 @@
 diff a/servers/media/src/decorators/StandardEndpoint.decorator.ts b/servers/media/src/decorators/StandardEndpoint.decorator.ts	(rejected hunks)
-@@ -1,5 +1,6 @@
- import { applyDecorators, UseGuards } from '@nestjs/common'
- import {
-+  ApiBadRequestResponse,
-   ApiForbiddenResponse,
-   ApiHeader,
-   ApiOperation,
-@@ -22,6 +23,11 @@ export type StandardEndpointOptionsType = {
-   manualCapabilities?: NamedCapability[],
+@@ -7,7 +7,7 @@ import {
+   ApiSecurity,
+   ApiUnauthorizedResponse,
+ } from '@nestjs/swagger'
+-import { NamedCapability } from '@cardinalapps/access-control/dist/cjs'
++import { MediaServerCapability } from '@cardinalapps/access-control/dist/cjs'
+ import { Capabilities } from './Capabilities.decorator'
+ import { CapabilitiesGuard } from '../guards/capabilities.guard'
+ import { AuthGuard } from '../guards/auth.guard'
+@@ -19,8 +19,8 @@ export type StandardEndpointOptionsType = {
+   auth?: boolean,
+   summary?: string,
+   description?: string,
+-  capabilities?: NamedCapability[],
+-  manualCapabilities?: NamedCapability[],
++  capabilities?: MediaServerCapability[],
++  manualCapabilities?: MediaServerCapability[],
    manualCapabilitiesAreAllRequired?: boolean,
    cloudUserHeader?: boolean,
-+  errors?: {
-+    400?: string[],
-+    401?: string[],
-+    403?: string[],
-+  },
- }
- 
- /**
-@@ -50,6 +56,9 @@ export type StandardEndpointOptionsType = {
-  * @param [options.description] - OpenAPI docs description text (publicly viewable).
-  * @param [options.cloudUserHeader] - Enables the Cardinal Account JWT header
-  * for receiving the cloud user JWT from a local user. Disabled by default.
-+ * @param [options.errorReasons] - Provide error messages to concatenate with
-+ * internal error messages. Use an array of present-tense strings, or provide an
-+ * empty array to just enable the built-in message for that code.
-  */
- export function StandardEndpoint(options: StandardEndpointOptionsType) {
-   const {
-@@ -60,6 +69,7 @@ export function StandardEndpoint(options: StandardEndpointOptionsType) {
-     summary = '',
-     description = '',
-     cloudUserHeader = false,
-+    errors,
-   } = options
- 
-   const publicSummary = (
-@@ -85,6 +95,7 @@ export function StandardEndpoint(options: StandardEndpointOptionsType) {
-   )
- 
-   return applyDecorators(
-+    // Docs
-     ApiOperation({
-       summary: publicSummary,
-       description: publicDescription,
-@@ -92,14 +103,50 @@ export function StandardEndpoint(options: StandardEndpointOptionsType) {
-       overrideExisting: false,
-     }),
- 
-+    // Docs for 400
-+    ...(errors?.[400]
-+      ? [ApiBadRequestResponse({
-+          description:
-+            "Possible reasons: "
-+            + ['Request validation failed, see response for details']
-+                .concat(errors?.[400] || [])
-+                .join('; ') + '.',
-+        })]
-+      : []
-+    ),
-+
-+    // Authentication guard and docs
-     ...(auth ? [UseGuards(AuthGuard)] : []),
-     ...(auth ? [ApiSecurity(ApiSecurityTypes.LOCAL_USER_JWT)] : []),
--    ...(auth ? [ApiUnauthorizedResponse()] : []),
-+    ...(auth || errors?.[401]
-+      ? [ApiUnauthorizedResponse({
-+          description:
-+            "Possible reasons: "
-+            + ['The authorization token is invalid']
-+                .concat(errors?.[401] || [])
-+                .join('; ') + '.',
-+        })]
-+      : []
-+    ),
- 
-+    // RBAC guards and docs
-     ...(capabilities ? [UseGuards(CapabilitiesGuard)] : []),
-     ...(capabilities ? [Capabilities(capabilities)] : []),
--    ...(capabilities ? [ApiForbiddenResponse({ description: "Returns a 403 if the user does not have sufficient capabilities."  })] : []),
-+    ...(capabilities || errors?.[403]
-+      ? [ApiForbiddenResponse({
-+          description:
-+            "Possible reasons: "
-+            + (capabilities
-+                ? ['The user does not have sufficent capabilities']
-+                : []
-+              )
-+                .concat(errors?.[403] || [])
-+                .join('; ') + '.',
-+        })]
-+      : []
-+    ),
- 
-+    // Headers
-     ...(cloudUserHeader ? [ApiHeader({ name: 'CardinalTolkien' })] : []),
-   )
- }
+   errors?: {

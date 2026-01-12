@@ -1,0 +1,14 @@
+diff a/servers/media/src/modules/auth/types.ts b/servers/media/src/modules/auth/types.ts	(rejected hunks)
+@@ -1,10 +1,10 @@
+-import { NamedCapability } from "@cardinalapps/access-control/dist/cjs"
++import { MediaServerCapability } from "@cardinalapps/access-control/dist/cjs"
+ import { CardinalApp } from "../../utils/apps"
+ 
+ /**
+  * Each app and their associated login capability.
+  */
+-export const APP_LOGIN_CAPABILITY: Record<CardinalApp, NamedCapability> = {
++export const APP_LOGIN_CAPABILITY: Record<CardinalApp, MediaServerCapability> = {
+   admin: 'AdminApp.Login',
+   music: 'MusicApp.Login',
+   photos: 'PhotosApp.Login',

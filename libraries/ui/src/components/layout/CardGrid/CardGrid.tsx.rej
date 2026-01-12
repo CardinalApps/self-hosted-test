@@ -1,54 +1,19 @@
 diff a/libraries/ui/src/components/layout/CardGrid/CardGrid.tsx b/libraries/ui/src/components/layout/CardGrid/CardGrid.tsx	(rejected hunks)
-@@ -1,9 +1,12 @@
+@@ -1,7 +1,7 @@
  import react from 'react'
  import type { PropsWithChildren, ReactNode } from 'react'
  import clsx from 'clsx'
-+import { NamedCapability } from '@cardinalapps/access-control/src'
+-import { NamedCapability } from '@cardinalapps/access-control/src'
++import { MediaServerCapability } from '@cardinalapps/access-control/src'
  
--import './CardGrid.css'
  import Card, { CardProps } from '../Card/Card'
-+import CardWithCapabilities from '../CardWithCapabilities'
-+
-+import './CardGrid.css'
- 
- type CardGridProps = {
-   className?: string,
-@@ -45,18 +48,29 @@ const CardGrid = ({
+ import CardWithCapabilities from '../CardWithCapabilities'
+@@ -48,7 +48,7 @@ const CardGrid = ({
  
  type GridCardProps = {
    size?: 'xs' | 's' | 'm' | 'l' | 'xl'
-+  capabilities?: NamedCapability[],
+-  capabilities?: NamedCapability[],
++  capabilities?: MediaServerCapability[],
  } & CardProps
  
  CardGrid.Card = (props: GridCardProps = {}) => {
--  return (
--    <Card
--      {...props}
--      padding="thin"
--      className={clsx(`grid-size-${props.size || 'm'}`, props.className)}
--    >
--      {props.children}
--    </Card>
--  )
-+  const cardProps: CardProps = {
-+    ...props,
-+    padding: "thin",
-+    className: clsx(`grid-size-${props.size || 'm'}`, props.className),
-+  }
-+
-+  if (props?.capabilities) {
-+    return (
-+      <CardWithCapabilities {...cardProps} capabilities={props.capabilities}>
-+        {props.children}
-+      </CardWithCapabilities>
-+    )
-+  } else {
-+    return (
-+      <Card {...cardProps}>
-+        {props.children}
-+      </Card>
-+    )
-+  }
- }
- 
- export default CardGrid

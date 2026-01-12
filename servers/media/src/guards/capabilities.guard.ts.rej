@@ -1,0 +1,27 @@
+diff a/servers/media/src/guards/capabilities.guard.ts b/servers/media/src/guards/capabilities.guard.ts	(rejected hunks)
+@@ -7,7 +7,7 @@ import {
+ } from '@nestjs/common'
+ import { Reflector } from '@nestjs/core'
+ import { Capabilities } from '../decorators/Capabilities.decorator'
+-import { getRole, hasCapabilities, NamedCapability } from '@cardinalapps/access-control/dist/cjs'
++import { getMediaServerRole, hasCapabilities, MediaServerCapability } from '@cardinalapps/access-control/dist/cjs'
+ 
+ /**
+  * Ensures that the currently logged in user roles satisfy ALL of the
+@@ -18,7 +18,7 @@ export class CapabilitiesGuard implements CanActivate {
+   constructor(private reflector: Reflector) {}
+ 
+   canActivate(context: ExecutionContext): boolean {
+-    const capabilities = this.reflector.get<NamedCapability[]>(Capabilities, context.getHandler())
++    const capabilities = this.reflector.get<MediaServerCapability[]>(Capabilities, context.getHandler())
+ 
+     if (!capabilities) {
+       throw new InternalServerErrorException(`CapabilitiesGuard requires setting the @Capabilities() decorator on field ${context.getHandler().name}`)
+@@ -31,6 +31,6 @@ export class CapabilitiesGuard implements CanActivate {
+       throw new ForbiddenException()
+     }
+ 
+-    return hasCapabilities(capabilities, userRoles?.flatMap((role) => getRole(role.role).capabilities))
++    return hasCapabilities(capabilities, userRoles?.flatMap((role) => getMediaServerRole(role.role).capabilities))
+   }
+ }

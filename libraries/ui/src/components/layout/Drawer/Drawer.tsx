@@ -18,7 +18,7 @@ import Card from '../Card'
 
 import './Drawer.css'
 import HasCapabilities from '../HasCapabilities'
-import { NamedCapability } from '@cardinalapps/access-control/src'
+import { MediaServerCapability } from '@cardinalapps/access-control/src'
 
 type DrawerProps = {
   width?: number,
@@ -173,7 +173,7 @@ Drawer.Tab = ({ className, index, children }: PropsWithChildren<DrawerTabPropsTy
 type DrawerSectionPropsType = {
   className?: string,
   title?: string,
-  capabilities?: NamedCapability[],
+  capabilities?: MediaServerCapability[],
 }
 
 Drawer.Section = ({ className, title, capabilities, children }: PropsWithChildren<DrawerSectionPropsType>) => {

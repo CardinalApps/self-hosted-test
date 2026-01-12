@@ -3,42 +3,17 @@ diff a/libraries/ui/src/components/features/AppBase/AppPage.tsx b/libraries/ui/s
  import type { CSSProperties, PropsWithChildren, ReactNode } from 'react'
  import { useDispatch, useSelector } from 'react-redux'
  import clsx from 'clsx'
--import { CapabilityString } from '@cardinalapps/access-control/src'
-+import { NamedCapability } from '@cardinalapps/access-control/src'
+-import { NamedCapability } from '@cardinalapps/access-control/src'
++import { MediaServerCapability } from '@cardinalapps/access-control/src'
  
  import {
    layoutActions,
-@@ -13,7 +13,7 @@ import {
-   SIDEBAR_MODE,
- } from '../../../store/slices/layout'
- import { RouterContext } from '../../../context/router'
--import CurrentUserIsCapable from '../../layout/HasAccess'
-+import HasCapabilities from '../../layout/HasCapabilities'
- import AccessError, { NetworkError } from '../../layout/AccessError/AccessError'
- 
- type AppPageProps = {
 @@ -21,7 +21,7 @@ type AppPageProps = {
    pageTitle?: string,
    pageDocLink?: string,
    className?: string | string[],
--  capabilities?: CapabilityString[],
-+  capabilities?: NamedCapability[],
+-  capabilities?: NamedCapability[],
++  capabilities?: MediaServerCapability[],
    loading?: boolean,
    restoreScrollPoint?: boolean,
    toolbar?: ReactNode,
-@@ -108,12 +108,9 @@ function AppPage({
-                   {toolbar}
-                 </div>
-               )}
--              {capabilities
--                ? <CurrentUserIsCapable capabilities={capabilities}>
--                    {children}
--                  </CurrentUserIsCapable>
--                : children
--              }
-+              <HasCapabilities capabilities={capabilities}>
-+                {children}
-+              </HasCapabilities>
-             </>
-       }
-     </div>

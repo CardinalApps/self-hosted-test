@@ -1,0 +1,21 @@
+diff a/libraries/ui/src/hooks/useHasCapability.ts b/libraries/ui/src/hooks/useHasCapability.ts	(rejected hunks)
+@@ -1,5 +1,5 @@
+ import { useMemo } from "react"
+-import { getRole, hasCapability, NamedCapability } from "@cardinalapps/access-control/src"
++import { getMediaServerRole, hasCapability, MediaServerCapability } from "@cardinalapps/access-control/src"
+ 
+ import { useAppSelector } from "./useAppSelector"
+ import { homeServerUserSelectors } from "../store/slices/homeServerUser"
+@@ -7,10 +7,10 @@ import { homeServerUserSelectors } from "../store/slices/homeServerUser"
+ /**
+  * Checks if the current user has a capability. The result is memoized.
+  */
+-export function useHasCapability(capability: NamedCapability) {
++export function useHasCapability(capability: MediaServerCapability) {
+   const currentUser = useAppSelector(homeServerUserSelectors.current)
+   return useMemo(
+-    () => hasCapability(capability, currentUser?.roles?.flatMap((role) => getRole(role.role).capabilities)),
++    () => hasCapability(capability, currentUser?.roles?.flatMap((role) => getMediaServerRole(role.role).capabilities)),
+     [capability, currentUser?.roles?.length, currentUser.userId],
+   )
+ }

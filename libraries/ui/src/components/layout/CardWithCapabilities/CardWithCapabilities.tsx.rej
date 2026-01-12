@@ -1,32 +1,27 @@
 diff a/libraries/ui/src/components/layout/CardWithCapabilities/CardWithCapabilities.tsx b/libraries/ui/src/components/layout/CardWithCapabilities/CardWithCapabilities.tsx	(rejected hunks)
-@@ -1,4 +1,5 @@
+@@ -1,6 +1,6 @@
  import { useMemo, type PropsWithChildren } from 'react'
-+import clsx from 'clsx'
- import { getRole, hasCapabilities, NamedCapability } from '@cardinalapps/access-control/src'
+ import clsx from 'clsx'
+-import { getRole, hasCapabilities, NamedCapability } from '@cardinalapps/access-control/src'
++import { getMediaServerRole, hasCapabilities, MediaServerCapability } from '@cardinalapps/access-control/src'
  import AccessError from '../AccessError'
  
-@@ -6,6 +7,8 @@ import Card, { CardProps } from '../Card/Card'
- import { useAppSelector } from '../../../hooks/useAppSelector'
- import { homeServerUserSelectors } from '../../../store/slices/homeServerUser'
+ import Card, { CardProps } from '../Card/Card'
+@@ -10,7 +10,7 @@ import { homeServerUserSelectors } from '../../../store/slices/homeServerUser'
+ import './CardWithCapabilities.css'
  
-+import './CardWithCapabilities.css'
-+
  type CardWithCapabilitiesProps = {
-   capabilities: NamedCapability[],
+-  capabilities: NamedCapability[],
++  capabilities: MediaServerCapability[],
  } & CardProps
-@@ -27,7 +30,14 @@ const CardWithCapabilities = (props: PropsWithChildren<CardWithCapabilitiesProps
-     ? <Card {...props}>
-         {props.children}
-       </Card>
--    : <AccessError />
-+    : <Card
-+        {...props}
-+        className={clsx('card-access-error', props?.className)}
-+        headerRight={null}
-+        footer={null}
-+      >
-+        <AccessError code={403} capabilities={props?.capabilities} />
-+      </Card>
- }
  
- export default CardWithCapabilities
+ /**
+@@ -22,7 +22,7 @@ const CardWithCapabilities = (props: PropsWithChildren<CardWithCapabilitiesProps
+   const currentUser = useAppSelector(homeServerUserSelectors.current)
+ 
+   const hasAccess = useMemo(
+-    () => hasCapabilities(props?.capabilities, currentUser?.roles?.flatMap((role) => getRole(role.role).capabilities)),
++    () => hasCapabilities(props?.capabilities, currentUser?.roles?.flatMap((role) => getMediaServerRole(role.role).capabilities)),
+     [(props?.capabilities || []).length, currentUser.userId],
+   )
+ 

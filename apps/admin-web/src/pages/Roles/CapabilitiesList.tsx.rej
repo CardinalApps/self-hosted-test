@@ -1,120 +1,94 @@
 diff a/apps/admin-web/src/pages/Roles/CapabilitiesList.tsx b/apps/admin-web/src/pages/Roles/CapabilitiesList.tsx	(rejected hunks)
-@@ -4,8 +4,8 @@ import {
-   Capabilities,
-   Roles,
+@@ -1,12 +1,12 @@
+ import { useEffect, useState } from 'react'
+ import {
+   ACi18n,
+-  Capabilities,
+-  Roles,
    hasCapability,
--  Components,
--  ComponentNames,
-+  Aspects,
-+  AspectNames,
-   RoleNames,
+-  Aspects,
+-  AspectNames,
+-  RoleNames,
++  MediaServerAspect,
++  MediaServerCapabilities,
++  MediaServerRoles,
++  MediaServerAspects,
++  MediaServerRoleNames,
  } from '@cardinalapps/access-control/src'
  
-@@ -24,16 +24,16 @@ import { settingsSelectors } from '@cardinalapps/ui/src/store/slices/settings'
+ import { useAppSelector } from '@cardinalapps/ui/src/hooks/useAppSelector'
+@@ -24,8 +24,8 @@ import { settingsSelectors } from '@cardinalapps/ui/src/store/slices/settings'
  import i18n from './i18n.json'
  
  type CapabilitiesListProps = {
--  globallySelectedComponent: ComponentNames,
-+  globallySelectedAspect: AspectNames,
-   globallySelectedRole: RoleNames,
--  setGloballySelectedComponent: (ComponentNames) => void
-+  setGloballySelectedAspect: (AspectNames) => void
+-  globallySelectedAspect: AspectNames,
+-  globallySelectedRole: RoleNames,
++  globallySelectedAspect: MediaServerAspect,
++  globallySelectedRole: MediaServerRoleNames,
+   setGloballySelectedAspect: (AspectNames) => void
    setGloballySelectedRole: (RoleNames) => void
  }
+@@ -48,14 +48,14 @@ function CapabilitiesList({
  
- function CapabilitiesList({
--  globallySelectedComponent,
-+  globallySelectedAspect: globallySelectedAspect,
-   globallySelectedRole,
--  setGloballySelectedComponent,
-+  setGloballySelectedAspect,
-   setGloballySelectedRole,
- }: CapabilitiesListProps) {
-   const { lang } = useAppSelector(settingsSelectors.current)
-@@ -46,12 +46,12 @@ function CapabilitiesList({
-       i18n['caps.plural'][lang],
-     )
- 
--    if (!globallySelectedComponent && !globallySelectedRole) {
-+    if (!globallySelectedAspect && !globallySelectedRole) {
+     if (!globallySelectedAspect && !globallySelectedRole) {
        return i18n['caps-list.total'][lang]
-         .replace('{total}', Capabilities.length)
+-        .replace('{total}', Capabilities.length)
++        .replace('{total}', MediaServerCapabilities.length)
      }
  
--    if (!globallySelectedComponent && globallySelectedRole) {
-+    if (!globallySelectedAspect && globallySelectedRole) {
+     if (!globallySelectedAspect && globallySelectedRole) {
        return i18n['caps-list.only-role'][lang]
          .replace('{role}', ACi18n[`role.${globallySelectedRole}.name`]?.[lang])
          .replace('{num}', filteredItems.length)
-@@ -59,18 +59,18 @@ function CapabilitiesList({
+-        .replace('{total}', Capabilities.length)
++        .replace('{total}', MediaServerCapabilities.length)
          .replace('{capabilities}', pluralizedCapability)
      }
  
--    if (globallySelectedComponent && !globallySelectedRole) {
--      return i18n['caps-list.only-component'][lang]
--        .replace('{component}', globallySelectedComponent)
-+    if (globallySelectedAspect && !globallySelectedRole) {
-+      return i18n['caps-list.only-aspect'][lang]
-+        .replace('{aspect}', globallySelectedAspect)
+@@ -63,7 +63,7 @@ function CapabilitiesList({
+       return i18n['caps-list.only-aspect'][lang]
+         .replace('{aspect}', globallySelectedAspect)
          .replace('{num}', filteredItems.length)
-         .replace('{total}', Capabilities.length)
+-        .replace('{total}', Capabilities.length)
++        .replace('{total}', MediaServerCapabilities.length)
          .replace('{capabilities}', pluralizedCapability)
      }
  
--    if (globallySelectedComponent && globallySelectedRole) {
--      return i18n['caps-list.component-and-role'][lang]
-+    if (globallySelectedAspect && globallySelectedRole) {
-+      return i18n['caps-list.aspect-and-role'][lang]
+@@ -72,16 +72,16 @@ function CapabilitiesList({
          .replace('{role}', ACi18n[`role.${globallySelectedRole}.name`]?.[lang])
--        .replace('{component}', globallySelectedComponent)
-+        .replace('{aspect}', globallySelectedAspect)
+         .replace('{aspect}', globallySelectedAspect)
          .replace('{num}', filteredItems.length)
-         .replace('{total}', Capabilities.length)
+-        .replace('{total}', Capabilities.length)
++        .replace('{total}', MediaServerCapabilities.length)
          .replace('{capabilities}', pluralizedCapability)
-@@ -87,8 +87,8 @@ function CapabilitiesList({
-         }
-       })
+     }
+   }
+ 
+   useEffect(() => {
+-    const filtered = Capabilities
++    const filtered = MediaServerCapabilities
        .filter((cap) => {
--        if (globallySelectedComponent) {
--          return !!cap.includes(globallySelectedComponent)
-+        if (globallySelectedAspect) {
-+          return !!cap.includes(globallySelectedAspect)
+         if (globallySelectedRole) {
+-          return !!hasCapability(cap, Roles?.[globallySelectedRole]?.capabilities)
++          return !!hasCapability(cap, MediaServerRoles?.[globallySelectedRole]?.capabilities)
          } else {
            return true
          }
-@@ -102,7 +102,7 @@ function CapabilitiesList({
-       })
- 
-     setFilteredItems(filtered)
--  }, [globallySelectedComponent, globallySelectedRole])
-+  }, [globallySelectedAspect, globallySelectedRole])
- 
-   return (
-     <CardGrid.Card
-@@ -129,19 +129,19 @@ function CapabilitiesList({
-               onChange={(selected) => setGloballySelectedRole(selected)}
-             />
-             <Select
--              name="component"
-+              name="aspect"
-               size='s'
-               layout="underline"
+@@ -120,7 +120,7 @@ function CapabilitiesList({
                multi={false}
--              selectPlaceholder={i18n['caps-list.component-filter'][lang]}
--              value={globallySelectedComponent}
--              options={Components.map((component) => {
-+              selectPlaceholder={i18n['caps-list.aspect-filter'][lang]}
-+              value={globallySelectedAspect}
-+              options={Aspects.map((aspect) => {
+               selectPlaceholder={i18n['caps-list.role-filter'][lang]}
+               value={globallySelectedRole}
+-              options={Object.keys(Roles).map((role) => {
++              options={Object.keys(MediaServerRoles).map((role) => {
                  return {
--                  label: component,
--                  value: component,
-+                  label: aspect,
-+                  value: aspect,
-                 }
-               })}
--              onChange={(selected) => setGloballySelectedComponent(selected)}
-+              onChange={(selected) => setGloballySelectedAspect(selected)}
-             />
-           </>
-         </Form>
+                   label: ACi18n[`role.${role}.name`]?.[lang],
+                   value: role,
+@@ -135,7 +135,7 @@ function CapabilitiesList({
+               multi={false}
+               selectPlaceholder={i18n['caps-list.aspect-filter'][lang]}
+               value={globallySelectedAspect}
+-              options={Aspects.map((aspect) => {
++              options={MediaServerAspects.map((aspect) => {
+                 return {
+                   label: aspect,
+                   value: aspect,

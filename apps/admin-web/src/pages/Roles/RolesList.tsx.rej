@@ -1,42 +1,73 @@
 diff a/apps/admin-web/src/pages/Roles/RolesList.tsx b/apps/admin-web/src/pages/Roles/RolesList.tsx	(rejected hunks)
-@@ -13,6 +13,7 @@ import AddRemove from '@cardinalapps/ui/src/components/forms/AddRemove'
- import Form from '@cardinalapps/ui/src/components/forms/Form'
- import FormField from '@cardinalapps/ui/src/components/forms/FormField'
- import Button from '@cardinalapps/ui/src/components/interaction/Button'
-+import useHasCapability from '@cardinalapps/ui/src/hooks/useHasCapability'
+@@ -1,5 +1,5 @@
+ import { useEffect, useState, useMemo } from 'react'
+-import { ACi18n, RoleNames, getRole, Role, Roles, RoleName } from '@cardinalapps/access-control/src'
++import { ACi18n, MediaServerRoleNames, getMediaServerRole, Role, MediaServerRoles, MediaServerRoleName } from '@cardinalapps/access-control/src'
  
- import { useAppDispatch } from '@cardinalapps/ui/src/hooks/useAppDispatch'
- import { useAppSelector } from '@cardinalapps/ui/src/hooks/useAppSelector'
-@@ -24,11 +25,15 @@ import { toastActions } from '@cardinalapps/ui/src/store/slices/toast'
+ import H5 from '@cardinalapps/ui/src/components/typography/H5'
+ import List from '@cardinalapps/ui/src/components/interaction/List'
+@@ -25,13 +25,11 @@ import { toastActions } from '@cardinalapps/ui/src/store/slices/toast'
  
  import i18n from './i18n.json'
  
-+
-+
+-
+-
  function RolesList() {
    const dispatch = useAppDispatch()
    const { lang } = useAppSelector(settingsSelectors.current)
-   const [drawerRoleSlug, setDrawerRoleSlug] = useState<RoleNames>()
-   const drawerRole: Role = getRole(drawerRoleSlug)
-+  const userCanAddRole = useHasCapability('RoleAssignments.Create')
-+  const userCanDeleteRole = useHasCapability('RoleAssignments.Delete')
+-  const [drawerRoleSlug, setDrawerRoleSlug] = useState<RoleNames>()
+-  const drawerRole: Role = getRole(drawerRoleSlug)
++  const [drawerRoleSlug, setDrawerRoleSlug] = useState<MediaServerRoleNames>()
++  const drawerRole: Role = getMediaServerRole(drawerRoleSlug)
+   const userCanAddRole = useHasCapability('RoleAssignments.Create')
+   const userCanDeleteRole = useHasCapability('RoleAssignments.Delete')
  
-   const usersRes = useGetUsersQuery({ take: 9999 })
-   const users = usersRes?.data ? usersRes.data?.[0] : []
-@@ -158,7 +163,7 @@ function RolesList() {
-                 ? i18n['roles.drawer.user-list.guest'][lang]
-                 :  user?.cachedCloudUser?.publicName || 'Cardinal User',
-               value: user?.userId,
--              canDelete: user?.designation !== 'guest_account',
-+              canDelete: userCanDeleteRole ? user?.designation !== 'guest_account' : false,
-               avatar: user?.designation === 'guest_account'
-                 ? { type: 'guest' }
-                 : user?.cachedCloudUser?.avatar
-@@ -173,6 +178,7 @@ function RolesList() {
-                 ? i18n['roles.drawer.user-list.guest'][lang]
-                 :  user?.cachedCloudUser?.publicName || 'Cardinal User',
-               value: user?.userId,
-+              canAdd: userCanAddRole,
-               avatar: user?.designation === 'guest_account'
-               ? { type: 'guest' }
-               : user?.cachedCloudUser?.avatar
+@@ -78,13 +76,13 @@ function RolesList() {
+    * List items for the roles box.
+    */
+   const rolesList = () => {
+-    return Object.keys(Roles).map((role) => {
++    return Object.keys(MediaServerRoles).map((role) => {
+       const numUsersWithRole = usersWithRole(role).length
+       return {
+         name: ACi18n[`role.${role}.name`]?.[lang],
+         label: pluralize(numUsersWithRole, i18n['roles.num-users.singular'][lang], i18n['roles.num-users.plural'][lang]).replace('{num}', numUsersWithRole),
+         controls: ['view'],
+-        onView: () => setDrawerRoleSlug(role as RoleName),
++        onView: () => setDrawerRoleSlug(role as MediaServerRoleName),
+       } as ListItem
+     })
+   }
+@@ -92,7 +90,7 @@ function RolesList() {
+   /**
+    * The list used when the role is not editable.
+    */
+-  const roleUsersUneditableList = (roleSlug: RoleNames) => {
++  const roleUsersUneditableList = (roleSlug: MediaServerRoleNames) => {
+     return usersWithRole(roleSlug).map((user: UserType) => {
+       return {
+         name: <UserTag user={user} size="s" />,
+@@ -218,19 +216,19 @@ function RolesList() {
+               items={[
+                 {
+                   name: i18n['roles.drawer.max-assignments'][lang],
+-                  label: Roles[drawerRoleSlug].maxUsers !== null
+-                    ? Roles[drawerRoleSlug].maxUsers
++                  label: MediaServerRoles[drawerRoleSlug].maxUsers !== null
++                    ? MediaServerRoles[drawerRoleSlug].maxUsers
+                     : i18n['roles.drawer.max-assignments.unlimited'][lang],
+                 },
+                 {
+                   name: i18n['roles.drawer.can-be-assigned'][lang],
+-                  label: Roles[drawerRoleSlug].revocable
++                  label: MediaServerRoles[drawerRoleSlug].revocable
+                     ? i18n['roles.drawer.can-be-assigned.true'][lang]
+                     : i18n['roles.drawer.can-be-assigned.false'][lang],
+                 },
+                 {
+                   name: i18n['roles.drawer.can-be-revoked'][lang],
+-                  label: Roles[drawerRoleSlug].revocable
++                  label: MediaServerRoles[drawerRoleSlug].revocable
+                     ? i18n['roles.drawer.can-be-assigned.true'][lang]
+                     : i18n['roles.drawer.can-be-assigned.false'][lang],
+                 },

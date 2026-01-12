@@ -1,14 +1,20 @@
 diff a/apps/admin-web/src/pages/Roles/Roles.tsx b/apps/admin-web/src/pages/Roles/Roles.tsx	(rejected hunks)
-@@ -20,7 +20,11 @@ function Roles() {
-   const [globallySelectedRole, setGloballySelectedRole] = useState<RoleNames>()
+@@ -1,6 +1,6 @@
+ import { useState } from 'react'
+ import { useSelector } from 'react-redux'
+-import { AspectNames, RoleNames } from '@cardinalapps/access-control/src'
++import { MediaServerAspect, MediaServerRoleNames } from '@cardinalapps/access-control/src'
+ 
+ import AppPage from '@cardinalapps/ui/src/components/features/AppBase/AppPage'
+ 
+@@ -16,8 +16,8 @@ import './styles.css'
+ 
+ function Roles() {
+   const { lang } = useSelector(settingsSelectors.current)
+-  const [globallySelectedAspect, setGloballySelectedAspect] = useState<AspectNames>()
+-  const [globallySelectedRole, setGloballySelectedRole] = useState<RoleNames>()
++  const [globallySelectedAspect, setGloballySelectedAspect] = useState<MediaServerAspect>()
++  const [globallySelectedRole, setGloballySelectedRole] = useState<MediaServerRoleNames>()
  
    return (
--    <AppPage layout={PAGE_LAYOUT.standard} pageTitle={i18n['title'][lang]}>
-+    <AppPage
-+      layout={PAGE_LAYOUT.standard}
-+      pageTitle={i18n['title'][lang]}
-+      capabilities={['RoleAssignments.Read']}
-+    >
-       <CardGrid rowHeight='l'>
-         <RolesList />
-         <CapabilitiesList
+     <AppPage
