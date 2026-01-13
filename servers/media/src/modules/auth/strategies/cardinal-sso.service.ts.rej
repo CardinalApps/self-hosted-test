@@ -1,17 +1,20 @@
 diff a/servers/media/src/modules/auth/strategies/cardinal-sso.service.ts b/servers/media/src/modules/auth/strategies/cardinal-sso.service.ts	(rejected hunks)
 @@ -1,5 +1,5 @@
  import { Injectable, Logger } from '@nestjs/common'
--import { getRole, hasCapability, RoleName } from '@cardinalapps/access-control/dist/cjs'
-+import { getMediaServerRole, hasCapability, MediaServerRoleName } from '@cardinalapps/access-control/dist/cjs'
+-import { getMediaServerRole, hasCapability, MediaServerRoleName } from '@cardinalapps/access-control/dist/cjs'
++import { getMediaServerRole, hasCapability, MediaServerCapability, MediaServerRoleName } from '@cardinalapps/access-control/dist/cjs'
  
  import { UserService } from '../../user/user.service'
  import { CloudUserService } from '../../user/cloud-user.service'
-@@ -175,7 +175,7 @@ export class CardinalSSOStrategy {
+@@ -175,7 +175,10 @@ export class CardinalSSOStrategy {
      if (!user || !app) {
        throw new Error(`Login failed, could not determine which app the user is trying to log into, got: ${app}`)
      }
--    if (hasCapability(APP_LOGIN_CAPABILITY?.[app], user.roles?.flatMap((role) => getRole(role.role as RoleName).capabilities))) {
-+    if (hasCapability(APP_LOGIN_CAPABILITY?.[app], user.roles?.flatMap((role) => getMediaServerRole(role.role as MediaServerRoleName).capabilities))) {
+-    if (hasCapability(APP_LOGIN_CAPABILITY?.[app], user.roles?.flatMap((role) => getMediaServerRole(role.role as MediaServerRoleName).capabilities))) {
++    if (hasCapability<MediaServerCapability>(
++      APP_LOGIN_CAPABILITY?.[app],
++      user.roles?.flatMap((role) => getMediaServerRole(role.role as MediaServerRoleName).capabilities),
++    )) {
        return true
      } else {
        throw new Error(`Login failed, user does not have the ${APP_LOGIN_CAPABILITY?.[app]} capability`)

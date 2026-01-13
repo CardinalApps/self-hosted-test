@@ -1,26 +1,10 @@
 diff a/libraries/ui/src/components/layout/HasCapabilities/HasCapabilities.tsx b/libraries/ui/src/components/layout/HasCapabilities/HasCapabilities.tsx	(rejected hunks)
-@@ -1,13 +1,13 @@
- import { PropsWithChildren, useMemo } from 'react'
- import { useSelector } from 'react-redux'
--import { NamedCapability, getRole, hasCapabilities } from '@cardinalapps/access-control/src'
-+import { MediaServerCapability, getMediaServerRole, hasCapabilities } from '@cardinalapps/access-control/src'
- 
- import AccessError from '../AccessError'
- 
- import { homeServerUserSelectors } from '../../../store/slices/homeServerUser'
- 
- type HasAccessProps = {
--  capabilities: NamedCapability[],
-+  capabilities: MediaServerCapability[],
- }
- 
- /**
 @@ -31,7 +31,7 @@ const HasCapabilities = ({
    const currentUser = useSelector(homeServerUserSelectors.current)
  
    const hasAccess = useMemo(
--    () => hasCapabilities(capabilities, currentUser?.roles?.flatMap((role) => getRole(role.role).capabilities)),
-+    () => hasCapabilities(capabilities, currentUser?.roles?.flatMap((role) => getMediaServerRole(role.role).capabilities)),
+-    () => hasCapabilities(capabilities, currentUser?.roles?.flatMap((role) => getMediaServerRole(role.role).capabilities)),
++    () => hasCapabilities<MediaServerCapability>(capabilities, currentUser?.roles?.flatMap((role) => getMediaServerRole(role.role).capabilities)),
      [(capabilities || []).length, currentUser.userId],
    )
  

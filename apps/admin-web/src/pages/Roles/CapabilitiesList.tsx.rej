@@ -1,94 +1,18 @@
 diff a/apps/admin-web/src/pages/Roles/CapabilitiesList.tsx b/apps/admin-web/src/pages/Roles/CapabilitiesList.tsx	(rejected hunks)
-@@ -1,12 +1,12 @@
- import { useEffect, useState } from 'react'
- import {
+@@ -3,6 +3,7 @@ import {
    ACi18n,
--  Capabilities,
--  Roles,
    hasCapability,
--  Aspects,
--  AspectNames,
--  RoleNames,
-+  MediaServerAspect,
-+  MediaServerCapabilities,
-+  MediaServerRoles,
-+  MediaServerAspects,
-+  MediaServerRoleNames,
- } from '@cardinalapps/access-control/src'
- 
- import { useAppSelector } from '@cardinalapps/ui/src/hooks/useAppSelector'
-@@ -24,8 +24,8 @@ import { settingsSelectors } from '@cardinalapps/ui/src/store/slices/settings'
- import i18n from './i18n.json'
- 
- type CapabilitiesListProps = {
--  globallySelectedAspect: AspectNames,
--  globallySelectedRole: RoleNames,
-+  globallySelectedAspect: MediaServerAspect,
-+  globallySelectedRole: MediaServerRoleNames,
-   setGloballySelectedAspect: (AspectNames) => void
-   setGloballySelectedRole: (RoleNames) => void
- }
-@@ -48,14 +48,14 @@ function CapabilitiesList({
- 
-     if (!globallySelectedAspect && !globallySelectedRole) {
-       return i18n['caps-list.total'][lang]
--        .replace('{total}', Capabilities.length)
-+        .replace('{total}', MediaServerCapabilities.length)
-     }
- 
-     if (!globallySelectedAspect && globallySelectedRole) {
-       return i18n['caps-list.only-role'][lang]
-         .replace('{role}', ACi18n[`role.${globallySelectedRole}.name`]?.[lang])
-         .replace('{num}', filteredItems.length)
--        .replace('{total}', Capabilities.length)
-+        .replace('{total}', MediaServerCapabilities.length)
-         .replace('{capabilities}', pluralizedCapability)
-     }
- 
-@@ -63,7 +63,7 @@ function CapabilitiesList({
-       return i18n['caps-list.only-aspect'][lang]
-         .replace('{aspect}', globallySelectedAspect)
-         .replace('{num}', filteredItems.length)
--        .replace('{total}', Capabilities.length)
-+        .replace('{total}', MediaServerCapabilities.length)
-         .replace('{capabilities}', pluralizedCapability)
-     }
- 
-@@ -72,16 +72,16 @@ function CapabilitiesList({
-         .replace('{role}', ACi18n[`role.${globallySelectedRole}.name`]?.[lang])
-         .replace('{aspect}', globallySelectedAspect)
-         .replace('{num}', filteredItems.length)
--        .replace('{total}', Capabilities.length)
-+        .replace('{total}', MediaServerCapabilities.length)
-         .replace('{capabilities}', pluralizedCapability)
-     }
-   }
- 
-   useEffect(() => {
--    const filtered = Capabilities
-+    const filtered = MediaServerCapabilities
+   MediaServerAspect,
++  MediaServerCapability,
+   MediaServerCapabilities,
+   MediaServerRoles,
+   MediaServerAspects,
+@@ -81,7 +82,7 @@ function CapabilitiesList({
+     const filtered = MediaServerCapabilities
        .filter((cap) => {
          if (globallySelectedRole) {
--          return !!hasCapability(cap, Roles?.[globallySelectedRole]?.capabilities)
-+          return !!hasCapability(cap, MediaServerRoles?.[globallySelectedRole]?.capabilities)
+-          return !!hasCapability(cap, MediaServerRoles?.[globallySelectedRole]?.capabilities)
++          return !!hasCapability<MediaServerCapability>(cap, MediaServerRoles?.[globallySelectedRole]?.capabilities)
          } else {
            return true
          }
-@@ -120,7 +120,7 @@ function CapabilitiesList({
-               multi={false}
-               selectPlaceholder={i18n['caps-list.role-filter'][lang]}
-               value={globallySelectedRole}
--              options={Object.keys(Roles).map((role) => {
-+              options={Object.keys(MediaServerRoles).map((role) => {
-                 return {
-                   label: ACi18n[`role.${role}.name`]?.[lang],
-                   value: role,
-@@ -135,7 +135,7 @@ function CapabilitiesList({
-               multi={false}
-               selectPlaceholder={i18n['caps-list.aspect-filter'][lang]}
-               value={globallySelectedAspect}
--              options={Aspects.map((aspect) => {
-+              options={MediaServerAspects.map((aspect) => {
-                 return {
-                   label: aspect,
-                   value: aspect,

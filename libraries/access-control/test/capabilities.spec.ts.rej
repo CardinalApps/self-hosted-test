@@ -1,21 +1,28 @@
 diff a/libraries/access-control/test/capabilities.spec.ts b/libraries/access-control/test/capabilities.spec.ts	(rejected hunks)
-@@ -7,16 +7,16 @@ import {
+@@ -1,5 +1,4 @@
+-// @ts-nocheck File contains intentional type mismatches to check against
+-// runtime role tampering.
++// @ts-nocheck - File contains intentional type errors
+ 
+ import {
+   test,
+@@ -7,16 +6,16 @@ import {
    describe,
  } from '@jest/globals'
  
--import { CapabilityAssignments, hasCapability, hasCapabilities } from '../src'
-+import { MediaServerCapabilityAssignments, hasCapability, hasCapabilities } from '../src'
+-import { MediaServerCapabilityAssignments, hasCapability, hasCapabilities } from '../src'
++import { hasCapability, hasCapabilities, CapabilityAssignments } from '../src'
  
  describe('hasCapability()', () => {
--  const userWithValidStaticAssignments: CapabilityAssignments = [
-+  const userWithValidStaticAssignments: MediaServerCapabilityAssignments = [
+-  const userWithValidStaticAssignments: MediaServerCapabilityAssignments = [
++  const userWithValidStaticAssignments: CapabilityAssignments = [
      'AdminApp.Login',
      'MusicReleases.List',
      'MusicArtists.Read',
      'MusicArtists.List',
    ]
--  const userWithWildcardAssignments: CapabilityAssignments = [
-+  const userWithWildcardAssignments: MediaServerCapabilityAssignments = [
+-  const userWithWildcardAssignments: MediaServerCapabilityAssignments = [
++  const userWithWildcardAssignments: CapabilityAssignments = [
      'AdminApp.*',
      'AdminApp.Login',
      '*.Login',

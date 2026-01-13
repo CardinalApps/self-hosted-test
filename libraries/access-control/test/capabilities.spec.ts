@@ -23,7 +23,7 @@ describe('hasCapability()', () => {
     'MusicArtists.Read',
     'MusicArtists.List',
   ]
-  const userWithDoubleWildcardAssignment: MediaServerCapabilityAssignments = [
+  const userWithDoubleWildcardAssignment: CapabilityAssignments = [
     '*.*',
     'MusicReleases.List',
     'MusicArtists.Read',
