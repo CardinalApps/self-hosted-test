@@ -1,3 +1,6 @@
+import { CapabilityAssignments, hasCapabilities } from "./capabilities"
+import { getCloudRole, CloudRoleNames } from "./contexts/cardinal-cloud"
+
 type ExpressRequestDuck = {
   auth: {
     userId: string,
@@ -17,21 +20,22 @@ type ExpressResponseDuck = {
 
 type ExpressNextFunctionDuck = () => void
 
-type AllowedRoles = string[]
-
 /**
- * Express middleware that enforces authentication and RBAC. An empty roles
- * array means that no roles are allowed.
+ * Express middleware that enforces authentication and RBAC.
  */
-export const createAuthGuard = function(allowedRoles: AllowedRoles = []) {
+export const createRBACMiddleware = function<Caps>(capabilities: Caps[]) {
   return (req: ExpressRequestDuck, res: ExpressResponseDuck, next: ExpressNextFunctionDuck) => {
-    // auth and user must be set
     if (!req?.auth || !req?.user) {
       return res.status(401).send()
     }
 
-    // role must be allowed
-    if (!allowedRoles.includes(req.user.role)) {
+    const userRole = getCloudRole(req.user.role as CloudRoleNames)
+
+    if (!userRole) {
+      return res.status(401).send()
+    }
+
+    if (!hasCapabilities<Caps>(capabilities, userRole.capabilities as CapabilityAssignments<Caps>)) {
       return res.status(403).send()
     }
 

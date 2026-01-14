@@ -1,12 +1,17 @@
 diff a/libraries/access-control/src/roles.ts b/libraries/access-control/src/roles.ts	(rejected hunks)
-@@ -9,10 +9,3 @@ export type Role<TCaps> = {
+@@ -1,11 +1,13 @@
++import { CapabilityAssignments } from "./capabilities"
++
+ /**
+  * Roles are sets of capability assignments. Users can be assigned multiple
+  * different roles to form a superset of capabilities.
+  */
+-export type Role<TCaps> = {
++export type Role<Caps> = {
+   assignable: boolean,
+   revocable: boolean,
+   maxUsers: number | null, // Use null for unlimited
    name: string,
-   capabilities: TCaps[],
+-  capabilities: TCaps[],
++  capabilities: CapabilityAssignments<Caps>,
  }
--
--/**
-- * Returns a single role.
-- */
--// export const getMediaServerRole = (role: MediaServerRoleNames): Role<MediaServerCapability[]> | undefined => {
--//   return MediaServerRoles?.[role]
--// }
