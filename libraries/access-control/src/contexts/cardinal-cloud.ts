@@ -6,6 +6,8 @@ import { Role } from "../roles"
  */
 export const CloudAspects = [
   'CurrentUser',
+  'CurrentUserSessions',
+  'Users',
 ] as const
 
 export type CloudAspect = typeof CloudAspects[number]
@@ -14,8 +16,22 @@ export type CloudAspect = typeof CloudAspects[number]
  * Master list of all capabilities.
  */
 export const CloudCapabilities = [
+  // Intended for Cardinal Apps Inc. employees only
+  'Users.Read',
+
+  // Intended for everyone
   'CurrentUser.Read',
   'CurrentUser.Update',
+  'CurrentUser.Delete',
+
+  'CurrentUserSessions.Read',
+  'CurrentUserSessions.Delete',
+
+  'Email.Trigger',
+
+  'StoredToken.Create',
+  'StoredToken.Consume',
+  'StoredToken.Check',
 ] as const
 
 /**
@@ -55,7 +71,10 @@ export const CloudRoles: Record<`${CloudRoleName}`, Role<CloudCapabilityAssignme
     maxUsers: null,
     name: CloudRoleName.ADMINISTRATIOR,
     capabilities: [
-      'CurrentUser.Read',
+      'CurrentUser.*',
+      'CurrentUserSessions.*',
+      'Email.*',
+      'StoredToken.*',
     ],
   },
 } as const
