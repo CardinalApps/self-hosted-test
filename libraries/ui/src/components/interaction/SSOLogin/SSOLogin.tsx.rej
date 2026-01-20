@@ -1,9 +1,11 @@
 diff a/libraries/ui/src/components/interaction/SSOLogin/SSOLogin.tsx b/libraries/ui/src/components/interaction/SSOLogin/SSOLogin.tsx	(rejected hunks)
-@@ -18,6 +18,7 @@ const SSO_URL_PROD = 'https://account.cardinalapps.io'
- 
- type SSOLoginProps = {
-   appId: string,
-+  // FIXME remove this (they are set server side)
-   permissions: string,
-   saveJWTInLocalStorage?: boolean,
-   onPopupOpened?: () => void,
+@@ -159,9 +159,6 @@ const SSOLogin = ({
+           appId,
+           nonce,
+           serverName: server_name,
+-          scopes: [
+-            'user_id',
+-          ],
+         },
+       })
+         .then(resolve)
