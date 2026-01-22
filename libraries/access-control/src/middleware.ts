@@ -25,7 +25,8 @@ type ExpressNextFunctionDuck = () => void
  */
 export const createRBACMiddleware = function<Caps>(capabilities: Caps[]) {
   return (req: ExpressRequestDuck, res: ExpressResponseDuck, next: ExpressNextFunctionDuck) => {
-    if (!req?.auth || !req?.user) {
+    // At this point, the server should have set a user object via any method (cookie, jwt)
+    if (!req?.user) {
       return res.status(401).send()
     }
 

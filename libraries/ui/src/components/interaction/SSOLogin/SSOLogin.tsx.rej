@@ -1,19 +1,26 @@
 diff a/libraries/ui/src/components/interaction/SSOLogin/SSOLogin.tsx b/libraries/ui/src/components/interaction/SSOLogin/SSOLogin.tsx	(rejected hunks)
-@@ -19,7 +19,7 @@ const SSO_URL_PROD = 'https://account.cardinalapps.io'
- type SSOLoginProps = {
-   appId: string,
-   // FIXME remove this (they are set server side)
--  permissions: string,
-+  permissions?: string,
+@@ -22,7 +22,7 @@ type SSOLoginProps = {
+   permissions?: string,
    saveJWTInLocalStorage?: boolean,
    onPopupOpened?: () => void,
-   onSSOSuccess?: (JWT: string) => void,
-@@ -42,7 +42,7 @@ const SSOLogin = ({
-   onPopupOpened,
-   onSSOSuccess,
-   onPopupClosed,
--  label = 'Sign in with Cardinal',
-+  label = 'Sign in with Cardinal Cloud',
-   ssoUrl,
-   debug = false,
-   enableNewSSOFlow = false,
+-  onSSOSuccess?: (JWT: string) => void,
++  onSSOSuccess?: (JWT?: string) => void,
+   onPopupClosed?: () => void,
+   label?: string,
+   ssoUrl?: string,
+@@ -114,6 +114,15 @@ const SSOLogin = ({
+         onSSOSuccess(e.data.CARDINAL_USER_JWT)
+       }
+     }
++
++    if (e.origin === ssoUrl) {
++      console.log(e)
++    }
++
++    // New SSO flow uses this property
++    if (e.origin === ssoUrl && e?.data?.checkedOut) {
++      onSSOSuccess()
++    }
+   }
+ 
+   /**

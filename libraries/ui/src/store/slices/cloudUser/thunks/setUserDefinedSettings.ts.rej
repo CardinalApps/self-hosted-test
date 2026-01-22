@@ -1,0 +1,43 @@
+diff a/libraries/ui/src/store/slices/cloudUser/thunks/setUserDefinedSettings.ts b/libraries/ui/src/store/slices/cloudUser/thunks/setUserDefinedSettings.ts	(rejected hunks)
+@@ -1,8 +1,8 @@
+ import { createAsyncThunk } from '@reduxjs/toolkit'
+ 
+-import { authorizedFetchHeaders } from '../../../../lib/auth/jwt'
++import authAPI from '../../../../lib/auth/authAPI'
+ 
+-import { STORE_KEY, USER_DATA_API_URL } from '../constants'
++import { STORE_KEY } from '../constants'
+ 
+ /**
+  * "User defined settings" are the settings that the user sets. For example,
+@@ -15,25 +15,15 @@ const setUserDefinedSettings = createAsyncThunk<
+   Record<string, unknown>
+ >(`${STORE_KEY}/setUserDefinedSetting`, (payload) => {
+   return new Promise((resolve, reject) => {
+-    fetch(USER_DATA_API_URL, {
+-      method: 'PATCH',
+-      headers: {
+-        'Accept': 'application/json',
+-        'Content-Type': 'application/json',
+-        ...authorizedFetchHeaders(),
+-      },
+-      body: JSON.stringify({
++    authAPI('/user', 'PATCH', {
++      body: {
+         userDefinedSettings: {
+           ...(payload),
+         },
+-      }),
++      },
+     })
+-      .then((res) => {
+-        if (res.ok) {
+-          resolve({ ...payload })
+-        } else {
+-          reject()
+-        }
++      .then(() => {
++        resolve(payload)
+       })
+       .catch((error) => {
+         reject()
