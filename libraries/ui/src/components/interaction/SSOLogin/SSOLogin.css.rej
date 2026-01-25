@@ -1,40 +1,49 @@
 diff a/libraries/ui/src/components/interaction/SSOLogin/SSOLogin.css b/libraries/ui/src/components/interaction/SSOLogin/SSOLogin.css	(rejected hunks)
-@@ -1,15 +1,14 @@
--[data-theme="dark"] {
--
--}
--
- .login-with-cardinal-button {
-+  width: 100%;
-+  min-height: 55px;
-   padding: 5px 10px;
--  border: 1px solid var(--border-color-3);
-+  border: 1px solid var(--border-color-1);
-   border-radius: 6px;
+@@ -7,6 +7,8 @@
    cursor: pointer;
    display: inline-flex;
-+  justify-content: center;
+   justify-content: center;
++  position: relative;
++  overflow: hidden;
    align-items: center;
--  color: var(--text-color-1);
-+  color: var(--text-color-2);
+   color: var(--text-color-2);
    background-color: var(--bg-2);
- 
-   &:visited {
-@@ -17,7 +16,7 @@
+@@ -19,6 +21,31 @@
+     background-color: var(--bg-3);
    }
  
-   &:hover {
--    background-color: var(--bg-4);
-+    background-color: var(--bg-3);
-   }
- 
++  &.loading {
++
++    .loading-indicator {
++      
++      svg {
++        transform: translate(-50%, -50%);
++      }
++    }
++
++    span {
++      transform: translateY(300%)
++    }
++  }
++
++  .loading-indicator {
++    
++    svg {
++      position: absolute;
++      top: 50%;
++      left: 50%;
++      transform: translate(-50%, -300%);
++      transition: transform 200ms;
++    }
++  }
++
    svg {
-@@ -26,7 +25,7 @@
- 
-   span {
+     margin-right: 8px;
+   }
+@@ -27,5 +54,6 @@
      font-family: var(--font-family);
--    font-weight: 800;
-+    font-weight: 600;
+     font-weight: 600;
      font-size: 14px;
++    transition: transform 200ms;
    }
  }
