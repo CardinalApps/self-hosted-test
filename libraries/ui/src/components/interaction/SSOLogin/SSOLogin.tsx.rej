@@ -1,35 +1,30 @@
 diff a/libraries/ui/src/components/interaction/SSOLogin/SSOLogin.tsx b/libraries/ui/src/components/interaction/SSOLogin/SSOLogin.tsx	(rejected hunks)
-@@ -12,6 +12,8 @@ import { useAppDispatch } from '../../../hooks/useAppDispatch'
- import './SSOLogin.css'
- import { useAppSelector } from '../../../hooks/useAppSelector'
- import { settingsSelectors } from '../../../store/slices/settings'
-+import Loading from '../../layout/Loading'
-+import clsx from 'clsx'
+@@ -204,10 +204,12 @@ const SSOLogin = ({
+   }
  
- const SSO_URL_DEV = 'http://localhost:3077'
- const SSO_URL_PROD = 'https://account.cardinalapps.io'
-@@ -68,7 +70,6 @@ const SSOLogin = ({
-   const dispatch = useAppDispatch()
-   const ssoFlowWindow = useRef(null)
-   const ssoWindowClosedInterval = useRef(null)
--  //const [ssoIsLoading, setSSOIsLoading] = useState(false)
-   const [ssoFlowIsOpen, setSSOFlowIsOpen] = useState(false)
-   const [nonce, setNonce] = useState(uuid())
-   const { server_name } = useAppSelector(settingsSelectors.current)
-@@ -228,7 +229,7 @@ const SSOLogin = ({
-   return (
-     <>
-       <a
--        className="login-with-cardinal-button"
-+        className={clsx('login-with-cardinal-button', ssoFlowIsOpen ? 'loading' : '')}
-         target="_blank"
-         rel="noreferrer"
-         style={style}
-@@ -240,6 +241,7 @@ const SSOLogin = ({
-           }
-         }}
-       >
-+        <Loading size="s" />
-         <BrandLogo size="xs" icon="birb"/>
-         <span>{label}</span>
-       </a>
+   const handleSSOClick = () => {
++    const newWin = window.open()
++
+     if (ssoFlowWindow.current) {
+       ssoFlowWindow.current.focus()
+     } else {
+-      const isPopup = true
++      const isPopup = false
+       const popupWidth = 525
+       const popupHeight = 670
+       const popupLeft = (window.outerWidth / 2) - (popupWidth / 2)
+@@ -218,9 +220,11 @@ const SSOLogin = ({
+           const url = debug
+             ? `${res.interactiveLoginUrl}?${SSO_DEBUG_PARAM}`
+             : res.interactiveLoginUrl
+-          ssoFlowWindow.current = isPopup
+-            ? window.open(url)
+-            : window.open(url, '_blank', `popup=true, width=${popupWidth}, height=${popupHeight}, left=${popupLeft}, top=${popupright}`)
++          newWin.location.href = url
++          ssoFlowWindow.current = newWin
++          // ssoFlowWindow.current = isPopup
++          //   ? window.open(url, '_blank', `popup=true, width=${popupWidth}, height=${popupHeight}, left=${popupLeft}, top=${popupright}`)
++          //   : window.open(url)
+           setSSOFlowIsOpen(true)
+         })
+     }
