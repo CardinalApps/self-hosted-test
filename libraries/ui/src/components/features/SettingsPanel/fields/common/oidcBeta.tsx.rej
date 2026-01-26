@@ -1,5 +1,5 @@
-diff a/libraries/ui/src/components/features/SettingsPanel/fields/common/developerMode.tsx b/libraries/ui/src/components/features/SettingsPanel/fields/common/developerMode.tsx	(rejected hunks)
-@@ -13,8 +13,9 @@ const developerMode = (app, lang) => {
+diff a/libraries/ui/src/components/features/SettingsPanel/fields/common/oidcBeta.tsx b/libraries/ui/src/components/features/SettingsPanel/fields/common/oidcBeta.tsx	(rejected hunks)
+@@ -13,8 +13,9 @@ const oidcBeta = (app, lang) => {
          <ToggleSwitch
            value={value}
            onChange={onChange}

@@ -1,30 +1,110 @@
 diff a/libraries/ui/src/components/interaction/SSOLogin/SSOLogin.tsx b/libraries/ui/src/components/interaction/SSOLogin/SSOLogin.tsx	(rejected hunks)
-@@ -204,10 +204,12 @@ const SSOLogin = ({
+@@ -15,6 +15,10 @@ import { settingsSelectors } from '../../../store/slices/settings'
+ import Loading from '../../layout/Loading'
+ import clsx from 'clsx'
+ 
++/**
++ * Use topology package
++ * @deprecated USER-22
++ */
+ const SSO_URL_DEV = 'http://localhost:3077'
+ const SSO_URL_PROD = 'https://account.cardinalapps.io'
+ 
+@@ -37,7 +41,9 @@ export type IPCHandshakeMessageData = {
+ 
+ type SSOLoginProps = {
+   appId: string,
+-  // FIXME remove this with the old sso (they are set server side now)
++  /**
++   * @deprecated USER-22
++   */
+   permissions?: string,
+   saveJWTInLocalStorage?: boolean,
+   onPopupOpened?: () => void,
+@@ -76,6 +82,9 @@ const SSOLogin = ({
+ 
+   const debug = window.location.search.includes(SSO_DEBUG_PARAM)
+ 
++  /**
++   * TODO use topology package
++   */
+   if (!ssoUrl) {
+     ssoUrl = window.location.href.includes('//localhost:') || window.location.href.includes('//127.0.0.1:')
+       ? SSO_URL_DEV
+@@ -84,6 +93,8 @@ const SSOLogin = ({
+ 
+   /**
+    * TODO remove
++   * 
++   * @deprecated USER-22
+    */
+   const handleLegacySSOClick = () => {
+     if (ssoFlowWindow.current) {
+@@ -100,6 +111,10 @@ const SSOLogin = ({
+     }
    }
  
++  /**
++   * Handle all incoming IPC messages from the child window that is running the
++   * SSO flow.
++   */
+   const handlePopupWindowMessage = (e) => {
+     if (debug) console.log('Received postMessage in SSOLogin', e)
+ 
+@@ -116,6 +131,9 @@ const SSOLogin = ({
+         userAgentString: navigator.userAgent,
+         tokenType,
+         debug,
++        /**
++         * @deprecated USER-22
++         */
+         // @ts-expect-error remove this with the old SSO
+         requestedPermissions: permissions,
+       }
+@@ -128,7 +146,10 @@ const SSOLogin = ({
+       if (debug) console.log('Cardinal SSO popup initial handshake complete')
+     }
+ 
+-    // Popup says the SSO flow was completed successfully (OLD SSO ONLY)
++    /**
++     * Popup says the SSO flow was completed successfully
++     * @deprecated USER-22
++     */
+     if (e.origin === ssoUrl && e?.data?.CARDINAL_USER_JWT) {
+       if (debug) console.log('Cardinal SSO login success')
+       if (saveJWTInLocalStorage) {
+@@ -203,28 +224,21 @@ const SSOLogin = ({
+     })
+   }
+ 
++  /**
++   * Handle the click of a "Login with Cardinal" button. It must open a new
++   * window immediately for it to work on mobile.
++   */
    const handleSSOClick = () => {
-+    const newWin = window.open()
-+
+-    const newWin = window.open()
+-
      if (ssoFlowWindow.current) {
        ssoFlowWindow.current.focus()
      } else {
--      const isPopup = true
-+      const isPopup = false
-       const popupWidth = 525
-       const popupHeight = 670
-       const popupLeft = (window.outerWidth / 2) - (popupWidth / 2)
-@@ -218,9 +220,11 @@ const SSOLogin = ({
-           const url = debug
+-      const isPopup = false
+-      const popupWidth = 525
+-      const popupHeight = 670
+-      const popupLeft = (window.outerWidth / 2) - (popupWidth / 2)
+-      const popupright = (window.outerHeight / 2) - (popupHeight / 2)
+-
++      const newWin = window.open()
+       getInteractiveSSOLoginUrl()
+         .then((res: { interactiveLoginUrl: string }) => {
+-          const url = debug
++          newWin.location.href = debug
              ? `${res.interactiveLoginUrl}?${SSO_DEBUG_PARAM}`
              : res.interactiveLoginUrl
--          ssoFlowWindow.current = isPopup
--            ? window.open(url)
--            : window.open(url, '_blank', `popup=true, width=${popupWidth}, height=${popupHeight}, left=${popupLeft}, top=${popupright}`)
-+          newWin.location.href = url
-+          ssoFlowWindow.current = newWin
-+          // ssoFlowWindow.current = isPopup
-+          //   ? window.open(url, '_blank', `popup=true, width=${popupWidth}, height=${popupHeight}, left=${popupLeft}, top=${popupright}`)
-+          //   : window.open(url)
+-          newWin.location.href = url
+           ssoFlowWindow.current = newWin
+-          // ssoFlowWindow.current = isPopup
+-          //   ? window.open(url, '_blank', `popup=true, width=${popupWidth}, height=${popupHeight}, left=${popupLeft}, top=${popupright}`)
+-          //   : window.open(url)
            setSSOFlowIsOpen(true)
          })
      }

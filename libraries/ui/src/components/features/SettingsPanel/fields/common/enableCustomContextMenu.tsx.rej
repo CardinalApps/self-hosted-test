@@ -1,14 +1,13 @@
 diff a/libraries/ui/src/components/features/SettingsPanel/fields/common/enableCustomContextMenu.tsx b/libraries/ui/src/components/features/SettingsPanel/fields/common/enableCustomContextMenu.tsx	(rejected hunks)
-@@ -11,10 +11,10 @@ const enableCustomContextMenu = (app, lang) => {
-     render: ({ value, onChange }) => {
-       return (
+@@ -13,8 +13,9 @@ const enableCustomContextMenu = (app, lang) => {
          <ToggleSwitch
--          name={fieldObj.slug}
--          label={fieldObj.label}
            value={value}
            onChange={onChange}
-+          showActiveLabel={true}
-+          labelAlign='left'
+-          showActiveLabel={true}
+-          labelAlign='left'
++          layout="box"
++          title={fieldObj.label}
++          description={fieldObj.description}
          />
        )
      },

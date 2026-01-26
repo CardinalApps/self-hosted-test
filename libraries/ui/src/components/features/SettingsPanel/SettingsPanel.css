@@ -96,6 +96,16 @@
     }
   }
 
+  .settings-input {
+
+    &:last-of-type {
+
+      .toggle-switch-box {
+        margin-bottom: 0;
+      }
+    }
+  }
+
   .field {
     width: 100%;
     margin-bottom: 30px;

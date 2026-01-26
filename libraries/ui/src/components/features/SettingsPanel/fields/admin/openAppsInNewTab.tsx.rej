@@ -1,14 +1,13 @@
 diff a/libraries/ui/src/components/features/SettingsPanel/fields/admin/openAppsInNewTab.tsx b/libraries/ui/src/components/features/SettingsPanel/fields/admin/openAppsInNewTab.tsx	(rejected hunks)
-@@ -12,10 +12,10 @@ const openAppsInNewTab = (app, lang) => {
-       return (
-         <>
+@@ -14,8 +14,9 @@ const openAppsInNewTab = (app, lang) => {
            <ToggleSwitch
--            name={field.slug}
              value={value}
--            label={field.label}
              onChange={(v) => onChange(v, null)}
-+            showActiveLabel={true}
-+            labelAlign='left'
+-            showActiveLabel={true}
+-            labelAlign='left'
++            layout="box"
++            title={field.label}
++            description={field.description}
            />
          </>
        )

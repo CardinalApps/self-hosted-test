@@ -1,13 +1,13 @@
 diff a/libraries/ui/src/components/features/SettingsPanel/Field.tsx b/libraries/ui/src/components/features/SettingsPanel/Field.tsx	(rejected hunks)
-@@ -20,9 +20,9 @@ function Field({
-   children,
+@@ -21,6 +21,11 @@ function Field({
    field,
  }: PropsWithChildren<FieldProps>) {
--  const { label, description } = field
-+  const { label, description, type, slug } = field
+   const { label, description, type, slug } = field
++
++  if (type === 'toggle') {
++    return children
++  }
++
    return (
--    <div className={clsx('field', className, `type-${field.type}`)} style={style}>
-+    <div className={clsx('field', className, `type-${type}`, slug)} style={style}>
+     <div className={clsx('field', className, `type-${type}`, slug)} style={style}>
        <div className="field-meta">
-         {!!label && <p className="field-label">{label}</p>}
-         {!!description && <Desc>{description}</Desc>}
