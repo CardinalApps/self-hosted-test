@@ -40,6 +40,11 @@ export const createRBACMiddleware = function<Caps>(capabilities: Caps[]) {
       return res.status(401).send()
     }
 
+    if (req.user) {
+      console.error('The server must let the RBAC middleware set req.user. Set req.userPreAuthorization instead.')
+      return res.status(500).send()
+    }
+
     const userRole = getCloudRole(req.userPreAuthorization.role)
 
     if (!userRole) {
