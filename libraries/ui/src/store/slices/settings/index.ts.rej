@@ -1,0 +1,22 @@
+diff a/libraries/ui/src/store/slices/settings/index.ts b/libraries/ui/src/store/slices/settings/index.ts	(rejected hunks)
+@@ -4,6 +4,7 @@ import { getSetting } from '@cardinalapps/app-settings/src'
+ import set from './thunks/set'
+ import sync from './thunks/sync'
+ 
++import homeServerLogout from '../homeServerUser/thunks/logout'
+ import { globalActions } from '../../constants/actions'
+ 
+ import { STORE_KEY } from './constants'
+@@ -68,6 +69,12 @@ const settingsSlice = createSlice({
+       .addCase(globalActions.RESET, () => {
+         return { ...initialState }
+       })
++      /**
++       * Reset app settings after logout
++       */
++      .addCase(homeServerLogout.fulfilled, () => {
++        return { ...initialState }
++      })
+       /**
+        * "set" thunk cases
+        */
