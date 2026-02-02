@@ -1,41 +1,29 @@
 diff a/libraries/ui/src/components/interaction/SSOLogin/SSOLogin.tsx b/libraries/ui/src/components/interaction/SSOLogin/SSOLogin.tsx	(rejected hunks)
-@@ -33,6 +33,7 @@ type TokenType = 'JWT' | 'cookie'
- export type IPCHandshakeMessageData = {
-   appId: string,
-   nonce: string,
-+  instanceId?: string,
-   serverName: string,
-   userAgentString: string,
-   tokenType: TokenType,
-@@ -41,6 +42,7 @@ export type IPCHandshakeMessageData = {
+@@ -54,6 +54,7 @@ type SSOLoginProps = {
+   label?: string,
+   ssoUrl?: string,
+   enableNewSSOFlow?: boolean,
++  overrideServerName?: string,
+   tokenType?: TokenType,
+   style?: CSSProperties,
+ }
+@@ -73,6 +74,7 @@ const SSOLogin = ({
+   label = 'Sign in with Cardinal Cloud',
+   ssoUrl,
+   enableNewSSOFlow = false,
++  overrideServerName,
+   tokenType = 'JWT',
+   style,
+ }: PropsWithChildren<SSOLoginProps>) => {
+@@ -81,7 +83,10 @@ const SSOLogin = ({
+   const ssoWindowClosedInterval = useRef(null)
+   const [ssoFlowIsOpen, setSSOFlowIsOpen] = useState(false)
+   const [nonce, setNonce] = useState(uuid())
+-  const { server_name } = useAppSelector(settingsSelectors.current)
++  const { server_name: serverNameFromSettings } = useAppSelector(settingsSelectors.current)
++  const server_name = overrideServerName
++    ? overrideServerName
++    : serverNameFromSettings as string
  
- type SSOLoginProps = {
-   appId: string,
-+  instanceId?: string,
-   /**
-    * @deprecated USER-22
-    */
-@@ -62,6 +64,7 @@ type SSOLoginProps = {
-  */
- const SSOLogin = ({
-   appId,
-+  instanceId,
-   permissions,
-   saveJWTInLocalStorage = true,
-   onPopupOpened,
-@@ -127,6 +130,7 @@ const SSOLogin = ({
-       const dataToSend: IPCHandshakeMessageData = {
-         appId,
-         nonce,
-+        instanceId,
-         serverName: server_name as string,
-         userAgentString: navigator.userAgent,
-         tokenType,
-@@ -210,6 +214,7 @@ const SSOLogin = ({
-         body: {
-           appId,
-           nonce,
-+          instanceId,
-           tokenType,
-           serverName: server_name,
-         },
+   const debug = window.location.search.includes(SSO_DEBUG_PARAM)
+ 
