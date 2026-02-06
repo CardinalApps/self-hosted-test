@@ -3,24 +3,29 @@ import homeServerAPI from '../../../../lib/homeserver/homeServerAPI'
 import { AppDispatch, RootState } from '../../..'
 import { STORE_KEY } from '../constants'
 
+export type InstanceRes = {
+  instanceId: string,
+  serverName: string,
+}
+
 /**
  * Check the instance ID of this server.
  */
-const fetchInstanceId = createAsyncThunk<
-  string,
+const fetchInstance = createAsyncThunk<
+  InstanceRes,
   void,
   {
     dispatch: AppDispatch
     state: RootState
   }
->(`${STORE_KEY}/fetchInstanceId`, async (data: void, thunkAPI) => {
+>(`${STORE_KEY}/fetchInstance`, async (data: void, thunkAPI) => {
   const cached = thunkAPI.getState().homeServer.instanceId
 
   if (!cached) {
-    const res: Record<string, unknown> = await homeServerAPI('/instance')
+    const res = await homeServerAPI<InstanceRes>('/instance')
 
-    if (res?.instanceId) {
-      return res.instanceId as string
+    if (res) {
+      return res
     } else {
       throw new Error()
     }
@@ -28,4 +33,4 @@ const fetchInstanceId = createAsyncThunk<
   }
 })
 
-export default fetchInstanceId
+export default fetchInstance

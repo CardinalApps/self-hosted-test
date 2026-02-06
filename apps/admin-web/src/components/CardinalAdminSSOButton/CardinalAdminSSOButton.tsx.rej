@@ -1,10 +1,18 @@
 diff a/apps/admin-web/src/components/CardinalAdminSSOButton/CardinalAdminSSOButton.tsx b/apps/admin-web/src/components/CardinalAdminSSOButton/CardinalAdminSSOButton.tsx	(rejected hunks)
-@@ -57,7 +51,7 @@ export default function CardinalAdminSSOButton({
+@@ -26,6 +26,7 @@ export default function CardinalAdminSSOButton({
+   const dispatch = useAppDispatch()
+   const { enable_oidc_beta } = useAppSelector(settingsSelectors.current)
+   const instanceId = useAppSelector(homeServerSelectors.instanceId)
++  const serverName = useAppSelector(homeServerSelectors.serverName)
+ 
+   /**
+    * When the user logs into a Cardinal cloud account, try to log into the local
+@@ -47,7 +48,7 @@ export default function CardinalAdminSSOButton({
+       <SSOLogin
+         appId={CARDINAL_PUBLIC_APP_ID}
+         instanceId={instanceId}
+-        overrideServerName={overrideServerName}
++        serverName={overrideServerName || serverName}
          permissions={CARDINAL_PUBLIC_APP_PERMISSIONS}
          saveJWTInLocalStorage={saveJWTInLocalStorage}
          onSSOSuccess={onSSOSuccess ? onSSOSuccess : handleSSOSuccess}
--        enableNewSSOFlow={newSSOIsEnabled}
-+        enableNewSSOFlow={enable_oidc_beta as boolean | undefined}
-       />
-     </>
-   )

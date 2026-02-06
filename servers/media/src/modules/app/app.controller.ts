@@ -244,13 +244,17 @@ export class AppController {
     status: 200,
     schema: {
       example: {
-        id: "<id>",
+        instanceId: "<id>",
+        serverName: "My custom name",
       },
     },
   })
   async getInstance(): Promise<Instance> {
+    const instanceId = await this.databaseService.getOption(OPTIONS.INSTANCE_ID.name) as string
+    const serverName = await this.settingsService.get(CardinalApp.ADMIN, 'server_name') as string
     return {
-      instanceId: await this.databaseService.getOption(OPTIONS.INSTANCE_ID.name) as string,
+      instanceId: instanceId || '',
+      serverName: serverName || '',
     }
   }
 

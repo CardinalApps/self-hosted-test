@@ -1,37 +1,10 @@
 diff a/servers/media/src/modules/claim/claim.service.ts b/servers/media/src/modules/claim/claim.service.ts	(rejected hunks)
-@@ -2,12 +2,12 @@ import { Injectable, Logger } from '@nestjs/common'
- 
- import { EventService } from '../event/event.service'
- import { UserService } from '../user/user.service'
--import { UserEvents } from '../user/events'
- import { DatabaseService } from '../database/database.service'
- import { OPTIONS } from '../../utils/options'
- import { authAPI } from '../../utils/cloud'
- import { SettingsService } from '../settings/settings.service'
- import { CardinalApp } from '../../utils/apps'
-+import { CreateOwnerEventPayload, UserEvents } from '../user/events'
- 
- type ClaimRes = {
-   claimId: string,
-@@ -39,7 +39,7 @@ export class ClaimService {
-    * This is async so as not to block any local actions if the cloud is
-    * unreachable.
-    */
--  async claimServerWithCloudIfNotClaimed(): Promise<void> {
-+  async claimServerWithCloudIfNotClaimed(options?: CreateOwnerEventPayload): Promise<void> {
-     // Server must have an owner
-     const owner = await this.userService.getServerOwner()
-     if (!owner) {
-@@ -53,7 +53,11 @@ export class ClaimService {
+@@ -94,7 +94,7 @@ export class ClaimService {
+     try {
+       await this.databaseService.saveOption(OPTIONS.CLAIM_ID.name, res.claimId)
+       await this.databaseService.saveOption(OPTIONS.CLAIMED_AT.name, res.claimedAt)
+-      Logger.log('Successfully claimed this Media Server instance with Cardinal cloud. You should now be able to see this Media Server under your account at account.cardinalapps.io', 'Claim')
++      Logger.log('Successfully claimed this Media Server instance with Cardinal cloud; see your claims at account.cardinalapps.io/account/claims', 'Claim')
+     } catch (err) {
+       Logger.log(err, 'Claim')
      }
- 
-     const instanceId = await this.databaseService.getOption(OPTIONS.INSTANCE_ID.name)
--    const serverName = await this.settingsService.get(CardinalApp.ADMIN, 'server_name')
-+
-+    // The serverName will be given in the options during First Time Setup
-+    const serverName = options?.serverName
-+      ? options.serverName
-+      : await this.settingsService.get(CardinalApp.ADMIN, 'server_name')
- 
-     authAPI<ClaimRes>('/user/claims', 'POST', {
-       body: {

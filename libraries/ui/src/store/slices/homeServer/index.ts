@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { globalActions } from '../../constants/actions'
 import healthCheck from './thunks/healthCheck'
-import fetchInstanceId from './thunks/fetchInstanceId'
+import fetchInstance, { InstanceRes } from './thunks/fetchInstanceId'
 
 import { STORE_KEY } from './constants'
 
@@ -79,10 +79,11 @@ const homeServerSlice = createSlice({
       /**
        * Instance ID
        */
-      .addCase(fetchInstanceId.fulfilled, (state, action: PayloadAction<string>) => {
-        state.instanceId = action.payload
+      .addCase(fetchInstance.fulfilled, (state, action: PayloadAction<InstanceRes>) => {
+        state.instanceId = action.payload?.instanceId
+        state.serverName = action.payload?.serverName
       })
-      .addCase(fetchInstanceId.rejected, (state) => {
+      .addCase(fetchInstance.rejected, (state) => {
         state.instanceId = null
       })
   },
@@ -90,6 +91,7 @@ const homeServerSlice = createSlice({
     health: (state) => state.health.state,
     loading: (state) => state.health.loading,
     instanceId: (state) => state.instanceId,
+    serverName: (state) => state.serverName,
     healthResponses: (state) => state.health.responses,
     latestHealthResponse: (state) => state.health.responses?.[0] || undefined,
     latestEvent: (state) => state.latestEvent || undefined,
