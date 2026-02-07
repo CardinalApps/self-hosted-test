@@ -110,7 +110,7 @@ const createStore = () => {
 
   setupListeners(store.dispatch)
 
-  const writeThrottle = 2000
+  const writeThrottle = 500
   let storeLastSavedAt = 0
 
   // Cache the store after every change
