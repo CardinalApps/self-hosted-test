@@ -1,68 +1,26 @@
 diff a/libraries/ui/src/components/forms/ToggleSwitch/ToggleSwitch.css b/libraries/ui/src/components/forms/ToggleSwitch/ToggleSwitch.css	(rejected hunks)
-@@ -6,10 +6,19 @@
-   justify-content: flex-start;
+@@ -34,6 +34,12 @@
+     }
+   }
  
-   &.box {
--    padding: 20px 25px;
--    gap: 0;
--    border-radius: var(--border-radius);
--    border: 1px solid var(--border-color-2);
-+    min-height: 68px;
-+    margin-bottom: 15px;
-+    padding: 15px 20px;
++  .toggle-switch-box-inner {
 +    display: flex;
 +    align-items: center;
-+    flex-wrap: nowrap;
-+    border: 1px solid var(--border-color-3);
-+    border-radius: 10px;
-+    background-color: var(--bg-2);
-+
-+    .toggle-switch {
-+      background-color: var(--bg-4);
-+    }
- 
-     .title { 
- 
-@@ -21,24 +30,34 @@
-     .toggle-switch-box-inner {
-       width: 100%;
-       justify-content: space-between;
-+      gap: 8px;
-     }
-   }
- 
-+  .toggle-switch-box-meta-col {
-+    flex-grow: 1;
++    gap: 8px;
 +  }
 +
-   .toggle-switch-box-title {
--    width: 100%;
--    margin-bottom: 10px;
--    padding-left: 0;
--    font-weight: 800;
--    font-size: 18px;
-+    margin-bottom: 5px;
-+    color: var(--text-color-2);
-+    font-size: 15px;
-+    font-weight: 400;
+   .toggle-switch-box-meta-col {
+     flex-grow: 1;
    }
-   
-   .description {
-     padding-right: 15px;
--    font-size: 15px;
-+    font-weight: 400;
-+    font-size: 13px;
-     line-height: 1.4em;
-+    color: var(--text-color-3);
-+
-+    a {
-+      color: var(--accent-color);
- 
--    @media screen and (max-width: 768px) {
--      font-size: 14px;
-+      &:hover {
-+        text-decoration: underline;
-+      }
-     }
+@@ -62,11 +68,6 @@
    }
  }
+ 
+-.toggle-switch-box-inner {
+-  display: flex;
+-  align-items: center;
+-}
+-
+ .toggle-switch {
+   width: 50px;
+   height: 30px;

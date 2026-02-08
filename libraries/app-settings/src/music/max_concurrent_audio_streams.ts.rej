@@ -1,0 +1,9 @@
+diff a/libraries/app-settings/src/music/max_concurrent_audio_streams.ts b/libraries/app-settings/src/music/max_concurrent_audio_streams.ts	(rejected hunks)
+@@ -6,6 +6,7 @@ export const MAX_CONCURRENT_AUDIO_STREAMS = 'max_concurrent_audio_streams'
+ export const maxConcurrentAudioStreamsFactory: SettingsFieldFactory = (app: SupportedCardinalApp, lang: SupportedLang) => ({
+   slug: MAX_CONCURRENT_AUDIO_STREAMS,
+   label: i18n?.['settings.max-concurrent-audio-streams.label']?.[lang],
++  description: i18n?.['settings.max-concurrent-audio-streams.desc']?.[lang],
+   type: 'number',
+   storage: 'home_server',
+   defaultValue: 1,

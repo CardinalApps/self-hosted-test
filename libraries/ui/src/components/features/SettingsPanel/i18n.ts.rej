@@ -1,14 +1,11 @@
 diff a/libraries/ui/src/components/features/SettingsPanel/i18n.ts b/libraries/ui/src/components/features/SettingsPanel/i18n.ts	(rejected hunks)
-@@ -4,6 +4,12 @@ const i18n: StringList = {
-   "settings.main-title": {
-     "en": "Settings",
+@@ -40,6 +40,9 @@ const i18n: StringList = {
+   "settings.language.title": {
+     "en": "Language",
    },
-+  "settings.build-tag.label": {
-+    "en": "Build:",
++  "settings.music.multi-player": {
++    "en": "Multi-Player",
 +  },
-+  "settings.build-tag.fallback": {
-+    "en": "Untagged",
-+  },
-   "settings.tab-name-general": {
-     "en": "General",
-   },
+ }
+ 
+ export default i18n

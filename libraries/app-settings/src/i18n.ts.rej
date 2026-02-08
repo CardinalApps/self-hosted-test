@@ -1,12 +1,19 @@
 diff a/libraries/app-settings/src/i18n.ts b/libraries/app-settings/src/i18n.ts	(rejected hunks)
-@@ -159,6 +159,9 @@ export default {
+@@ -159,9 +159,15 @@ export default {
      "en": "Open apps in new tab",
    },
    "settings.max-concurrent-audio-streams.label": {
--    "en": "Maximum number of concurrent audio streams",
-+    "en": "Maximum number of concurrent audio players",
+-    "en": "Maximum number of concurrent audio players",
++    "en": "Max audio players",
 +  },
-+  "settings.max-concurrent-playing-audio-streams.label": {
-+    "en": "Maximum number of concurrently playing audio players",
++  "settings.max-concurrent-audio-streams.desc": {
++    "en": "New players will pause old players until the max is reached, then oldest players are stopped.",
+   },
+   "settings.max-concurrent-playing-audio-streams.label": {
+-    "en": "Maximum number of concurrently playing audio players",
++    "en": "Max concurrent audio streams",
++  },
++  "settings.max-concurrent-playing-audio-streams.desc": {
++    "en": "How many of the current players can be playing audio at the same time.",
    },
  }
