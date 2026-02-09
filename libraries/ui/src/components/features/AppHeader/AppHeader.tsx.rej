@@ -1,26 +1,50 @@
 diff a/libraries/ui/src/components/features/AppHeader/AppHeader.tsx b/libraries/ui/src/components/features/AppHeader/AppHeader.tsx	(rejected hunks)
-@@ -11,6 +11,7 @@ import homeServerUserLogout from '../../../store/slices/homeServerUser/thunks/lo
- import { settingsSelectors } from '../../../store/slices/settings'
- import { useAppDispatch } from '../../../hooks/useAppDispatch'
- import { RouterContext } from '../../../context/router'
-+import { CardinalApp } from '../../../lib/env/cardinal'
- 
- import CloudStatusIcon from './componenets/CloudStatusIcon'
- import ActivityIcon from './componenets/ActivityIcon'
-@@ -18,8 +19,6 @@ import ActivityIcon from './componenets/ActivityIcon'
- import i18n from './i18n'
- 
- import './AppHeader.css'
--import { CardinalApp } from '../../../lib/env/cardinal'
--import { getAppUrl } from '../../../lib/net/router'
- 
+@@ -23,7 +23,6 @@ import './AppHeader.css'
  type AppHeaderProps = {
    app?: CardinalApp,
-@@ -84,7 +83,6 @@ const AppHeader = ({
-         </div>
+   logoClickTo?: string,
+-  settingsClickTo?: string,
+   onSwitchAccountClick?: () => void,
+   loginButton?: ReactNode,
+   appName?: string,
+@@ -35,7 +34,6 @@ type AppHeaderProps = {
+ const AppHeader = ({
+   app,
+   logoClickTo,
+-  settingsClickTo,
+   onSwitchAccountClick,
+   loginButton,
+   appName,
+@@ -84,26 +82,17 @@ const AppHeader = ({
        </div>
        <div className="right">
--        <a href={getAppUrl('indexing', { app: 'admin' })}>test</a>
          <div className="icons">
-           {/* Cloud status icon */}
-           <div className="icon no-hover">
+-          {/* Cloud status icon */}
+-          <div className="icon no-hover">
+-            <CloudStatusIcon />
++          {/* App menu icon */}
++          <div className="icon">
++            <AppMenu align="center" target={open_apps_in_new_tab ? '_blank' : undefined} />
+           </div>
+           {/* Activity icon */}
+           <div className="icon">
+             <ActivityIcon />
+           </div>
+-          {/* App menu icon */}
+-          <div className="icon">
+-            <AppMenu align="center" target={open_apps_in_new_tab ? '_blank' : undefined} />
+-          </div>
+-          {/* Settings icon */}
+-          <div className="icon settings-icon">
+-            {Link && settingsClickTo
+-              ? <Link to={settingsClickTo} className="settings-icon-link">
+-                  <i className="fas fa-cog" />
+-                </Link>
+-              : <div className="settings-icon-nolink"><i className="fas fa-cog" /></div>
+-            }
++          {/* Cloud status icon */}
++          <div className="icon no-hover">
++            <CloudStatusIcon />
+           </div>
+         </div>
+         {/* User menu */}

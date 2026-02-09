@@ -1,10 +1,10 @@
 diff a/libraries/ui/src/components/interaction/Toolbar/Toolbar.css b/libraries/ui/src/components/interaction/Toolbar/Toolbar.css	(rejected hunks)
-@@ -6,7 +6,7 @@
-   display: inline-flex;
-   align-items: center;
-   position: relative;
--  background-color: var(--bg-2);
-+  background-color: var(--bg-1);
+@@ -25,7 +25,7 @@
+       border: none;
+       cursor: pointer;
+       border-radius: 100%;
+-      background-color: var(--bg-2);
++      background-color: var(--bg-1);
+       transition: transform 200ms;
  
-   @media (max-width: 768px) {
-     height: 38px;
+       &:hover, &:focus {

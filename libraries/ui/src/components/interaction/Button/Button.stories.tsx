@@ -52,6 +52,13 @@ export const Icon: Story = {
   },
 }
 
+export const Icon: Story = {
+  args: {
+    children: 'Button with an icon',
+    icon: 'fas fa-star',
+  },
+}
+
 export const Tag: Story = {
   args: {
     tag: true,

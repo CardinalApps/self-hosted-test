@@ -1,16 +1,205 @@
 diff a/libraries/ui/src/components/interaction/UserMenu/UserMenu.tsx b/libraries/ui/src/components/interaction/UserMenu/UserMenu.tsx	(rejected hunks)
-@@ -166,12 +166,12 @@ const UserMenu = ({
+@@ -1,16 +1,28 @@
+-import { useState, useEffect } from 'react'
++import { useState, useEffect, useContext } from 'react'
+ import type { PropsWithChildren, ReactNode } from 'react'
+ import { useSelector } from 'react-redux'
+ import { AnimatePresence, motion } from 'framer-motion'
+-import ms from 'ms'
++import H3 from '../../typography/H3'
++import { getSetting } from '@cardinalapps/app-settings/src'
++// import ms from 'ms'
+ 
+ import Avatar from '../../layout/Avatar'
++import Button from '../Button'
+ 
++import { settingsSelectors } from '../../../store/slices/settings'
++import { SupportedLang } from '@cardinalapps/app-settings/src/types'
++import { RouterContext } from '../../../context/router'
+ import { cloudUserSelectors } from '../../../store/slices/cloudUser'
++import { appSelectors } from '../../../store/slices/app'
++import { useAppDispatch } from '../../../hooks/useAppDispatch'
+ 
+ import i18n from './i18n'
+ 
++import { routes } from '../../features/AppBase/routes'
++import Select from '../../forms/Select'
++
+ import './UserMenu.css'
++import set from '../../../store/slices/settings/thunks/set'
+ 
+ type UserMenuProps = {
+   onSwitchAccountClick?: () => void,
+@@ -27,9 +39,16 @@ const UserMenu = ({
+   onLogoutClick,
+   loginButton,
+ }: PropsWithChildren<UserMenuProps>) => {
++  const dispatch = useAppDispatch()
++  const app = useSelector(appSelectors.app)
+   const loggedIn = useSelector(cloudUserSelectors.loggedIn)
+   const currentUser = useSelector(cloudUserSelectors.current)
++  const { lang, theme } = useSelector(settingsSelectors.current)
+   const [menuIsOpen, setMenuIsOpen] = useState(false)
++  const { navigate } = useContext(RouterContext)
++
++  const themeFieldFactory = getSetting('theme')
++  const themeField = themeFieldFactory(app, lang as SupportedLang)
+ 
+   const handleLogout = () => {
+     setMenuIsOpen(false)
+@@ -44,25 +63,25 @@ const UserMenu = ({
+     }
+   }
+ 
+-  const memberDays = () => {
+-    const createdDate = new Date(currentUser?.createdAt)
+-    const createdMsAgo = Date.now() - createdDate.getTime()
++  // const memberDays = () => {
++  //   const createdDate = new Date(currentUser?.createdAt)
++  //   const createdMsAgo = Date.now() - createdDate.getTime()
+ 
+-    if (createdMsAgo < ms('1d')) {
+-      return i18n['user-menu.member-days.today']['en']
+-    }
+-    else if (createdMsAgo < ms('30d')) {
+-      return i18n['user-menu.member-days.less-than-1-month']['en']
+-    }
+-    else if (createdMsAgo < ms('1y')) {
+-      return i18n['user-menu.member-days.less-than-1-year']['en']
+-    }
+-    else {
+-      return i18n['user-menu.member-days.default']['en']
+-        .replace('{month}', String((createdDate.getMonth() + 1)).padStart(2, '0'))
+-        .replace('{year}', createdDate.getFullYear().toString())
+-    }
+-  }
++  //   if (createdMsAgo < ms('1d')) {
++  //     return i18n['user-menu.member-days.today']['en']
++  //   }
++  //   else if (createdMsAgo < ms('30d')) {
++  //     return i18n['user-menu.member-days.less-than-1-month']['en']
++  //   }
++  //   else if (createdMsAgo < ms('1y')) {
++  //     return i18n['user-menu.member-days.less-than-1-year']['en']
++  //   }
++  //   else {
++  //     return i18n['user-menu.member-days.default']['en']
++  //       .replace('{month}', String((createdDate.getMonth() + 1)).padStart(2, '0'))
++  //       .replace('{year}', createdDate.getFullYear().toString())
++  //   }
++  // }
+ 
+   useEffect(() => {
+     const onEsc = (e) => {
+@@ -72,7 +91,7 @@ const UserMenu = ({
+     }
+ 
+     const onClickOutside = (e) => {
+-      if (!e.target.closest('.user-menu')) {
++      if (!e.target.closest('.user-menu') && !e.target.matches('.option')) {
+         setMenuIsOpen(false)
+       }
+     }
+@@ -101,7 +120,7 @@ const UserMenu = ({
+               ? <>
+                   <motion.div
+                     initial={{ opacity: 0, y: -8 }}
+-                    animate={{ opacity: 1, y: 0, transition: { type: "spring", delay: 0.35 } }}
++                    animate={{ opacity: 1, y: 0, transition: { type: "spring", delay: 0.15 } }}
+                     className="user-dropdown-greeting"
+                   >
+                     {
+@@ -119,7 +138,7 @@ const UserMenu = ({
+                               </span> */}
+                               <span
+                                 className="subscription"
+-                                title={memberDays()}
++                                // title={memberDays()}
+                               >
+                                 <i className="fas fa-trophy" />
+                                 {i18n[`user-menu.subscription.${currentUser.subscription}`]?.['en']}
+@@ -136,33 +155,68 @@ const UserMenu = ({
+                   </motion.div>
+                   <motion.div
+                     initial={{ opacity: 0, y: -8 }}
+-                    animate={{ opacity: 1, y: 0, transition: { type: "spring", delay: 0.55 } }}
++                    animate={{ opacity: 1, y: 0, transition: { type: "spring", delay: 0.30 } }}
+                   >
+                     <nav className={`user-dropdown-menu`}>
+                       {loggedIn
+                         ? <div className="logged-in-items">
+-                            <ul>
+-                              <li>
+-                                <a href="https://account.cardinalapps.io" className="btn" target="_blank">
+-                                  {i18n['user-menu.my-account']['en']}
+-                                  <i className="fas fa-external-link-alt" />
+-                                </a>
+-                              </li>
++                          {
++                            // Media server
++                          }
++                            <H3 className="user-dropdown-section-title">{i18n['user-menu.quick-settings']['en']}</H3>
++                            <div className="user-menu-quick-settings">
++                              <Select
++                                size="s"
++                                name={themeField.slug}
++                                options={themeField.options as Record<string, string>}
++                                value={theme as string}
++                                multi={false}
++                                min={1}
++                                onChange={(val) => dispatch(set({
++                                  settings: {
++                                    [themeField.slug]: val,
++                                  },
++                                  app: app,
++                                }))}
++                              />
++                            </div>
++                            <H3 className="user-dropdown-section-title">{i18n['user-menu.media-server']['en']}</H3>
++                            <ul className="user-dropdown-button-group">
+                               <li>
+-                                <a href="https://help.cardinalapps.io" className="btn" target="_blank">
+-                                  {i18n['user-menu.help']['en']}
+-                                  <i className="fas fa-external-link-alt" />
+-                                </a>
++                                <Button onClick={() => navigate(routes.SETTINGS)} icon="fas fa-cog">
++                                  {i18n['user-menu.app-settings']['en']}
++                                </Button>
+                               </li>
+                               <li>
+-                                <button type="button" className="btn" onClick={handleSwitchAccountClick}>
++                                <Button onClick={handleSwitchAccountClick} icon="fas fa-users">
+                                   {i18n['user-menu.switch-account']['en']}
+-                                </button>
++                                </Button>
+                               </li>
+                               <li>
+-                                <button type="button" className="btn" onClick={handleLogout}>
++                                <Button onClick={handleLogout} icon="fas fa-sign-out-alt">
+                                   {i18n['user-menu.logout']['en']}
+-                                </button>
++                                </Button>
++                              </li>
++                            </ul>
++                            {
++                              // Cloud
++                            }
++                            <H3 className="user-dropdown-section-title">{i18n['user-menu.cloud']['en']}</H3>
++                            <ul className="user-dropdown-button-group">
++                              <li>
++                                <Button href="https://account.cardinalapps.io" target="_blank" icon="fas fa-user-circle">
++                                  {i18n['user-menu.my-account']['en']}
++                                </Button>
++                              </li>
++                              <li>
++                                <Button href="https://help.cardinalapps.io" target="_blank" icon="fas fa-info-circle">
++                                  {i18n['user-menu.help']['en']}
++                                </Button>
++                              </li>
++                              <li>
++                                <Button href="https://status.cardinalapps.io" target="_blank" icon="fas fa-cloud">
++                                  {i18n['user-menu.status']['en']}
++                                </Button>
                                </li>
                              </ul>
                              <div className="links">
--                              <span>
-+                              {/* <span>
-                                 <i className="fas fa-comments" />
-                                 <a href="https://forums.cardinalapps.io" target="_blank">
-                                   {i18n['user-menu.forums']['en']}
-                                 </a>
--                              </span>
-+                              </span> */}
-                               <span>
-                                 <a href="https://cardinalapps.io" target="_blank">
-                                   {i18n['user-menu.website']['en']}

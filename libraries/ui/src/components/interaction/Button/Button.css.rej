@@ -1,24 +1,55 @@
 diff a/libraries/ui/src/components/interaction/Button/Button.css b/libraries/ui/src/components/interaction/Button/Button.css	(rejected hunks)
-@@ -45,6 +45,22 @@
-     } */
+@@ -119,27 +119,34 @@
+ 
+   &.action {
+     height: auto;
+-    padding: 24px 24px 22px;
+-    font-size: 16px;
+-    font-weight: 600;
+-    line-height: 0.1em;
++    min-height: 70px;
++    padding: 15px 35px;
++    font-size: 17px;
++    font-weight: 500;
+     display: flex;
++    border-radius: 40px;
+     align-items: center;
++    color: var(--text-color-3);
+     transform: scale(1);
+     transition: transform 200ms;
+ 
+     &:hover {
+       background-color: var(--button-bg);
++
++      i {
++        color: var(--accent-color);
++      }
+     }
+ 
+     &:active {
+-      transform: scale(0.98);
++      transform: scale(0.96);
+     }
+ 
+     i {
+-      position: relative;
+-      top: -2px;
+-      font-size: 19px;
++      margin-right: 17px;
++      color: var(--text-color-3);
++      font-size: 22px;
++      transition: color 200ms;
+     }
    }
  
-+  &.plain {
-+    width: auto;
-+    height: auto;
-+    border: none;
-+    padding: 0;
-+    color: var(--accent-color);
-+    font-weight: 400;
-+    font-size: 14px;
-+    background: none;
-+
-+    &:hover {
-+      text-decoration: underline;
-+      background: none;
-+    }
+@@ -202,6 +209,10 @@
+     }
+   }
+ 
++  .span-icon {
++    min-width: 36px;
 +  }
 +
-   &.tag {
-     padding: 22px 20px;
-     font-size: 14px;
+   .button-text {
+     white-space: nowrap;
+   }
