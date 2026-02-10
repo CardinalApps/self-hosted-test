@@ -1,19 +1,34 @@
 diff a/libraries/ui/src/components/features/AppBase/AppPage.tsx b/libraries/ui/src/components/features/AppBase/AppPage.tsx	(rejected hunks)
-@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react'
- import type { CSSProperties, PropsWithChildren, ReactNode } from 'react'
- import { useDispatch, useSelector } from 'react-redux'
- import clsx from 'clsx'
--import { NamedCapability } from '@cardinalapps/access-control/src'
-+import { MediaServerCapability } from '@cardinalapps/access-control/src'
- 
- import {
-   layoutActions,
-@@ -21,7 +21,7 @@ type AppPageProps = {
-   pageTitle?: string,
-   pageDocLink?: string,
-   className?: string | string[],
--  capabilities?: NamedCapability[],
-+  capabilities?: MediaServerCapability[],
+@@ -25,6 +25,7 @@ type AppPageProps = {
    loading?: boolean,
    restoreScrollPoint?: boolean,
    toolbar?: ReactNode,
++  showLibrarySwitcher?: boolean,
+   networkError?: NetworkError,
+   virtualLayout?: ReactNode,
+   style?: CSSProperties,
+@@ -44,6 +45,7 @@ function AppPage({
+   children,
+   restoreScrollPoint = true,
+   toolbar,
++  showLibrarySwitcher = false,
+   networkError,
+   style,
+   ...props
+@@ -80,6 +82,7 @@ function AppPage({
+     dispatch(layoutActions.setLayout(layout as PAGE_LAYOUT))
+     dispatch(layoutActions.setPageTitle(pageTitle))
+     dispatch(layoutActions.setPageDocLink(pageDocLink))
++    dispatch(layoutActions.setShowLibrarySwitcher(showLibrarySwitcher))
+ 
+     // Maybe force close the sidebar
+     if (PAGE_BEHAVIORS[layout].forceSidebarCollapse) {
+@@ -90,7 +93,7 @@ function AppPage({
+     if (!PAGE_BEHAVIORS[layout].forceSidebarCollapse && userSelectedSidebarMode === SIDEBAR_MODE.expanded) {
+       dispatch(layoutActions.setSidebarMode(SIDEBAR_MODE.expanded))
+     }
+-  }, [layout, pageTitle, pageDocLink])
++  }, [layout, pageTitle, pageDocLink, showLibrarySwitcher])
+ 
+   return (
+     <div

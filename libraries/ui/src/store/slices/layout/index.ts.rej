@@ -1,9 +1,35 @@
 diff a/libraries/ui/src/store/slices/layout/index.ts b/libraries/ui/src/store/slices/layout/index.ts	(rejected hunks)
-@@ -7,6 +7,7 @@ import { STORE_KEY, SIDEBAR_MODE, PAGE_LAYOUT } from './constants'
- export type VirtualView = {
-   total: number,
-   start: number,
-+  offset: number,
-   end: number,
- }
+@@ -23,6 +23,7 @@ export type LayoutSliceState = {
+   virtualViews: {
+     [name: string]: VirtualView,
+   },
++  showLibrarySwitcher: boolean,
+   pageDocLink: string,
+ 
+   // The actual current mode of the sidebar
+@@ -39,6 +40,7 @@ const initialState: LayoutSliceState = {
+   scrollPoints: {},
+   toolbarValues: {},
+   virtualViews: {},
++  showLibrarySwitcher: false,
+   pageDocLink: '',
+   sidebarMode: SIDEBAR_MODE.expanded,
+   userSelectedSidebarMode: SIDEBAR_MODE.expanded,
+@@ -71,6 +73,9 @@ const layoutSlice = createSlice({
+     setSidebarMode: (state, action: PayloadAction<SIDEBAR_MODE>) => {
+       state.sidebarMode = action.payload
+     },
++    setShowLibrarySwitcher: (state, action: PayloadAction<boolean>) => {
++      state.showLibrarySwitcher = action.payload
++    },
+     setUserSelectedSidebarMode: (state, action: PayloadAction<SIDEBAR_MODE>) => {
+       state.userSelectedSidebarMode = action.payload
+     },
+@@ -138,6 +143,7 @@ const layoutSlice = createSlice({
+     toolbarValues: (state) => state.toolbarValues,
+     virtualViews: (state) => state.virtualViews,
+     scrollPoints: (state) => state.scrollPoints,
++    showLibrarySwitcher: (state) => state.showLibrarySwitcher,
+   },
+ })
  
