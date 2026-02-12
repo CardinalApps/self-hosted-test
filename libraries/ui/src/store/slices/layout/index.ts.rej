@@ -1,35 +1,58 @@
 diff a/libraries/ui/src/store/slices/layout/index.ts b/libraries/ui/src/store/slices/layout/index.ts	(rejected hunks)
-@@ -23,6 +23,7 @@ export type LayoutSliceState = {
+@@ -4,6 +4,10 @@ import { globalActions } from '../../constants/actions'
+ 
+ import { STORE_KEY, SIDEBAR_MODE, PAGE_LAYOUT } from './constants'
+ 
++export type ActionButton = {
++  gradientAnimation?: string,
++}
++
+ export type VirtualView = {
+   total: number,
+   start: number,
+@@ -23,6 +27,9 @@ export type LayoutSliceState = {
    virtualViews: {
      [name: string]: VirtualView,
    },
-+  showLibrarySwitcher: boolean,
++  actionButtons: {
++    [name: string]: ActionButton,
++  },
+   showLibrarySwitcher: boolean,
    pageDocLink: string,
  
-   // The actual current mode of the sidebar
-@@ -39,6 +40,7 @@ const initialState: LayoutSliceState = {
+@@ -40,6 +47,7 @@ const initialState: LayoutSliceState = {
    scrollPoints: {},
    toolbarValues: {},
    virtualViews: {},
-+  showLibrarySwitcher: false,
++  actionButtons: {},
+   showLibrarySwitcher: false,
    pageDocLink: '',
    sidebarMode: SIDEBAR_MODE.expanded,
-   userSelectedSidebarMode: SIDEBAR_MODE.expanded,
-@@ -71,6 +73,9 @@ const layoutSlice = createSlice({
+@@ -73,6 +81,9 @@ const layoutSlice = createSlice({
      setSidebarMode: (state, action: PayloadAction<SIDEBAR_MODE>) => {
        state.sidebarMode = action.payload
      },
-+    setShowLibrarySwitcher: (state, action: PayloadAction<boolean>) => {
-+      state.showLibrarySwitcher = action.payload
++    setActionButton: (state, action: PayloadAction<{ buttonName: string, button: ActionButton }>) => {
++      state.actionButtons[action.payload.buttonName] = action.payload.button
 +    },
-     setUserSelectedSidebarMode: (state, action: PayloadAction<SIDEBAR_MODE>) => {
-       state.userSelectedSidebarMode = action.payload
+     setShowLibrarySwitcher: (state, action: PayloadAction<boolean>) => {
+       state.showLibrarySwitcher = action.payload
      },
-@@ -138,6 +143,7 @@ const layoutSlice = createSlice({
-     toolbarValues: (state) => state.toolbarValues,
-     virtualViews: (state) => state.virtualViews,
-     scrollPoints: (state) => state.scrollPoints,
-+    showLibrarySwitcher: (state) => state.showLibrarySwitcher,
-   },
- })
- 
+@@ -90,6 +101,9 @@ const layoutSlice = createSlice({
+     removeScrollPoint: (state, action: PayloadAction<string>) => {
+       delete state.scrollPoints?.[action.payload]
+     },
++    removeActionButton: (state, action: PayloadAction<string>) => {
++      delete state.actionButtons?.[action.payload]
++    },
+     removeAllScrollPoints: (state) => {
+       state.scrollPoints = initialState.scrollPoints
+     },
+@@ -136,6 +150,7 @@ const layoutSlice = createSlice({
+     current: (state) => state.current,
+     pageTitle: (state) => state.pageTitle,
+     pageDocLink: (state) => state.pageDocLink,
++    actionButtons: (state) => state.actionButtons,
+     mobileNavIsOpen: (state) => state.mobileNavIsOpen,
+     mobileFileBrowserIsOpen: (state) => state.mobileFileBrowserIsOpen,
+     sidebarMode: (state) => state.sidebarMode,

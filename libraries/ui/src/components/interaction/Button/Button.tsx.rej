@@ -1,25 +1,89 @@
 diff a/libraries/ui/src/components/interaction/Button/Button.tsx b/libraries/ui/src/components/interaction/Button/Button.tsx	(rejected hunks)
-@@ -17,6 +17,7 @@ type ButtonProps = {
-   outline?: boolean,
-   title?: string,
-   textual?: boolean,
-+  plain?: boolean,
-   tag?: boolean,
-   action?: boolean,
-   icon?: string,
-@@ -40,6 +41,7 @@ const Button = ({
-   outline = false,
-   title,
-   textual = false,
-+  plain = false,
-   tag = false,
-   action = false,
-   icon = undefined,
-@@ -58,6 +60,7 @@ const Button = ({
+@@ -27,6 +31,7 @@ type ButtonProps = {
+   onClick?: () => void,
+   className?: string,
+   disabled?: boolean,
++  actionButtonName?: string,
+ }
+ 
+ /**
+@@ -52,9 +57,13 @@ const Button = ({
+   onClick = () => {},
+   className = undefined,
+   disabled = false,
++  actionButtonName,
+   ...props
+ }: PropsWithChildren<ButtonProps>) => {
++  const dispatch = useAppDispatch()
++  const { [actionButtonName]: storedActionButton } = useAppSelector(layoutSelectors.actionButtons)
+   const [mouseUpAnimation] = useState('')
++
+   const classNameProp = clsx(
+     'button',
      !!solid && 'solid',
-     !!outline && 'outline',
-     !!textual && 'textual',
-+    !!plain && 'plain',
-     !!tag && 'tag',
-     !!action && 'action',
-     !!arrowText && 'arrow-text',
+@@ -69,11 +78,37 @@ const Button = ({
+     !!disabled && 'disabled',
+     !!animation && `${animation}-animation animation with-icon`,
+     !!mouseUpAnimation && `${mouseUpAnimation}`,
++    storedActionButton?.gradientAnimation && 'party',
+     className,
+   )
+ 
++  const handleActionButtonClick = () => {
++    if (actionButtonName) {
++      const randomGradient = [
++        randomHexColor(),
++        randomHexColor(),
++        randomHexColor(),
++        randomHexColor(),
++        randomHexColor(),
++      ]
++      const animation = `linear-gradient(-45deg, ${randomGradient.join(',')})`
++      dispatch(layoutActions.setActionButton({ buttonName: actionButtonName, button: { gradientAnimation: animation } }))
++    }
++  }
++
++  const maybeWithWrapper = (children) => {
++    if (action) {
++      return (
++        <div className="action-button-animation-box" onClick={handleActionButtonClick}>
++          {children}
++        </div>
++      )
++    }
++    return children
++  }
++
+   if (href) {
+-    return (
++    return maybeWithWrapper(
+       <a
+         href={href}
+         target={target}
+@@ -85,22 +120,23 @@ const Button = ({
+       >
+         {!!icon && <Icon fa={icon} />}
+         <span className="button-text">{children}</span>
+-      </a>
++      </a>,
+     )
+   } else {
+-    return (
++    return maybeWithWrapper(
+       <button
+         type={type}
+         className={classNameProp}
+         onClick={onClick}
+         title={title}
+         disabled={disabled || animation ? true : false}
++        style={storedActionButton?.gradientAnimation ? { backgroundImage: storedActionButton.gradientAnimation } : undefined}
+         {...props}
+       >
+         {!!icon && <Icon fa={icon} />}
+         {animation && getAnimationSVG(animation, animationColor)}
+         <span className="button-text">{children}</span>
+-      </button>
++      </button>,
+     )
+   }
+ }

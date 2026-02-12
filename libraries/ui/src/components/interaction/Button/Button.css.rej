@@ -1,20 +1,37 @@
 diff a/libraries/ui/src/components/interaction/Button/Button.css b/libraries/ui/src/components/interaction/Button/Button.css	(rejected hunks)
-@@ -131,6 +131,7 @@
-     transition: transform 200ms;
+@@ -128,10 +128,22 @@
+     align-items: center;
+     color: var(--text-color-3);
+     transform: scale(1);
+-    transition: transform 200ms;
++    transition: transform 200ms, background-color 1.2s;
++    animation: gradient 24s ease infinite;
++    background-size: 6000% 2000%;
++
++    &.party {
++
++      i {
++        color: white !important;
++      }
++
++      .button-text {
++        color: white !important;
++      }
++    }
  
      &:hover {
-+      animation: 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0s 1 normal forwards inniePop;
+-      animation: 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0s 1 normal forwards inniePop;
        background-color: var(--button-bg);
  
        i {
-@@ -138,10 +139,6 @@
+@@ -139,6 +151,10 @@
        }
      }
  
--    &:active {
--      transform: scale(0.96);
--    }
--
++    &:active {
++      animation: 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0s 1 normal forwards inniePop;
++    }
++
      i {
        margin-right: 17px;
        color: var(--text-color-3);
