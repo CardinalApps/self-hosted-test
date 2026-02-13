@@ -144,6 +144,17 @@ const DemoApp = () => {
               </Link>
             </li>
 
+            {/* Procedural */}
+            <li
+              className={location.pathname === `/${PAGE_LAYOUT["procedural"]}` ? 'active' : ''}
+              key="procedural-layout"
+            >
+              <Link to={`/${PAGE_LAYOUT["procedural"]}`}>
+                <i className="fas fa-border-all" />
+                <span>Layout: procedural</span>
+              </Link>
+            </li>
+
             {/* Modal */}
             <li
               className={location.pathname === `/modal` ? 'active' : ''}

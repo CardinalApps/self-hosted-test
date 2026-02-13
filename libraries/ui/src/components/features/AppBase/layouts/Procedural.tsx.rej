@@ -1,0 +1,78 @@
+diff a/libraries/ui/src/components/features/AppBase/layouts/Procedural.tsx b/libraries/ui/src/components/features/AppBase/layouts/Procedural.tsx	(rejected hunks)
+@@ -1,10 +1,9 @@
+-import { PropsWithChildren } from 'react'
++import { CSSProperties, PropsWithChildren } from 'react'
+ import clsx from 'clsx'
+ 
+-type ProceduralProps = {
+-  proceduralViewName: string,
++export type ProceduralProps = {
++  name: string,
+   className?: string | string[],
+-  initialBlocks: React.ReactNode[],
+ }
+ 
+ /**
+@@ -13,23 +12,55 @@ type ProceduralProps = {
+  */
+ function ProceduralLayout({
+   className,
+-  initialBlocks,
+-}: ProceduralProps) {
++  children,
++}: PropsWithChildren<ProceduralProps>) {
+   return (
+     <div className={clsx('procedural-layout', className)}>
+-      {initialBlocks}
++      {children}
+     </div>
+   )
+ }
+ 
+-type ProceduralBlockProps = {
+-  size: "12x2"
++export type ProceduralBlockSize =
++    "12x1"
++  | "12x2"
++  | "12x3"
++  | "12x4"
++  | "12x5"
++  | "12x6"
++  | "6x1"
++  | "6x2"
++  | "6x3"
++  | "6x4"
++  | "6x5"
++  | "6x6"
++  | "4x1"
++  | "4x2"
++  | "4x3"
++  | "4x4"
++  | "4x5"
++  | "4x6"
++  | "8x1"
++  | "8x2"
++  | "8x3"
++  | "8x4"
++  | "8x5"
++  | "8x6"
++
++export type ProceduralBlockProps = {
++  size: ProceduralBlockSize,
++  style?: CSSProperties,
+ }
+ 
+ ProceduralLayout.Block = (props: PropsWithChildren<ProceduralBlockProps>) => {
+   return (
+-    <div className="procedural-layout-block" data-size={props.size}>
+-      {props.children}
++    <div
++      className="procedural-layout-block"
++      data-size={props.size}
++    >
++      <div className="procedural-layout-block-inner" style={props.style}>
++        {props.children}
++      </div>
+     </div>
+   )
+ }

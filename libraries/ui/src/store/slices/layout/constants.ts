@@ -46,6 +46,11 @@ export const PAGE_BEHAVIORS = Object.freeze({
     showCollapseControl: true,
     showBackground: false,
   }),
+  [PAGE_LAYOUT["procedural"]]: Object.freeze({
+    forceSidebarCollapse: false,
+    showCollapseControl: true,
+    showBackground: false,
+  }),
 })
 
 export enum SIDEBAR_MODE {

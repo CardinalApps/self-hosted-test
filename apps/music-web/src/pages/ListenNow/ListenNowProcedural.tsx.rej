@@ -1,0 +1,29 @@
+diff a/apps/music-web/src/pages/ListenNow/ListenNowProcedural.tsx b/apps/music-web/src/pages/ListenNow/ListenNowProcedural.tsx	(rejected hunks)
+@@ -3,21 +3,14 @@ import TrueShuffle from './items/TrueShuffle'
+ 
+ function ListenNowProcedural() {
+ 
+-  const getInitialBlocks = () => {
+-    return [
+-      (
+-        <ProceduralLayout.Block size='12x2' key="action-buttons">
+-          <TrueShuffle />
+-        </ProceduralLayout.Block>
+-      ),
+-    ]
+-  }
+-
+   return (
+     <ProceduralLayout
+-      proceduralViewName={'music-listen-now'}
+-      initialBlocks={getInitialBlocks()}
+-    />
++      name={'music-listen-now'}
++    >
++      <ProceduralLayout.Block size='12x1' key="action-buttons">
++        <TrueShuffle />
++      </ProceduralLayout.Block>
++    </ProceduralLayout>
+   )
+ }
+ 
