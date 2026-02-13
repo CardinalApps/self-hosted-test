@@ -1,20 +1,66 @@
 diff a/libraries/ui/src/components/features/AppBase/AppScaffold.tsx b/libraries/ui/src/components/features/AppBase/AppScaffold.tsx	(rejected hunks)
-@@ -13,7 +13,7 @@ import H2 from '../../typography/H2'
- import { layoutSelectors, layoutActions } from '../../../store/slices/layout'
- import { SCROLL_RESTORATION_KEYS, PAGE_LAYOUT } from '../../../store/slices/layout'
- import { RouterContext } from '../../../context/router'
--import ErrorPage from '../../layout/ErrorPage'
-+import AccessError from '../../layout/AccessError'
+@@ -1,6 +1,6 @@
+ import { useContext, useRef } from 'react'
+ import type { PropsWithChildren, ReactNode } from 'react'
+-import { useSelector, useDispatch } from 'react-redux'
++import { useSelector } from 'react-redux'
+ import clsx from 'clsx'
  
- export type SidebarOptions = {
-   overflow: boolean,
-@@ -107,7 +107,8 @@ function AppScaffold({
-           )}
-           <Routes>
-             {privateScaffoldRoutes ? privateScaffoldRoutes : null}
--            <Route path="*" element={<ErrorPage overrides={{ code: 404 }} />} />
-+            {/* Top-level page error handling */}
-+            <Route path="*" element={<AccessError code={404} />} />
-           </Routes>
-         </main>
-       </section>
+ import Columns, { Column } from '../../layout/Columns'
+@@ -10,8 +10,8 @@ import { GlobalAudioPlayer } from '../AudioPlayer'
+ import { DirectoryTreeSidebarPortal, DirectoryTreeMobileButton } from '../../interaction/DirectoryTree'
+ import H2 from '../../typography/H2'
+ 
+-import { layoutSelectors, layoutActions } from '../../../store/slices/layout'
+-import { SCROLL_RESTORATION_KEYS, PAGE_LAYOUT } from '../../../store/slices/layout'
++import { layoutSelectors } from '../../../store/slices/layout'
++import { PAGE_LAYOUT } from '../../../store/slices/layout'
+ import { RouterContext } from '../../../context/router'
+ import AccessError from '../../layout/AccessError'
+ 
+@@ -33,28 +33,13 @@ function AppScaffold({
+   privateScaffoldRoutes,
+   enableGlobalAudioPlayer = false,
+ }: PropsWithChildren<AppScaffoldProps>) {
+-  const dispatch = useDispatch()
+-  const { Routes, Route, location } = useContext(RouterContext)
+-  const throttleRef = useRef(null)
++  const { Routes, Route } = useContext(RouterContext)
+   const pageScrollRef = useRef(null)
+   const mobileNavIsOpen = useSelector(layoutSelectors.mobileNavIsOpen)
+   const layout = useSelector(layoutSelectors.current)
+   const pageTitle = useSelector(layoutSelectors.pageTitle)
+   const pageDocLink = useSelector(layoutSelectors.pageDocLink)
+   const mobileFileBrowserIsOpen = useSelector(layoutSelectors.mobileFileBrowserIsOpen)
+-  const scrollKey = `${SCROLL_RESTORATION_KEYS.page}:${location.pathname}`
+-
+-  /**
+-   * Save scroll position.
+-   */
+-  const handlePageScroll = (e) => {
+-    if (throttleRef.current) {
+-      clearTimeout(throttleRef.current)
+-    }
+-    throttleRef.current = setTimeout(() => {
+-      dispatch(layoutActions.saveScrollPoint({ name: scrollKey, px: e.target.scrollTop }))
+-    }, 200)
+-  }
+ 
+   const hasPageTitleBar = () => {
+     const supportedLayouts = [
+@@ -63,6 +48,7 @@ function AppScaffold({
+       PAGE_LAYOUT.fixed,
+       PAGE_LAYOUT.files,
+       PAGE_LAYOUT.virtual,
++      PAGE_LAYOUT.procedural,
+     ]
+     if (supportedLayouts.includes(layout)) {
+       if (pageTitle || pageDocLink) {
+@@ -89,7 +75,6 @@ function AppScaffold({
+       <section
+         ref={pageScrollRef}
+         className={clsx('main-col', !!mobileNavIsOpen && 'mobile-menu-open')}
+-        onScroll={handlePageScroll}
+       >
+         <main className={clsx('page-content', !!mobileFileBrowserIsOpen && 'no-scroll')}>
+           {layout === PAGE_LAYOUT.files && <DirectoryTreeMobileButton />}

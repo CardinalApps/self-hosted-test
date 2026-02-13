@@ -1,131 +1,53 @@
 diff a/libraries/ui/src/components/features/AppBase/AppBase.css b/libraries/ui/src/components/features/AppBase/AppBase.css	(rejected hunks)
-@@ -547,3 +547,129 @@
-     z-index: 2;
-   }
+@@ -264,6 +264,25 @@
+   );
  }
+ 
++[data-layout="procedural"] {
 +
-+.procedural-layout {
-+  --numCols: 12;
-+  --gap: 10px;
-+  --rowHeight: calc(70px + calc(var(--gap) * 2));
++  .main-col {
++    height: 100%;
++    padding-top: 0;
++  }
 +
-+  display: flex;
-+  flex-wrap: wrap;
-+  justify-content: space-between;
-+  margin: 0 calc(var(--gap) * -1);
++  .page-content {
++    height: 100%;
++    padding: 0;
++    overflow: hidden;
++  }
 +
-+  .procedural-layout-block {
-+    padding-bottom: calc(var(--gap) * 2);
-+
-+    .procedural-layout-block-inner {
-+      height: 100%;
-+      margin: 0 calc(var(--gap));
-+      border-radius: 22px;
-+      overflow: hidden;
-+    }
-+
-+    /* 1 col wide */
-+    &[data-size="12x1"] {
-+      width: 100%;
-+      height: calc(1 * var(--rowHeight));
-+    }
-+    &[data-size="12x2"] {
-+      width: 100%;
-+      height: calc(2 * var(--rowHeight));
-+    }
-+    &[data-size="12x3"] {
-+      width: 100%;
-+      height: calc(3 * var(--rowHeight));
-+    }
-+    &[data-size="12x4"] {
-+      width: 100%;
-+      height: calc(4 * var(--rowHeight));
-+    }
-+    &[data-size="12x5"] {
-+      width: 100%;
-+      height: calc(5 * var(--rowHeight));
-+    }
-+    &[data-size="12x6"] {
-+      width: 100%;
-+      height: calc(6 * var(--rowHeight));
-+    }
-+
-+    /* 2 cols wide */
-+    &[data-size="6x1"] {
-+      width: 50%;
-+      height: calc(1 * var(--rowHeight));
-+    }
-+    &[data-size="6x2"] {
-+      width: 50%;
-+      height: calc(2 * var(--rowHeight));
-+    }
-+    &[data-size="6x3"] {
-+      width: 50%;
-+      height: calc(3 * var(--rowHeight));
-+    }
-+    &[data-size="6x4"] {
-+      width: 50%;
-+      height: calc(4 * var(--rowHeight));
-+    }
-+    &[data-size="6x5"] {
-+      width: 50%;
-+      height: calc(5 * var(--rowHeight));
-+    }
-+    &[data-size="6x6"] {
-+      width: 50%;
-+      height: calc(6 * var(--rowHeight));
-+    }
-+
-+    /* 3 cols wide */
-+    &[data-size="4x1"] {
-+      width: 33.3333%;
-+      height: calc(1 * var(--rowHeight));
-+    }
-+    &[data-size="4x2"] {
-+      width: 33.3333%;
-+      height: calc(2 * var(--rowHeight));
-+    }
-+    &[data-size="4x3"] {
-+      width: 33.3333%;
-+      height: calc(3 * var(--rowHeight));
-+    }
-+    &[data-size="4x4"] {
-+      width: 33.3333%;
-+      height: calc(4 * var(--rowHeight));
-+    }
-+    &[data-size="4x5"] {
-+      width: 33.3333%;
-+      height: calc(5 * var(--rowHeight));
-+    }
-+    &[data-size="4x6"] {
-+      width: 33.3333%;
-+      height: calc(6 * var(--rowHeight));
-+    }
-+
-+    /* Three-quarters col */
-+    &[data-size="8x1"] {
-+      width: 66.6666%;
-+      height: calc(1 * var(--rowHeight));
-+    }
-+    &[data-size="8x2"] {
-+      width: 66.6666%;
-+      height: calc(2 * var(--rowHeight));
-+    }
-+    &[data-size="8x3"] {
-+      width: 66.6666%;
-+      height: calc(3 * var(--rowHeight));
-+    }
-+    &[data-size="8x4"] {
-+      width: 66.6666%;
-+      height: calc(4 * var(--rowHeight));
-+    }
-+    &[data-size="8x5"] {
-+      width: 66.6666%;
-+      height: calc(5 * var(--rowHeight));
-+    }
-+    &[data-size="8x6"] {
-+      width: 66.6666%;
-+      height: calc(6 * var(--rowHeight));
-+    }
++  .page-title-bar {
++    padding-top: 23px;
++    padding-left: 10px;
 +  }
 +}
++
+ .app-header-row {
+   height: var(--header-height);
+   position: fixed;
+@@ -553,10 +572,13 @@
+   --gap: 10px;
+   --rowHeight: calc(70px + calc(var(--gap) * 2));
+ 
++  height: 100%;
++  padding: 0 10px;
+   display: flex;
+   flex-wrap: wrap;
++  align-content: flex-start;
+   justify-content: space-between;
+-  margin: 0 calc(var(--gap) * -1);
++  overflow-y: auto;
+ 
+   .procedural-layout-block {
+     padding-bottom: calc(var(--gap) * 2);
+@@ -568,6 +590,10 @@
+       overflow: hidden;
+     }
+ 
++    .procedural-layout-block-title {
++      margin-bottom: 0;
++    }
++
+     /* 1 col wide */
+     &[data-size="12x1"] {
+       width: 100%;

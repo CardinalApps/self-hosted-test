@@ -132,4 +132,20 @@ ProceduralLayout.Title = (props: PropsWithChildren<ProceduralTitleProps>) => {
   )
 }
 
+export type ProceduralTitleProps = {
+  style?: CSSProperties,
+}
+
+ProceduralLayout.Title = (props: PropsWithChildren<ProceduralTitleProps>) => {
+  return (
+    <div
+      className="procedural-layout-block"
+    >
+      <div className="procedural-layout-block-title page-title-bar" style={props.style}>
+        <H2 className="page-title">{props.children}</H2>
+      </div>
+    </div>
+  )
+}
+
 export default ProceduralLayout

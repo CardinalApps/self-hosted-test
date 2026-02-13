@@ -1,29 +1,30 @@
 diff a/apps/music-web/src/pages/ListenNow/ListenNowProcedural.tsx b/apps/music-web/src/pages/ListenNow/ListenNowProcedural.tsx	(rejected hunks)
-@@ -3,21 +3,14 @@ import TrueShuffle from './items/TrueShuffle'
+@@ -1,13 +1,27 @@
++import { useAppSelector } from '@cardinalapps/ui/src/hooks/useAppSelector'
++import { settingsSelectors } from '@cardinalapps/ui/src/store/slices/settings'
++
+ import ProceduralLayout from '@cardinalapps/ui/src/components/features/AppBase/layouts/Procedural'
+ import TrueShuffle from './items/TrueShuffle'
  
++import i18n from './i18n.json'
++
  function ListenNowProcedural() {
++  const { lang } = useAppSelector(settingsSelectors.current)
++
++  const listenNowLoadMore = () => {
++    console.log('load more')
++  }
  
--  const getInitialBlocks = () => {
--    return [
--      (
--        <ProceduralLayout.Block size='12x2' key="action-buttons">
--          <TrueShuffle />
--        </ProceduralLayout.Block>
--      ),
--    ]
--  }
--
    return (
      <ProceduralLayout
--      proceduralViewName={'music-listen-now'}
--      initialBlocks={getInitialBlocks()}
--    />
-+      name={'music-listen-now'}
-+    >
-+      <ProceduralLayout.Block size='12x1' key="action-buttons">
-+        <TrueShuffle />
-+      </ProceduralLayout.Block>
-+    </ProceduralLayout>
-   )
- }
- 
+       name={'music-listen-now'}
++      onLoadMore={listenNowLoadMore}
+     >
+-      <ProceduralLayout.Block size='12x1' key="action-buttons">
++      <ProceduralLayout.Title>
++        {i18n['title'][lang]}
++      </ProceduralLayout.Title>
++      <ProceduralLayout.Block size='12x1'>
+         <TrueShuffle />
+       </ProceduralLayout.Block>
+     </ProceduralLayout>
