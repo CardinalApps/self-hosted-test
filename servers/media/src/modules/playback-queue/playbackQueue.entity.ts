@@ -6,7 +6,7 @@ import {
   Generated,
 } from 'typeorm'
 
-import { QueueType, DynamicQueueName } from '@cardinalapps/types/dist/cjs/playback-queue'
+import { QueueType, DynamicQueueType } from '@cardinalapps/types/dist/cjs/playback-queue'
 
 import { BaseEntity } from '../../entities/base.entity'
 import { User } from '../user/user.entity'
@@ -25,5 +25,5 @@ export class Queue extends BaseEntity {
   type: QueueType
 
   @Column({ nullable: true })
-  dynamicName: DynamicQueueName
+  dynamicType: DynamicQueueType
 }

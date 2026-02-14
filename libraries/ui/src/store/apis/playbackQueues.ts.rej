@@ -1,0 +1,16 @@
+diff a/libraries/ui/src/store/apis/playbackQueues.ts b/libraries/ui/src/store/apis/playbackQueues.ts	(rejected hunks)
+@@ -1,4 +1,4 @@
+-import { DynamicQueueName, QueueType } from '@cardinalapps/types/src/playback-queue'
++import { DynamicQueueType, QueueType } from '@cardinalapps/types/src/playback-queue'
+ 
+ import queryParams from '../../lib/net/queryParams'
+ import { UserType } from '../../types/user'
+@@ -10,7 +10,7 @@ export type QueueT = {
+   createdAt?: string,
+   user: UserType,
+   type: QueueType,
+-  dynamicName?: DynamicQueueName,
++  dynamicName?: DynamicQueueType,
+ }
+ 
+ export const playbackQueueApi = baseHomeServerApi

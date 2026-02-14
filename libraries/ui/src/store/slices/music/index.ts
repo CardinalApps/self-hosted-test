@@ -50,6 +50,12 @@ type PlayerLoaded = {
   playerId?: string,
 }
 
+export type ServerQueue = {
+  type: QueueType,
+  dynamicType: DynamicQueueType,
+  queueId: string,
+}
+
 const audioSlice = createSlice({
   name: STORE_KEY,
   initialState,

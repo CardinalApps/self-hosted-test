@@ -1,21 +1,31 @@
 diff a/libraries/ui/src/store/slices/music/index.ts b/libraries/ui/src/store/slices/music/index.ts	(rejected hunks)
-@@ -30,7 +30,7 @@ type PlayerLoaded = {
+@@ -4,11 +4,13 @@ import { globalActions } from '../../constants/actions'
+ import playMusic from './thunks/play'
+ 
+ import { STORE_KEY, PLAYER, PLAYBACK_STATE } from './constants'
++import { DynamicQueueType, QueueType } from '@cardinalapps/types/src/playback-queue'
+ 
+ export type Player = {
+   id: string,
    playerId?: string,
- }
+   trackId: string,
++  queueId: string,
+   state: string,
+   currentPlaybackStartedAt: number,
+   initializedAt: number,
+@@ -89,13 +97,14 @@ const audioSlice = createSlice({
+         const { create, remove, resume, pause } = payload
  
--const musicSlice = createSlice({
-+const audioSlice = createSlice({
-   name: STORE_KEY,
-   initialState,
-   reducers: {
-@@ -159,7 +159,7 @@ const selectLoading = createSelector((state) => state.players, (players) => {
-     .filter((player: Player) => player.state === PLAYBACK_STATE.LOADING)
- })
+         // Add new players
+-        for (const { trackId, generatedPlayerId, now } of create) {
++        for (const { trackId, generatedPlayerId, now, queueId } of create) {
+           state.players[generatedPlayerId] = {
+             ...PLAYER,
+             id: generatedPlayerId,
+             initializedAt: now,
+             currentPlaybackStartedAt: now,
+             trackId,
++            queueId,
+           }
+         }
  
--export const musicSelectors = musicSlice.selectors
--export const musicActions = musicSlice.actions
-+export const audioSelectors = audioSlice.selectors
-+export const audioActions = audioSlice.actions
- 
--export default musicSlice
-+export default audioSlice
