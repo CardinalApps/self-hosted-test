@@ -3,17 +3,8 @@ diff a/servers/media/src/modules/app/app.module.ts b/servers/media/src/modules/a
  import { MusicHistoryModule } from '../music-history/music-history.module'
  import { InvitationModule } from '../invitation/invitation.module'
  import { ClaimModule } from '../claim/claim.module'
--import { QueueModule } from '../queue/queue.module'
-+import { PlaybackQueueModule } from '../playback-queue/playbackQueue.module'
+-import { PlaybackQueueModule } from '../playback-queue/playbackQueue.module'
++import { PlaybackQueueModule } from '../playback-queue/playback-queue.module'
  
  import { HTTPLoggerMiddleware } from '../../middleware/HTTPLogger.middleware'
  import { RevokeDisabledUserSessions } from '../../middleware/RevokeDisabledUserSessions.middleware'
-@@ -124,7 +124,7 @@ const resolvePostgresHost = () => {
-     LibraryModule,
-     MusicHistoryModule,
-     InvitationModule,
--    QueueModule,
-+    PlaybackQueueModule,
-     ClaimModule,
-     // Serve static SPAs, for static files like images use "useStaticAssets" in main.js
-     ServeStaticModule.forRoot({
