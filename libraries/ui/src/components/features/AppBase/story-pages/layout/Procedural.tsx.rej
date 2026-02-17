@@ -1,34 +1,17 @@
 diff a/libraries/ui/src/components/features/AppBase/story-pages/layout/Procedural.tsx b/libraries/ui/src/components/features/AppBase/story-pages/layout/Procedural.tsx	(rejected hunks)
-@@ -4,21 +4,23 @@ import ProceduralLayout, { ProceduralBlockSize } from '../../layouts/Procedural'
- import { PAGE_LAYOUT } from '../../../../../store/slices/layout'
- 
- function ProceduralPage() {
-+  const example = () => [12, 6, 4].map((col) => {
-+    return [1, 2, 3, 4, 5, 6].map((row) => {
-+      const size = `${col}x${row}` as ProceduralBlockSize
-+      return (
-+        <ProceduralLayout.Block size={size} style={{ backgroundColor: 'var(--bg-4)', padding: 20 }} key={size}>
-+          {size}
-+        </ProceduralLayout.Block>
-+      )
-+    })
-+  })
+@@ -15,11 +15,14 @@ function ProceduralPage() {
+     })
+   })
    return (
-     <AppPage layout={PAGE_LAYOUT.procedural} pageTitle="Layout: procedural">
+-    <AppPage layout={PAGE_LAYOUT.procedural} pageTitle="Layout: procedural">
++    <AppPage layout={PAGE_LAYOUT.procedural}>
        <ProceduralLayout
          name='sandbox'
          className='procedural-layout-demo'
        >
--        {[12, 6, 4].map((col) => {
--          return [1, 2, 3, 4, 5, 6].map((row) => {
--            return (
--              <ProceduralLayout.Block size={`${col}x${row}` as ProceduralBlockSize} style={{ backgroundColor: 'var(--bg-4)', padding: 20 }}>
--                {`${col}x${row}`}
--              </ProceduralLayout.Block>
--            )
--          })
--        })}
-+        {example()}
++        <ProceduralLayout.Title>
++          Layout: Procedural
++        </ProceduralLayout.Title>
+         {example()}
          <ProceduralLayout.Block size="8x4" style={{ backgroundColor: 'var(--bg-4)', padding: 20 }}>
            8x4
-         </ProceduralLayout.Block>
