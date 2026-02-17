@@ -1,9 +1,14 @@
 diff a/libraries/ui/src/components/interaction/UserMenu/UserMenu.css b/libraries/ui/src/components/interaction/UserMenu/UserMenu.css	(rejected hunks)
-@@ -42,7 +42,6 @@
-       right: 0;
-       bottom: -466px;
-       overflow: hidden;
--      border: 1px solid var(--border-color-3);
-       border-radius: 40px;
-       box-shadow: var(--box-shadow-2);
+@@ -240,6 +240,12 @@
  
+     .switch-away {
+ 
++      .sep {
++        font-size: 14px;
++        font-weight: 400;
++        margin: 0 5px;
++      }
++
+       button {
+         padding: 0;
+         margin: 0;
