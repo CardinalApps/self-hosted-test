@@ -1,13 +1,37 @@
 diff a/libraries/ui/src/store/slices/music/thunks/play.ts b/libraries/ui/src/store/slices/music/thunks/play.ts	(rejected hunks)
-@@ -100,7 +100,10 @@ const playMusic = createAsyncThunk<
-         body: {
-           type: queueType,
-           dynamicType: dynamicQueueType,
--          libraries: currentLibraries.map((id) => ({ libraryId: id })),
-+          ...(currentLibraries?.length
-+            ? { libraries: currentLibraries.map((id) => ({ libraryId: id })) }
-+            : {}
-+          ),
-         },
+@@ -23,7 +23,7 @@ export type PlayReturn = {
+     trackId: string,
+     generatedPlayerId: string,
+     now: number,
+-    queueId: string,
++    queue: ServerQueue,
+   }>,
+   pause: Array<{
+     playerId?: string,
+@@ -91,7 +91,7 @@ const playMusic = createAsyncThunk<
+   // When no player exists, create a new one
+   if (!resolvedPlayerId) {
+     let trackIdToPlay = trackId
+-    let queueId
++    let queue
+ 
+     // Maybe create a queue
+     if (queueType) {
+@@ -108,7 +108,7 @@ const playMusic = createAsyncThunk<
        })
  
+       // Now kith (I wrote this on valentines day)
+-      queueId = serverQueue.queueId
++      queue = serverQueue
+ 
+       // Play the first item in the queue if no trackId was explicitly set
+       if (!trackId) {
+@@ -123,7 +123,7 @@ const playMusic = createAsyncThunk<
+ 
+     workToDo.create?.push({
+       trackId: trackIdToPlay,
+-      queueId,
++      queue,
+       generatedPlayerId: uuid(),
+       now: Date.now(),
+     })

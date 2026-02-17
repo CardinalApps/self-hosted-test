@@ -50,18 +50,6 @@ type PlayerLoaded = {
   playerId?: string,
 }
 
-export type QueueItem = {
-  mediaType: 'musicTrack',
-  mediaId: string,
-}
-
-export type ServerQueue = {
-  type: QueueType,
-  dynamicType: DynamicQueueType,
-  queueId: string,
-  items: QueueItem[],
-}
-
 const audioSlice = createSlice({
   name: STORE_KEY,
   initialState,

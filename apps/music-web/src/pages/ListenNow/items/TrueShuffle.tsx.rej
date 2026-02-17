@@ -1,35 +1,42 @@
 diff a/apps/music-web/src/pages/ListenNow/items/TrueShuffle.tsx b/apps/music-web/src/pages/ListenNow/items/TrueShuffle.tsx	(rejected hunks)
-@@ -2,26 +2,22 @@ import { useAppSelector } from '@cardinalapps/ui/src/hooks/useAppSelector'
+@@ -1,15 +1,21 @@
++import { useEffect, useState } from 'react'
+ import { useAppSelector } from '@cardinalapps/ui/src/hooks/useAppSelector'
  import Button from '@cardinalapps/ui/src/components/interaction/Button'
++import { PLAYBACK_STATE } from '@cardinalapps/ui/src/store/slices/music/constants'
  
  import { settingsSelectors } from '@cardinalapps/ui/src/store/slices/settings'
--import { useCreateQueueMutation } from '@cardinalapps/ui/src/store/apis/playbackQueues'
-+import { useAppDispatch } from '@cardinalapps/ui/src/hooks/useAppDispatch'
-+import play from '@cardinalapps/ui/src/store/slices/music/thunks/play'
+ import { useAppDispatch } from '@cardinalapps/ui/src/hooks/useAppDispatch'
+ import play from '@cardinalapps/ui/src/store/slices/music/thunks/play'
  
  import i18n from '../i18n.json'
--import { useEffect } from 'react'
++import { audioSelectors, Player } from '@cardinalapps/ui/src/store/slices/music'
  
  function ActionButtons() {
-+  const dispatch = useAppDispatch()
+   const dispatch = useAppDispatch()
    const { lang } = useAppSelector(settingsSelectors.current)
--  const [createQueue, createQueueResult] = useCreateQueueMutation()
++  const playingIds = useAppSelector(audioSelectors.playingIds)
++  const playingPlayers = useAppSelector(audioSelectors.playing)
++  const [partyTime, setPartyTime] = useState<boolean>(false)
  
    const handleStartTrueShuffle = () => {
--    createQueue({
--      type: 'dynamic',
--      dynamicName: 'true_shuffle',
--    })
-+    dispatch(play({
-+      queueType: 'dynamic',
-+      dynamicQueueType: 'true_shuffle',
-+    }))
+     dispatch(play({
+@@ -18,9 +24,18 @@ function ActionButtons() {
+     }))
    }
  
--  useEffect(() => {
--
--  }, [createQueueResult.isSuccess])
--
++  useEffect(() => {
++    const atLeastOnePlayerPlayerIsTrueShuffle = playingPlayers.find((player: Player) => {
++      return player.state === PLAYBACK_STATE.PLAYING && player.queue?.dynamicType === 'true_shuffle'
++    })
++    setPartyTime(!!atLeastOnePlayerPlayerIsTrueShuffle)
++  }, [playingIds])
++
    return (
      <Button
        action
++      actionButtonName='true-shuffle'
++      partyTime={partyTime}
+       icon="fas fa-random"
+       onClick={handleStartTrueShuffle}
+     >
