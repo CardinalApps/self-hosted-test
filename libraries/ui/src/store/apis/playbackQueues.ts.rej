@@ -1,28 +1,40 @@
 diff a/libraries/ui/src/store/apis/playbackQueues.ts b/libraries/ui/src/store/apis/playbackQueues.ts	(rejected hunks)
-@@ -28,7 +28,7 @@ export const playbackQueueApi = baseHomeServerApi
-         }
-       >({
-         query: ({ take, skip, order, orderBy, type }) => {
--          return queryParams('/playback-queue', {
-+          return queryParams('/playback-queues', {
-             ...(take && { take }),
-             ...(skip && { skip }),
-             ...(order && { order }),
-@@ -44,7 +44,7 @@ export const playbackQueueApi = baseHomeServerApi
-         Partial<QueueT>
-       >({
-         query: (body) => ({
--          url: '/playback-queue',
-+          url: '/playback-queues',
-           method: 'POST',
-           body,
-         }),
-@@ -56,7 +56,7 @@ export const playbackQueueApi = baseHomeServerApi
-         string
-       >({
-         query: (id) => ({
--          url: `playback-queue/${id}`,
-+          url: `/playback-queues/${id}`,
-           method: 'DELETE',
-         }),
-         invalidatesTags: ['PlaybackQueue.List'],
+@@ -5,7 +5,11 @@ import { UserType } from '../../types/user'
+ 
+ import { CommonOrderParams, PaginationParams } from '../types/api'
+ import { baseHomeServerApi } from './baseHomeServerApi'
++import { QueueItem, ServerQueue } from '../slices/music'
+ 
++/**
++ * @deprecated
++ */
+ export type QueueT = {
+   createdAt?: string,
+   user: UserType,
+@@ -19,6 +23,18 @@ export const playbackQueueApi = baseHomeServerApi
+   })
+   .injectEndpoints({
+     endpoints: (builder) => ({
++      getQueue: builder.query<
++        ServerQueue,
++        {
++          queueId: string,
++        }
++      >({
++        query: ({
++          queueId,
++        }) => queryParams(`/playback-queues/${queueId}`, {
++        }),
++      }),
++
+       getQueues: builder.query<
+         [QueueT[], number],
+         PaginationParams & {
+@@ -66,6 +99,7 @@ export const playbackQueueApi = baseHomeServerApi
+ 
+ export const {
+   useGetQueuesQuery,
++  useGetQueueItemsQuery,
+   useCreateQueueMutation,
+   useDeleteQueueMutation,
+ } = playbackQueueApi

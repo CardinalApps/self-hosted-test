@@ -1,19 +1,32 @@
 diff a/libraries/ui/src/components/interaction/MusicTrack/MusicTrack.tsx b/libraries/ui/src/components/interaction/MusicTrack/MusicTrack.tsx	(rejected hunks)
-@@ -5,7 +5,7 @@ import Icon from '../../typography/Icon'
- import MusicPlaybackButton from '../MusicPlaybackButton'
+@@ -25,6 +25,7 @@ type MusicTrackProps = {
+   duration?: string,
+   plays?: number,
+   hasArtwork?: boolean,
++  canFav?: boolean,
+ }
  
- //import { settingsSelectors } from '../../../store/slices/settings'
--import { musicSelectors } from '../../../store/slices/music'
-+import { audioSelectors } from '../../../store/slices/music'
- import playMusic from '../../../store/slices/music/thunks/play'
- import { RouterContext } from '../../../context/router'
- 
-@@ -43,7 +43,7 @@ const MusicTrack = ({
+ const MusicTrack = ({
+@@ -39,6 +40,7 @@ const MusicTrack = ({
+   duration,
+   plays,
+   hasArtwork = true,
++  canFav = true,
+ }: PropsWithChildren<MusicTrackProps>) => {
    const dispatch = useAppDispatch()
    const { Link } = useContext(RouterContext)
-   //const { lang } = useSelector(settingsSelectors.current)
--  const playing = useSelector(musicSelectors.playing)
-+  const playing = useSelector(audioSelectors.playing)
-   const artwork = useReleaseCover(hasArtwork ? releaseId : null)
- 
-   const handleDoubleClick = (e) => {
+@@ -91,9 +93,11 @@ const MusicTrack = ({
+       </div>
+       {!!duration && <p className="col music-track-duration">{duration}</p>}
+       {!!plays && <p className="col music-track-plays"><span>{plays}</span></p>}
+-      <div className="col music-track-favorite">
+-        <Icon fa="fas fa-star" hoverType="icon" onClick={() => console.log('fav')} />
+-      </div>
++      {!!canFav &&
++        <div className="col music-track-favorite">
++          <Icon fa="fas fa-star" hoverType="icon" onClick={() => console.log('fav')} />
++        </div>
++      }
+       {!!artwork &&
+         <div className="col music-track-artwork">
+           <img src={artwork} />

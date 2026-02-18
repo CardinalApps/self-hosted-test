@@ -1,0 +1,21 @@
+diff a/servers/media/src/modules/playback-queue/playback-queue.module.ts b/servers/media/src/modules/playback-queue/playback-queue.module.ts	(rejected hunks)
+@@ -11,6 +11,7 @@ import { LibraryModule } from '../library/library.module'
+ import { DynamicPlayback } from './dynamic-playback-queue.service'
+ import { PlaybackQueueItem } from './playback-queue-item.entity'
+ import { MusicTrackModule } from '../music-track/music-track.module'
++import { QueueItemService } from './playback-queue-item.service'
+ 
+ @Module({
+   imports: [
+@@ -22,9 +23,10 @@ import { MusicTrackModule } from '../music-track/music-track.module'
+   exports: [
+     TypeOrmModule,
+     QueueService,
++    QueueItemService,
+     DynamicPlayback,
+   ],
+-  providers: [QueueService, DynamicPlayback],
++  providers: [QueueService, QueueItemService, DynamicPlayback],
+   controllers: [PlaybackQueueController],
+ })
+ export class PlaybackQueueModule {}

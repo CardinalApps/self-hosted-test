@@ -1,0 +1,9 @@
+diff a/libraries/ui/src/components/features/AudioPlayer/index.ts b/libraries/ui/src/components/features/AudioPlayer/index.ts	(rejected hunks)
+@@ -1,5 +1,5 @@
+ import AudioPlayer from './AudioPlayer'
+-import GlobalAudioPlayer from './GlobalAudioPlayer'
++import MiniAudioPlayer from './MiniAudioPlayer'
+ 
+-export { AudioPlayer, GlobalAudioPlayer }
++export { AudioPlayer, MiniAudioPlayer }
+ export default AudioPlayer
