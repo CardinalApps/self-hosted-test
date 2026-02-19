@@ -1,14 +1,20 @@
 diff a/libraries/ui/src/store/slices/music/thunks/play.ts b/libraries/ui/src/store/slices/music/thunks/play.ts	(rejected hunks)
-@@ -119,6 +119,12 @@ const playMusic = createAsyncThunk<
+@@ -113,7 +113,7 @@ const playMusic = createAsyncThunk<
+       // Play the first item in the queue if no trackId was explicitly set
+       if (!trackId) {
+         const firstItem = serverQueue?.items?.[0]
+-        if (firstItem && firstItem?.mediaType === 'musicTrack' && firstItem?.mediaId) {
++        if (firstItem && firstItem?.mediaType === 'music_track' && firstItem?.mediaId) {
+           trackIdToPlay = firstItem?.mediaId
+         } else {
            console.error('Could not start playback because the first item in the queue is either missing or not a music track.', firstItem)
-         }
+@@ -123,7 +123,8 @@ const playMusic = createAsyncThunk<
+       // Don't save the queue items so that they cannot be used accidentially;
+       // always use the server state instead
+       if ('items' in queue) {
+-        delete queue.items
++        // TODO copy first queue item into local state, delete rest
++        //delete queue.items
        }
-+
-+      // Don't save the queue items so that they cannot be used accidentially;
-+      // always use the server state instead
-+      if ('items' in queue) {
-+        delete queue.items
-+      }
      }
  
-     workToDo.create?.push({

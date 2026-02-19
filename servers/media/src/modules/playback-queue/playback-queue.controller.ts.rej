@@ -1,51 +1,30 @@
 diff a/servers/media/src/modules/playback-queue/playback-queue.controller.ts b/servers/media/src/modules/playback-queue/playback-queue.controller.ts	(rejected hunks)
-@@ -25,12 +25,16 @@ import { CreatePlaybackQueueDto } from './dtos/CreatePlaybackQueue'
- import { DeletePlaybackQueueDto } from './dtos/DeletePlaybackQueueDto'
- import { User } from '../user/user.entity'
- import { StandardEndpoint } from '../../decorators/StandardEndpoint.decorator'
-+import { QueryPlaybackQueueItemsDto } from './dtos/QueryPlaybackQueueItem.dto'
-+import { PlaybackQueueItem } from './playback-queue-item.entity'
-+import { QueueItemService } from './playback-queue-item.service'
+@@ -28,6 +28,7 @@ import { StandardEndpoint } from '../../decorators/StandardEndpoint.decorator'
+ import { QueryPlaybackQueueItemsDto } from './dtos/QueryPlaybackQueueItem.dto'
+ import { PlaybackQueueItem } from './playback-queue-item.entity'
+ import { QueueItemService } from './playback-queue-item.service'
++import { CreatePlaybackQueueNextItemsDto } from './dtos/CreatePlaybackQueueNextItems'
  
  @Controller('/playback-queues')
  @ApiTags('Playback Queues')
- export class PlaybackQueueController {
-   constructor(
-     private readonly playbackQueueService: QueueService,
-+    private readonly playbackQueueItemService: QueueItemService,
-     private readonly eventService: EventService,
-   ) {}
+@@ -121,4 +122,20 @@ export class PlaybackQueueController {
  
-@@ -42,7 +46,9 @@ export class PlaybackQueueController {
-     summary: 'Get a queue.',
-     //capabilities: ['Invitations.Read'],
-   })
--  async getPlaybackQueue(@Param() { id }: GetPlaybackQueueDto): Promise<PlaybackQueue> {
-+  async getPlaybackQueue(
-+    @Param() { id }: GetPlaybackQueueDto,
-+  ): Promise<PlaybackQueue> {
-     const queue = await this.playbackQueueService.get(id)
- 
-     if (!queue) {
-@@ -64,6 +70,21 @@ export class PlaybackQueueController {
-     return await this.playbackQueueService.query(query)
+     return await this.playbackQueueService.delete(id)
    }
- 
-+  /**
-+   * Query queue items.
-+   */
-+  @Get('/:id/items')
-+  @StandardEndpoint({
-+    summary: 'Query queues.',
-+    //capabilities: ['Invitations.Read'],
-+  })
-+  async queryPlaybackQueueItems(
-+    @Param() { id }: GetPlaybackQueueDto,
-+    @Query() query: QueryPlaybackQueueItemsDto,
-+  ): Promise<[PlaybackQueueItem[], number]> {
-+    return await this.playbackQueueItemService.query(id, query)
-+  }
 +
-   /**
-    * Create a queue.
-    */
++  /**
++   * Add items to a dynamic queue.
++   */
++  @Post('/:id/extend')
++  @StandardEndpoint({
++    summary: 'Add items to a dynamic queue.',
++    //capabilities: ['Invitations.Create'],
++  })
++  async extend(
++    @CurrentUser() user: User,
++    @Body() extendPlaybackQueueDto: CreatePlaybackQueueNextItemsDto,
++  ): Promise<void> {
++    console.log(extendPlaybackQueueDto)
++    return
++  }
+ }

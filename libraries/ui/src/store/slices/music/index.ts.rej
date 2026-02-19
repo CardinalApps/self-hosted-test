@@ -1,47 +1,10 @@
 diff a/libraries/ui/src/store/slices/music/index.ts b/libraries/ui/src/store/slices/music/index.ts	(rejected hunks)
-@@ -4,13 +4,27 @@ import { DynamicQueueType, QueueType } from '@cardinalapps/types/src/playback-qu
- import { globalActions } from '../../constants/actions'
- import playMusic from './thunks/play'
- 
-+import { Library } from '../../apis/libraries'
+@@ -8,7 +8,7 @@ import { Library } from '../../apis/libraries'
  import { STORE_KEY, PLAYER, PLAYBACK_STATE } from './constants'
  
-+export type QueueItem = {
-+  mediaType: 'musicTrack',
-+  mediaId: string,
-+  libraries: Library[],
-+}
-+
-+export type ServerQueue = {
-+  type: QueueType,
-+  dynamicType: DynamicQueueType,
-+  queueId: string,
-+  items?: QueueItem[],
-+}
-+
- export type Player = {
-   id: string,
-   playerId?: string,
-   trackId: string,
--  queueId: string,
-+  queue: ServerQueue,
-   state: string,
-   currentPlaybackStartedAt: number,
-   initializedAt: number,
-@@ -103,14 +105,14 @@ const audioSlice = createSlice({
-         const { create, remove, resume, pause } = payload
- 
-         // Add new players
--        for (const { trackId, generatedPlayerId, now, queueId } of create) {
-+        for (const { trackId, generatedPlayerId, now, queue } of create) {
-           state.players[generatedPlayerId] = {
-             ...PLAYER,
-             id: generatedPlayerId,
-             initializedAt: now,
-             currentPlaybackStartedAt: now,
-             trackId,
--            queueId,
-+            queue,
-           }
-         }
- 
+ export type QueueItem = {
+-  mediaType: 'musicTrack',
++  mediaType: 'music_track',
+   mediaId: string,
+   libraries: Library[],
+ }
