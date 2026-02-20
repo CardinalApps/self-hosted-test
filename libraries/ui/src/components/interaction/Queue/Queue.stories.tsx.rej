@@ -1,0 +1,12 @@
+diff a/libraries/ui/src/components/interaction/Queue/Queue.stories.tsx b/libraries/ui/src/components/interaction/Queue/Queue.stories.tsx	(rejected hunks)
+@@ -10,7 +10,9 @@ const meta = {
+ type Story = StoryObj<typeof meta>
+ 
+ export const MusicQueue: Story = {
+-  args: {},
++  args: {
++    layout: 'list',
++  },
+ }
+ 
+ export default meta
