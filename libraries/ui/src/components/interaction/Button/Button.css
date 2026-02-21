@@ -228,6 +228,23 @@
     }
   }
 
+  &.circle-icon {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+
+    .span-icon {
+      min-height: auto;
+
+      i {
+        margin-right: 0;
+      }
+    }
+  }
+
   &.animation {
     transform: translateY(0px) !important;
   }

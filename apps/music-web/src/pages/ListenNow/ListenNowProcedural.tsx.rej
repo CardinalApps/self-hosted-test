@@ -1,30 +1,22 @@
 diff a/apps/music-web/src/pages/ListenNow/ListenNowProcedural.tsx b/apps/music-web/src/pages/ListenNow/ListenNowProcedural.tsx	(rejected hunks)
-@@ -1,13 +1,27 @@
-+import { useAppSelector } from '@cardinalapps/ui/src/hooks/useAppSelector'
-+import { settingsSelectors } from '@cardinalapps/ui/src/store/slices/settings'
-+
+@@ -3,6 +3,7 @@ import { settingsSelectors } from '@cardinalapps/ui/src/store/slices/settings'
+ 
  import ProceduralLayout from '@cardinalapps/ui/src/components/features/AppBase/layouts/Procedural'
  import TrueShuffle from './items/TrueShuffle'
++import RecentlyAddedReleases from './items/RecentlyAddedReleases'
  
-+import i18n from './i18n.json'
-+
- function ListenNowProcedural() {
-+  const { lang } = useAppSelector(settingsSelectors.current)
-+
-+  const listenNowLoadMore = () => {
-+    console.log('load more')
-+  }
+ import i18n from './i18n.json'
  
-   return (
-     <ProceduralLayout
-       name={'music-listen-now'}
-+      onLoadMore={listenNowLoadMore}
-     >
--      <ProceduralLayout.Block size='12x1' key="action-buttons">
-+      <ProceduralLayout.Title>
-+        {i18n['title'][lang]}
-+      </ProceduralLayout.Title>
-+      <ProceduralLayout.Block size='12x1'>
+@@ -24,6 +25,12 @@ function ListenNowProcedural() {
+       <ProceduralLayout.Block size='12x1'>
          <TrueShuffle />
        </ProceduralLayout.Block>
++      <ProceduralLayout.Block size='12x3'>
++        <RecentlyAddedReleases />
++      </ProceduralLayout.Block>
++      <ProceduralLayout.Block size='12x3'>
++        <TrueShuffle />
++      </ProceduralLayout.Block>
      </ProceduralLayout>
+   )
+ }
