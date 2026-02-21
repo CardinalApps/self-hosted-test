@@ -136,6 +136,7 @@ export const musicReleasesApi = baseHomeServerApi
 export const {
   useGetInfiniteMusicReleasesInfiniteQuery,
   useGetMusicReleaseQuery,
+  useGetNewMusicReleasesQuery,
   useGetMusicReleasesQuery,
   useLazyGetMusicReleaseQuery,
   useLazyGetMusicReleasesQuery,

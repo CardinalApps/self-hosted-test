@@ -1,10 +1,20 @@
 diff a/servers/media/src/modules/music-release/dtos/GetMusicReleases.dto.ts b/servers/media/src/modules/music-release/dtos/GetMusicReleases.dto.ts	(rejected hunks)
-@@ -14,7 +14,7 @@ class MusicReleasesPagination extends Pagination {
-   @IsOptional()
-   @IsString()
-   @IsIn(Object.values(AllowedMusicReleasesOrderBy))
--  orderBy?: AllowedMusicReleasesOrderBy = AllowedMusicReleasesOrderBy.createdAt
-+  sort?: AllowedMusicReleasesOrderBy = AllowedMusicReleasesOrderBy.createdAt
- }
+@@ -1,7 +1,8 @@
+ import { Transform } from 'class-transformer'
+-import { IsBoolean, IsString, IsOptional, IsIn } from 'class-validator'
++import { IsBoolean, IsString, IsOptional, IsIn, IsArray } from 'class-validator'
  
- export class GetMusicReleasesDto extends MusicReleasesPagination {
+ import { Pagination } from '../../../dtos/pagination.dto'
++import { Library } from '../../library/library.entity'
+ 
+ enum AllowedMusicReleasesOrderBy {
+   'createdAt' = 'createdAt',
+@@ -42,4 +43,8 @@ export class GetMusicReleasesDto extends MusicReleasesPagination {
+   @IsOptional()
+   @IsBoolean()
+   metadata?: boolean = false
++
++  @IsArray()
++  @IsOptional()
++  libraries?: Partial<Library>[]
+ }

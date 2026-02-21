@@ -1,6 +1,5 @@
 import { Transform } from 'class-transformer'
 import { IsNumber, IsOptional, IsIn } from 'class-validator'
-import { FindOptionsOrderValue } from 'typeorm'
 
 /**
  * Base fields for pagination.

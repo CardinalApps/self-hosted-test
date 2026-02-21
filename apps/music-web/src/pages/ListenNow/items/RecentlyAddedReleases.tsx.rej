@@ -1,0 +1,34 @@
+diff a/apps/music-web/src/pages/ListenNow/items/RecentlyAddedReleases.tsx b/apps/music-web/src/pages/ListenNow/items/RecentlyAddedReleases.tsx	(rejected hunks)
+@@ -1,19 +1,30 @@
+ import { useAppSelector } from '@cardinalapps/ui/src/hooks/useAppSelector'
+ import Carousel from '@cardinalapps/ui/src/components/interaction/Carousel'
++import { useGetNewMusicReleasesQuery } from '@cardinalapps/ui/src/store/apis/musicReleases'
+ 
+ import { settingsSelectors } from '@cardinalapps/ui/src/store/slices/settings'
+ 
+ import i18n from '../i18n.json'
+ 
+-function ActionButtons() {
++function RecentlyAddedReleases() {
+   const { lang } = useAppSelector(settingsSelectors.current)
+ 
++  const {
++    data,
++  } = useGetNewMusicReleasesQuery({})
++
++  const releases = data || []
++
++  console.log(releases)
++
+   return (
+     <Carousel
+       title={i18n['recently-added-releases.title'][lang]}
++      next={true}
++      prev={true}
+       items={[]}
+     />
+   )
+ }
+ 
+-export default ActionButtons
++export default RecentlyAddedReleases

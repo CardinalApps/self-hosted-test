@@ -1,23 +1,40 @@
 diff a/libraries/ui/src/components/interaction/Toolbar/items/Order/Order.tsx b/libraries/ui/src/components/interaction/Toolbar/items/Order/Order.tsx	(rejected hunks)
-@@ -3,18 +3,15 @@ import { useSelector } from 'react-redux'
- import { settingsSelectors } from '../../../../../store/slices/settings'
+@@ -4,14 +4,14 @@ import { settingsSelectors } from '../../../../../store/slices/settings'
  import { layoutSelectors } from '../../../../../store/slices/layout'
  
-+import { CommonOrderParams } from '../../../../../store/types/api'
-+
+ import { CommonOrderParams } from '../../../../../store/types/api'
++import { ToolbarItemProps, ToolbarItem } from '../../types'
+ 
  import i18n from './i18n'
  
  import './Order.css'
- import { ToolbarItemProps, ToolbarItem } from '../../types'
+-import { ToolbarItemProps, ToolbarItem } from '../../types'
  
--export enum Order {
--  ASC = 'asc',
--  DESC = 'desc',
--}
--
  export const SLUG = ToolbarItem.ORDER
--export const DEFAULT_VALUE = Order.ASC
-+export const DEFAULT_VALUE: CommonOrderParams = 'asc'
+-export const DEFAULT_VALUE: CommonOrderParams = 'asc'
++export const DEFAULT_VALUE: CommonOrderParams = 'ASC'
  
  /**
   * This toolbar item is used for setting the order (ascending or descending) of
+@@ -29,7 +29,7 @@ const ToolbarOrder = ({
+   const order = toolbarValues?.order || DEFAULT_VALUE
+ 
+   const onIconClick = () => {
+-    const newVal = order === 'asc' ? 'desc' : 'asc'
++    const newVal = order === 'ASC' ? 'DESC' : 'ASC'
+     onChange(SLUG, newVal, toolbarValues)
+   }
+ 
+@@ -37,10 +37,10 @@ const ToolbarOrder = ({
+     <div className="order">
+       <button
+         className="toolbar-button"
+-        title={i18n[`order.${order}`][lang]}
++        title={i18n[`order.${order}`]?.[lang]}
+         onClick={onIconClick}
+       >
+-        {order === 'asc'
++        {order === 'ASC'
+           ? <i className="toolbar-icon fas fa-sort-amount-up-alt" />
+           : <i className="toolbar-icon fas fa-sort-amount-down-alt" />
+         }

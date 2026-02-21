@@ -1,35 +1,54 @@
 diff a/servers/media/src/modules/music-release/music-release.service.ts b/servers/media/src/modules/music-release/music-release.service.ts	(rejected hunks)
-@@ -52,18 +52,24 @@ export class MusicReleaseService {
-     const where = isNumeric(id)
-       ? { id: id as number }
-       : { musicReleaseId: id as string }
--    const musicRelease = await this.musicReleaseRepository.find({
--      where,
+@@ -120,25 +120,37 @@ export class MusicReleaseService {
+   }
+ 
+   /**
+-   * Returns all releases according to the query.
++   * Returns new music releases.
+    */
+   async query(getMusicReleasesDto: GetMusicReleasesDto): Promise<[MusicRelease[], number]> {
+-    const { take, skip, order, sort, artists, genres, tracks, thumbnails, metadata } = getMusicReleasesDto
+-    return await this.musicReleaseRepository.findAndCount({
++    const {
+       take,
+       skip,
 -      relations: {
--        ...relations,
+-        artist: true,
+-        artists: artists,
+-        genres: genres,
+-        tracks: tracks,
+-        thumbnails: thumbnails,
+-        metadata: metadata,
+-      },
+-      order: {
+-        [sort]: order,
 -      },
 -    })
- 
--    if (!musicRelease.length) {
-+    try {
-+      const musicRelease = await this.musicReleaseRepository.find({
-+        where,
-+        relations: {
-+          ...relations,
-+        },
-+      })
++      order,
++      sort,
++      artists,
++      genres,
++      tracks,
++      thumbnails,
++      metadata,
++      //libraries,
++    } = getMusicReleasesDto
 +
-+      if (!musicRelease.length) {
-+        return null
-+      }
++    const qb = this.musicReleaseRepository.createQueryBuilder('musicRelease')
 +
-+      return musicRelease[0]
-+    } catch (error) {
-+      Logger.error(error)
-       return null
-     }
--
--    return musicRelease[0]
++    if (artists) qb.leftJoinAndSelect('musicRelease.artist', 'artist')
++    if (artists) qb.leftJoinAndSelect('musicRelease.artists', 'artists')
++    if (genres) qb.leftJoinAndSelect('musicRelease.genres', 'genres')
++    if (tracks) qb.leftJoinAndSelect('musicRelease.tracks', 'tracks')
++    if (thumbnails) qb.leftJoinAndSelect('musicRelease.thumbnails', 'thumbnails')
++    if (metadata) qb.leftJoinAndSelect('musicRelease.metadata', 'metadata')
++
++    qb.orderBy(`musicRelease.${sort}`, order)
++      .take(take)
++      .skip(skip)
++
++    const r = await qb.getManyAndCount()
++    return r
    }
  
    /**

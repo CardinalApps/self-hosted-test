@@ -1,0 +1,14 @@
+diff a/servers/media/src/modules/music-release/music-release.module.ts b/servers/media/src/modules/music-release/music-release.module.ts	(rejected hunks)
+@@ -10,10 +10,11 @@ import { MusicReleaseThumbnail } from './music-release-thumbnail.entity'
+ 
+ import { EventModule } from '../event/event.module'
+ import { MusicArtistModule } from '../music-artist/music-artist.module'
++import { MusicReleasesView } from './music-release-view.entity'
+ 
+ @Module({
+   imports: [
+-    TypeOrmModule.forFeature([MusicRelease, MusicReleaseMetadata, MusicReleaseThumbnail]),
++    TypeOrmModule.forFeature([MusicRelease, MusicReleaseMetadata, MusicReleaseThumbnail, MusicReleasesView]),
+     MusicArtistModule,
+     EventModule,
+   ],
