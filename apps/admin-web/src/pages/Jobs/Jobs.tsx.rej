@@ -1,14 +1,10 @@
 diff a/apps/admin-web/src/pages/Jobs/Jobs.tsx b/apps/admin-web/src/pages/Jobs/Jobs.tsx	(rejected hunks)
-@@ -71,7 +71,11 @@ function Jobs() {
-   }
+@@ -34,7 +34,7 @@ function Jobs() {
  
-   return (
--    <AppPage layout={PAGE_LAYOUT.standard} pageTitle={i18n['title'][lang]}>
-+    <AppPage
-+      layout={PAGE_LAYOUT.standard}
-+      pageTitle={i18n['title'][lang]}
-+      capabilities={['Jobs.Read']}
-+    >
-       <div className={'jobTags'}>
-         {!!jobTypes?.length && jobTypes.map((job) => {
-           const configuring = jobToStart === job
+   const {
+     refetch: refetchActiveJobs,
+-  } = useGetJobsQuery({ take: 9999, skip: 0, status: ['preparing', 'paused', 'running', 'in_queue'], order: 'asc' })
++  } = useGetJobsQuery({ take: 9999, skip: 0, status: ['preparing', 'paused', 'running', 'in_queue'], order: 'ASC' })
+ 
+   const handleJobTypeClick = (job) => {
+     if (jobToStart === job) {
