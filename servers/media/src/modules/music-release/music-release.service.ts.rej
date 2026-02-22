@@ -1,54 +1,71 @@
 diff a/servers/media/src/modules/music-release/music-release.service.ts b/servers/media/src/modules/music-release/music-release.service.ts	(rejected hunks)
-@@ -120,25 +120,37 @@ export class MusicReleaseService {
+@@ -16,21 +16,28 @@ import { MusicGenre } from '../music-genres/music-genre.entity'
+ import { isNumeric, sortableString } from '../../utils/string'
+ 
+ import { ALBUM_ART_FILE_NAME, ALBUM_ART_FILE_EXTENSION } from './types'
++import { LibraryService } from '../library/library.service'
+ 
+ @Injectable()
+ export class MusicReleaseService {
+   constructor(
+     @InjectDataSource()
+     private dataSource: DataSource,
++
+     @InjectRepository(MusicRelease)
+     private musicReleaseRepository: Repository<MusicRelease>,
++
+     @InjectRepository(MusicReleaseMetadata)
+     private musicReleaseMetadataRepository: Repository<MusicReleaseMetadata>,
++
+     @InjectRepository(MusicReleaseThumbnail)
+     private musicReleaseThumbnailRepository: Repository<MusicReleaseThumbnail>,
++
+     @InjectRepository(MusicArtist)
+     private musicArtistRepository: Repository<MusicArtist>,
++
+     private readonly eventService: EventService,
++    private readonly libraryService: LibraryService,
+   ) {}
+ 
+   /**
+@@ -120,7 +127,7 @@ export class MusicReleaseService {
    }
  
    /**
--   * Returns all releases according to the query.
-+   * Returns new music releases.
+-   * Returns new music releases.
++   * Returns music releases.
     */
    async query(getMusicReleasesDto: GetMusicReleasesDto): Promise<[MusicRelease[], number]> {
--    const { take, skip, order, sort, artists, genres, tracks, thumbnails, metadata } = getMusicReleasesDto
--    return await this.musicReleaseRepository.findAndCount({
-+    const {
-       take,
-       skip,
--      relations: {
--        artist: true,
--        artists: artists,
--        genres: genres,
--        tracks: tracks,
--        thumbnails: thumbnails,
--        metadata: metadata,
--      },
--      order: {
--        [sort]: order,
--      },
--    })
-+      order,
-+      sort,
-+      artists,
-+      genres,
-+      tracks,
-+      thumbnails,
-+      metadata,
-+      //libraries,
-+    } = getMusicReleasesDto
+     const {
+@@ -133,7 +140,7 @@ export class MusicReleaseService {
+       tracks,
+       thumbnails,
+       metadata,
+-      //libraries,
++      libraries,
+     } = getMusicReleasesDto
+ 
+     const qb = this.musicReleaseRepository.createQueryBuilder('musicRelease')
+@@ -145,12 +152,19 @@ export class MusicReleaseService {
+     if (thumbnails) qb.leftJoinAndSelect('musicRelease.thumbnails', 'thumbnails')
+     if (metadata) qb.leftJoinAndSelect('musicRelease.metadata', 'metadata')
+ 
+-    qb.orderBy(`musicRelease.${sort}`, order)
++    // When filtering by library, join tracks and files
++    if (libraries && libraries.length) {
++      const libraryEntities = await this.libraryService.getLibraries(libraries)
++      qb.leftJoinAndSelect('musicRelease.tracks', 'tracks')
++      qb.innerJoin('tracks.file', ...this.libraryService.createJoinArgs(libraryEntities))
++    }
 +
-+    const qb = this.musicReleaseRepository.createQueryBuilder('musicRelease')
-+
-+    if (artists) qb.leftJoinAndSelect('musicRelease.artist', 'artist')
-+    if (artists) qb.leftJoinAndSelect('musicRelease.artists', 'artists')
-+    if (genres) qb.leftJoinAndSelect('musicRelease.genres', 'genres')
-+    if (tracks) qb.leftJoinAndSelect('musicRelease.tracks', 'tracks')
-+    if (thumbnails) qb.leftJoinAndSelect('musicRelease.thumbnails', 'thumbnails')
-+    if (metadata) qb.leftJoinAndSelect('musicRelease.metadata', 'metadata')
-+
-+    qb.orderBy(`musicRelease.${sort}`, order)
-+      .take(take)
-+      .skip(skip)
-+
-+    const r = await qb.getManyAndCount()
-+    return r
++    qb
++      .orderBy(`musicRelease.${sort}`, order)
+       .take(take)
+       .skip(skip)
+ 
+-    const r = await qb.getManyAndCount()
+-    return r
++    return await qb.getManyAndCount()
    }
  
    /**

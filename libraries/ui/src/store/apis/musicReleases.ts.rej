@@ -1,45 +1,21 @@
 diff a/libraries/ui/src/store/apis/musicReleases.ts b/libraries/ui/src/store/apis/musicReleases.ts	(rejected hunks)
-@@ -3,7 +3,7 @@ import queryParams from '../../lib/net/queryParams'
- import { CommonOrderParams, CommonSortParams, PaginationParams } from '../types/api'
- import { getNextPageParam, getPreviousPageParam, ITEMS_PER_RTK_PAGE } from '../utils/infiniteScroll'
- import { baseHomeServerApi } from './baseHomeServerApi'
--import { Library } from './libraries'
-+//import { Library } from './libraries'
- 
- export type ReleasesSortParams = CommonSortParams | 'sortTitle' | 'trackNumber'
- export type MusicReleaseType = {
-@@ -106,34 +106,6 @@ export const musicReleasesApi = baseHomeServerApi
+@@ -90,9 +90,10 @@ export const musicReleasesApi = baseHomeServerApi
+           thumbnails?: boolean,
+           order?: CommonOrderParams,
+           orderBy?: 'name' | 'createdAt',
++          libraries?: string[],
+         }
+       >({
+-        query: ({ take, skip, order, orderBy, tracks, genres, artists, thumbnails }) => {
++        query: ({ take, skip, order, orderBy, tracks, genres, artists, thumbnails, libraries }) => {
+           return queryParams('/music/releases', {
+             ...(take && { take }),
+             ...(skip && { skip }),
+@@ -102,6 +103,7 @@ export const musicReleasesApi = baseHomeServerApi
+             ...(genres && { genres }),
+             ...(artists && { artists }),
+             ...(thumbnails && { thumbnails }),
++            ...(libraries && { libraries }),
+           })
          },
        }),
- 
--      getNewMusicReleases: builder.query<
--        [MusicReleaseType[], number],
--        PaginationParams & {
--          tracks?: boolean,
--          genres?: boolean,
--          artists?: boolean,
--          thumbnails?: boolean,
--          order?: CommonOrderParams,
--          orderBy?: 'name' | 'createdAt',
--          libraries?: Partial<Library>[]
--        }
--      >({
--        query: ({ take, skip, order, orderBy, tracks, genres, artists, thumbnails, libraries }) => {
--          // @ts-ignore add object type to queryParams if this works
--          return queryParams('/music/releases/new', {
--            ...(take && { take }),
--            ...(skip && { skip }),
--            ...(order && { order }),
--            ...(orderBy && { orderBy }),
--            ...(tracks && { tracks }),
--            ...(genres && { genres }),
--            ...(artists && { artists }),
--            ...(thumbnails && { thumbnails }),
--            ...(libraries && { libraries }),
--          })
--        },
--      }),
--
-       getMusicRelease: builder.query<
-         MusicReleaseType,
-         { id: string }

@@ -1,25 +1,10 @@
 diff a/libraries/ui/src/store/slices/library/index.ts b/libraries/ui/src/store/slices/library/index.ts	(rejected hunks)
-@@ -5,19 +5,19 @@ import { globalActions } from '../../constants/actions'
- import { STORE_KEY } from './constants'
- 
- export interface LibrarySliceState {
--  current: string,
-+  current: string[],
- }
- 
- const initialState: LibrarySliceState = {
--  current: null,
-+  current: [],
- }
- 
- const librarySlice = createSlice({
-   name: STORE_KEY,
+@@ -17,7 +17,7 @@ const librarySlice = createSlice({
    initialState,
    reducers: {
--    set: (state, { payload: libraryId }) => {
--      state.current = libraryId
-+    set: (state, { payload: selected }) => {
-+      state.current = selected
+     set: (state, { payload: selected }) => {
+-      state.current = selected
++      state.current = selected || []
      },
    },
    extraReducers: (builder) => {
