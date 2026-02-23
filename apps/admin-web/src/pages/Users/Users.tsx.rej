@@ -1,23 +1,9 @@
 diff a/apps/admin-web/src/pages/Users/Users.tsx b/apps/admin-web/src/pages/Users/Users.tsx	(rejected hunks)
-@@ -25,6 +25,7 @@ import { useGetActiveUsersQuery } from '@cardinalapps/ui/src/store/apis/activeUs
- import ManageInvitationsDrawer from './ManageInvitationsDrawer'
- import UserManagementDrawer from './UserManagementDrawer'
- 
-+import { ACi18n } from '@cardinalapps/access-control/src'
- import i18n from './i18n.json'
- import './styles.css'
- 
-@@ -62,11 +63,12 @@ function Users() {
+@@ -63,7 +63,6 @@ function Users() {
    }
  
    const roleCol = (user: UserType) => {
-+    console.log(user?.roles?.[0]?.role)
+-    console.log(user?.roles?.[0]?.role)
      return (
        <Table.Col key="role">
          <span className="capitalize">
-           {user?.roles.length === 1
--            ? user?.roles?.[0]?.role
-+            ? ACi18n[`role.${user?.roles?.[0]?.role}.name`]?.[lang]
-             : i18n['users.roles.count'][lang].replace('{num}', user?.roles.length)
-           }
-         </span>
