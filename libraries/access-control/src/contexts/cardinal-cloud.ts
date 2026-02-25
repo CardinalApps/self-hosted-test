@@ -23,6 +23,7 @@ export type CloudAspect = typeof CloudAspects[number]
 export const CloudCapabilities = [
   // Intended for Cardinal Apps Inc. employees only
   'Users.Read',
+  'Users.Update',
 
   // Intended for everyone
   'CurrentUser.Read',
