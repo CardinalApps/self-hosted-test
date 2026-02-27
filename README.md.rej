@@ -1,9 +1,16 @@
 diff a/README.md b/README.md	(rejected hunks)
-@@ -24,7 +24,4 @@ This workspace is built with pnpm and Turborepo. Use the [Quick Start](/docs/qui
+@@ -1,11 +1,11 @@
+-# Source code for self-hosted Cardinal apps
++# Source Code for Self-Hosted Cardinal Apps
  
- ## License
+ This monorepo contains the source code for all self-hosted [Cardinal
+-apps](https://cardinalapps.io). It tracks a private upstream repository.
++apps](https://cardinalapps.io).
  
--This software is licensed under CC BY-NC-NC 4.0. [[HTML](https://creativecommons.org/licenses/by-nc-nd/4.0/)]
--[[Plain Text](/LICENSE)]
--
- Copyright Cardinal Apps Inc. 2021 - 2025, all rights reserved.
+ ## Quick start
+ 
+-This workspace is built with pnpm and Turborepo. Use the [Quick Start](/docs/quick-start.md) docs to run it locally.
++Use the [Quick Start](/docs/quick-start.md) docs to run it locally.
+ 
+ ### Packages
+ 
