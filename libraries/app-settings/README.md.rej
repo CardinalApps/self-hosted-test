@@ -1,7 +1,14 @@
 diff a/libraries/app-settings/README.md b/libraries/app-settings/README.md	(rejected hunks)
-@@ -3,5 +3,3 @@
- App settings are all of the settings that a user can change about any of their apps. Things like the language, theme, and start page.
+@@ -1,5 +1,10 @@
+ # App Settings
  
- Most of these settings are exposed through the `<SettingsPanel />` in the React apps.
--
--01
+-App settings are all of the settings that a user can change about any of their apps. Things like the language, theme, and start page.
++App Settings (aka "user preferences", aka "allowing the user to enable the dark
++theme across all their apps in one fell swoop") are all of the settings that a
++user can change about any of their apps. Things like the language, theme, and
++start page.
+ 
+-Most of these settings are exposed through the `<SettingsPanel />` in the React apps.
++Most of these settings are exposed through the `<SettingsPanel />` in the React
++apps, but there are other ways to work with them too. This package provides
++utils for doing that, and exports the master list of all settings.

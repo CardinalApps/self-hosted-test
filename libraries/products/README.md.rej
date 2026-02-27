@@ -1,0 +1,6 @@
+diff a/libraries/products/README.md b/libraries/products/README.md	(rejected hunks)
+@@ -1 +1,3 @@
+-# Cardinal Product Data
++# Cardinal Products
++
++Information about Cardinal's products that a user can purchase.
