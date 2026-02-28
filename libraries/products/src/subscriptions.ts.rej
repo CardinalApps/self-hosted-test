@@ -1,10 +1,38 @@
 diff a/libraries/products/src/subscriptions.ts b/libraries/products/src/subscriptions.ts	(rejected hunks)
-@@ -37,7 +37,7 @@ export const SUBSCRIPTIONS = {
+@@ -1,6 +1,7 @@
+ export enum SubscriptionTierSlug {
+   FREE = 'free',
+   EARLY_ADOPTER = 'early_adopter',
++  STARTER = 'starter',
+   PRO = 'pro',
+   ULTIMATE = 'ultimate',
+ }
+@@ -56,6 +57,19 @@ export const SUBSCRIPTIONS = {
+       monthly: 'early_adopter',
      },
-     slug: "free",
-     provides: {
--      seats: 3,
-+      seats: 5,
-     },
-     prices: {},
    },
++  starter: {
++    name: {
++      en: "Starter",
++    },
++    slug: "starter",
++    provides: {
++      seats: 10,
++    },
++    prices: {
++      monthly: 'starter_monthly',
++      yearly: 'starter_yearly',
++    },
++  },
+   pro: {
+     name: {
+       en: "Pro",
+@@ -75,7 +89,7 @@ export const SUBSCRIPTIONS = {
+     },
+     slug: "ultimate",
+     provides: {
+-      seats: 50,
++      seats: 40,
+     },
+     prices: {
+       monthly: 'ultimate_monthly',
