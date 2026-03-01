@@ -1,14 +1,27 @@
 diff a/servers/media/src/main.ts b/servers/media/src/main.ts	(rejected hunks)
-@@ -127,7 +127,11 @@ async function startup() {
-    */
-   const openAPIDoc = setupOpenApiDoc()
-   const openAPIDocument = SwaggerModule.createDocument(app, openAPIDoc)
--  SwaggerModule.setup('/api/docs', app, openAPIDocument)
-+  SwaggerModule.setup('/api/docs', app, openAPIDocument, {
-+    swaggerOptions: {
-+      persistAuthorization: true,
-+    },
-+  })
+@@ -144,19 +144,20 @@ async function startup() {
+   await app.listen(PORT)
  
-   if (getCurrentMode() === 'development') {
-     Logger.log('Writing openapi.json', 'Development')
+   /**
+-   * Welcome messages.
++   * Welcome message box.
+    */
+   const printWelcome = (ip) => {
+     Logger.log('╭────────────────────────────────────────────────────────────────╮', 'Welcome')
+     Logger.log('│ Cardinal Media Server started!                                 │', 'Welcome')
+     Logger.log('│                                                                │', 'Welcome')
+-    Logger.log(`│ Dashboard.......................${(ip+':'+PORT+'/admin').padEnd(31)}│`, 'Welcome')
+-    Logger.log(`│ Music app.......................${(ip+':'+PORT+'/music').padEnd(31)}│`, 'Welcome')
+-    Logger.log(`│ Photos app......................${(ip+':'+PORT+'/photos').padEnd(31)}│`, 'Welcome')
+-    Logger.log(`│ Cinema app......................${(ip+':'+PORT+'/cinema').padEnd(31)}│`, 'Welcome')
++    Logger.log(`│ Admin...........................${(ip+':'+PORT+'/admin').padEnd(31)}│`, 'Welcome')
++    Logger.log(`│ Music...........................${(ip+':'+PORT+'/music').padEnd(31)}│`, 'Welcome')
++    Logger.log(`│ Photos..........................${(ip+':'+PORT+'/photos').padEnd(31)}│`, 'Welcome')
++    Logger.log(`│ Cinema..........................${(ip+':'+PORT+'/cinema').padEnd(31)}│`, 'Welcome')
+     Logger.log(`│ API specification...............${(ip+':'+PORT+'/api/docs').padEnd(31)}│`, 'Welcome')
+     Logger.log('│ Manage your Cardinal account....account.cardinalapps.io        │', 'Welcome')
+     Logger.log('│ Get help using your apps........help.cardinalapps.io           │', 'Welcome')
++    Logger.log('│ Community Forums................cardinal.discourse.group       │', 'Welcome')
+     Logger.log('╰────────────────────────────────────────────────────────────────╯', 'Welcome')
+   }
+ 
