@@ -1,27 +1,14 @@
 diff a/README.md b/README.md	(rejected hunks)
-@@ -63,14 +63,14 @@ self-hosted packages included.
- <details>
-   <summary>How do I build the apps?</summary>
-   <p>The official builds that are on <a href="https://hub.docker.com/r/cardinalapps/media-server">Docker Hub</a> are built and published by Cardinal's CI. While you can definitely build and use Docker images using this repository, doing so is out of scope of this repository and there is no orchestration available for it beyond running the pnpm commands yourself one by one.</p>
--  <p>Running self-built containers is not offically supported, and the upstream repository may change at any time in ways that break self-build setups.</p>
-+  <p>Running self-built containers is not offically supported, and this repository may change at any time in ways that break self-build setups.</p>
+@@ -78,6 +78,12 @@ self-hosted packages included.
+   <p>No. This is, for better or for worse, all written by a human. Vive la révolution!</p>
  </details>
  
++<details>
++  <summary>Something isn't working</summary>
++  <p>The Turborepo development environment should work. There may be a few leftover references to things from the upstream repo, but nothing that would stop the development environment from running.</p>
++  <p>If you are still having issue then please create a post on the forums.</p>
++</details>
++
  <details>
-   <summary>Can I use this to verify the integrity of the public builds?</summary>
-   <p>Sort of? The Media Server binary that you can build with this repository will exactly match the one that is shipped in the public Docker builds.</p>
-   <p>But, like other CI things, this is out of scope of this repository.</p>
--  <p>I am open to ideas on how to go about doing this sort of thing.</p>
-+  <p>I am open to ideas on how to do this sort of thing.</p>
- </details>
- 
- <details>
-@@ -83,7 +83,7 @@ self-hosted packages included.
+   <summary>Contributing</summary>
    <ul>
-     <li><strong>Suggestions:</strong> Create a post on the forums or create a GitHub issue.</li>
-     <li><strong>Bug Reports:</strong> Create a post on the forums or create a GitHub issue. For a serious vulnerability, please disclose responsibly using the email on the <a href="https://cardinalapps.io/contact">Contact page</a>.</li>
--    <li><strong>Code Contributions:</strong> If your code contribution is tiny then you can open a PR here for review if you are ok with me merging it upstream instead of directly into this repo (you will get credit on the website and in app). If you particularly like this project and want to contribute more then come say hello in the forums.</li>
-+    <li><strong>Code Contributions:</strong> If your code contribution is small then you can open a PR here for review if you are ok with me merging it upstream instead of merging into this repo (you will still get credit in app and in this README). If you particularly like this project and want to contribute more then come say hello in the forums.</li>
-   </ul>
- </details>
- 
