@@ -1,14 +1,40 @@
 diff a/README.md b/README.md	(rejected hunks)
-@@ -78,6 +78,12 @@ self-hosted packages included.
-   <p>No. This is, for better or for worse, all written by a human. Vive la révolution!</p>
+@@ -31,14 +31,13 @@ These are the packages in this monorepo.
+ | `products`         | `/libraries` | -               | Data about Cardinal's products                                                       |
+ | `topology`         | `/libraries` | -               | Infrastructure topology                                                              |
+ | `types`            | `/libraries` | -               | Not used                                                                             |
+-| `ui`               | `/libraries` | `3099`          | React UI & component library with Storybook                                          |
++| `ui`               | `/libraries` | `3099`          | UI layer & React component library with Storybook                                    |
+ | `media`            | `/servers`   | `3080`, `24800` | Monolithic [Media Server](https://cardinalapps.io/cardinal-media-server)             |
+ 
+ ## About This Repository
+ 
+ The purpose of this repository is to publish the source code for Cardinal's
+-self-hosted applications for users to inspect, and for developers to
+-use when building their own applications that use Cardinal's APIs.
++self-hosted applications for users to inspect.
+ 
+ This is not the repository where work actively happens. This repository is a
+ read-only clone of Cardinal's main (private) monorepo, but with only the
+@@ -47,9 +46,9 @@ self-hosted packages included.
+ <details>
+   <summary>How do I use this repository as someone that wants to build an app that uses Cardinal's APIs?</summary>
+   <ol>
+-    <li>First, read the <a href="https://help.cardinalapps.io/guides/developers">Developer Guide</a> on the the Help Site.</li>
+-    <li>Next, install the <strong>beta</strong> Media Server from Docker Hub and develop your app against that API. You probably don't actually need to use this repository.</li>
+-    <li>While developing your app, you can use this repository if you want to develop against <code>latest</code> instead of beta. Just follow the Quick Start to get it running locally, then have your app connect to the development environment.</li>
++    <li>Consult the <a href="https://help.cardinalapps.io/guides/developers">Developer Guide</a> on the the Help Site.</li>
++    <li>Install the <strong>beta</strong> Media Server from Docker Hub and develop your app against that API. You probably don't actually need to use this repository.</li>
++    <li>You can use this repository if you want to develop against <code>latest</code> instead of <code>beta</code>. Just follow the Quick Start to get it running locally, then have your app connect to the development environment.</li>
+   </ol>
  </details>
  
-+<details>
-+  <summary>Something isn't working</summary>
-+  <p>The Turborepo development environment should work. There may be a few leftover references to things from the upstream repo, but nothing that would stop the development environment from running.</p>
-+  <p>If you are still having issue then please create a post on the forums.</p>
-+</details>
-+
+@@ -57,7 +56,7 @@ self-hosted packages included.
+   <summary>About the commit history</summary>
+   <p>The original commits from the main repository are not preserved when code is copied to this repository because they contain references to files that don't exist in this repository. So, the Cardinal CI bot will create new commits that contain changes for only the files that are published to the self-hosted repository.</p>
+   <p>Unfortuntely, I am but a mere git mortal so this process results in losing the original commit messages. The commits in this repository are also less granular, with each commit each containing everything from the last merge to main upstream.</p>
+-  <p>I recognize the issues that this will create for prospective contributors. I've included a copy of the CI job that publishes this code at <code>publish-oss.yaml</code> in case anyone wants to improve on it.</p>
++  <p>I recognize the issues that this will create for prospective contributors. If people actually want to use this repo then I'll improve it.</p>
+ </details>
+ 
  <details>
-   <summary>Contributing</summary>
-   <ul>
