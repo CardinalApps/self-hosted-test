@@ -1,22 +1,41 @@
 diff a/apps/admin-web/src/pages/Indexing/styles.css b/apps/admin-web/src/pages/Indexing/styles.css	(rejected hunks)
-@@ -190,14 +190,14 @@
-           }
+@@ -171,24 +171,24 @@
+           flex-grow: 1;
          }
        }
--
--      .importCompletedIcon {
++    }
++  }
+ 
+-      .stopRun {
 -        margin-left: 10px;
--        color: var(--success);
--        font-size: 18px;
--      }
+-        padding: 0;
+-        border: none;
+-        cursor: pointer;
+-        display: flex;
+-        border-radius: 100%;
+-        color: var(--text-color-1);
+-        background: none;
++  .stopRun {
++    margin-left: 10px;
++    padding: 0;
++    border: none;
++    cursor: pointer;
++    display: inline-flex;
++    border-radius: 100%;
++    color: var(--text-color-1);
++    background: none;
+ 
+-        i {
+-          font-size: 18px;
++    i {
++      font-size: 18px;
+ 
+-          &:hover {
+-            color: var(--accent-color);
+-          }
+-        }
++      &:hover {
++        color: var(--accent-color);
+       }
      }
    }
-+
-+  .importCompletedIcon {
-+    margin-left: 10px;
-+    color: var(--success);
-+    font-size: 18px;
-+  }
- }
- 
- .importButton {

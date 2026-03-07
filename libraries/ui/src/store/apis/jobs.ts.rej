@@ -1,13 +1,11 @@
 diff a/libraries/ui/src/store/apis/jobs.ts b/libraries/ui/src/store/apis/jobs.ts	(rejected hunks)
-@@ -5,6 +5,11 @@ import { baseHomeServerApi } from './baseHomeServerApi'
+@@ -82,7 +82,8 @@ export const jobsApi = baseHomeServerApi
  
- export type JobStatus = 'draft' | 'preparing' | 'in_queue' | 'running' | 'paused' | 'canceled' | 'completed' | 'errored'
- 
-+// export type JobReport = {
-+//   type: string,
-+//   status: JobStatus,
-+// }
-+
- export type Job = {
-   id: number,
-   jobId: string,
+       controlActiveJob: builder.mutation<
+         Job,
+-        { jobId: string, body: Partial<Job> }
++        // FIXME server should accept a string
++        { jobId: number, body: Partial<Job> }
+       >({
+         query: ({ jobId, body }) => ({
+           url: `/job/${jobId}`,
