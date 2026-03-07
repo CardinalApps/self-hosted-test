@@ -1,0 +1,17 @@
+diff a/libraries/ui/src/store/utils/getStorageKey.ts b/libraries/ui/src/store/utils/getStorageKey.ts	(rejected hunks)
+@@ -12,8 +12,14 @@
+ export const getStorageKey = () => {
+   const path = window.location.pathname
+ 
+-  if (path.startsWith('/music')) {
++  if (path.startsWith('/admin')) {
++    return '@cardinalapps/admin'
++  } else if (path.startsWith('/photos')) {
++    return '@cardinalapps/photos'
++  } else if (path.startsWith('/music')) {
+     return '@cardinalapps/music'
++  } else if (path.startsWith('/cinema')) {
++    return '@cardinalapps/cinema'
+   } else {
+     return '@cardinalapps/webapp'
+   }
