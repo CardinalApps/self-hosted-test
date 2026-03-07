@@ -1,9 +1,36 @@
 diff a/libraries/ui/src/components/interaction/Table/Table.css b/libraries/ui/src/components/interaction/Table/Table.css	(rejected hunks)
-@@ -94,6 +94,7 @@
-       overflow: hidden;
-       z-index: 2;
-       transition: background-color 125ms;
-+      vertical-align: middle;
+@@ -1,6 +1,8 @@
+ .table-box {
+   width: 100%;
+   height: 100%;
++  padding: 1px;
++  overflow-x: auto;
+   --pagination-height: 50px;
+   --tbody-border-radius: 10px;
  
-       &.highlight {
-         background-color: var(--bg-3);
+@@ -41,7 +43,8 @@
+     .th {
+       padding: 10px 20px;
+       font-weight: 800;
+-      font-size: 16px;
++      font-size: 14px;
++      text-transform: uppercase;
+       user-select: none;
+       vertical-align: bottom;
+       text-align: left;
+@@ -73,6 +76,7 @@
+     }
+ 
+     .tr {
++      border-bottom: 1px solid var(--border-color-1);
+ 
+       &:first-of-type {
+         td:first-of-type { border-top-left-radius: var(--tbody-border-radius); }
+@@ -80,6 +84,7 @@
+       }
+ 
+       &:last-of-type {
++        border-bottom: none;
+         td:first-of-type { border-bottom-left-radius: var(--tbody-border-radius); }
+         td:last-of-type { border-bottom-right-radius: var(--tbody-border-radius); }
+       }

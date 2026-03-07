@@ -1,10 +1,13 @@
 diff a/libraries/ui/src/components/interaction/Button/Button.css b/libraries/ui/src/components/interaction/Button/Button.css	(rejected hunks)
-@@ -139,7 +139,7 @@
+@@ -276,9 +276,9 @@
+     }
+   }
  
-   &.action {
-     height: auto;
--    min-height: 70px;
-+    min-height: 80px;
-     padding: 15px 35px;
-     font-size: 17px;
-     font-weight: 500;
+-  .span-icon {
++  /* .span-icon {
+     min-width: 36px;
+-  }
++  } */
+ 
+   .button-text {
+     white-space: nowrap;

@@ -1,9 +1,10 @@
 diff a/libraries/ui/src/components/interaction/Table/Table.tsx b/libraries/ui/src/components/interaction/Table/Table.tsx	(rejected hunks)
-@@ -17,6 +17,7 @@ type TableColumnProps = {
-   className?: string,
-   index?: number,
-   align?: 'left' | 'right',
-+  width?: number | string,
-   onMouseEnter?: () => void,
-   onMouseLeave?: () => void,
- }
+@@ -54,7 +54,7 @@ const Table = ({
+   onPageChange,
+   loading = false,
+   emptyMessage,
+-  highlightRowOnHover,
++  highlightRowOnHover = true,
+   highlightColOnHover,
+   emptyIcon = 'fas fa-wind',
+ }: TableProps) => {
