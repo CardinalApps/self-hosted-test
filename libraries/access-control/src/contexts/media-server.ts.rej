@@ -1,9 +1,43 @@
 diff a/libraries/access-control/src/contexts/media-server.ts b/libraries/access-control/src/contexts/media-server.ts	(rejected hunks)
-@@ -235,6 +235,6 @@ export type MediaServerRoleNames = keyof typeof MediaServerRoles
- /**
-  * Returns a single role.
-  */
--export const getMediaServerRole = (role: MediaServerRoleNames): Role<MediaServerCapabilityAssignment> | undefined => {
-+export const getMediaServerRole = (role: MediaServerRoleNames): Role<MediaServerCapabilityAssignment> => {
-   return MediaServerRoles?.[role]
- }
+@@ -191,6 +196,7 @@ export const MediaServerRoles: Record<`${MediaServerRoleName}`, Role<MediaServer
+       ...MUSIC_APP_CAPABILITIES,
+       ...PHOTOS_APP_CAPABILITIES,
+       ...CINEMA_APP_CAPABILITIES,
++      ...READONLY_CROSS_APP_FEATURES,
+     ],
+   },
+   [MediaServerRoleName.MUSIC_USER]: {
+@@ -198,21 +204,30 @@ export const MediaServerRoles: Record<`${MediaServerRoleName}`, Role<MediaServer
+     revocable: true,
+     maxUsers: null,
+     name: MediaServerRoleName.MUSIC_USER,
+-    capabilities: MUSIC_APP_CAPABILITIES,
++    capabilities: [
++      ...MUSIC_APP_CAPABILITIES,
++      ...READONLY_CROSS_APP_FEATURES,
++    ],
+   },
+   [MediaServerRoleName.PHOTOS_USER]: {
+     assignable: true,
+     revocable: true,
+     maxUsers: null,
+     name: MediaServerRoleName.PHOTOS_USER,
+-    capabilities: PHOTOS_APP_CAPABILITIES,
++    capabilities: [
++      ...PHOTOS_APP_CAPABILITIES,
++      ...READONLY_CROSS_APP_FEATURES,
++    ],
+   },
+   [MediaServerRoleName.CINEMA_USER]: {
+     assignable: true,
+     revocable: true,
+     maxUsers: null,
+     name: MediaServerRoleName.CINEMA_USER,
+-    capabilities: CINEMA_APP_CAPABILITIES,
++    capabilities: [
++      ...CINEMA_APP_CAPABILITIES,
++      ...READONLY_CROSS_APP_FEATURES,
++    ],
+   },
+   [MediaServerRoleName.NEWCOMER]: {
+     assignable: true,
