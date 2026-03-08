@@ -1,10 +1,12 @@
 diff a/libraries/ui/src/components/features/AppBase/DevTools.tsx b/libraries/ui/src/components/features/AppBase/DevTools.tsx	(rejected hunks)
-@@ -18,7 +18,7 @@ import i18n from './i18n'
- import './AppBase.css'
- 
- export default function AppLoading() {
--  const { location } = useContext(RouterContext)
-+  const { location, navigate } = useContext(RouterContext)
-   const dispatch = useDispatch()
-   const dragControls = useDragControls()
-   const homeServerUserLoggedIn = useSelector(homeServerUserSelectors.loggedIn)
+@@ -48,8 +48,8 @@ export default function AppLoading() {
+       <div className="developer-tools-list">
+         <p className="developer-tools-current-route">{i18n['dev-tools.current-route']['en']} <strong>{location.pathname}</strong></p>
+         <ul>
+-          <li>{i18n['dev-tools.home-server-user-logged-in']['en']} <strong>{homeServerUserLoggedIn.toString()}</strong></li>
+-          <li>{i18n['dev-tools.cloud-user-logged-in']['en']} <strong>{cloudUserLoggedIn.toString()}</strong></li>
++          <li>{i18n['dev-tools.home-server-user-logged-in']['en']} <strong>{homeServerUserLoggedIn?.toString()}</strong></li>
++          <li>{i18n['dev-tools.cloud-user-logged-in']['en']} <strong>{cloudUserLoggedIn?.toString()}</strong></li>
+         </ul>
+         <div className="developer-tools-list">
+           <div>
