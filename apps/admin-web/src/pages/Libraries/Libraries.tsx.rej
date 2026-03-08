@@ -1,10 +1,92 @@
 diff a/apps/admin-web/src/pages/Libraries/Libraries.tsx b/apps/admin-web/src/pages/Libraries/Libraries.tsx	(rejected hunks)
-@@ -48,7 +48,7 @@ function Libraries() {
-   const {
-     data: allLibrariesResponse,
-     isLoading: allLibrariesLoading,
--  } = useGetLibrariesQuery({ take: 9999, skip: 0, order: 'asc' })
-+  } = useGetLibrariesQuery({ take: 9999, skip: 0, order: 'ASC' })
-   const allLibraries = allLibrariesResponse || []
+@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux'
+ import AppPage from '@cardinalapps/ui/src/components/features/AppBase/AppPage'
+ import Button from '@cardinalapps/ui/src/components/interaction/Button'
+ import CreateSomething from '@cardinalapps/ui/src/components/interaction/CreateSomething'
+-import AvatarGroup from '@cardinalapps/ui/src/components/layout/AvatarGroup'
+ import DirectoryTree from '@cardinalapps/ui/src/components/interaction/DirectoryTree'
+ import Table from '@cardinalapps/ui/src/components/interaction/Table'
+ import Drawer from '@cardinalapps/ui/src/components/layout/Drawer'
+@@ -25,14 +24,15 @@ import {
+ import { PAGE_LAYOUT } from '@cardinalapps/ui/src/store/slices/layout/constants'
+ import { TreeNode } from '@cardinalapps/ui/src/components/interaction/DirectoryTree/DirectoryTree'
+ import { UserType } from '@cardinalapps/ui/src/types/user'
++import HasCapabilities from '@cardinalapps/ui/src/components/layout/HasCapabilities'
++import useHasCapability from '@cardinalapps/ui/src/hooks/useHasCapability'
++import UserTag from '@cardinalapps/ui/src/components/interaction/UserTag'
  
+ import homeServerAPI from '@cardinalapps/ui/src/lib/homeserver/homeServerAPI'
+ 
+ import i18n from './i18n.json'
+ 
+ import './styles.css'
+-import HasCapabilities from '@cardinalapps/ui/src/components/layout/HasCapabilities'
+-import useHasCapability from '@cardinalapps/ui/src/hooks/useHasCapability'
+ 
+ function Libraries() {
+   const { lang } = useSelector(settingsSelectors.current)
+@@ -58,10 +58,10 @@ function Libraries() {
+    */
+   const fetchPublicUsers = () => {
+     return new Promise((resolve) => {
+-      homeServerAPI('/users/public')
++      homeServerAPI('/users?take=9999')
+         .then((users) => {
+-          if (Array.isArray(users)) {
+-            resolve(users)
++          if (Array.isArray(users?.[0])) {
++            resolve(users[0])
+           } else {
+             resolve([])
+           }
+@@ -79,32 +79,11 @@ function Libraries() {
+   useEffect(() => {
+     fetchPublicUsers()
+       .then((users: UserType[]) => {
++        console.log(users)
+         setAllUsers(users)
+       })
+   }, [])
+ 
+-  const getAvatars = (users) => {
+-    if (!users) {
+-      return []
+-    }
+-    return users
+-      .sort((user) => {
+-        // server owner first
+-        // FIXME
+-        if (user.role === 'owner') {
+-          return -1
+-        }
+-      })
+-      .map((user) => {
+-        if (user?.designation === 'guest_account') {
+-          return { type: "guest", size: 'xs' }
+-        }
+-        if (user?.cachedCloudUser?.avatar) {
+-          return { ...user?.cachedCloudUser?.avatar, size: 'xs' }
+-        }
+-      })
+-  }
+-
    /**
+    * All table body rows.
+    */
+@@ -127,10 +106,12 @@ function Libraries() {
+         ),
+         (
+           <Table.Col key="users">
+-            {allUsers?.length
+-              ? <AvatarGroup avatars={getAvatars(allUsers)} />
+-              : null
+-            }
++            <div className="user-avatars">
++              {allUsers?.length
++                ? allUsers.map((user) => <UserTag key={user.userId} user={user} showName={false} size="s" />)
++                : null
++              }
++            </div>
+             {/* {
+               library?.users?.length
+               ? library.users.length === 1

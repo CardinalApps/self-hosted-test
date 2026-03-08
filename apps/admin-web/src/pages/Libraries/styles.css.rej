@@ -1,0 +1,13 @@
+diff a/apps/admin-web/src/pages/Libraries/styles.css b/apps/admin-web/src/pages/Libraries/styles.css	(rejected hunks)
+@@ -32,5 +32,11 @@
+     .controls {
+       text-align: right;
+     }
++
++    .user-avatars {
++      display: flex;
++      gap: 5px;
++      flex-wrap: wrap;
++    }
+   }
+ }
