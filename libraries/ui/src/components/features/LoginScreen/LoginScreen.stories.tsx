@@ -212,4 +212,37 @@ export const OnlyCloudAccount = () => {
   )
 }
 
+export const OnlyCloudAccount = () => {
+  const dispatch = useAppDispatch()
+  const isLoggedIn = useSelector(cloudUserSelectors.loggedIn)
+  const currentUser = useSelector(cloudUserSelectors.current)
+  const [JWT, setJWT] = useState<string>()
+
+  // Save the JWT in local storage
+  useEffect(() => {
+    if (!JWT) return
+    setJwt(JWT)
+    dispatch(fetchCloudUser())
+  }, [JWT])
+
+  return (
+    <LoginScreen
+      overrideApp={CardinalApp.ADMIN}
+      allowGuestAccount={false}
+      allowLocalAccount={false}
+      ownerAccount={isLoggedIn ? currentUser : undefined}
+      onContinueAsCurrentUserClick={() => alert('Continuing as current user')}
+      onLoginWithAnonymousAccountClick={() => alert('Continuing with anonymous account')}
+      cardinalSSOLoginButton={
+        <SSOLogin
+          appId="59068b7c-2c67-4d98-aef7-44d37914b86f"
+          permissions="*"
+          saveJWTInLocalStorage={false}
+          onSSOSuccess={(JWT) => setJWT(JWT)}
+        />
+      }
+    />
+  )
+}
+
 export default meta

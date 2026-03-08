@@ -399,6 +399,20 @@ export class UserService {
   }
 
   /**
+   * Returns the local user that is associated with local username.
+   */
+  async getUserByLocalUsername(username: string): Promise<User | null> {
+    return await this.userRepository.findOne({
+      where: {
+        username,
+      },
+      relations: {
+        roles: true,
+      },
+    })
+  }
+
+  /**
    * Returns the guest account. There is a check during server startup to
    * guarentee it exists.
    */

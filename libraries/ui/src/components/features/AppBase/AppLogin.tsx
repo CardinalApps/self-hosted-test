@@ -124,6 +124,22 @@ function AppLogin({
   }
 
   /**
+   * Attempt to log in with a local account.
+   */
+  const loginWithLocalAccount = (username: string, password: string) => {
+    // Log the user out of their cloud account when logging into a local account
+    // FIXME only do this after a successful login
+    if (cloudUserLoggedIn) {
+      dispatch(cloudUserLogout())
+    }
+
+    dispatch(homeServerLogin({
+      username,
+      password,
+    }))
+  }
+
+  /**
    * Continue with the currently logged in cloud account.
    */
   const continueAsCurrentUser = () => {

@@ -1,18 +1,16 @@
 diff a/libraries/ui/src/components/layout/Drawer/Drawer.css b/libraries/ui/src/components/layout/Drawer/Drawer.css	(rejected hunks)
-@@ -110,6 +110,18 @@
-     &:last-of-type {
-       margin-bottom: 0;
+@@ -122,6 +122,16 @@
+         font-size: 12px;
+       }
      }
 +
-+    .access-error {
++    form {
 +      
-+      .error-information {
-+        gap: 2px;
-+      }
-+      
-+      .error-name,
-+      .error-message {
-+        font-size: 12px;
++      footer {
++        width: 100%;
++        display: flex;
++        justify-content: flex-end;
++        padding: 20px 0;
 +      }
 +    }
    }

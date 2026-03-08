@@ -1,11 +1,57 @@
 diff a/apps/admin-web/src/pages/Users/i18n.json b/apps/admin-web/src/pages/Users/i18n.json	(rejected hunks)
-@@ -158,9 +158,6 @@
-   "users.settings.info.id": {
-     "en": "ID"
+@@ -113,11 +113,23 @@
+   "users.invite.sent-invite-to-user": {
+     "en": "Invitation sent."
    },
--  "users.settings.info.role": {
--    "en": "Role"
--  },
-   "users.settings.info.enabled": {
-     "en": "Enabled"
+-  "users.server.capacity": {
+-    "en": "Capacity"
++  "users.server.cloud-capacity": {
++    "en": "Cloud Users"
    },
+-  "users.server.capacity.seats": {
+-    "en": "Used {used} of {total} seats."
++  "users.server.local-capacity": {
++    "en": "Local Users"
++  },
++  "users.server.capacity.cloud": {
++    "en": "Used {used} of {total} cloud seats."
++  },
++  "users.server.capacity.local.singular": {
++    "en": "{total} local user."
++  },
++  "users.server.capacity.local.plural": {
++    "en": "{total} local users."
++  },
++  "users.server.capacity.create": {
++    "en": "Create User"
+   },
+   "users.table.title": {
+     "en": "All users"
+@@ -131,6 +143,9 @@
+   "users.table.header.name": {
+     "en": "Account"
+   },
++  "users.table.header.type": {
++    "en": "Type"
++  },
+   "users.table.header.role": {
+     "en": "Roles"
+   },
+@@ -235,5 +250,17 @@
+   },
+   "users.roles.count": {
+     "en": "{num} roles"
++  },
++  "create-user.title": {
++    "en": "Create Local User"
++  },
++  "create-user.username": {
++    "en": "Username"
++  },
++  "create-user.password": {
++    "en": "Password"
++  },
++  "create-user.submit": {
++    "en": "Create User"
+   }
+ }

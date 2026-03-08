@@ -82,6 +82,19 @@ function Users() {
     )
   }
 
+  const typeCol = (user: UserType) => {
+    return (
+      <Table.Col key="type">
+        <span className="capitalize">
+          {user.cardinalId
+            ? i18n['users.settings.info.type.cloud'][lang]
+            : i18n['users.settings.info.type.local'][lang]
+          }
+        </span>
+      </Table.Col>
+    )
+  }
+
   const roleCol = (user: UserType) => {
     return (
       <Table.Col key="role">

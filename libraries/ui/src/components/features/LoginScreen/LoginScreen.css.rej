@@ -1,18 +1,55 @@
 diff a/libraries/ui/src/components/features/LoginScreen/LoginScreen.css b/libraries/ui/src/components/features/LoginScreen/LoginScreen.css	(rejected hunks)
-@@ -102,14 +102,14 @@
+@@ -96,11 +96,11 @@
+       flex-direction: column;
+       gap: 8px;
+ 
+-      button, a {
++      button:not([type="submit"]), a {
+         width: 100%;
+         min-height: 50px;
          padding: 8px 10px;
-         margin-bottom: 10px;
+-        margin-bottom: 10px;
++        margin-bottom: 0;
          justify-content: center;
--        background-color: var(--bg-3);
-+        background-color: var(--bg-2);
+         background-color: var(--bg-2);
  
-         &:last-of-type {
-           margin-bottom: 0;
-         }
- 
-         &:hover {
--          background-color: var(--bg-4);
-+          background-color: var(--bg-3);
-         }
-       }
+@@ -189,6 +189,30 @@
+   .server-owner-disclaimer {
+     margin: 0 5px;
+   }
++
++  .local-account-login {
++    width: 100%;
++    margin: 0;
++    padding: 0;
++    overflow: hidden;
++
++    form {
++      width: 100%;
++      padding: 15px 10px;
++      display: flex;
++      flex-direction: column;
++      border-radius: var(--border-radius);
++      border: 1px solid var(--border-color-1);
++
++      .form-field {
++        width: 100%;
++      }
++
++      footer {
++        justify-content: flex-end;
++      }
++    }
++  }
+   
+   footer {
+     width: 100%;
+@@ -200,7 +224,7 @@
+       padding: 0 10px;
      }
+ 
+-    a, button {
++    a, button:not([type="submit"]) {
+       color: var(--text-color-1) !important;
+       font-size: 13px !important;
+       font-weight: 400 !important;
