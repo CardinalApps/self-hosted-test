@@ -1,23 +1,10 @@
 diff a/README.md b/README.md	(rejected hunks)
-@@ -54,9 +54,9 @@ self-hosted packages included.
+@@ -79,7 +79,7 @@ self-hosted packages included.
  
- <details>
-   <summary>About the commit history</summary>
--  <p>The original commits from the main repository are not preserved when code is copied to this repository because they contain references to files that don't exist in this repository. So, the Cardinal CI bot will create new commits that contain changes for only the files that are published to the self-hosted repository.</p>
--  <p>Unfortuntely, I am but a mere git mortal so this process results in losing the original commit messages. The commits in this repository are also less granular, with each commit each containing everything from the last merge to main upstream.</p>
--  <p>I recognize the issues that this will create for prospective contributors. If people actually want to use this repo then I'll improve it.</p>
-+  <p>The original commits from the main repository are not preserved in this repository because they contain references to files that don't exist here. So, the Cardinal CI bot will create new commits that contain changes for only the files that are published to the self-hosted repository.</p>
-+  <p>Unfortuntely, this process results in losing the original commit messages. The commits in this repository are also less granular, with each commit each containing everything from the last merge to main upstream.</p>
-+  <p>I recognize the issues that this creates. If people actually want to use this repo then I'll try to improve it.</p>
- </details>
- 
- <details>
-@@ -80,7 +80,7 @@ self-hosted packages included.
  <details>
    <summary>Something isn't working</summary>
-   <p>The Turborepo development environment should work. There may be a few leftover references to things from the upstream repo, but nothing that would stop the development environment from running.</p>
--  <p>If you are still having issue then please create a post on the forums.</p>
-+  <p>If you are still having issue then please create a post on the forums or create a GitHub issue.</p>
+-  <p>The Turborepo development environment should work. There may be a few leftover references to things from the upstream repo, but nothing that would stop the development environment from running.</p>
++  <p>All self-hosted features should work in the development environment. But since this repo only runs self-hosted apps, the cloud services will not function.</p>
+   <p>If you are still having issue then please create a post on the forums or create a GitHub issue.</p>
  </details>
  
- <details>
