@@ -119,6 +119,16 @@ function FirstTimeSetup() {
    * "not_setup" status.
    */
   useEffect(() => {
+    if (step) {
+      setVisibleStepNum(step)
+    }
+  }, [step])
+
+  /**
+   * Only allow access to this page if the last server health response had the
+   * "not_setup" status.
+   */
+  useEffect(() => {
     if (health !== 'not_setup') {
       navigate(routes.LOGIN)
     }

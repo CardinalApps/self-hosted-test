@@ -1,9 +1,48 @@
 diff a/apps/admin-web/src/pages/FirstTimeSetup/FirstTimeSetup.tsx b/apps/admin-web/src/pages/FirstTimeSetup/FirstTimeSetup.tsx	(rejected hunks)
-@@ -180,6 +180,7 @@ function FirstTimeSetup() {
-               userObjectOfFutureOwner={userObjectOfFutureOwner}
-               setUserObjectOfFutureOwner={setUserObjectOfFutureOwner}
-               setSsoJWTOfFutureOwner={setSsoJWTOfFutureOwner}
-+              overrideServerName={serverName}
-             />
-           </motion.section>
-         }
+@@ -21,19 +21,24 @@ import Help from './sections/Help'
+ import Finish from './sections/Finish'
+ 
+ import homeServerAPI from '@cardinalapps/ui/src/lib/homeserver/homeServerAPI'
++import { settingsSelectors } from '@cardinalapps/ui/src/store/slices/settings'
+ 
+ import * as routes from '../../routes'
+ 
++import i18n from './i18n.json'
++
+ import './styles.css'
+ 
+ function FirstTimeSetup() {
+   const dispatch = useAppDispatch()
+   const navigate = useNavigate()
++  const { lang } = useAppSelector(settingsSelectors.current)
+   const health = useAppSelector(homeServerSelectors.health)
+   const firstTimeSetupComplete = useAppSelector(homeServerSelectors.firstTimeSetupComplete)
+   const homeServerUserLoggedIn = useAppSelector(homeServerUserSelectors.loggedIn)
+   const [finishButtonState, setFinishButtonState] = useState<string>()
+   const [step, setStep] = useState(1)
++  const [visibleStepNum, setVisibleStepNum] = useState(step)
+   const [theme, setTheme] = useState('light')
+   const [serverName, setServerName] = useState('')
+   const [agreeToAnonymousUsageData, setAgreeToAnonymousUsageData] = useState(true)
+@@ -122,11 +137,19 @@ function FirstTimeSetup() {
+     <div className={'firstTimeSetup'}>
+       {(step >= 2 || step === null) &&
+         <motion.div
+-          className={'top-logo logo'}
++          className={'header logo'}
+           initial={{ opacity: 0 }}
+           animate={{ opacity: 1, transition: { delay: 0.6, duration: 0.8, type: 'tween' } }}
+         >
+-          <BrandLogo icon="birb" />
++          <div>
++            <BrandLogo icon="birb" />
++          </div>
++          <div>
++            <div className="setup-progress">
++              {/* Don't count splash screen */}
++              <span>{visibleStepNum - 1} {i18n['progress.sep'][lang]} 7</span>
++            </div>
++          </div>
+         </motion.div>
+       }
+       <AnimatePresence>

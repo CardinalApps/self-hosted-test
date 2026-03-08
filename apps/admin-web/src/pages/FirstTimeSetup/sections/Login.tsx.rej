@@ -1,17 +1,38 @@
 diff a/apps/admin-web/src/pages/FirstTimeSetup/sections/Login.tsx b/apps/admin-web/src/pages/FirstTimeSetup/sections/Login.tsx	(rejected hunks)
-@@ -69,12 +69,15 @@ function Login({
+@@ -64,25 +64,24 @@ function Login({
+         <Card
+           className={'card'}
+           padding="thick"
+-          icon={<i className="fas fa-id-card" />}
++          icon={<i className="fas fa-stamp" />}
+           iconSize="l"
            header={<H2 className={'title'}>{i18n['login.title'][lang]}</H2>}
            footer={
              <>
-+            <div>
-+
-               <Button onClick={prev} textual={true}>
-                 {i18n['prev'][lang]}
-               </Button>
-               <Button onClick={next} textual={true}>
-                 {i18n['next'][lang]}
-               </Button>
-+            </div>
+-            <div>
+-
+-              <Button onClick={prev} textual={true}>
+-                {i18n['prev'][lang]}
+-              </Button>
+-              <Button onClick={next} textual={true}>
+-                {i18n['next'][lang]}
+-              </Button>
+-            </div>
++              <div>
++                <Button onClick={prev} textual={true}>
++                  {i18n['prev'][lang]}
++                </Button>
++                <Button onClick={next} textual={true}>
++                  {i18n['next'][lang]}
++                </Button>
++              </div>
              </>
            }
          >
+-          <p className={'message'} dangerouslySetInnerHTML={{ __html: i18n['login.message-p1'][lang] }} />
+-          <p className={'message'} dangerouslySetInnerHTML={{ __html: i18n['login.message-p2'][lang] }} />
++          <div dangerouslySetInnerHTML={{ __html: i18n['login.overview'][lang] }} />
++
+           <div className={'loginButton'}>
+             {loggedIn
+               ?
