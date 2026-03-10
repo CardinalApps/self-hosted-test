@@ -52,4 +52,3 @@ volumes:
     name: "cardinal-auth-server-db-data"
   cardinal-cms:
     name: "cardinal-cms-db-data"
-
