@@ -32,3 +32,5 @@ Before beginning, your machine will need:
   Some apps may require environment variables. Those apps will have a
   `.env.template` file that you can copy, and the app runtime should tell you
   which variables are missing.
+
+  
