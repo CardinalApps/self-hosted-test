@@ -1,71 +1,12 @@
 diff a/libraries/ui/src/components/features/AppBase/layouts/Virtual.tsx b/libraries/ui/src/components/features/AppBase/layouts/Virtual.tsx	(rejected hunks)
-@@ -16,9 +16,10 @@ import { PaginationParams, RTKPage } from '../../../../store/types/api'
- import Card from '../../../layout/Card'
- import Icon from '../../../typography/Icon'
- import Button from '../../../interaction/Button'
-+import H5 from '../../../typography/H5'
-+import { librarySelectors } from '../../../../store/slices/library'
+@@ -166,8 +166,8 @@ function VirtualLayout({
+     }
  
- import i18n from '../i18n'
--import H5 from '../../../typography/H5'
+     const offset = 0
+-    const nextPageTrigger = leadingPageParams.skip - offset
+-    const prevPageTrigger = trailingPageParams.skip + offset
++    const nextPageTrigger = Math.floor((leadingPageParams.skip - offset) / itemsPerRow)
++    const prevPageTrigger = Math.floor((trailingPageParams.skip + offset) / itemsPerRow)
  
- type VirtualProps = {
-   virtualViewName: string,
-@@ -84,6 +85,7 @@ function VirtualLayout({
-   ...props
- }: PropsWithChildren<VirtualProps>) {
-   const dispatch = useAppDispatch()
-+  const libraries = useAppSelector(librarySelectors.current)
-   const boxRef = useRef(null)
-   const { width: boxWidth } = useElementSize(boxRef)
-   const parentRef = useRef<HTMLDivElement>(null)
-@@ -101,12 +103,7 @@ function VirtualLayout({
-   /**
-    * Cache the virtual position for reinitialization on page reload.
-    */
--  const onVirtualChange = (instance) => {
--    if (!instance?.range) {
--      return
--    }
--    const startRow = instance?.range?.startIndex + 1
--    const endRow = instance?.range?.endIndex + 1
-+  const onVirtualChange = (startRow, endRow, offset) => {
-     const start = startRow - 1 <= 0 ? 1 : ((startRow - 1) * itemsPerRow) + 1
-     const end = Math.min(((endRow) * itemsPerRow), totalItems)
-     dispatch(layoutActions.setVirtualView({
-@@ -114,7 +111,7 @@ function VirtualLayout({
-       value: {
-         start,
-         end,
--        offset: instance.scrollOffset,
-+        offset,
-         total: totalItems,
-       },
-     }))
-@@ -144,7 +141,11 @@ function VirtualLayout({
-     gap,
-     paddingStart: 1,
-     paddingEnd: 20,
--    onChange: onVirtualChange,
-+    onChange: (instance) => onVirtualChange(
-+      instance?.range?.startIndex + 1,
-+      instance?.range?.endIndex + 1,
-+      instance.scrollOffset,
-+    ),
-   })
- 
-   /**
-@@ -217,6 +218,13 @@ function VirtualLayout({
-     rowVirtualizer.measure()
-   }, [itemsPerRow])
- 
-+  /**
-+   * Trigger a rerender when libraries change.
-+   */
-+  useEffect(() => {
-+    rowVirtualizer.measure()
-+  }, [libraries.toString(), numRows])
-+
-   return (
-     <div {...props} className={clsx('virtual-layout', className)}>
-       {isLoading && <div className="virtual-loading"><Loading /></div>}
+     if (
+       lastItem.index > nextPageTrigger
