@@ -1,9 +1,9 @@
 diff a/apps/music-web/src/pages/Releases/Releases.tsx b/apps/music-web/src/pages/Releases/Releases.tsx	(rejected hunks)
-@@ -19,6 +19,7 @@ function ReleasesPage() {
-       layout={PAGE_LAYOUT.virtual}
+@@ -20,6 +20,7 @@ function ReleasesPage() {
        pageTitle={i18n['music-releases.title']['en']}
        restoreScrollPoint={false}
-+      capabilities={['MusicReleases.Read']}
+       capabilities={['MusicReleases.Read']}
++      showLibrarySwitcher={true}
        toolbar={(
          <Toolbar
            name={TOOLBAR_NAME}
