@@ -112,6 +112,29 @@ export class UserController {
   }
 
   /**
+   * Update your own user.
+   */
+  @Patch('/users/current')
+  @StandardEndpoint({
+    summary: 'Update your own user.',
+    capabilities: ['CurrentUser.Update'],
+  })
+  async updateCurrentUser(
+    @Body() updateUserDto: UpdateUserDto,
+    @CurrentUser() currentUser: User,
+  ): Promise<User> {
+    if (updateUserDto.enabled === false) {
+      throw new UnauthorizedException('You cannot disable yourself.')
+    }
+
+    try {
+      return await this.userService.update(currentUser.userId, updateUserDto)
+    } catch (error) {
+      throw new InternalServerErrorException(error.message)
+    }
+  }
+
+  /**
    * Returns the server owner, if there is one.
    */
   @Get('/users/owner')

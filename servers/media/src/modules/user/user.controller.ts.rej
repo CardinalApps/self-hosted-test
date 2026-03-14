@@ -1,51 +1,77 @@
 diff a/servers/media/src/modules/user/user.controller.ts b/servers/media/src/modules/user/user.controller.ts	(rejected hunks)
-@@ -15,7 +15,6 @@ import {
- } from '@nestjs/common'
- import {
-   ApiTags,
--  ApiMethodNotAllowedResponse,
-   ApiExcludeEndpoint,
- } from '@nestjs/swagger'
+@@ -31,7 +31,6 @@ import { StandardEndpoint } from '../../decorators/StandardEndpoint.decorator'
+ import { getJWTFromHeaders, getCardinalTolkienFromHeaders } from '../../utils/jwt'
+ import { GetUsersDto } from './dtos/GetUsers.dto'
+ import { SeatsService } from './seats.service'
+-import { Designations } from './types'
  
-@@ -142,35 +141,21 @@ export class UserController {
+ @Controller()
+ @ApiTags('Users')
+@@ -174,10 +196,7 @@ export class UserController {
    }
  
    /**
--   * Creates a local user. Local users can be one of two types: `offline` or
--   * `online`.
-+   * Creates user in the Media Server. These users are stored in the Media
-+   * Server's database, so technically they are all "local" users, but there is
-+   * a further distinction that is outlined on:
-    * 
--   * *`online`* - A local user account with a linked Cardinal account is called an
--   * `online` user. There can only be 1 online user per Media Server, and
--   * that is the server owner.
-+   * https://help.cardinalapps.io/guides/cardinal-media-server/accounts
-    * 
--   * *`offline`* - A local user account without a linked Cardinal account is
--   * called an `offline` user. The only offline account is the nameless &
--   * passwordless one that comes included with the Media Server, called "Offline
--   * Account".
-+   * Cloud accounts are not created here - instead the are created by the auth
-+   * service as a SSO login side effect.
+-   * TODO split this into two separate endpoints, one for updating your own
+-   * user, and one for updating other users. The endpoint for yourself should
+-   * require CurrentUser.Update and the one for other users should require
+-   * Users.Update.
++   * Update any user.
     */
-   @Post('/users')
+   @Patch('/users/:id')
    @StandardEndpoint({
-     summary: 'Create a new local Media Server user.',
-     capabilities: ['Users.Create'],
-   })
--  @ApiMethodNotAllowedResponse({ description: 'The server will refuse to create more than 1 `online` account and will refuse to create `offline` accounts.' })
-   async createLocalUser(@Body() createUserDto: CreateUser): Promise<User> {
--    // TODO offline accounts feature
--    if (!createUserDto?.cardinalJWT) {
--      throw new MethodNotAllowedException('Cannot create additional offline account. Use the included Offline Account instead.')
--    }
+@@ -189,41 +208,26 @@ export class UserController {
+     @Body() updateUserDto: UpdateUserDto,
+     @CurrentUser() currentUser: User,
+   ): Promise<User> {
+-    const usersThatCanUseThisEndpoint = []
 -
--    // Check if this server has already been claimed by a Cardinal account
--    if (await this.userService.getServerOwner()) {
--      throw new MethodNotAllowedException('Cannot create new online account because this server has already been claimed by a Cardinal account.')
--    }
--
-     return await this.userService.createUser({ dto: createUserDto })
-   }
+     // Special case: prevent disabling your own user
+     if (id === currentUser.userId && updateUserDto.enabled === false) {
+-      throw new UnauthorizedException('You cannot disable your current user.')
++      throw new UnauthorizedException('You cannot disable yourself.')
+     }
  
+-    // Server owner can update anyone
+-    const serverOwner = await this.userService.getServerOwner()
+-    usersThatCanUseThisEndpoint.push(serverOwner.userId)
+-
+-    // Users can update themselves
+-    usersThatCanUseThisEndpoint.push(id)
+-
+-    // User is allow to perform this update
+-    if (usersThatCanUseThisEndpoint.includes(currentUser.userId)) {
+-      const userPriorToUpdate = await this.userService.get(id)
+-
+-      // If trying to enable a user (but not the Guest Account), check if there is a seat available
+-      if (
+-        (updateUserDto?.enabled === true && userPriorToUpdate.enabled === false)
+-        && userPriorToUpdate.designation !== Designations.GUEST_ACCOUNT
+-      ) {
+-        if (!await this.seatsService.hasAvailableSeats()) {
+-          throw new ForbiddenException('Cannot enable this user because there are no seats available.')
+-        }
+-      }
+-
+-      try {
+-        return await this.userService.update(id, updateUserDto)
+-      } catch (error) {
+-        throw new InternalServerErrorException(error.message)
++    // If trying to enable a cloud user, check if there is a seat available
++    const userPriorToUpdate = await this.userService.get(id)
++    if (
++      (updateUserDto?.enabled === true && userPriorToUpdate.enabled === false)
++      && userPriorToUpdate.cardinalId
++    ) {
++      if (!await this.seatsService.hasAvailableSeats()) {
++        throw new ForbiddenException('Cannot enable this user because there are no seats available.')
+       }
+     }
+ 
+-    throw new UnauthorizedException()
++    try {
++      return await this.userService.update(id, updateUserDto)
++    } catch (error) {
++      throw new InternalServerErrorException(error.message)
++    }
+   }
+ }

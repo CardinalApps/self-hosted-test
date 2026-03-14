@@ -219,7 +219,7 @@
     "en": "Remove this user"
   },
   "users.settings.alert.guest-account-info": {
-    "en": "The guest account is a special account that can be shared by everyone anonymously. It does not use a seat."
+    "en": "The guest account is a special account that can be shared by everyone anonymously."
   },
   "users.settings.actions.remove.disabled-for-guest": {
     "en": "The Guest Account cannot be removed."
