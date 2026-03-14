@@ -1,0 +1,17 @@
+diff a/servers/media/src/modules/indexing/i18n.ts b/servers/media/src/modules/indexing/i18n.ts	(rejected hunks)
+@@ -1,5 +1,5 @@
+ const i18n = {
+-  "indexing.patch.state.description": {
++  "indexing.get.state.description": {
+     "en": `
+ Returns a snapshot of the indexing state at 
+ this current moment. Use this endpoint for one-time checks. 
+@@ -17,7 +17,7 @@ Possible states are: {states}
+ `,
+   },
+ 
+-  "indexing.get.state.description": {
++  "indexing.patch.state.description": {
+     "en": `
+ Update the state of the currently running indexing operation. This endpoint
+ is dedicated to controlling the indexing service from the frontend, and
