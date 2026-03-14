@@ -1,27 +1,23 @@
 diff a/servers/media/src/modules/app/app.module.ts b/servers/media/src/modules/app/app.module.ts	(rejected hunks)
-@@ -81,8 +81,7 @@ const resolvePostgresHost = () => {
- 
- @Module({
-   imports: [
--    // Initialize Nest modules
--    // @ts-expect-error FIXME separate the db configs and set their types properly
-+    // @ts-expect-error FIXME didn't feel like typing this when converting from vanilla JS
-     TypeOrmModule.forRoot(envVar('CARDINAL_POSTGRES', false)
-       ? {
-           type: 'postgres',
-@@ -92,6 +91,7 @@ const resolvePostgresHost = () => {
+@@ -91,9 +91,9 @@ const resolvePostgresHost = () => {
            password: envVar('POSTGRES_PASSWORD', 'cardinal'),
            autoLoadEntities: true,
            retryAttempts: 3,
-+          // this stays on until 1.0.0
-           synchronize: true,
+-          // this stays on until 1.0.0
+-          synchronize: true,
            namingStrategy: new SnakeNamingStrategy(),
++          // this stays on until v1.0.0
++          synchronize: true,
          }
-@@ -101,6 +101,7 @@ const resolvePostgresHost = () => {
+       // SQLite
+       : {
+@@ -101,7 +101,8 @@ const resolvePostgresHost = () => {
            database: getSQLiteDatabaseLocation(),
            autoLoadEntities: true,
            retryAttempts: 3,
-+          // this stays on until 1.0.0
+-          // this stays on until 1.0.0
++          namingStrategy: new SnakeNamingStrategy(),
++          // this stays on until v1.0.0
            synchronize: true,
          },
      ),
