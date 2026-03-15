@@ -16,6 +16,7 @@ import EnableDisable from './EnableDisable'
 
 import i18n from './i18n.json'
 import './styles.css'
+import UpdatePassword from './UpdatePassword'
 
 type UserManagementDrawerProps = {
   user: UserType,
@@ -28,7 +29,8 @@ function UserManagementDrawer({ user, onClose }: UserManagementDrawerProps) {
   const isGuestAccount = user?.designation === 'guest_account'
   const isCurrentUser = user?.userId === currentUser.userId
   const isCloudUser = user?.cardinalId
-  const isServerOwner = user?.role === 'owner'
+  const isServerOwner = user?.roles.find((role) => role.role === 'owner')
+  const hasPassword = !user.cardinalId && user.designation !== 'guest_account'
 
   const removeUserButton = () => {
     if (isGuestAccount) {
@@ -87,7 +89,7 @@ function UserManagementDrawer({ user, onClose }: UserManagementDrawerProps) {
               name: i18n['users.settings.info.last-seen'][lang],
               label: user?.activityStatusUpdatedAt
                 ? `${formatDate(user?.activityStatusUpdatedAt)} (${formatTimeAgo(user?.activityStatusUpdatedAt)})`
-                : null,
+                : i18n['users.settings.info.last-seen.never'][lang],
             },
             {
               name: i18n['users.settings.info.type'][lang],
@@ -117,6 +119,7 @@ function UserManagementDrawer({ user, onClose }: UserManagementDrawerProps) {
         />
       </Drawer.Section>
       <Drawer.Section className="user-actions" title={i18n['users.settings.actions'][lang]}>
+        {hasPassword && <UpdatePassword user={user} />}
         <EnableDisable user={user} />
         {removeUserButton()}
       </Drawer.Section>

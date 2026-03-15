@@ -194,6 +194,9 @@
   "users.settings.info.last-seen": {
     "en": "Last seen"
   },
+  "users.settings.info.last-seen.never": {
+    "en": "Never"
+  },
   "users.settings.roles": {
     "en": "Roles"
   },
@@ -206,6 +209,9 @@
   "users.settings.actions.enable": {
     "en": "Enable this user"
   },
+  "users.settings.actions.update-password": {
+    "en": "Update password"
+  },
   "users.settings.actions.cloud-portal-link": {
     "en": "Manage your Cardinal cloud account online"
   },
@@ -213,7 +219,7 @@
     "en": "Remove this user"
   },
   "users.settings.alert.guest-account-info": {
-    "en": "The guest account is a special account that can be shared by everyone anonymously. It does not use a seat."
+    "en": "The guest account is a special account that can be shared by everyone anonymously."
   },
   "users.settings.actions.remove.disabled-for-guest": {
     "en": "The Guest Account cannot be removed."
@@ -247,6 +253,12 @@
   },
   "users.updated.disabled.success": {
     "en": "User has been disabled."
+  },
+  "users.updated.password.success": {
+    "en": "Set new password"
+  },
+  "users.updated.password.submit": {
+    "en": "Update"
   },
   "users.roles.count": {
     "en": "{num} roles"

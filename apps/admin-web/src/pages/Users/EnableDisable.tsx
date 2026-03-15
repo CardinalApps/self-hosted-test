@@ -25,7 +25,7 @@ function EnableDisableUser({ user }: EnableDisableUserProps) {
   const [updateUser, updateUserResult] = useUpdateUserMutation()
   const [showConfirmDisableUser, setShowConfirmDisableUser] = useState<boolean>(false)
   const [showConfirmEnableUser, setShowConfirmEnableUser] = useState<boolean>(false)
-  const isServerOwner = user?.role === 'owner'
+  const isServerOwner = user.roles.find((role) => role.role === 'owner')
   const isCurrentUser = user.userId === currentUser.userId
 
   const handleDisableUser = () => {
@@ -89,16 +89,6 @@ function EnableDisableUser({ user }: EnableDisableUserProps) {
   }
 
   useEffect(() => {
-    if (updateUserResult.isError) {
-      dispatch(toastActions.addToQueue({
-        type: 'danger',
-        // @ts-expect-error
-        title: `${updateUserResult?.error?.status} Error`,
-        // @ts-expect-error
-        body: updateUserResult?.error?.data?.message,
-      }))
-      return
-    }
     if (updateUserResult.isSuccess && updateUserResult.originalArgs?.body?.enabled === true) {
       setShowConfirmEnableUser(false)
       dispatch(toastActions.addToQueue({

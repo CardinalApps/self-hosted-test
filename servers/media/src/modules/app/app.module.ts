@@ -91,9 +91,9 @@ const resolvePostgresHost = () => {
           password: envVar('POSTGRES_PASSWORD', 'cardinal'),
           autoLoadEntities: true,
           retryAttempts: 3,
-          // this stays on until 1.0.0
-          synchronize: true,
           namingStrategy: new SnakeNamingStrategy(),
+          // this stays on until v1.0.0
+          synchronize: true,
         }
       // SQLite
       : {
@@ -101,7 +101,8 @@ const resolvePostgresHost = () => {
           database: getSQLiteDatabaseLocation(),
           autoLoadEntities: true,
           retryAttempts: 3,
-          // this stays on until 1.0.0
+          namingStrategy: new SnakeNamingStrategy(),
+          // this stays on until v1.0.0
           synchronize: true,
         },
     ),

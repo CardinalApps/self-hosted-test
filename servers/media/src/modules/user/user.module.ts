@@ -14,6 +14,7 @@ import { User } from './user.entity'
 import { RoleAssignment } from '../rbac/role-assignment.entity'
 import { LicensingController } from './licensing.controller'
 import { PublicUserController } from './users-public.controller'
+import { UpdateUserService } from './update-user.service'
 
 @Module({
   imports: [
@@ -27,10 +28,12 @@ import { PublicUserController } from './users-public.controller'
     UserService,
     SeatsService,
     LocalUserService,
+    UpdateUserService,
     CloudUserService,
   ],
   providers: [
     UserService,
+    UpdateUserService,
     LocalUserService,
     CloudUserService,
     SeatsService,

@@ -39,6 +39,7 @@ export type MediaServerAspect = typeof MediaServerAspects[number]
  */
 export const MediaServerCapabilities = [
   'CurrentUser.Read',
+  'CurrentUser.Update',
 
   'AdminApp.Login',
 
@@ -137,6 +138,7 @@ export enum MediaServerRoleName {
  */
 const MINIMALLY_NECESSARY_CAPABILITIES: CapabilityAssignments<MediaServerCapability> = [
   'CurrentUser.Read',
+  'CurrentUser.Update',
 ]
 const READONLY_CROSS_APP_FEATURES: CapabilityAssignments<MediaServerCapability> = [
   'Libraries.Read',

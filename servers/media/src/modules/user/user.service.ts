@@ -171,19 +171,6 @@ export class UserService {
   }
 
   /**
-   * Update a user.
-   */
-  async update(userId: string, data: Partial<User>): Promise<User | null> {
-    try {
-      await this.userRepository.update({ userId }, data)
-      return await this.get(userId)
-    } catch (error) {
-      Logger.log(error)
-      return null
-    }
-  }
-
-  /**
    * Creates the server owner account.
    */
   async createServerOwner(cardinalSSOJWT, serverName?): Promise<User | null> {
