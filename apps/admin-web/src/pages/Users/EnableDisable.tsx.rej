@@ -1,12 +1,27 @@
 diff a/apps/admin-web/src/pages/Users/EnableDisable.tsx b/apps/admin-web/src/pages/Users/EnableDisable.tsx	(rejected hunks)
-@@ -123,8 +123,8 @@ function EnableDisableUser({ user }: EnableDisableUserProps) {
+@@ -25,7 +25,7 @@ function EnableDisableUser({ user }: EnableDisableUserProps) {
+   const [updateUser, updateUserResult] = useUpdateUserMutation()
+   const [showConfirmDisableUser, setShowConfirmDisableUser] = useState<boolean>(false)
+   const [showConfirmEnableUser, setShowConfirmEnableUser] = useState<boolean>(false)
+-  const isServerOwner = user?.role === 'owner'
++  const isServerOwner = user.roles.find((role) => role.role === 'owner')
+   const isCurrentUser = user.userId === currentUser.userId
  
-   return (
-     <>
--      {!!user.enabled && getDisableButton()}
--      {!user.enabled && (
-+      {!!user?.enabled && getDisableButton()}
-+      {!user?.enabled && (
-         <Button onClick={() => setShowConfirmEnableUser(true)} icon="fas fa-door-open">
-           {i18n['users.settings.actions.enable'][lang]}
-         </Button>
+   const handleDisableUser = () => {
+@@ -89,16 +89,6 @@ function EnableDisableUser({ user }: EnableDisableUserProps) {
+   }
+ 
+   useEffect(() => {
+-    if (updateUserResult.isError) {
+-      dispatch(toastActions.addToQueue({
+-        type: 'danger',
+-        // @ts-expect-error
+-        title: `${updateUserResult?.error?.status} Error`,
+-        // @ts-expect-error
+-        body: updateUserResult?.error?.data?.message,
+-      }))
+-      return
+-    }
+     if (updateUserResult.isSuccess && updateUserResult.originalArgs?.body?.enabled === true) {
+       setShowConfirmEnableUser(false)
+       dispatch(toastActions.addToQueue({
