@@ -125,7 +125,7 @@ function Users() {
               {formatTimeAgo(lastSeen)}
             </span>
             )
-          : null
+          : i18n['users.settings.info.last-seen.never'][lang]
         }
       </Table.Col>
     )

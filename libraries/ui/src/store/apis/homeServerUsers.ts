@@ -63,6 +63,18 @@ export const usersApi = baseHomeServerApi
       }),
 
       /**
+       * Update current user.
+       */
+      updateCurrentUser: builder.mutation({
+        query: ({ body }) => ({
+          url: `/users/current`,
+          method: 'PATCH',
+          body,
+        }),
+        invalidatesTags: ['Users.List'],
+      }),
+
+      /**
        * Update a user.
        */
       createUser: builder.mutation({
@@ -80,5 +92,6 @@ export const {
   useGetUsersQuery,
   useGetServerOwnerQuery,
   useUpdateUserMutation,
+  useUpdateCurrentUserMutation,
   useCreateUserMutation,
 } = usersApi

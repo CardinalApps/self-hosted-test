@@ -9,7 +9,6 @@ import {
   Query,
   Patch,
   UnauthorizedException,
-  ForbiddenException,
   InternalServerErrorException,
   Logger,
 } from '@nestjs/common'
@@ -19,7 +18,6 @@ import {
 } from '@nestjs/swagger'
 
 import { UserService } from './user.service'
-import { LocalUserService } from './local-user.service'
 import { CloudUserService } from './cloud-user.service'
 import { User } from './user.entity'
 import { CreateUser } from './dtos/CreateUser.dto'
@@ -30,17 +28,15 @@ import { StandardEndpoint } from '../../decorators/StandardEndpoint.decorator'
 
 import { getJWTFromHeaders, getCardinalTolkienFromHeaders } from '../../utils/jwt'
 import { GetUsersDto } from './dtos/GetUsers.dto'
-import { SeatsService } from './seats.service'
-import { Designations } from './types'
+import { UpdateUserService } from './update-user.service'
 
 @Controller()
 @ApiTags('Users')
 export class UserController {
   constructor(
     private readonly userService: UserService,
-    private readonly localUserService: LocalUserService,
+    private readonly updateUserService: UpdateUserService,
     private readonly cloudUserService: CloudUserService,
-    private readonly seatsService: SeatsService,
   ) {}
 
   /**
@@ -89,6 +85,29 @@ export class UserController {
       if (error.message == 405) {
         throw new MethodNotAllowedException()
       }
+    }
+  }
+
+  /**
+   * Update your own user.
+   */
+  @Patch('/users/current')
+  @StandardEndpoint({
+    summary: 'Update your own user.',
+    capabilities: ['CurrentUser.Update'],
+  })
+  async updateCurrentUser(
+    @Body() updateUserDto: UpdateUserDto,
+    @CurrentUser() currentUser: User,
+  ): Promise<User> {
+    if (updateUserDto.enabled === false) {
+      throw new UnauthorizedException('You cannot disable yourself.')
+    }
+
+    try {
+      return await this.updateUserService.validateAndUpdate(currentUser, currentUser, updateUserDto)
+    } catch (error) {
+      throw new InternalServerErrorException(error.message)
     }
   }
 
@@ -174,10 +193,7 @@ export class UserController {
   }
 
   /**
-   * TODO split this into two separate endpoints, one for updating your own
-   * user, and one for updating other users. The endpoint for yourself should
-   * require CurrentUser.Update and the one for other users should require
-   * Users.Update.
+   * Update any user.
    */
   @Patch('/users/:id')
   @StandardEndpoint({
@@ -189,41 +205,16 @@ export class UserController {
     @Body() updateUserDto: UpdateUserDto,
     @CurrentUser() currentUser: User,
   ): Promise<User> {
-    const usersThatCanUseThisEndpoint = []
-
-    // Special case: prevent disabling your own user
-    if (id === currentUser.userId && updateUserDto.enabled === false) {
-      throw new UnauthorizedException('You cannot disable your current user.')
+    try {
+      const updatingUser = await this.userService.get(id)
+      const results = await this.updateUserService.validateAndUpdate(
+        updatingUser,
+        currentUser,
+        updateUserDto,
+      )
+      return results
+    } catch (err) {
+      throw new InternalServerErrorException(err.message)
     }
-
-    // Server owner can update anyone
-    const serverOwner = await this.userService.getServerOwner()
-    usersThatCanUseThisEndpoint.push(serverOwner.userId)
-
-    // Users can update themselves
-    usersThatCanUseThisEndpoint.push(id)
-
-    // User is allow to perform this update
-    if (usersThatCanUseThisEndpoint.includes(currentUser.userId)) {
-      const userPriorToUpdate = await this.userService.get(id)
-
-      // If trying to enable a user (but not the Guest Account), check if there is a seat available
-      if (
-        (updateUserDto?.enabled === true && userPriorToUpdate.enabled === false)
-        && userPriorToUpdate.designation !== Designations.GUEST_ACCOUNT
-      ) {
-        if (!await this.seatsService.hasAvailableSeats()) {
-          throw new ForbiddenException('Cannot enable this user because there are no seats available.')
-        }
-      }
-
-      try {
-        return await this.userService.update(id, updateUserDto)
-      } catch (error) {
-        throw new InternalServerErrorException(error.message)
-      }
-    }
-
-    throw new UnauthorizedException()
   }
 }
