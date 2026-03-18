@@ -1,56 +1,19 @@
 diff a/libraries/ui/src/components/interaction/MusicTrack/MusicTrack.tsx b/libraries/ui/src/components/interaction/MusicTrack/MusicTrack.tsx	(rejected hunks)
-@@ -4,15 +4,18 @@ import { useSelector } from 'react-redux'
- import Icon from '../../typography/Icon'
- import MusicPlaybackButton from '../MusicPlaybackButton'
+@@ -6,7 +6,7 @@ import MusicPlaybackButton from '../MusicPlaybackButton'
  
--//import { settingsSelectors } from '../../../store/slices/settings'
-+import { settingsSelectors } from '../../../store/slices/settings'
+ import { settingsSelectors } from '../../../store/slices/settings'
  import { audioSelectors } from '../../../store/slices/music'
- import playMusic from '../../../store/slices/music/thunks/play'
+-import playMusic from '../../../store/slices/music/thunks/play'
++import play from '../../../store/slices/music/thunks/play'
  import { RouterContext } from '../../../context/router'
--
--import './MusicTrack.css'
  import { useReleaseCover } from '../../../hooks/useReleaseCover'
  import { useAppDispatch } from '../../../hooks/useAppDispatch'
- 
-+import i18n from './i18n'
-+
-+import './MusicTrack.css'
-+import { pluralize } from '../../../lib/formatting/text'
-+
- type MusicTrackProps = {
-   musicTrackId?: string,
-   trackNumber?: number,
-@@ -44,7 +47,7 @@ const MusicTrack = ({
- }: PropsWithChildren<MusicTrackProps>) => {
-   const dispatch = useAppDispatch()
-   const { Link } = useContext(RouterContext)
--  //const { lang } = useSelector(settingsSelectors.current)
-+  const { lang } = useSelector(settingsSelectors.current)
-   const playing = useSelector(audioSelectors.playing)
-   const artwork = useReleaseCover(hasArtwork ? releaseId : null)
- 
-@@ -82,6 +85,7 @@ const MusicTrack = ({
-             }
-             {!!artistName &&
-               <p className="music-release-artist">
-+                <span className="sep">—</span>
-                 {Link && artistLink
-                   ? <Link to={artistLink}>{artistName}</Link>
-                   : artistName
-@@ -92,7 +96,14 @@ const MusicTrack = ({
-         }
-       </div>
-       {!!duration && <p className="col music-track-duration">{duration}</p>}
--      {!!plays && <p className="col music-track-plays"><span>{plays}</span></p>}
-+      {typeof plays !== 'undefined' && (
-+        <p
-+          className="col music-track-plays"
-+          title={pluralize(plays, i18n['playcount.title.singular'][lang], i18n['playcount.title.plural'][lang]).replace('{num}', plays)}
-+        >
-+          <span>{plays}</span>
-+        </p>
-+      )}
-       {!!canFav &&
-         <div className="col music-track-favorite">
-           <Icon fa="fas fa-star" hoverType="icon" onClick={() => console.log('fav')} />
+@@ -59,7 +59,7 @@ const MusicTrack = ({
+       && !e.target.matches('.music-playback-button')
+       && !e.target.closest('.music-playback-button')
+     ) {
+-      dispatch(playMusic({
++      dispatch(play({
+         trackId: musicTrackId,
+       }))
+     }

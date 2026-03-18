@@ -1,0 +1,14 @@
+diff a/servers/media/src/modules/music-history/music-history.module.ts b/servers/media/src/modules/music-history/music-history.module.ts	(rejected hunks)
+@@ -8,10 +8,11 @@ import { MusicHistory } from './music-history.entity'
+ import { EventModule } from '../event/event.module'
+ import { UserModule } from '../user/user.module'
+ import { MusicTrackModule } from '../music-track/music-track.module'
++import { PlaybackQueueItem } from '../playback-queue/playback-queue-item.entity'
+ 
+ @Module({
+   imports: [
+-    TypeOrmModule.forFeature([MusicHistory]),
++    TypeOrmModule.forFeature([MusicHistory, PlaybackQueueItem]),
+     UserModule,
+     EventModule,
+     MusicTrackModule,

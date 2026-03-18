@@ -1,19 +1,9 @@
 diff a/servers/media/src/modules/music-history/dtos/CreateMusicHistoryEntry.dto.ts b/servers/media/src/modules/music-history/dtos/CreateMusicHistoryEntry.dto.ts	(rejected hunks)
-@@ -1,13 +1,13 @@
- import { Transform } from 'class-transformer'
--import { IsNumber } from 'class-validator'
-+import { IsNumber, IsString } from 'class-validator'
+@@ -10,4 +10,7 @@ export class CreateMusicHistoryEntryDto {
  
- import { toNumber } from '../../../utils/transformers'
- 
- export class CreateMusicHistoryEntryDto {
-   @Transform(toNumber)
-   @IsNumber()
--  progress: number
-+  seconds: number
- 
--  @IsNumber()
--  trackId: number
+   @IsString()
+   trackId: string
++
 +  @IsString()
-+  trackId: string
++  queueItemId: string
  }

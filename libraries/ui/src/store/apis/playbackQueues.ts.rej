@@ -1,40 +1,17 @@
 diff a/libraries/ui/src/store/apis/playbackQueues.ts b/libraries/ui/src/store/apis/playbackQueues.ts	(rejected hunks)
-@@ -5,7 +5,11 @@ import { UserType } from '../../types/user'
+@@ -1,5 +1,3 @@
+-import { DynamicQueueType, QueueType } from '@cardinalapps/types/src/playback-queue'
+-
+ import queryParams from '../../lib/net/queryParams'
+ import { UserType } from '../../types/user'
  
- import { CommonOrderParams, PaginationParams } from '../types/api'
+@@ -7,6 +5,9 @@ import { CommonOrderParams, PaginationParams } from '../types/api'
  import { baseHomeServerApi } from './baseHomeServerApi'
-+import { QueueItem, ServerQueue } from '../slices/music'
+ import { QueueItem, ServerQueue } from '../slices/music'
  
-+/**
-+ * @deprecated
-+ */
- export type QueueT = {
-   createdAt?: string,
-   user: UserType,
-@@ -19,6 +23,18 @@ export const playbackQueueApi = baseHomeServerApi
-   })
-   .injectEndpoints({
-     endpoints: (builder) => ({
-+      getQueue: builder.query<
-+        ServerQueue,
-+        {
-+          queueId: string,
-+        }
-+      >({
-+        query: ({
-+          queueId,
-+        }) => queryParams(`/playback-queues/${queueId}`, {
-+        }),
-+      }),
++export type QueueType = 'static' | 'dynamic'
++export type DynamicQueueType = 'true_shuffle'
 +
-       getQueues: builder.query<
-         [QueueT[], number],
-         PaginationParams & {
-@@ -66,6 +99,7 @@ export const playbackQueueApi = baseHomeServerApi
- 
- export const {
-   useGetQueuesQuery,
-+  useGetQueueItemsQuery,
-   useCreateQueueMutation,
-   useDeleteQueueMutation,
- } = playbackQueueApi
+ /**
+  * @deprecated
+  */

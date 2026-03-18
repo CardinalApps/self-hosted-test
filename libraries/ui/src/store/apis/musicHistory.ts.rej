@@ -1,19 +1,48 @@
 diff a/libraries/ui/src/store/apis/musicHistory.ts b/libraries/ui/src/store/apis/musicHistory.ts	(rejected hunks)
-@@ -2,7 +2,7 @@ import queryParams from '../../lib/net/queryParams'
- import { CommonSortParams, CommonOrderParams, PaginationParams } from '../types/api'
- import { UserType } from '../../types/user'
- import { getNextPageParam, getPreviousPageParam, ITEMS_PER_RTK_PAGE } from '../utils/infiniteScroll'
--import { baseApi } from './base'
-+import { baseHomeServerApi } from './baseHomeServerApi'
- import { MusicTrackType } from './musicTracks'
- 
+@@ -8,6 +8,7 @@ import { MusicTrackType } from './musicTracks'
  export type MusicHistorySortParams = CommonSortParams | 'sortTitle' | 'trackNumber'
-@@ -16,7 +16,7 @@ export type MusicHistoryEntryType = {
+ export type MusicHistoryEntryType = {
+   createdAt: string,
++  updatedAt: string,
+   id: number,
+   progress: number,
+   playbackEntryId: string,
+@@ -15,6 +16,10 @@ export type MusicHistoryEntryType = {
+   user: UserType,
    [key: string]: unknown,
  }
++export type UpsertMusicHistoryEntryType = {
++  queueEntryId: string,
++  seconds: number,
++}
  
--export const musicHistoryApi = baseApi
-+export const musicHistoryApi = baseHomeServerApi
+ export const musicHistoryApi = baseHomeServerApi
    .enhanceEndpoints({
-     addTagTypes: ['MusicHistoryList'],
+@@ -56,10 +61,27 @@ export const musicHistoryApi = baseHomeServerApi
+             ...(metadata && { metadata }),
+           })
+         },
++        providesTags: ['MusicHistoryList'],
++      }),
++
++      /**
++       * Mutations.
++       */
++      upsertHistoryEntry: builder.mutation<
++        UpsertMusicHistoryEntryType,
++        Partial<MusicHistoryEntryType>
++      >({
++        query: (body) => ({
++          url: '/music/history',
++          method: 'PATCH',
++          body,
++        }),
++        invalidatesTags: ['MusicHistoryList'],
+       }),
+     }),
    })
+ 
+ export const {
++  useUpsertHistoryEntryMutation,
+   useGetInfiniteMusicHistoryInfiniteQuery,
+ } = musicHistoryApi
