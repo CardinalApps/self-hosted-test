@@ -1,12 +1,25 @@
 diff a/libraries/ui/src/store/apis/musicArtists.ts b/libraries/ui/src/store/apis/musicArtists.ts	(rejected hunks)
-@@ -80,6 +80,10 @@ export const musicArtistsApi = baseHomeServerApi
-           })
+@@ -25,7 +25,7 @@ export const musicArtistsApi = baseHomeServerApi
+       getInfiniteMusicArtists: builder.infiniteQuery<
+         [MusicArtistType[], number],
+         {
+-          sort?: ArtistsSortParams,
++          orderBy?: ArtistsSortParams,
+           order?: CommonOrderParams,
+           libraries?: string[],
          },
-       }),
-+
-+      /**
-+       * Get one.
-+       */
-       getMusicArtist: builder.query<
-         MusicArtistType,
-         { id: string }
+@@ -41,12 +41,12 @@ export const musicArtistsApi = baseHomeServerApi
+           getPreviousPageParam,
+         },
+         query({ queryArg, pageParam }) {
+-          const { sort, order, libraries } = queryArg
++          const { orderBy, order, libraries } = queryArg
+           const { take, skip } = pageParam
+           return queryParams('/music/artists', {
+             ...(typeof skip !== 'undefined' && { skip }),
+             ...(take && { take }),
+-            ...(sort && { sort }),
++            ...(orderBy && { orderBy }),
+             ...(order && { order }),
+             ...(libraries && { libraries }),
+             releases: true,

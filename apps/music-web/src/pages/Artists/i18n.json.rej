@@ -1,20 +1,10 @@
 diff a/apps/music-web/src/pages/Artists/i18n.json b/apps/music-web/src/pages/Artists/i18n.json	(rejected hunks)
-@@ -1,14 +1,8 @@
- {
--  "title": {
--    "en": "Artists"
-+  "music-artists.title": {
-+    "en": "Music Artists"
+@@ -4,5 +4,8 @@
    },
--  "no-artists-card-title": {
--    "en": "No music"
--  },
--  "no-artists-card-message": {
--    "en": "Import your music to browse through the artists in your collection."
--  },
--  "no-artists-button": {
--    "en": "Import music"
-+  "music-artists.order-by.name": {
-+    "en": "Name"
+   "music-artists.order-by.name": {
+     "en": "Name"
++  },
++  "music-artists.order-by.created": {
++    "en": "Added"
    }
  }

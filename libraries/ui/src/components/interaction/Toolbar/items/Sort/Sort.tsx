@@ -15,16 +15,16 @@ export const SLUG = ToolbarItem.SORT
 export const DEFAULT_VALUE = 'date_added'
 
 export interface SortToolbarItemObject extends ToolbarItemObject {
-  options: {
+  options: Array<{
     value: string,
     label: string,
     sentenceCase: string,
-  }[],
-  extra: {
+  }>,
+  extra: Array<{
     value: string,
     label: string,
     sentenceCase: string,
-  }[],
+  }>,
 }
 
 interface SortToolbarItemProps extends ToolbarItemProps {
@@ -82,6 +82,7 @@ const ToolbarSort = ({
         selectedPrefix={`${i18n['sort-by'][lang]} `}
         size="s"
         multi={false}
+        min={1}
         value={toolbarValues?.[slug] as string || item?.initialValue as string}
         options={getOptions()}
         onChange={(value) => onChange(slug, value, toolbarValues)}
