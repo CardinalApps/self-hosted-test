@@ -1,39 +1,10 @@
 diff a/libraries/ui/src/components/features/AudioPlayer/AudioPlayer.tsx b/libraries/ui/src/components/features/AudioPlayer/AudioPlayer.tsx	(rejected hunks)
-@@ -12,6 +12,7 @@ import { audioSelectors, audioActions } from '../../../store/slices/music'
- import { CACHED_SEEK_SESSION_STORAGE_KEY, PLAYBACK_STATE } from '../../../store/slices/music/constants'
- import play from '../../../store/slices/music/thunks/play'
- import next from '../../../store/slices/music/thunks/next'
-+import previous from '../../../store/slices/music/thunks/previous'
+@@ -60,7 +60,7 @@ const AudioPlayer = ({
+   const [fadeIn, setFadeIn] = useState(false)
  
- import { getHowl } from '../../../hooks/useHowler'
- import { useReleaseCover } from '../../../hooks/useReleaseCover'
-@@ -67,7 +68,7 @@ const AudioPlayer = ({
+   const handlePlayClick = (id) => {
+-    dispatch(play({ trackId: id }))
++    dispatch(play({ trackIds: [id] }))
    }
  
-   const handlePrevClick = () => {
--    //dispatch(playMusic({ trackId: id }))
-+    dispatch(previous({ playerId: player.id }))
-   }
- 
-   const handleNextClick = () => {
-@@ -98,7 +99,10 @@ const AudioPlayer = ({
-    * Regularly update the current playback time.
-    */
-   useEffect(() => {
--    if (!playbackTimeInterval.current && howl) {
-+    if (howl) {
-+      if (playbackTimeInterval.current) {
-+        clearInterval(playbackTimeInterval.current)
-+      }
-       playbackTimeInterval.current = setInterval(() => {
-         const seek = howl.seek()
-         setPlaybackSeconds(seek)
-@@ -111,7 +115,7 @@ const AudioPlayer = ({
-         clearInterval(playbackTimeInterval.current)
-       }
-     }
--  }, [playerId, howl])
-+  }, [playerId, howl, player.trackId])
- 
-   useEffect(() => {
-     const timeout = setTimeout(() => {
+   const handlePauseClick = () => {
