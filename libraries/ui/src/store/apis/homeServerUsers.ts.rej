@@ -1,27 +1,14 @@
 diff a/libraries/ui/src/store/apis/homeServerUsers.ts b/libraries/ui/src/store/apis/homeServerUsers.ts	(rejected hunks)
-@@ -62,6 +62,18 @@ export const usersApi = baseHomeServerApi
-         invalidatesTags: ['Users.List', 'Licensing.Seats'],
-       }),
+@@ -1,10 +1,10 @@
+ import queryParams from '../../lib/net/queryParams'
+-import { CommonSortParams, PaginationParams } from '../types/api'
++import { CommonOrderByParams, PaginationParams } from '../types/api'
+ import { UserType } from '../../types/user'
+ import { baseHomeServerApi } from './baseHomeServerApi'
+ import { MusicTrackType } from './musicTracks'
  
-+      /**
-+       * Update current user.
-+       */
-+      updateCurrentUser: builder.mutation({
-+        query: ({ body }) => ({
-+          url: `/users/current`,
-+          method: 'PATCH',
-+          body,
-+        }),
-+        invalidatesTags: ['Users.List'],
-+      }),
-+
-       /**
-        * Update a user.
-        */
-@@ -80,5 +92,6 @@ export const {
-   useGetUsersQuery,
-   useGetServerOwnerQuery,
-   useUpdateUserMutation,
-+  useUpdateCurrentUserMutation,
-   useCreateUserMutation,
- } = usersApi
+-export type MusicHistorySortParams = CommonSortParams | 'sortTitle' | 'trackNumber'
++export type MusicHistorySortParams = CommonOrderByParams | 'sortTitle' | 'trackNumber'
+ export type MusicHistoryEntryType = {
+   createdAt: string,
+   id: number,

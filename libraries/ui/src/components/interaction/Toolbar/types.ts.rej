@@ -1,9 +1,27 @@
 diff a/libraries/ui/src/components/interaction/Toolbar/types.ts b/libraries/ui/src/components/interaction/Toolbar/types.ts	(rejected hunks)
-@@ -14,6 +14,7 @@ export interface ToolbarItemObject {
-   title?: string,
-   initialValue?: unknown,
-   options?: unknown[],
-+  extra?: unknown,
-   render?: ToolbarItem | (({ toolbarName, onChange }) => ReactNode),
- }
+@@ -1,10 +1,24 @@
+ import type { ReactNode } from 'react'
  
++export type ToolbarOrderByType =
++  'createdAt'
++  | 'updatedAt'
++  | 'title'
++  | 'name'
++  | 'duration'
++  | 'bitrate'
++  | 'trackNumber'
++  | 'discNumber'
++  | 'playCount'
++  | 'random'
++
++export type ToolbarOrderByDropdownType = ToolbarOrderByType[]
++
+ export enum ToolbarItem {
+   DATERANGE = 'daterange',
+   PAGINATION = 'pagination',
+   ORDER = 'order',
+-  SORT = 'sort',
++  ORDERBY = 'orderby',
+   DELETE = 'delete',
+   DESELECT = 'deselect',
+ }

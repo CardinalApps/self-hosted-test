@@ -1,48 +1,33 @@
 diff a/libraries/ui/src/store/apis/musicHistory.ts b/libraries/ui/src/store/apis/musicHistory.ts	(rejected hunks)
-@@ -8,6 +8,7 @@ import { MusicTrackType } from './musicTracks'
- export type MusicHistorySortParams = CommonSortParams | 'sortTitle' | 'trackNumber'
+@@ -1,11 +1,11 @@
+ import queryParams from '../../lib/net/queryParams'
+-import { CommonSortParams, CommonOrderParams, PaginationParams } from '../types/api'
++import { CommonOrderByParams, CommonOrderParams, PaginationParams } from '../types/api'
+ import { UserType } from '../../types/user'
+ import { getNextPageParam, getPreviousPageParam, ITEMS_PER_RTK_PAGE } from '../utils/infiniteScroll'
+ import { baseHomeServerApi } from './baseHomeServerApi'
+ import { MusicTrackType } from './musicTracks'
+ 
+-export type MusicHistorySortParams = CommonSortParams | 'sortTitle' | 'trackNumber'
++export type MusicHistorySortParams = CommonOrderByParams | 'sortTitle' | 'trackNumber'
  export type MusicHistoryEntryType = {
    createdAt: string,
-+  updatedAt: string,
-   id: number,
-   progress: number,
-   playbackEntryId: string,
-@@ -15,6 +16,10 @@ export type MusicHistoryEntryType = {
-   user: UserType,
-   [key: string]: unknown,
- }
-+export type UpsertMusicHistoryEntryType = {
-+  queueEntryId: string,
-+  seconds: number,
-+}
- 
- export const musicHistoryApi = baseHomeServerApi
-   .enhanceEndpoints({
-@@ -56,10 +61,27 @@ export const musicHistoryApi = baseHomeServerApi
-             ...(metadata && { metadata }),
-           })
+   updatedAt: string,
+@@ -33,7 +33,7 @@ export const musicHistoryApi = baseHomeServerApi
+       getInfiniteMusicHistory: builder.infiniteQuery<
+         [MusicHistoryEntryType[], number],
+         {
+-          sort?: MusicHistorySortParams,
++          orderby?: MusicHistorySortParams,
+           order?: CommonOrderParams,
+           release?: boolean,
+           metadata?: boolean
+@@ -50,7 +50,7 @@ export const musicHistoryApi = baseHomeServerApi
+           getPreviousPageParam,
          },
-+        providesTags: ['MusicHistoryList'],
-+      }),
-+
-+      /**
-+       * Mutations.
-+       */
-+      upsertHistoryEntry: builder.mutation<
-+        UpsertMusicHistoryEntryType,
-+        Partial<MusicHistoryEntryType>
-+      >({
-+        query: (body) => ({
-+          url: '/music/history',
-+          method: 'PATCH',
-+          body,
-+        }),
-+        invalidatesTags: ['MusicHistoryList'],
-       }),
-     }),
-   })
- 
- export const {
-+  useUpsertHistoryEntryMutation,
-   useGetInfiniteMusicHistoryInfiniteQuery,
- } = musicHistoryApi
+         query({ queryArg, pageParam }) {
+-          const { release, metadata, sort, order } = queryArg
++          const { release, metadata, orderby: sort, order } = queryArg
+           const { take, skip } = pageParam
+           return queryParams('/music/history', {
+             ...(typeof skip !== 'undefined' && { skip }),

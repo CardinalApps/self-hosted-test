@@ -1,9 +1,33 @@
 diff a/apps/music-web/src/pages/Releases/Releases.tsx b/apps/music-web/src/pages/Releases/Releases.tsx	(rejected hunks)
-@@ -20,6 +20,7 @@ function ReleasesPage() {
-       pageTitle={i18n['music-releases.title']['en']}
-       restoreScrollPoint={false}
-       capabilities={['MusicReleases.Read']}
-+      showLibrarySwitcher={true}
-       toolbar={(
-         <Toolbar
-           name={TOOLBAR_NAME}
+@@ -1,6 +1,6 @@
+ import AppPage from '@cardinalapps/ui/src/components/features/AppBase/AppPage'
+ import Toolbar from '@cardinalapps/ui/src/components/interaction/Toolbar'
+-import { ToolbarItem } from '@cardinalapps/ui/src/components/interaction/Toolbar/types'
++import { ToolbarItem, ToolbarOrderByDropdownType } from '@cardinalapps/ui/src/components/interaction/Toolbar/types'
+ 
+ import { PAGE_LAYOUT } from '@cardinalapps/ui/src/store/slices/layout/constants'
+ 
+@@ -31,19 +31,12 @@ function ReleasesPage() {
+               render: ToolbarItem.ORDER,
+             },
+             {
+-              slug: 'sort',
+-              render: ToolbarItem.SORT,
++              slug: 'orderby',
++              render: ToolbarItem.ORDERBY,
+               initialValue: 'title',
+               options: [
+-                {
+-                  label: i18n['music-releases.order-by.title']['en'],
+-                  value: 'title',
+-                },
+-                // {
+-                //   label: 'Random',
+-                //   value: 'random',
+-                // },
+-              ],
++                'title',
++              ] as ToolbarOrderByDropdownType,
+             },
+           ]}
+         />

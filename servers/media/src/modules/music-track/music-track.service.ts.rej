@@ -1,45 +1,24 @@
 diff a/servers/media/src/modules/music-track/music-track.service.ts b/servers/media/src/modules/music-track/music-track.service.ts	(rejected hunks)
-@@ -72,17 +72,17 @@ export class MusicTrackService {
-       libraries,
-     } = getMusicTracksDto
- 
--    const qb = this.musicTrackRepository.createQueryBuilder('musicTrack')
-+    const qb = this.musicTrackRepository.createQueryBuilder('music_track')
- 
--    if (release) qb.leftJoinAndSelect('musicTrack.release', 'release')
-+    if (release) qb.leftJoinAndSelect('music_track.release', 'release')
-     if (release) qb.leftJoinAndSelect('release.thumbnails', 'thumbnails')
--    if (artists) qb.leftJoinAndSelect('musicTrack.artists', 'artists')
--    if (metadata) qb.leftJoinAndSelect('musicTrack.metadata', 'metadata')
-+    if (artists) qb.leftJoinAndSelect('music_track.artists', 'artists')
-+    if (metadata) qb.leftJoinAndSelect('music_track.metadata', 'metadata')
- 
-     // When filtering by library, join files
-     if (libraries && libraries.length) {
-       const libraryEntities = await this.libraryService.getLibraries(libraries)
--      qb.innerJoin('musicTrack.file', ...this.libraryService.createJoinArgs(libraryEntities))
-+      qb.innerJoin('music_track.file', ...this.libraryService.createJoinArgs(libraryEntities))
-     }
- 
-     // Calculate play count
-@@ -90,16 +90,16 @@ export class MusicTrackService {
-       subQuery
-         .select('COUNT(history.id)', 'count')
-         .from(MusicHistory, 'history')
--        .where('history.trackId = musicTrack.id'),
--      'musicTrack_playCount')
-+        .where('history.track_id = music_track.id'),
-+      'music_track_play_count')
+@@ -65,7 +65,7 @@ export class MusicTrackService {
+       take,
+       skip,
+       order,
+-      sort,
++      orderBy,
+       metadata,
+       release,
+       artists,
+@@ -94,11 +94,11 @@ export class MusicTrackService {
+       'music_track_play_count')
  
      qb
--      .orderBy(`musicTrack.${sort}`, order)
-+      .orderBy(`music_track.${sort}`, order)
+-      .orderBy(`music_track.${sort}`, order)
++      .orderBy(`music_track.${orderBy}`, order)
        .take(take)
        .skip(skip)
  
-     if (sort === 'playCount') {
--      qb.orderBy('musicTrack_playCount', order)
-+      qb.orderBy('music_track_play_count', order)
+-    if (sort === 'playCount') {
++    if (orderBy === 'playCount') {
+       qb.orderBy('music_track_play_count', order)
      }
  
-     // playCount requires manual mapping

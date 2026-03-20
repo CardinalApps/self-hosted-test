@@ -1,49 +1,35 @@
 diff a/libraries/ui/src/components/interaction/Toolbar/ToolbarItems.tsx b/libraries/ui/src/components/interaction/Toolbar/ToolbarItems.tsx	(rejected hunks)
-@@ -61,6 +61,7 @@ const ToolbarItems = ({
-   const windowSize = useWindowSize()
-   const { lang } = useSelector(settingsSelectors.current)
-   const [mobileToolbarModalIsOpen, setMobileToolbarModalIsOpen] = useState(false)
-+  const { [virtualViewName]: virtualView } = useSelector(layoutSelectors.virtualViews)
+@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
+ import Drawer from '../../layout/Drawer'
  
-   /**
-    * Return an instance of a built-in toolbar component.
-@@ -133,7 +134,6 @@ const ToolbarItems = ({
-    * (e.g., photos, albums, etc).
-    */
-   const itemName = function() {
--    const { [virtualViewName]: virtualView } = useSelector(layoutSelectors.virtualViews)
-     const total = virtualViewName ? virtualView?.total : numArchiveItems
-     return total === 1
-       ? itemNameSingular ? itemNameSingular : i18n['item.singular.default'][lang]
-@@ -145,7 +145,6 @@ const ToolbarItems = ({
-    * `numArchiveItems`.
-    */
-   const SimpleCountGroup = function() {
--    const { [virtualViewName]: virtualView } = useSelector(layoutSelectors.virtualViews)
-     if (!numArchiveItems) {
-       return <></>
-     }
-@@ -171,7 +170,6 @@ const ToolbarItems = ({
-    * virtual layout.
-    */
-   const VirtualLayoutGroup = function() {
--    const { [virtualViewName]: virtualView } = useSelector(layoutSelectors.virtualViews)
-     return (
-       !!virtualView?.start && !!virtualView?.end && !!virtualView?.total &&
-         <div className="toolbar-group">
-@@ -190,7 +188,6 @@ const ToolbarItems = ({
-    * Shows the current selection of items.
-    */
-   const SelectionGroup = function() {
--    const { [virtualViewName]: virtualView } = useSelector(layoutSelectors.virtualViews)
-     const total = virtualViewName ? virtualView?.total : numArchiveItems
-     return (
-       /* Controls for the selected items */
-@@ -224,7 +221,6 @@ const ToolbarItems = ({
-    * Render all of the items provided by the Toolbar `items` prop.
-    */
-   const ProvidedItemsGroup = function() {
--    const { [virtualViewName]: virtualView } = useSelector(layoutSelectors.virtualViews)
-     const total = virtualViewName ? virtualView?.total : numArchiveItems
-     return (
-       !!items.length && groupedItems().map((group, i) => {
+ import Order, { ORDER_SLUG } from './items/Order'
+-import Sort, { SORT_SLUG } from './items/Sort'
++import OrderBy, { ORDER_BY_SLUG } from './items/OrderBy'
+ import DateRange, { DATE_RANGE_SLUG } from './items/DateRange'
+ import Delete, { DELETE_SLUG } from './items/Delete'
+ import Deselect, { DESELECT_SLUG } from './items/Deselect'
+@@ -17,12 +17,12 @@ import { layoutActions, layoutSelectors } from '../../../store/slices/layout'
+ import useWindowSize from '../../../hooks/useWindowSize'
+ 
+ import { formatWithCommas } from '../../../lib/formatting/number'
++import { ToolbarItemObject } from './types'
+ 
+ import './Toolbar.css'
+ 
+ import i18n from './i18n'
+ 
+-import { ToolbarItemObject } from './types'
+ 
+ type ToolbarItemsProps = {
+   name?: string,
+@@ -70,8 +70,8 @@ const ToolbarItems = ({
+     switch (item) {
+       case ORDER_SLUG:
+         return Order
+-      case SORT_SLUG:
+-        return Sort
++      case ORDER_BY_SLUG:
++        return OrderBy
+       case DATE_RANGE_SLUG:
+         return DateRange
+       case DELETE_SLUG:

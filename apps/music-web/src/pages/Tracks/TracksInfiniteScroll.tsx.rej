@@ -1,9 +1,19 @@
 diff a/apps/music-web/src/pages/Tracks/TracksInfiniteScroll.tsx b/apps/music-web/src/pages/Tracks/TracksInfiniteScroll.tsx	(rejected hunks)
-@@ -72,6 +72,7 @@ function TracksInfiniteScroll({
-       itemHeight={ITEM_HEIGHT}
-       itemWidth={ITEM_WIDTH}
-       data={data}
-+      gap={5}
-       getItem={getItem}
-       isSuccess={isSuccess}
-       isLoading={isLoading}
+@@ -3,7 +3,7 @@ import { useAppSelector } from '@cardinalapps/ui/src/hooks/useAppSelector'
+ import { layoutSelectors } from '@cardinalapps/ui/src/store/slices/layout'
+ import {
+   MusicTrackType,
+-  TracksSortParams,
++  TracksOrderBy,
+   useGetInfiniteMusicTracksInfiniteQuery,
+ } from '@cardinalapps/ui/src/store/apis/musicTracks'
+ import { CommonOrderParams } from '@cardinalapps/ui/src/store/types/api'
+@@ -46,7 +46,7 @@ function TracksInfiniteScroll({
+     isFetchingPreviousPage,
+   } = useGetInfiniteMusicTracksInfiniteQuery(
+     {
+-      sort: toolbarValues?.sort as TracksSortParams,
++      orderBy: toolbarValues?.orderby as TracksOrderBy,
+       order: toolbarValues?.order as CommonOrderParams,
+       ...(libraries?.length ? { libraries } : {}),
+     },
