@@ -1,10 +1,18 @@
 diff a/servers/media/src/modules/music-track/dtos/GetMusicTracks.dto.ts b/servers/media/src/modules/music-track/dtos/GetMusicTracks.dto.ts	(rejected hunks)
-@@ -20,7 +20,7 @@ class MusicTracksPagination extends Pagination {
+@@ -6,7 +6,6 @@ import { toArrayOfStrings } from '../../../utils/transformers'
+ 
+ enum AllowedMusicTracksOrderBy {
+   'createdAt' = 'createdAt',
+-  'updatedAt' = 'updatedAt',
+   'title' = 'title',
+   'trackNumber' = 'trackNumber',
+   'discNumber' = 'discNumber',
+@@ -20,7 +19,7 @@ class MusicTracksPagination extends Pagination {
    @IsOptional()
    @IsString()
    @IsIn(Object.values(AllowedMusicTracksOrderBy))
--  sort?: AllowedMusicTracksOrderBy = AllowedMusicTracksOrderBy.trackNumber
-+  orderBy?: AllowedMusicTracksOrderBy = AllowedMusicTracksOrderBy.createdAt
+-  orderBy?: AllowedMusicTracksOrderBy = AllowedMusicTracksOrderBy.createdAt
++  orderBy?: AllowedMusicTracksOrderBy = AllowedMusicTracksOrderBy.title
  }
  
  export class GetMusicTracksDto extends MusicTracksPagination {

@@ -3,8 +3,8 @@ diff a/apps/music-web/src/pages/History/HistoryInfiniteScroll.tsx b/apps/music-w
  import { useAppSelector } from '@cardinalapps/ui/src/hooks/useAppSelector'
  import { layoutSelectors } from '@cardinalapps/ui/src/store/slices/layout'
  import {
--  TracksSortParams,
-+  TracksOrderByParams,
+-  TracksOrderByParams,
++  MusicTracksOrderBy,
  } from '@cardinalapps/ui/src/store/apis/musicTracks'
  import { MusicHistoryEntryType, useGetInfiniteMusicHistoryInfiniteQuery } from '@cardinalapps/ui/src/store/apis/musicHistory'
  import { CommonOrderParams } from '@cardinalapps/ui/src/store/types/api'
@@ -12,8 +12,8 @@ diff a/apps/music-web/src/pages/History/HistoryInfiniteScroll.tsx b/apps/music-w
      isFetchingPreviousPage,
    } = useGetInfiniteMusicHistoryInfiniteQuery(
      {
--      sort: toolbarValues?.sort as TracksSortParams,
-+      orderby: toolbarValues?.orderby as TracksOrderByParams,
+-      orderby: toolbarValues?.orderby as TracksOrderByParams,
++      orderBy: toolbarValues?.orderBy as MusicTracksOrderBy,
        order: toolbarValues?.order as CommonOrderParams,
      },
      { initialPageParam },

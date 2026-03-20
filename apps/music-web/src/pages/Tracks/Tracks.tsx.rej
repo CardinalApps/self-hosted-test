@@ -1,46 +1,28 @@
 diff a/apps/music-web/src/pages/Tracks/Tracks.tsx b/apps/music-web/src/pages/Tracks/Tracks.tsx	(rejected hunks)
-@@ -3,6 +3,7 @@ import Toolbar from '@cardinalapps/ui/src/components/interaction/Toolbar'
+@@ -3,7 +3,7 @@ import Toolbar from '@cardinalapps/ui/src/components/interaction/Toolbar'
  import { ToolbarItem } from '@cardinalapps/ui/src/components/interaction/Toolbar/types'
  
  import { PAGE_LAYOUT } from '@cardinalapps/ui/src/store/slices/layout/constants'
-+import { TracksOrderBy } from '@cardinalapps/ui/src/store/apis/musicTracks'
+-import { TracksOrderBy } from '@cardinalapps/ui/src/store/apis/musicTracks'
++import { MusicTracksOrderBy } from '@cardinalapps/ui/src/store/apis/musicTracks'
  
  import TracksInfiniteScroll from './TracksInfiniteScroll'
  
-@@ -31,27 +32,17 @@ function TracksPage() {
+@@ -32,7 +32,7 @@ function TracksPage() {
                render: ToolbarItem.ORDER,
              },
              {
--              slug: 'sort',
--              render: ToolbarItem.SORT,
-+              slug: 'orderby',
-+              render: ToolbarItem.ORDERBY,
+-              slug: 'orderby',
++              slug: 'orderBy',
+               render: ToolbarItem.ORDERBY,
                initialValue: 'title',
                options: [
--                {
--                  label: i18n['music-tracks.order-by.title']['en'],
--                  value: 'title',
--                },
--                {
--                  label: i18n['music-tracks.order-by.track-num']['en'],
--                  value: 'trackNumber',
--                },
--                {
--                  label: i18n['music-tracks.order-by.duration']['en'],
--                  value: 'duration',
--                },
--                {
--                  label: i18n['music-tracks.order-by.bitrate']['en'],
--                  value: 'bitrate',
--                },
--              ],
-+                'title',
-+                'createdAt',
-+                'playCount',
-+                'trackNumber',
-+                'duration',
-+                'bitrate',
-+              ] as TracksOrderBy[],
+@@ -42,7 +42,7 @@ function TracksPage() {
+                 'trackNumber',
+                 'duration',
+                 'bitrate',
+-              ] as TracksOrderBy[],
++              ] as MusicTracksOrderBy[],
              },
            ]}
          />

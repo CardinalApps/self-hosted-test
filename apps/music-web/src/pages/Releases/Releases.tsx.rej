@@ -1,33 +1,28 @@
 diff a/apps/music-web/src/pages/Releases/Releases.tsx b/apps/music-web/src/pages/Releases/Releases.tsx	(rejected hunks)
-@@ -1,6 +1,6 @@
+@@ -1,8 +1,9 @@
  import AppPage from '@cardinalapps/ui/src/components/features/AppBase/AppPage'
  import Toolbar from '@cardinalapps/ui/src/components/interaction/Toolbar'
--import { ToolbarItem } from '@cardinalapps/ui/src/components/interaction/Toolbar/types'
-+import { ToolbarItem, ToolbarOrderByDropdownType } from '@cardinalapps/ui/src/components/interaction/Toolbar/types'
+-import { ToolbarItem, ToolbarOrderByDropdownType } from '@cardinalapps/ui/src/components/interaction/Toolbar/types'
++import { ToolbarItem } from '@cardinalapps/ui/src/components/interaction/Toolbar/types'
  
  import { PAGE_LAYOUT } from '@cardinalapps/ui/src/store/slices/layout/constants'
++import { MusicReleasesOrderBy } from '@cardinalapps/ui/src/store/apis/musicReleases'
  
-@@ -31,19 +31,12 @@ function ReleasesPage() {
+ import ReleasesInfiniteScroll from './ReleasesInfiniteScroll'
+ 
+@@ -31,12 +32,13 @@ function ReleasesPage() {
                render: ToolbarItem.ORDER,
              },
              {
--              slug: 'sort',
--              render: ToolbarItem.SORT,
-+              slug: 'orderby',
-+              render: ToolbarItem.ORDERBY,
+-              slug: 'orderby',
++              slug: 'orderBy',
+               render: ToolbarItem.ORDERBY,
                initialValue: 'title',
                options: [
--                {
--                  label: i18n['music-releases.order-by.title']['en'],
--                  value: 'title',
--                },
--                // {
--                //   label: 'Random',
--                //   value: 'random',
--                // },
--              ],
-+                'title',
-+              ] as ToolbarOrderByDropdownType,
+                 'title',
+-              ] as ToolbarOrderByDropdownType,
++                'createdAt',
++              ] as MusicReleasesOrderBy[],
              },
            ]}
          />
