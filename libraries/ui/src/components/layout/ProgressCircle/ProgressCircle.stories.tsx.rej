@@ -1,0 +1,11 @@
+diff a/libraries/ui/src/components/layout/ProgressCircle/ProgressCircle.stories.tsx b/libraries/ui/src/components/layout/ProgressCircle/ProgressCircle.stories.tsx	(rejected hunks)
+@@ -11,8 +11,7 @@ type Story = StoryObj<typeof meta>
+ 
+ export const Default: Story = {
+   args: {
+-    current: 75,
+-    total: 100,
++    current: 0.25,
+     showPercentage: true,
+   },
+ }
