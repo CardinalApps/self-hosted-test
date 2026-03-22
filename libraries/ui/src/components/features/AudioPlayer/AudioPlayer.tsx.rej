@@ -1,10 +1,46 @@
 diff a/libraries/ui/src/components/features/AudioPlayer/AudioPlayer.tsx b/libraries/ui/src/components/features/AudioPlayer/AudioPlayer.tsx	(rejected hunks)
-@@ -56,7 +56,7 @@ const AudioPlayer = ({
-     isLoading: musicTrackLoading,
+@@ -16,6 +16,7 @@ import previous from '../../../store/slices/music/thunks/previous'
+ 
+ import { getHowl } from '../../../hooks/useHowler'
+ import { useReleaseCover } from '../../../hooks/useReleaseCover'
++import { useCoverColors } from '../../../hooks/useCoverColors'
+ 
+ import { useGetMusicTrackQuery } from '../../../store/apis/musicTracks'
+ 
+@@ -31,6 +32,7 @@ type AudioPlayerProps = {
+   className?: string,
+   playerId: string,
+   size: 'mini' | 'wide',
++  onColorsLoaded?: (color: string[]) => void
+ }
+ 
+ /**
+@@ -40,6 +42,7 @@ const AudioPlayer = ({
+   className,
+   playerId,
+   size,
++  onColorsLoaded,
+ }: PropsWithChildren<AudioPlayerProps>) => {
+   const howl = getHowl(playerId)
+   const dispatch = useAppDispatch()
+@@ -57,6 +60,7 @@ const AudioPlayer = ({
    } = useGetMusicTrackQuery({ id: player.trackId })
    const track = musicTrackResponse
--  const coverSrc = useReleaseCover(track?.release?.id)
-+  const [coverSrc] = useReleaseCover(track?.release?.id)
+   const [coverSrc] = useReleaseCover(track?.release?.id)
++  const coverColors = useCoverColors(coverSrc)
    const [fadeIn, setFadeIn] = useState(false)
  
    const handlePlayClick = (id) => {
+@@ -124,6 +128,12 @@ const AudioPlayer = ({
+     return () => clearTimeout(timeout)
+   }, [])
+ 
++  useEffect(() => {
++    if (onColorsLoaded && coverColors) {
++      onColorsLoaded(coverColors)
++    }
++  }, [onColorsLoaded, coverColors])
++
+   return (
+     <div className={clsx("audio-player", className, !!fadeIn && 'fade-in')} data-size={size} data-state={player.state} key={playerId}>
+       <div className="metadata no-collapse">

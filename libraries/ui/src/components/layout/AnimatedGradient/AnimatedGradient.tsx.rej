@@ -1,0 +1,10 @@
+diff a/libraries/ui/src/components/layout/AnimatedGradient/AnimatedGradient.tsx b/libraries/ui/src/components/layout/AnimatedGradient/AnimatedGradient.tsx	(rejected hunks)
+@@ -22,7 +22,7 @@ function randomBlotches(colors: string[]): Blotch[] {
+     color,
+     x: 10 + Math.random() * 80,
+     y: 10 + Math.random() * 80,
+-    size: 40 + Math.random() * 30,
++    size: 65 + Math.random() * 30,
+   }))
+ }
+ 
