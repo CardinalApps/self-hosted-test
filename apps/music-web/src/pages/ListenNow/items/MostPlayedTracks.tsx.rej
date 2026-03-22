@@ -1,10 +1,10 @@
 diff a/apps/music-web/src/pages/ListenNow/items/MostPlayedTracks.tsx b/apps/music-web/src/pages/ListenNow/items/MostPlayedTracks.tsx	(rejected hunks)
-@@ -32,8 +32,6 @@ function MostPlayedTracks() {
-   const musicTracks = Array.isArray(data) ? data[0] : []
-   const grouped = chunk(musicTracks, 4)
- 
--  console.log(musicTracks)
--
-   return (
-     <Card
-       header={
+@@ -23,7 +23,7 @@ function MostPlayedTracks() {
+   const {
+     data,
+   } = useGetMusicTracksQuery({
+-    sort: 'playCount',
++    orderBy: 'playCount',
+     order: 'DESC',
+     take: 40,
+     ...(libraries?.length ? { libraries } : {}),

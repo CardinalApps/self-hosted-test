@@ -1,28 +1,23 @@
 diff a/libraries/ui/src/store/apis/musicTracks.ts b/libraries/ui/src/store/apis/musicTracks.ts	(rejected hunks)
-@@ -4,7 +4,7 @@ import { CommonOrderParams, PaginationParams } from '../types/api'
- import { getNextPageParam, getPreviousPageParam, ITEMS_PER_RTK_PAGE } from '../utils/infiniteScroll'
- import { baseHomeServerApi } from './baseHomeServerApi'
- 
--export type TracksOrderBy = Extract<ToolbarOrderByType,
-+export type MusicTracksOrderBy = Extract<ToolbarOrderByType,
-   'createdAt'
-   | 'title'
-   | 'duration'
-@@ -45,7 +45,7 @@ export const musicTracksApi = baseHomeServerApi
-       getInfiniteMusicTracks: builder.infiniteQuery<
-         [MusicTrackType[], number],
-         {
--          orderBy?: TracksOrderBy,
-+          orderBy?: MusicTracksOrderBy,
-           order?: CommonOrderParams,
-           release?: boolean,
-           metadata?: boolean
-@@ -83,7 +83,7 @@ export const musicTracksApi = baseHomeServerApi
+@@ -83,18 +83,18 @@ export const musicTracksApi = baseHomeServerApi
        getMusicTracks: builder.query<
          [MusicTrackType[], number],
          PaginationParams & {
--          sort?: TracksOrderBy,
-+          sort?: MusicTracksOrderBy,
+-          sort?: MusicTracksOrderBy,
++          orderBy?: MusicTracksOrderBy,
            order?: CommonOrderParams,
            release?: boolean,
            metadata?: boolean,
+           libraries?: string[],
+         }
+       >({
+-        query: ({ take, skip, release, metadata, sort, order, libraries }) => {
++        query: ({ take, skip, release, metadata, orderBy, order, libraries }) => {
+           return queryParams('/music/tracks', {
+             ...(typeof skip !== 'undefined' && { skip }),
+             ...(take && { take }),
+-            ...(sort && { sort }),
++            ...(orderBy && { orderBy }),
+             ...(order && { order }),
+             ...(release && { release }),
+             ...(metadata && { metadata }),
