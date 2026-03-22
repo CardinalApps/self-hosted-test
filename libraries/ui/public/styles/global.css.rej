@@ -1,17 +1,19 @@
 diff a/libraries/ui/public/styles/global.css b/libraries/ui/public/styles/global.css	(rejected hunks)
-@@ -58,3 +58,15 @@
-   color: var(--danger);
+@@ -59,6 +59,17 @@
    i { color: var(--danger); }
  }
-+
-+@keyframes inniePop {
-+  0% {
-+    transform: scale(100%);
-+  }
-+  10% {
-+    transform: scale(97%);
-+  }
-+  100% {
-+    transform: scale(100%);
-+  }
+ 
++.checkered {
++  background-color: var(--checkered-color-1);
++  background-image:
++    linear-gradient(45deg, var(--checkered-color-2) 25%, transparent 25%),
++    linear-gradient(-45deg, var(--checkered-color-2) 25%, transparent 25%),
++    linear-gradient(45deg, transparent 75%, var(--checkered-color-2) 75%),
++    linear-gradient(-45deg, transparent 75%, var(--checkered-color-2) 75%);
++  background-size: 20px 20px;
++  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
 +}
++
+ @keyframes inniePop {
+   0% {
+     transform: scale(100%);
