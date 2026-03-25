@@ -1,7 +1,9 @@
 diff a/.gitignore b/.gitignore	(rejected hunks)
-@@ -22,3 +22,5 @@ servers/media/public/music
- servers/media/public/photos
+@@ -13,6 +13,7 @@ bin
+ .vercel
+ .turbo
+ .next
++.idea
  
- .DS_Store
-+
-+.claude
+ storybook-static
+ 
