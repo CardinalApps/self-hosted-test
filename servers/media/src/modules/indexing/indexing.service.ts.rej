@@ -1,28 +1,29 @@
 diff a/servers/media/src/modules/indexing/indexing.service.ts b/servers/media/src/modules/indexing/indexing.service.ts	(rejected hunks)
-@@ -580,6 +580,7 @@ export class IndexingService {
-     const extension = absolutePath.split('.').pop().toLowerCase()
-     let mimeType
-     let size
-+    let mtime: Date
+@@ -505,13 +505,23 @@ export class IndexingService {
+       where: { relativePath },
+     })
  
-     try {
-       const info = await fileType.fromFile(absolutePath)
-@@ -591,8 +592,9 @@ export class IndexingService {
-     try {
-       const stats = fs.statSync(absolutePath)
-       size = stats?.size || 0
-+      mtime = stats?.mtime || null
-     } catch (error) {
--      Logger.error(`Error parsing mime type. ${error?.message}`, 'Indexing')
-+      Logger.error(`Error reading file stats for ${absolutePath}. ${error?.message}`, 'Indexing')
+-    // TODO add logic for change detection
+-
+     if (!indexedReference) {
+       return FileOnDiskIndexingOperation.ADD
+-    } else {
+-      return FileOnDiskIndexingOperation.SKIP
      }
++
++    try {
++      const stats = fs.statSync(absolutePath)
++      const sizeChanged = stats.size !== indexedReference.size
++      const mtimeChanged = indexedReference.mtime == null || stats.mtime.getTime() !== indexedReference.mtime.getTime()
++
++      if (sizeChanged || mtimeChanged) {
++        return FileOnDiskIndexingOperation.UPDATE
++      }
++    } catch (error) {
++      Logger.error(`Could not stat file for change detection: ${absolutePath}`, 'Indexing')
++    }
++
++    return FileOnDiskIndexingOperation.SKIP
+   }
  
-     let app
-@@ -622,6 +624,7 @@ export class IndexingService {
-         mediaType,
-         mimeType,
-         size,
-+        mtime,
-         lastSeen: new Date(),
-         user: this.currentRun.user,
-       } as Partial<File>)
+   /**
