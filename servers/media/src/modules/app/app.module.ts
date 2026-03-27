@@ -52,6 +52,13 @@ import {
   getSQLiteDatabaseLocation,
 } from '../../utils/env'
 
+const resolveDatabaseLogLevel = () => {
+  const level = envVar('DATABASE_LOG_LEVEL', 0) as number
+  if (level > 0 && level <= 10) return ['query', 'error']
+  if (level > 0 && level <= 20) return ['error']
+  return false
+}
+
 const resolvePostgresHost = () => {
   const setByUser = envVar('POSTGRES_HOST', false)
 
@@ -89,8 +96,11 @@ const resolvePostgresHost = () => {
           port: envVar('POSTGRES_PORT', 5432),
           username: envVar('POSTGRES_USER', 'cardinal'),
           password: envVar('POSTGRES_PASSWORD', 'cardinal'),
+          ...(envVar('POSTGRES_DATABASE', false) ? { database: envVar('POSTGRES_DATABASE', undefined) } : {}),
+          ssl: envVar('POSTGRES_SSL', false),
           autoLoadEntities: true,
           retryAttempts: 3,
+          logging: resolveDatabaseLogLevel(),
           namingStrategy: new SnakeNamingStrategy(),
           // this stays on until v1.0.0
           synchronize: true,
@@ -101,6 +111,7 @@ const resolvePostgresHost = () => {
           database: getSQLiteDatabaseLocation(),
           autoLoadEntities: true,
           retryAttempts: 3,
+          logging: resolveDatabaseLogLevel(),
           namingStrategy: new SnakeNamingStrategy(),
           // this stays on until v1.0.0
           synchronize: true,
