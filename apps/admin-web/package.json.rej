@@ -1,10 +1,9 @@
 diff a/apps/admin-web/package.json b/apps/admin-web/package.json	(rejected hunks)
-@@ -1,7 +1,7 @@
- {
-   "name": "@cardinalapps/admin-web",
-   "description": "Cardinal Media Server Admin web app.",
--  "license": "CC BY-NC-ND 4.0",
-+  "license": "Elastic License 2.0 (ELv2)",
-   "version": "0.4.0",
-   "author": "Brian <brian@cardinalapps.io> (https://github.com/briiian)",
-   "homepage": "/admin",
+@@ -17,7 +17,6 @@
+   "dependencies": {
+     "@cardinalapps/access-control": "workspace:*",
+     "@cardinalapps/app-settings": "workspace:*",
+-    "@cardinalapps/types": "workspace:*",
+     "@cardinalapps/products": "workspace:*",
+     "@cardinalapps/ui": "workspace:*",
+     "@reduxjs/toolkit": "2.6.1",

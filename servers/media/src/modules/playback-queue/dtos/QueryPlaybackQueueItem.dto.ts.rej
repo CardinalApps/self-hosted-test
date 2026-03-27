@@ -1,37 +1,9 @@
 diff a/servers/media/src/modules/playback-queue/dtos/QueryPlaybackQueueItem.dto.ts b/servers/media/src/modules/playback-queue/dtos/QueryPlaybackQueueItem.dto.ts	(rejected hunks)
-@@ -1,8 +1,8 @@
- import { Transform } from 'class-transformer'
--import { IsString, IsOptional, IsIn, IsNumber } from 'class-validator'
-+import { IsString, IsOptional, IsIn, IsNumber, IsBoolean } from 'class-validator'
+@@ -3,7 +3,6 @@ import { IsString, IsOptional, IsIn, IsNumber, IsBoolean } from 'class-validator
  
  import { Pagination } from '../../../dtos/pagination.dto'
--import { toNumber } from '../../../utils/transformers'
-+import { toBoolean, toNumber, toString } from '../../../utils/transformers'
- // import { QueueType } from '@cardinalapps/types/src/playback-queue'
+ import { toBoolean, toNumber, toString } from '../../../utils/transformers'
+-// import { QueueType } from '@cardinalapps/types/src/playback-queue'
  // import { toString } from '../../../utils/transformers'
  
-@@ -19,8 +19,23 @@ class QueuePagination extends Pagination {
- }
- 
- export class QueryPlaybackQueueItemsDto extends QueuePagination {
-+  @Transform(toString)
-+  @IsString()
-+  @IsOptional()
-+  currentQueueItemId?: string
-+
-   @Transform(toNumber)
-   @IsNumber()
-   @IsOptional()
--  position?: number
-+  leading?: number
-+
-+  @Transform(toNumber)
-+  @IsNumber()
-+  @IsOptional()
-+  trailing?: number
-+
-+  @Transform(toBoolean)
-+  @IsBoolean()
-+  @IsOptional()
-+  includeCurrentItemInReturn?: boolean = true
- }
+ enum AllowedMusicTracksOrderBy {

@@ -1,10 +1,9 @@
 diff a/libraries/ui/package.json b/libraries/ui/package.json	(rejected hunks)
-@@ -1,7 +1,7 @@
- {
-   "name": "@cardinalapps/ui",
-   "description": "Shared React components and other utilities.",
--  "license": "CC BY-NC-ND 4.0",
-+  "license": "Elastic License 2.0 (ELv2)",
-   "version": "2.0.0",
-   "author": "Brian <brian@cardinalapps.io> (https://github.com/briiian)",
-   "private": true,
+@@ -16,7 +16,6 @@
+   "dependencies": {
+     "@cardinalapps/access-control": "workspace:*",
+     "@cardinalapps/app-settings": "workspace:*",
+-    "@cardinalapps/types": "workspace:*",
+     "@reduxjs/toolkit": "2.6.1",
+     "@storybook/manager-api": "^8.5.8",
+     "@storybook/preview-api": "^8.5.8",
