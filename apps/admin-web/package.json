@@ -17,7 +17,6 @@
   "dependencies": {
     "@cardinalapps/access-control": "workspace:*",
     "@cardinalapps/app-settings": "workspace:*",
-    "@cardinalapps/types": "workspace:*",
     "@cardinalapps/products": "workspace:*",
     "@cardinalapps/ui": "workspace:*",
     "@reduxjs/toolkit": "2.6.1",

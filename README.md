@@ -38,12 +38,7 @@ These are the packages in this monorepo.
 
 <details>
   <summary>How do I use this repository as someone that wants to build an app that uses Cardinal's APIs?</summary>
-  <p>You should develop against the beta release instead of this repo. Use this repo only if you want to develop against latest.</p>
-</details>
-
-<details>
-  <summary>Was this made with AI?</summary>
-  <p>No. This is, for better or for worse, all written by a human. Vive la révolution!</p>
+  <p>You should develop against the beta release instead of this repo. Use this repo only if you want to develop against the latest code.</p>
 </details>
 
 <details>
@@ -59,14 +54,14 @@ These are the packages in this monorepo.
 </details>
 
 <details>
-  <summary>Something isn't working</summary>
-  <p>All self-hosted features should work in the development environment. But since this repo only runs self-hosted apps, Cardinal's cloud services will not function here (you won't be able to log into your Cardinal account in the dev env).</p>
-  <p>If you are still having issues with something that should work locally then please create a GitHub issue.</p>
+  <summary>Why so few commits?</summary>
+  <p>This repository was created in March 2026. Prior to that, this project was closed source. The second commit in this repo is a squashed commit containing all the work since the beginning.</p>
+  <p>This repository also uses a workflow that sees fewer commits than usual. Commits here are generated automatically based on changes to Cardinal's internal repo, and they contain larger batches of work.</p>
 </details>
 
 <details>
-  <summary>Why so few commits?</summary>
-  <p>This repository was created in March 2026. Prior to that, this project was closed source. The second commit in this repo is a squashed commit containing all the work since the beginning.</p>
+  <summary>Is this made with AI?</summary>
+  <p>AI coding assistants are allowed, and the first AI code was added in 2026. All code prior to that was pure human.</p>
 </details>
 
 <details>

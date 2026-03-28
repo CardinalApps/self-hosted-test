@@ -1,0 +1,111 @@
+name: 🛁 Code Validation
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  discover:
+    name: Discover packages
+    runs-on: ubuntu-latest
+    outputs:
+      lint-packages: ${{ steps.discover.outputs.lint-packages }}
+      typecheck-packages: ${{ steps.discover.outputs.typecheck-packages }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: pnpm
+
+      - name: Install workspace deps
+        run: pnpm i
+
+      - name: Discover packages
+        id: discover
+        run: |
+          PKGS=$(pnpm ls -r --depth -1 --json)
+          LINT=$(echo "$PKGS" | node -e "
+            const fs = require('fs');
+            const pkgs = JSON.parse(fs.readFileSync('/dev/stdin', 'utf8'));
+            const result = pkgs
+              .filter(p => p.path !== process.cwd())
+              .filter(p => {
+                try {
+                  const s = JSON.parse(fs.readFileSync(p.path + '/package.json', 'utf8')).scripts || {};
+                  return 'lint' in s;
+                } catch { return false; }
+              })
+              .map(p => ({ name: p.name, label: p.name.replace(/^[^/]+\//, '') }));
+            process.stdout.write(JSON.stringify(result));
+          ")
+          TYPECHECK=$(echo "$PKGS" | node -e "
+            const fs = require('fs');
+            const pkgs = JSON.parse(fs.readFileSync('/dev/stdin', 'utf8'));
+            const result = pkgs
+              .filter(p => p.path !== process.cwd())
+              .filter(p => {
+                try {
+                  const s = JSON.parse(fs.readFileSync(p.path + '/package.json', 'utf8')).scripts || {};
+                  return 'typecheck' in s;
+                } catch { return false; }
+              })
+              .map(p => ({ name: p.name, label: p.name.replace(/^[^/]+\//, '') }));
+            process.stdout.write(JSON.stringify(result));
+          ")
+          echo "lint-packages=$LINT" >> $GITHUB_OUTPUT
+          echo "typecheck-packages=$TYPECHECK" >> $GITHUB_OUTPUT
+
+  lint:
+    name: "Lint (${{ matrix.package.label }})"
+    runs-on: ubuntu-latest
+    needs: discover
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ fromJson(needs.discover.outputs.lint-packages) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Init repo
+        uses: ./.github/actions/init-repo
+
+      - name: Lint
+        run: pnpm --filter="${{ matrix.package.name }}" lint --max-warnings 0
+
+  typecheck:
+    name: "Typecheck (${{ matrix.package.label }})"
+    runs-on: ubuntu-latest
+    needs: discover
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ fromJson(needs.discover.outputs.typecheck-packages) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Init repo
+        uses: ./.github/actions/init-repo
+
+      - name: Typecheck
+        run: pnpm --filter="${{ matrix.package.name }}" typecheck
+
+  validate:
+    name: Code Validation
+    runs-on: ubuntu-latest
+    needs: [lint, typecheck]
+    if: always()
+    steps:
+      - name: Check results
+        run: |
+          if [[ "${{ needs.lint.result }}" != "success" || "${{ needs.typecheck.result }}" != "success" ]]; then
+            exit 1
+          fi

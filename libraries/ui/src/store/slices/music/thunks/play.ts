@@ -2,13 +2,13 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { getSetting } from '@cardinalapps/app-settings/src'
 import { SupportedLang } from '@cardinalapps/app-settings/src/types'
 import { v4 as uuid } from 'uuid'
-import { QueueType, DynamicQueueType } from '@cardinalapps/types/src/playback-queue'
 import { QueueItem, ServerQueue } from '..'
 
 import { AppDispatch, RootState } from '../../../'
 
 import { PLAYBACK_STATE, STORE_KEY } from '../constants'
 import homeServerAPI from '../../../../lib/homeserver/homeServerAPI'
+import { DynamicQueueType, QueueType } from '../../../apis/playbackQueues'
 
 export type PlayArgs = {
   trackIds?: string[],

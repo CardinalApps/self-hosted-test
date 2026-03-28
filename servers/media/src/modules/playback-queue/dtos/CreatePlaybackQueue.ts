@@ -1,7 +1,9 @@
 import { IsArray, IsOptional, IsString } from 'class-validator'
-import { DynamicQueueType, QueueType } from '@cardinalapps/types/src/playback-queue'
 import { Library } from '../../library/library.entity'
 import { PlaybackQueueItem } from '../playback-queue-item.entity'
+
+export type QueueType = 'static' | 'dynamic'
+export type DynamicQueueType = 'true_shuffle'
 
 export class CreatePlaybackQueueDto {
   @IsString()

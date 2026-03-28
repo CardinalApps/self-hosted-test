@@ -10,13 +10,12 @@
     "dev": "storybook dev -p 3099 --no-open",
     "lint": "eslint src",
     "typecheck": "tsc --noEmit",
-    "build": "storybook build",
+    "build": "mkdir -p storybook-static && storybook build",
     "serve": "serve ./storybook-static"
   },
   "dependencies": {
     "@cardinalapps/access-control": "workspace:*",
     "@cardinalapps/app-settings": "workspace:*",
-    "@cardinalapps/types": "workspace:*",
     "@reduxjs/toolkit": "2.6.1",
     "@storybook/manager-api": "^8.5.8",
     "@storybook/preview-api": "^8.5.8",

@@ -3,8 +3,8 @@ import { envVar } from './env'
 
 export enum LogLevel {
   SILENT = 0,
-  INFO = 10,
-  DEBUG = 20,
+  DEBUG = 10,
+  INFO = 20,
 }
 
 export enum LogModule {
@@ -36,7 +36,7 @@ export const log = (module: LogModule, level: LogLevel, message: string) => {
       break
   }
 
-  if (level <= levelSetByEnvironment) {
+  if (levelSetByEnvironment !== LogLevel.SILENT && level >= levelSetByEnvironment) {
     if (level === LogLevel.DEBUG) {
       Logger.debug(message, module)
     } else if (level === LogLevel.INFO) {

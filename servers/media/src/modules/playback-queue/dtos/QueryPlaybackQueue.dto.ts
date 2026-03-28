@@ -2,8 +2,8 @@ import { Transform } from 'class-transformer'
 import { IsString, IsOptional, IsIn } from 'class-validator'
 
 import { Pagination } from '../../../dtos/pagination.dto'
-import { QueueType } from '@cardinalapps/types/src/playback-queue'
 import { toString } from '../../../utils/transformers'
+import { QueueType } from './CreatePlaybackQueue'
 
 enum AllowedMusicTracksOrderBy {
   'createdAt' = 'createdAt',
