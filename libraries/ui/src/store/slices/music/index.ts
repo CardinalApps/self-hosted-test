@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction, createSelector } from '@reduxjs/toolkit'
-import { DynamicQueueType, QueueType } from '@cardinalapps/types/src/playback-queue'
 
 import { globalActions } from '../../constants/actions'
 import play from './thunks/play'
@@ -8,6 +7,7 @@ import previous from './thunks/previous'
 
 import { Library } from '../../apis/libraries'
 import { STORE_KEY, PLAYER, PLAYBACK_STATE } from './constants'
+import { DynamicQueueType, QueueType } from '../../apis/playbackQueues'
 
 export type QueueItem = {
   mediaType: 'music_track',

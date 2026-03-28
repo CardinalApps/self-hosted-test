@@ -1,0 +1,28 @@
+name: Init repo
+
+description: Initialize the workspace for CI tasks by installing dependencies of all packages and building libraries.
+
+runs:
+  using: composite
+  steps:
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        # We are stuck on 18 for as long as we use pkg
+        node-version: 18
+        cache: 'pnpm'
+        
+    - name: Install Turborepo
+      run: npm i -g turbo
+      shell: bash
+
+    - name: Install workspace deps
+      run: pnpm i
+      shell: bash
+
+    - name: Build library packages
+      run: pnpm --filter="./libraries/**" build
+      shell: bash

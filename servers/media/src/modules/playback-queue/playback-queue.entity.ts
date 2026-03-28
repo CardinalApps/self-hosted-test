@@ -13,9 +13,7 @@ import { BaseEntity } from '../../entities/base.entity'
 import { User } from '../user/user.entity'
 import { Library } from '../library/library.entity'
 import { PlaybackQueueItem } from './playback-queue-item.entity'
-
-export type QueueType = 'static' | 'dynamic'
-export type DynamicQueueType = 'true_shuffle'
+import { DynamicQueueType, QueueType } from './dtos/CreatePlaybackQueue'
 
 @Entity()
 export class PlaybackQueue extends BaseEntity {
@@ -27,10 +25,10 @@ export class PlaybackQueue extends BaseEntity {
   @JoinColumn()
   user: User
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, type: 'text' })
   type: QueueType
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'text' })
   dynamicType: DynamicQueueType
 
   @ManyToMany(() => Library, (library) => library.playbackQueues, { onDelete: 'CASCADE' })
