@@ -1,12 +1,14 @@
 diff a/servers/media/src/modules/playback-queue/playback-queue.entity.ts b/servers/media/src/modules/playback-queue/playback-queue.entity.ts	(rejected hunks)
-@@ -13,9 +13,7 @@ import { BaseEntity } from '../../entities/base.entity'
- import { User } from '../user/user.entity'
- import { Library } from '../library/library.entity'
- import { PlaybackQueueItem } from './playback-queue-item.entity'
--
--export type QueueType = 'static' | 'dynamic'
--export type DynamicQueueType = 'true_shuffle'
-+import { DynamicQueueType, QueueType } from './dtos/CreatePlaybackQueue'
+@@ -25,10 +25,10 @@ export class PlaybackQueue extends BaseEntity {
+   @JoinColumn()
+   user: User
  
- @Entity()
- export class PlaybackQueue extends BaseEntity {
+-  @Column({ nullable: false })
++  @Column({ nullable: false, type: 'text' })
+   type: QueueType
+ 
+-  @Column({ nullable: true })
++  @Column({ nullable: true, type: 'text' })
+   dynamicType: DynamicQueueType
+ 
+   @ManyToMany(() => Library, (library) => library.playbackQueues, { onDelete: 'CASCADE' })
