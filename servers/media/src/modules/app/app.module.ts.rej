@@ -1,17 +1,17 @@
 diff a/servers/media/src/modules/app/app.module.ts b/servers/media/src/modules/app/app.module.ts	(rejected hunks)
-@@ -30,6 +30,7 @@ import { MusicHistoryModule } from '../music-history/music-history.module'
- import { InvitationModule } from '../invitation/invitation.module'
- import { ClaimModule } from '../claim/claim.module'
- import { PlaybackQueueModule } from '../playback-queue/playback-queue.module'
-+import { TranscodingModule } from '../transcoding/transcoding.module'
+@@ -2,6 +2,7 @@ import { join } from 'path'
  
- import { HTTPLoggerMiddleware } from '../../middleware/HTTPLogger.middleware'
- import { RevokeDisabledUserSessions } from '../../middleware/RevokeDisabledUserSessions.middleware'
-@@ -139,6 +140,7 @@ const resolvePostgresHost = () => {
-     InvitationModule,
-     PlaybackQueueModule,
-     ClaimModule,
-+    TranscodingModule,
-     // Serve static SPAs, for static files like images use "useStaticAssets" in main.js
-     ServeStaticModule.forRoot({
-       rootPath: join(__dirname, '..', '..', '..', 'public'),
+ import { Logger, MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
+ //import { APP_INTERCEPTOR } from '@nestjs/core'
++import { ConfigModule } from '@nestjs/config'
+ import { TypeOrmModule } from '@nestjs/typeorm'
+ import { ScheduleModule } from '@nestjs/schedule'
+ import { ServeStaticModule } from '@nestjs/serve-static'
+@@ -89,6 +90,7 @@ const resolvePostgresHost = () => {
+ 
+ @Module({
+   imports: [
++    ConfigModule.forRoot(),
+     // @ts-expect-error FIXME didn't feel like typing this when converting from vanilla JS
+     TypeOrmModule.forRoot(envVar('CARDINAL_POSTGRES', false)
+       ? {
