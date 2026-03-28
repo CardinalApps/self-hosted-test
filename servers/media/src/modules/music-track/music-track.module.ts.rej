@@ -1,15 +1,16 @@
 diff a/servers/media/src/modules/music-track/music-track.module.ts b/servers/media/src/modules/music-track/music-track.module.ts	(rejected hunks)
-@@ -8,11 +8,13 @@ import { MusicTrack } from './music-track.entity'
- import { MusicTrackMetadata } from './music-track-metadata.entity'
+@@ -9,12 +9,14 @@ import { MusicTrackMetadata } from './music-track-metadata.entity'
  
  import { EventModule } from '../event/event.module'
-+import { LibraryModule } from '../library/library.module'
+ import { LibraryModule } from '../library/library.module'
++import { TranscodingModule } from '../transcoding/transcoding.module'
  
  @Module({
    imports: [
      TypeOrmModule.forFeature([MusicTrack, MusicTrackMetadata]),
      EventModule,
-+    LibraryModule,
+     LibraryModule,
++    TranscodingModule,
    ],
    exports: [
      TypeOrmModule,
