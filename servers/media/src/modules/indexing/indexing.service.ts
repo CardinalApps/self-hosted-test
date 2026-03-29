@@ -234,7 +234,7 @@ export class IndexingService {
         const sub = qb.subQuery()
           .select('1')
           .from(File, 'file')
-          .where('file.runId = run.id')
+          .where('file.run = run.id')
           .getQuery()
         return `EXISTS ${sub}`
       })
@@ -779,21 +779,31 @@ export class IndexingService {
    * Hard deletes all indexed data from the database.
    */
   async deleteAllIndexedData() {
+    Logger.log('Starting to deindex files.', 'Indexing')
     const queryRunner = this.dataSource.createQueryRunner()
     await queryRunner.connect()
     await queryRunner.startTransaction()
     try {
-      // Clear in dependency order: leaves first, parents last
-      await queryRunner.manager.clear(MusicHistory)
-      await queryRunner.manager.clear(MusicTrackMetadata)
-      await queryRunner.manager.clear(MusicArtistMetadata)
-      await queryRunner.manager.clear(MusicReleaseMetadata)
-      await queryRunner.manager.clear(MusicReleaseThumbnail)
-      await queryRunner.manager.clear(MusicTrack)
-      await queryRunner.manager.clear(File)
-      await queryRunner.manager.clear(MusicRelease)
-      await queryRunner.manager.clear(MusicArtist)
-      await queryRunner.manager.clear(MusicGenre)
+      if (this.dataSource.options.type === 'postgres') {
+        // Truncate all tables in one statement so PostgreSQL can resolve
+        // FK constraints between them without erroring
+        const tables = [MusicHistory, MusicTrackMetadata, MusicArtistMetadata, MusicReleaseMetadata, MusicReleaseThumbnail, MusicTrack, File, MusicRelease, MusicArtist, MusicGenre]
+          .map((e) => `"${this.dataSource.getMetadata(e).tableName}"`)
+          .join(', ')
+        await queryRunner.query(`TRUNCATE ${tables} RESTART IDENTITY CASCADE`)
+      } else {
+        // SQLite: clear() uses DELETE internally; order matters for FK checks
+        await queryRunner.manager.clear(MusicHistory)
+        await queryRunner.manager.clear(MusicTrackMetadata)
+        await queryRunner.manager.clear(MusicArtistMetadata)
+        await queryRunner.manager.clear(MusicReleaseMetadata)
+        await queryRunner.manager.clear(MusicReleaseThumbnail)
+        await queryRunner.manager.clear(MusicTrack)
+        await queryRunner.manager.clear(File)
+        await queryRunner.manager.clear(MusicRelease)
+        await queryRunner.manager.clear(MusicArtist)
+        await queryRunner.manager.clear(MusicGenre)
+      }
 
       await queryRunner.commitTransaction()
       Logger.log('Deindexed all files.', 'Indexing')
