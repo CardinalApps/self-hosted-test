@@ -17,6 +17,8 @@ import { PlaybackQueueItem } from '../playback-queue/playback-queue-item.entity'
 
 @Entity()
 @Index(['track'])
+@Index(['user'])
+@Index(['createdAt'])
 export class MusicHistory extends BaseEntity {
   @UuidColumn()
   playbackEntryId: string
