@@ -1,9 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import H3 from '../../typography/H3'
-import H6 from '../../typography/H6'
 import Button from '../../interaction/Button'
-import P from '../../typography/P'
 
 import CardGrid from './CardGrid'
 import Card from '../Card'

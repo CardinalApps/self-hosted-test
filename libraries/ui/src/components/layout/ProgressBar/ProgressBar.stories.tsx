@@ -52,27 +52,22 @@ export const NoCount: Story = {
   },
 }
 
-export const Animated: Story = {
-  render: () => {
-    const total = 10000
-    const [current, setCurrent] = useState(0)
+export const Animated = () => {
+  const total = 10000
+  const [current, setCurrent] = useState(0)
 
-    useEffect(() => {
-      if (current >= total) return
-      const timer = setTimeout(() => setCurrent((c) => Math.min(c + 200, total)), 100)
-      return () => clearTimeout(timer)
-    }, [current])
+  useEffect(() => {
+    if (current >= total) return
+    const timer = setTimeout(() => setCurrent((c) => Math.min(c + 200, total)), 100)
+    return () => clearTimeout(timer)
+  }, [current])
 
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-        <ProgressBar current={current} total={total} showCount={true} />
-        <button onClick={() => setCurrent(0)}>Reset</button>
-      </div>
-    )
-  },
-  parameters: {
-    controls: { disable: true },
-  },
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <ProgressBar current={current} total={total} showCount={true} />
+      <button onClick={() => setCurrent(0)}>Reset</button>
+    </div>
+  )
 }
 
 export default meta
