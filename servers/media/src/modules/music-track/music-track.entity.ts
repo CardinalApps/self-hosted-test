@@ -21,6 +21,8 @@ import { MusicHistory } from '../music-history/music-history.entity'
 @Entity()
 @Index(['file'])
 @Index(['release'])
+@Index(['title'])
+@Index(['createdAt'])
 export class MusicTrack extends BaseEntity {
   @ManyToOne(() => File, (file) => file.musicTrack, { onDelete: 'CASCADE' })
   @JoinColumn()
