@@ -51,8 +51,18 @@ export const ClickableWithIcons: Story = {
 export const ManyTags: Story = {
   args: {
     tags: [
-      'Rock', 'Pop', 'Electronic', 'Ambient', 'Jazz', 'Classical',
-      'Hip-Hop', 'R&B', 'Country', 'Folk', 'Metal', 'Indie',
+      'Rock',
+      'Pop',
+      'Electronic',
+      'Ambient',
+      'Jazz',
+      'Classical',
+      'Hip-Hop',
+      'R&B',
+      'Country',
+      'Folk',
+      'Metal',
+      'Indie',
     ],
   },
 }

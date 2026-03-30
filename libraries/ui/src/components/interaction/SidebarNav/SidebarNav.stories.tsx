@@ -8,17 +8,6 @@ const meta = {
   argTypes: {},
 } satisfies Meta<typeof SidebarNav>
 
-const navItems = [
-  { icon: 'fas fa-grip', label: 'Browse' },
-  { icon: 'fas fa-compass', label: 'Explore' },
-  { icon: 'fas fa-record-vinyl', label: 'Albums' },
-]
-
-const secondaryItems = [
-  { icon: 'fas fa-star', label: 'Favourites' },
-  { icon: 'fas fa-user', label: 'My Account' },
-]
-
 export const Default = () => {
   return (
     <div style={{ width: 250, position: 'fixed', top: 20, left: 0, bottom: 20 }}>

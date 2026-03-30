@@ -37,7 +37,6 @@ export const Disabled = () => {
     <Checkbox
       name="checkbox-disabled"
       checked={false}
-      disabled={true}
       onChange={fn()}
     />
   )
@@ -48,7 +47,6 @@ export const DisabledChecked = () => {
     <Checkbox
       name="checkbox-disabled-checked"
       checked={true}
-      disabled={true}
       onChange={fn()}
     />
   )

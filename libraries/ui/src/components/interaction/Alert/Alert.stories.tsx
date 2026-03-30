@@ -65,17 +65,12 @@ export const ErrorWithButton: Story = {
   },
 }
 
-export const AllTypes: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 600 }}>
-      <Alert type="success" message="Library scan complete. 147 new tracks added." />
-      <Alert type="warning" message="Your storage is nearly full." />
-      <Alert type="error" message="Failed to connect to the media server." />
-    </div>
-  ),
-  parameters: {
-    controls: { disable: true },
-  },
-}
+export const AllTypes = () => (
+  <div style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 600 }}>
+    <Alert type="success" message="Library scan complete. 147 new tracks added." />
+    <Alert type="warning" message="Your storage is nearly full." />
+    <Alert type="error" message="Failed to connect to the media server." />
+  </div>
+)
 
 export default meta
