@@ -25,6 +25,7 @@ export class DatabaseService {
     if (this?.dataSource?.options?.type === 'better-sqlite3') {
       Logger.log(`Using SQLite database`, 'Database')
       Logger.log(`SQLite file location: ${getSQLiteDatabaseLocation()}`, 'Database')
+      await this.configureSQLite()
     } else if (this?.dataSource?.options?.type === 'postgres') {
       Logger.log(`Using PostgreSQL database`, 'Database')
       Logger.log(`host=${this?.dataSource?.options?.host} port=${this?.dataSource?.options?.port} username=${this?.dataSource?.options?.username}`, 'Database')
@@ -33,6 +34,34 @@ export class DatabaseService {
     }
 
     await this.createJunctionTableIndexes()
+  }
+
+  /**
+   * SQLite performance pragmas. These apply to the current connection and
+   * take effect immediately for all subsequent queries.
+   *
+   * - WAL mode:        readers never block writers and writers never block
+   *                    readers, which is critical during bulk scan ingestion.
+   * - synchronous:     NORMAL is safe with WAL and skips unnecessary fsyncs.
+   * - cache_size:      64 MB page cache instead of SQLite's ~2 MB default.
+   * - temp_store:      keeps sort/join temp tables in memory instead of on disk.
+   * - mmap_size:       128 MB memory-mapped I/O window for read-heavy workloads.
+   * - busy_timeout:    retry for up to 5 s before throwing a lock error, rather
+   *                    than failing immediately under write contention.
+   */
+  private async configureSQLite(): Promise<void> {
+    const pragmas = [
+      'PRAGMA journal_mode = WAL',
+      'PRAGMA synchronous = NORMAL',
+      'PRAGMA cache_size = -64000',
+      'PRAGMA temp_store = MEMORY',
+      'PRAGMA mmap_size = 134217728',
+      'PRAGMA busy_timeout = 5000',
+    ]
+
+    for (const pragma of pragmas) {
+      await this.dataSource.query(pragma)
+    }
   }
 
   /**
