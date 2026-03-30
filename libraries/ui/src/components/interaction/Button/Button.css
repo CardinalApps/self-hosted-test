@@ -15,8 +15,15 @@
   transition: transform 125ms, background-color 100ms;
   -webkit-appearance: none;
 
-  &:hover {
+  &:hover:not(.glass) {
     background: var(--button-bg-hover);
+  }
+
+  &.glass {
+
+    &:hover {
+      animation: 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0s 1 normal forwards inniePop;
+    }
   }
 
   &.solid {
