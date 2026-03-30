@@ -1,6 +1,7 @@
 import {
   Entity,
   Column,
+  Index,
   OneToMany,
   ManyToOne,
   ManyToMany,
@@ -18,6 +19,8 @@ import { MusicReleaseMetadata } from './music-release-metadata.entity'
 import { MusicReleaseThumbnail } from './music-release-thumbnail.entity'
 
 @Entity()
+@Index(['title'])
+@Index(['createdAt'])
 export class MusicRelease extends BaseEntity {
   @OneToMany(() => MusicTrack, (musicTrack) => musicTrack.release, { onDelete: 'CASCADE' })
   @JoinColumn()
