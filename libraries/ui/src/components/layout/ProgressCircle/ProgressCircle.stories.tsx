@@ -59,26 +59,21 @@ export const Large: Story = {
   },
 }
 
-export const Animated: Story = {
-  render: () => {
-    const [current, setCurrent] = useState(0)
+export const Animated = () => {
+  const [current, setCurrent] = useState(0)
 
-    useEffect(() => {
-      if (current >= 1) return
-      const timer = setTimeout(() => setCurrent((c) => Math.min(+(c + 0.02).toFixed(2), 1)), 80)
-      return () => clearTimeout(timer)
-    }, [current])
+  useEffect(() => {
+    if (current >= 1) return
+    const timer = setTimeout(() => setCurrent((c) => Math.min(+(c + 0.02).toFixed(2), 1)), 80)
+    return () => clearTimeout(timer)
+  }, [current])
 
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 16, alignItems: 'flex-start' }}>
-        <ProgressCircle current={current} showPercentage={true} size={100} />
-        <button onClick={() => setCurrent(0)}>Reset</button>
-      </div>
-    )
-  },
-  parameters: {
-    controls: { disable: true },
-  },
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16, alignItems: 'flex-start' }}>
+      <ProgressCircle current={current} showPercentage={true} size={100} />
+      <button onClick={() => setCurrent(0)}>Reset</button>
+    </div>
+  )
 }
 
 export default meta

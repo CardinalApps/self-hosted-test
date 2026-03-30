@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta } from '@storybook/react'
 
 import Pagination from './Pagination'
 
@@ -13,7 +13,6 @@ const meta = {
     },
   },
 } satisfies Meta<typeof Pagination>
-type Story = StoryObj<typeof meta>
 
 const PaginationDemo = ({ maxPages }: { maxPages: number }) => {
   const [currentPage, setCurrentPage] = useState(1)
