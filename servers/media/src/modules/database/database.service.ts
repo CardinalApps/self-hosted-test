@@ -5,7 +5,7 @@ import { DataSource, Repository } from 'typeorm'
 import { Option } from './option.entity'
 import { OptionsObjectType, OptionNameType, OptionValueType } from './types'
 
-import { getSQLiteDatabaseLocation } from '../../utils/env'
+import { getSQLiteDatabaseLocation, envVar } from '../../utils/env'
 import { OPTIONS } from '../../utils/options'
 import { helpCode } from '../../utils/help-codes'
 
@@ -42,7 +42,9 @@ export class DatabaseService {
    *
    * - WAL mode:        readers never block writers and writers never block
    *                    readers, which is critical during bulk scan ingestion.
+   *                    Controlled by SQLITE_WAL (default: true).
    * - synchronous:     NORMAL is safe with WAL and skips unnecessary fsyncs.
+   *                    Falls back to FULL when WAL is disabled.
    * - cache_size:      64 MB page cache instead of SQLite's ~2 MB default.
    * - temp_store:      keeps sort/join temp tables in memory instead of on disk.
    * - mmap_size:       128 MB memory-mapped I/O window for read-heavy workloads.
@@ -50,16 +52,18 @@ export class DatabaseService {
    *                    than failing immediately under write contention.
    */
   private async configureSQLite(): Promise<void> {
+    const walEnabled = envVar('SQLITE_WAL', true)
+
     const pragmas = [
-      'PRAGMA journal_mode = WAL',
-      'PRAGMA synchronous = NORMAL',
+      walEnabled ? 'PRAGMA journal_mode = WAL' : null,
+      walEnabled ? 'PRAGMA synchronous = NORMAL' : 'PRAGMA synchronous = FULL',
       'PRAGMA cache_size = -64000',
       'PRAGMA temp_store = MEMORY',
       'PRAGMA mmap_size = 134217728',
       'PRAGMA busy_timeout = 5000',
     ]
 
-    for (const pragma of pragmas) {
+    for (const pragma of pragmas.filter(Boolean)) {
       await this.dataSource.query(pragma)
     }
   }
