@@ -37,7 +37,7 @@ export async function createTestApp(): Promise<TestApp> {
     imports: [AppModule],
   }).compile()
 
-  const app = moduleRef.createNestApplication()
+  const app = moduleRef.createNestApplication({ logger: false })
 
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }))
   app.setGlobalPrefix('api')
