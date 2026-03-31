@@ -57,7 +57,8 @@ export type ENV_VAR =
   'MOVIES_DIR' |
   'TV_DIR' |
   'SIGNING_SECRET' |
-  'RESET_LOCAL_USER_PW'
+  'RESET_LOCAL_USER_PW' |
+  'SQLITE_WAL'
 
 /**
  * Returns the value of an environment variable, or the supplied fallback value.
