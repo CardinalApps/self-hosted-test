@@ -3,6 +3,7 @@
   "rootDir": "../",
   "testRegex": "tests/.*\\.integration\\.ts$",
   "testEnvironment": "node",
+  "silent": true,
   "verbose": true,
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
