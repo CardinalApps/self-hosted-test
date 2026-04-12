@@ -1,4 +1,4 @@
-import { useContext, type PropsWithChildren } from 'react'
+import { useContext, useState, useEffect, type PropsWithChildren } from 'react'
 import { useSelector } from 'react-redux'
 
 import Icon from '../../typography/Icon'
@@ -10,6 +10,7 @@ import play from '../../../store/slices/music/thunks/play'
 import { RouterContext } from '../../../context/router'
 import { useReleaseCover } from '../../../hooks/useReleaseCover'
 import { useAppDispatch } from '../../../hooks/useAppDispatch'
+import { useSetRatingMutation, useDeleteRatingMutation } from '../../../store/apis/ratings'
 
 import i18n from './i18n'
 
@@ -27,8 +28,9 @@ type MusicTrackProps = {
   artistLink?: string,
   duration?: string,
   plays?: number,
+  rating?: number | null,
   hasArtwork?: boolean,
-  canFav?: boolean,
+  canRate?: boolean,
 }
 
 const MusicTrack = ({
@@ -42,14 +44,23 @@ const MusicTrack = ({
   artistLink,
   duration,
   plays,
+  rating,
   hasArtwork = true,
-  canFav = true,
+  canRate = true,
 }: PropsWithChildren<MusicTrackProps>) => {
   const dispatch = useAppDispatch()
   const { Link } = useContext(RouterContext)
   const { lang } = useSelector(settingsSelectors.current)
   const playing = useSelector(audioSelectors.playing)
   const [artwork] = useReleaseCover(hasArtwork ? releaseId : null)
+
+  const [localRating, setLocalRating] = useState<number | null>(rating ?? null)
+  const [setRating] = useSetRatingMutation()
+  const [deleteRating] = useDeleteRatingMutation()
+
+  useEffect(() => {
+    setLocalRating(rating ?? null)
+  }, [rating])
 
   const handleDoubleClick = (e) => {
     if (
@@ -64,6 +75,19 @@ const MusicTrack = ({
       }))
     }
   }
+
+  const handleRatingClick = async () => {
+    if (!musicTrackId) return
+    if (localRating !== null) {
+      setLocalRating(null)
+      await deleteRating({ trackId: musicTrackId })
+    } else {
+      setLocalRating(1)
+      await setRating({ trackId: musicTrackId, rating: 1 })
+    }
+  }
+
+  const isRated = localRating !== null
 
   return (
     <div className="music-track" onDoubleClick={handleDoubleClick}>
@@ -104,9 +128,15 @@ const MusicTrack = ({
           <span>{plays}</span>
         </p>
       )}
-      {!!canFav &&
-        <div className="col music-track-favorite">
-          <Icon fa="fas fa-star" hoverType="icon" onClick={() => console.log('fav')} />
+      {!!canRate &&
+        <div className="col music-track-rating">
+          <Icon
+            fa="fas fa-star"
+            hoverType="icon"
+            className={isRated ? 'is-rated' : undefined}
+            title={isRated ? i18n['rating.action.remove'][lang] : i18n['rating.action.rate'][lang]}
+            onClick={handleRatingClick}
+          />
         </div>
       }
       {!!artwork &&
