@@ -71,6 +71,7 @@ function MostPlayedTracks() {
                       releaseId={musicTrack?.release?.id}
                       releaseTitle={musicTrack?.release?.title}
                       artistName={musicTrack?.artists?.[0]?.name}
+                      rating={musicTrack?.rating}
                     />
                   )
                 })

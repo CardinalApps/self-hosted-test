@@ -11,6 +11,7 @@ export type MusicTracksOrderBy = Extract<ToolbarOrderByType,
   | 'bitrate'
   | 'playCount'
   | 'trackNumber'
+  | 'rating'
 >
 export type MusicTrackType = {
   id: number,
@@ -19,6 +20,7 @@ export type MusicTrackType = {
   trackNumber: number,
   discNumber: number,
   playCount: number,
+  rating?: number | null,
   release: {
     title: string,
     musicReleaseId: string,
@@ -101,6 +103,7 @@ export const musicTracksApi = baseHomeServerApi
             ...(libraries && { libraries }),
           })
         },
+        providesTags: ['MusicTracks'],
       }),
 
       /**
@@ -113,6 +116,7 @@ export const musicTracksApi = baseHomeServerApi
         query: ({ id }) => {
           return queryParams(`/music/track/${id}`)
         },
+        providesTags: ['MusicTracks'],
       }),
     }),
   })
