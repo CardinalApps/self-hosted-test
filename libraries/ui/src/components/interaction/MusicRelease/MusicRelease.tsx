@@ -87,9 +87,7 @@ const MusicRelease = ({
                 musicTrackIdToPlay={trackIdsInRelease?.[0]}
               />
             </div>
-            {/* <div className="col music-track-favorite">
-              <Icon fa="fas fa-star" hoverType="icon" onClick={() => console.log('fav')} />
-            </div> */}
+
           </div>
         )}
       </div>

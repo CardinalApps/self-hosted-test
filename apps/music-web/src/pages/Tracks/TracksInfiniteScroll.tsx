@@ -62,6 +62,7 @@ function TracksInfiniteScroll({
         releaseTitle={musicTrack?.release?.title}
         releaseId={musicTrack?.release?.id}
         artistName={musicTrack?.artists?.[0]?.name}
+        rating={musicTrack?.rating}
       />
     )
   }
