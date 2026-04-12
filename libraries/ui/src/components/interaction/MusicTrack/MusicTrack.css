@@ -104,12 +104,16 @@
     }
   }
 
-  .music-track-favorite {
+  .music-track-rating {
     padding-left: 3px;
     padding-right: 3px;
 
     i {
       color: var(--text-color-5);
+    }
+
+    .is-rated i {
+      color: var(--accent-color);
     }
   }
 

@@ -94,6 +94,7 @@ function ReleasePage() {
                       trackNumber={musicTrack.trackNumber}
                       artistName={artists?.[0]?.name as string}
                       hasArtwork={!!musicTrack.thumbnails?.length}
+                      rating={musicTrack?.rating}
                     />
                   )
                 })}

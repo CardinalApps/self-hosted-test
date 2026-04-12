@@ -17,7 +17,7 @@ const MusicTrackItem = (props: {
               musicTrackId={props.musicTrackId}
               trackTitle={musicTrack?.title}
               releaseTitle={musicTrack?.release?.title}
-              canFav={false}
+              canRate={false}
             />
           )
           : (
