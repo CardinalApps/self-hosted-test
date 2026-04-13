@@ -12,6 +12,7 @@ import CardGrid from '@cardinalapps/ui/src/components/layout/CardGrid'
 import { PAGE_LAYOUT } from '@cardinalapps/ui/src/store/slices/layout'
 import Active from './cards/Active'
 import History from './cards/History'
+import Toolbar from '@cardinalapps/ui/src/components/interaction/Toolbar'
 
 import { useGetJobTypesQuery, useGetJobsQuery } from '@cardinalapps/ui/src/store/apis/jobs'
 
@@ -23,6 +24,8 @@ export type JobStatus = 'in_queue' | 'preparing' | 'running' | 'paused' | 'cance
 // export type JobReport = {
 //   status: JobStatus,
 // }
+
+const TOOLBAR_NAME = 'admin-jobs'
 
 function Jobs() {
   const { lang } = useSelector(settingsSelectors.current)
@@ -75,6 +78,11 @@ function Jobs() {
       layout={PAGE_LAYOUT.standard}
       pageTitle={i18n['title'][lang]}
       capabilities={['Jobs.Read']}
+      toolbar={(
+        <Toolbar
+          name={TOOLBAR_NAME}
+        />
+      )}
     >
       <div className={'jobTags'}>
         {!!jobTypes?.length && jobTypes.map((job) => {

@@ -27,12 +27,15 @@ import { UserType } from '@cardinalapps/ui/src/types/user'
 import HasCapabilities from '@cardinalapps/ui/src/components/layout/HasCapabilities'
 import useHasCapability from '@cardinalapps/ui/src/hooks/useHasCapability'
 import UserTag from '@cardinalapps/ui/src/components/interaction/UserTag'
+import Toolbar from '@cardinalapps/ui/src/components/interaction/Toolbar'
 
 import homeServerAPI from '@cardinalapps/ui/src/lib/homeserver/homeServerAPI'
 
 import i18n from './i18n.json'
 
 import './styles.css'
+
+const TOOLBAR_NAME = 'admin-libraries'
 
 function Libraries() {
   const { lang } = useSelector(settingsSelectors.current)
@@ -185,6 +188,11 @@ function Libraries() {
       pageTitle={i18n['title'][lang]}
       pageDocLink="/guides/cardinal-media-server/libraries"
       capabilities={['Libraries.Read']}
+      toolbar={(
+        <Toolbar
+          name={TOOLBAR_NAME}
+        />
+      )}
     >
       <DirectoryTree
         title={i18n['libraries.create.dirs.title'][lang]}
