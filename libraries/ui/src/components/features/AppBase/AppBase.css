@@ -111,15 +111,18 @@
   }
 
   .page-content {
-    padding: 0;
-  }
-
-  .page-title-bar {
-    padding-top: 23px;
+    padding-top: var(--header-height);
+    padding-left: 0;
+    padding-bottom: 0;
+    padding-right: 0;
   }
 }
 
 [data-layout="fixed"] {
+
+  .app-header-bar:before {
+    display: none;
+  }
 
   .main-col {
     height: 100%;
@@ -131,15 +134,18 @@
     padding: 0;
     overflow: hidden;
   }
-
-  .page-title-bar {
-    padding-top: 23px;
-    padding-left: 20px;
-  }
 }
 
 [data-layout="full"] {
   padding-left: 0;
+
+  .app-header {
+    left: 10px;
+  }
+
+  .app-header-bar:before {
+    display: none;
+  }
 
   .main-col {
     padding-top: 0;
@@ -264,6 +270,15 @@
     + var(--file-browser-width)
     + var(--file-browser-gutter)
   );
+
+  .page-content {
+    padding-top: var(--header-height);
+    padding-left: 25px;
+  }
+
+  .app-header {
+    left: 10px;
+  }
 }
 
 [data-layout="procedural"] {

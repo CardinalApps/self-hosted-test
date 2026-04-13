@@ -10,9 +10,12 @@ import { PAGE_LAYOUT } from '@cardinalapps/ui/src/store/slices/layout'
 import CardGrid from '@cardinalapps/ui/src/components/layout/CardGrid'
 import RolesList from './RolesList'
 import CapabilitiesList from './CapabilitiesList'
+import Toolbar from '@cardinalapps/ui/src/components/interaction/Toolbar'
 
 import i18n from './i18n.json'
 import './styles.css'
+
+const TOOLBAR_NAME = 'admin-roles'
 
 function Roles() {
   const { lang } = useSelector(settingsSelectors.current)
@@ -24,6 +27,11 @@ function Roles() {
       layout={PAGE_LAYOUT.standard}
       pageTitle={i18n['title'][lang]}
       capabilities={['RoleAssignments.Read']}
+      toolbar={(
+        <Toolbar
+          name={TOOLBAR_NAME}
+        />
+      )}
     >
       <CardGrid rowHeight='l'>
         <RolesList />
