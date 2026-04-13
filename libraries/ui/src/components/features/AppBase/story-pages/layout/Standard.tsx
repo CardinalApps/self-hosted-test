@@ -13,11 +13,10 @@ function StandardPage() {
           <li>
             <strong>Features:</strong>
             <ul>
-              <li>Includes the app header.</li>
-              <li>Includes the page title bar with doc link.</li>
+              <li>Includes the app header, with a solid background to hide content below (when glass is disabled).</li>
               <li>Includes the navigation sidebar, defaulting to its expanded mode.</li>
-              <li>Handles margins and padding around the page content.</li>
-              <li>Handles scrolling of the page content.</li>
+              <li>Automatically handles margins and padding around the page content.</li>
+              <li>Automatically handles scrolling of the page content.</li>
             </ul>
           </li>
           <li>

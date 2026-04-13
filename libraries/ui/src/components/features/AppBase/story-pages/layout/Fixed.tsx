@@ -8,13 +8,20 @@ function FixedPage() {
   return (
     <AppPage layout={PAGE_LAYOUT.fixed} pageTitle="Layout: fixed" pageDocLink="/guides/best-practices">
       <WrittenText>
+        <p>Sample</p>
+        <p>Sample</p>
+        <p>Sample</p>
+        <p>Sample</p>
+        <p>Sample</p>
+        <p>Sample</p>
         <p>The <code>fixed</code> layout allows the page to control the scrolling.</p>
         <ul>
           <li><strong>Inherits:</strong> Thin</li>
           <li>
             <strong>Features:</strong>
             <ul>
-              <li>Scrolling must be implemented by the page.</li>
+              <li>The header does not have a solid background when glass is disabled.</li>
+              <li>Scrolling is not handled automatically.</li>
             </ul>
           </li>
           <li>

@@ -141,10 +141,11 @@
 
 .global-file-browser {
   width: var(--file-browser-width);
-  height: 88%;
-  margin-top: 25px;
+  height: 100vh;
+  padding-top: var(--header-height);
+  padding-bottom: var(--gutter);
   position: fixed;
-  left: calc(var(--sidebar-nav-width) + var(--sidebar-nav-gutter));
+  left: calc(var(--sidebar-nav-width) + var(--sidebar-nav-gutter) + 9px);
   opacity: 0;
   pointer-events: none;
   transition: opacity 600ms;

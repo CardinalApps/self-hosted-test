@@ -27,9 +27,12 @@ import { useGetActiveUsersQuery } from '@cardinalapps/ui/src/store/apis/activeUs
 import ManageInvitationsDrawer from './ManageInvitationsDrawer'
 import UserManagementDrawer from './UserManagementDrawer'
 import CreateUserDrawer from './CreateUserDrawer'
+import Toolbar from '@cardinalapps/ui/src/components/interaction/Toolbar'
 
 import i18n from './i18n.json'
 import './styles.css'
+
+const TOOLBAR_NAME = 'admin-users'
 
 function Users() {
   const { lang } = useSelector(settingsSelectors.current)
@@ -191,6 +194,11 @@ function Users() {
       layout={PAGE_LAYOUT.standard}
       pageTitle={i18n['users.title'][lang]}
       capabilities={['Users.Read']}
+      toolbar={(
+        <Toolbar
+          name={TOOLBAR_NAME}
+        />
+      )}
     >
       <CardGrid>
         {

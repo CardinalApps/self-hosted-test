@@ -11,9 +11,12 @@ import Folders from './sections/Folders'
 import RunsHistory from './sections/RunsHistory'
 import CardGrid from '@cardinalapps/ui/src/components/layout/CardGrid'
 import { PAGE_LAYOUT } from '@cardinalapps/ui/src/store/slices/layout'
+import Toolbar from '@cardinalapps/ui/src/components/interaction/Toolbar'
 
 import i18n from './i18n.json'
 import './styles.css'
+
+const TOOLBAR_NAME = 'admin-indexing'
 
 function Indexing() {
   const { lang } = useSelector(settingsSelectors.current)
@@ -23,6 +26,11 @@ function Indexing() {
       layout={PAGE_LAYOUT.standard}
       pageTitle={i18n['title'][lang]}
       capabilities={['Indexing.Read']}
+      toolbar={(
+        <Toolbar
+          name={TOOLBAR_NAME}
+        />
+      )}
     >
       <CardGrid rowHeight='l' className='indexing'>
         <NewRun />

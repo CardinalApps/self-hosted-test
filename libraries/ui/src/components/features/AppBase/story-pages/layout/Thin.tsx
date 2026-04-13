@@ -14,7 +14,7 @@ function ThinPage() {
           <li>
             <strong>Features:</strong>
             <ul>
-              <li>All margins and padding are removed.</li>
+              <li>Margins and padding are not handled automatically.</li>
             </ul>
           </li>
           <li>
