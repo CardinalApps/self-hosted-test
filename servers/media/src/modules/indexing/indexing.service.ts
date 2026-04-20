@@ -631,7 +631,7 @@ export class IndexingService {
     try {
       const stats = fs.statSync(absolutePath)
       size = stats?.size || 0
-      mtime = stats?.mtime || null
+      mtime = stats?.mtime instanceof Date && isFinite(stats.mtime.getTime()) ? stats.mtime : null
     } catch (error) {
       Logger.error(`Error reading file stats for ${absolutePath}. ${error?.message}`, 'Indexing')
     }
@@ -734,7 +734,7 @@ export class IndexingService {
     try {
       const stats = fs.statSync(absolutePath)
       size = stats?.size || 0
-      mtime = stats?.mtime || null
+      mtime = stats?.mtime instanceof Date && isFinite(stats.mtime.getTime()) ? stats.mtime : null
     } catch (error) {
       Logger.error(`Error reading file stats for ${absolutePath}. ${error?.message}`, 'Indexing')
     }
